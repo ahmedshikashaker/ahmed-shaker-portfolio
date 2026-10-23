@@ -16,12 +16,12 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #05070b 0%, #0f172a 100%)",
-          border: "2px solid #d4af37",
-          borderRadius: "14px",
-          color: "#f3e5ab",
+          background: "linear-gradient(135deg, #0f172a 0%, #182338 100%)",
+          border: "2px solid rgba(223, 196, 144, 0.55)",
+          borderRadius: "16px",
+          color: "#dfc490",
           fontSize: 28,
-          fontWeight: 800,
+          fontWeight: 700,
           letterSpacing: "-0.04em",
         }}
       >
