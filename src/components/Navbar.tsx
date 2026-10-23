@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { FileText, ArrowUpRight, Menu, X } from "lucide-react";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 
@@ -63,13 +64,19 @@ export default function Navbar({ onOpenDossier }: NavbarProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-        {/* Zone 1: Clean Brand Identity */}
+        {/* Zone 1: Clean Brand Identity with LinkedIn Executive Portrait */}
         <button
           onClick={() => scrollToSection("hero")}
           className="group flex items-center gap-3 text-left focus:outline-none cursor-pointer shrink-0"
         >
-          <div className="w-9 h-9 rounded-lg bg-[#182338] border border-[#d4b982]/40 flex items-center justify-center text-[#dfc490] font-tech text-xs font-semibold group-hover:border-[#d4b982] transition-colors">
-            AS
+          <div className="relative w-9 h-9 rounded-lg overflow-hidden bg-[#182338] border border-[#d4b982]/45 group-hover:border-[#dfc490] transition-colors shrink-0">
+            <Image
+              src="/assets/profile/ahmed-shaker-portrait.jpg"
+              alt={EXECUTIVE_PROFILE.name}
+              width={36}
+              height={36}
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <div className="text-sm font-semibold text-slate-100 tracking-tight group-hover:text-[#dfc490] transition-colors">

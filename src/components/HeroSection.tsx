@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowDownRight, ArrowUpRight, FileText } from "lucide-react";
 import {
+  EXECUTIVE_PROFILE,
   EXECUTIVE_METRICS,
   SELECTED_PRODUCTS,
 } from "@/data/portfolioData";
@@ -112,6 +113,52 @@ export default function HeroSection({ onOpenDossier }: HeroSectionProps) {
             transition={{ duration: 0.65, delay: 0.16 }}
             className="lg:col-span-5 space-y-4"
           >
+            {/* Executive Portrait & Identity Card */}
+            <div className="p-5 rounded-2xl bg-[#131c31]/95 border border-[#d4b982]/30 flex items-center gap-4 shadow-xl shadow-slate-950/30">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-[#dfc490]/50 bg-[#182338] shrink-0">
+                <Image
+                  src="/assets/profile/ahmed-shaker-portrait.jpg"
+                  alt={EXECUTIVE_PROFILE.name}
+                  width={80}
+                  height={80}
+                  priority
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-base sm:text-lg font-bold text-slate-50 truncate">
+                    {EXECUTIVE_PROFILE.name}
+                  </span>
+                  <span className="w-2 h-2 rounded-full bg-[#5eead4] shrink-0" title="Active Executive" />
+                </div>
+                <p className="text-xs font-medium text-[#dfc490] mt-0.5">
+                  Head of Digital Technology · KIB
+                </p>
+                <p className="text-[11px] font-tech text-slate-400 mt-1">
+                  Kuwait · 2 Digital Factories Built · 16+ Platforms
+                </p>
+                <div className="flex items-center gap-3 mt-2.5 text-xs">
+                  <a
+                    href={EXECUTIVE_PROFILE.contact.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490] font-medium transition-colors"
+                  >
+                    <span>LinkedIn Profile</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#dfc490]" />
+                  </a>
+                  <span className="text-slate-600">·</span>
+                  <button
+                    onClick={onOpenDossier}
+                    className="text-slate-300 hover:text-[#dfc490] font-medium transition-colors cursor-pointer"
+                  >
+                    Executive Dossier
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Factory II Summary Card */}
             <div
               onClick={() => scrollTo("digital-factories")}

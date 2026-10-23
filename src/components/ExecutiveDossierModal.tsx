@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { X, Printer, ArrowUpRight, Globe } from "lucide-react";
 import {
   EXECUTIVE_PROFILE,
@@ -115,17 +116,28 @@ export default function ExecutiveDossierModal({
             {/* Body */}
             {lang === "en" ? (
               <div className="p-6 sm:p-10 space-y-8" dir="ltr">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-slate-200/10">
-                  <div>
-                    <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-50">
-                      {EXECUTIVE_PROFILE.name}
-                    </h2>
-                    <p className="mt-1 text-base font-medium text-[#dfc490]">
-                      {EXECUTIVE_PROFILE.title} · Digital Banking Transformation &amp; Architecture
-                    </p>
-                    <p className="mt-1 text-xs font-tech text-slate-400">
-                      Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-[#dfc490]/50 bg-[#182338] shrink-0">
+                      <Image
+                        src="/assets/profile/ahmed-shaker-portrait.jpg"
+                        alt={EXECUTIVE_PROFILE.name}
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
+                        {EXECUTIVE_PROFILE.name}
+                      </h2>
+                      <p className="mt-1 text-sm sm:text-base font-medium text-[#dfc490]">
+                        {EXECUTIVE_PROFILE.title} · Digital Banking Transformation &amp; Architecture
+                      </p>
+                      <p className="mt-1 text-xs font-tech text-slate-400">
+                        Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
+                      </p>
+                    </div>
                   </div>
                   <div className="text-xs text-slate-300 space-y-1 md:text-right">
                     <div>{EXECUTIVE_PROFILE.location}</div>
@@ -244,17 +256,28 @@ export default function ExecutiveDossierModal({
             ) : (
               /* Arabic Executive Brief (RTL) */
               <div className="p-6 sm:p-10 space-y-8 text-right" dir="rtl">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-slate-200/10">
-                  <div>
-                    <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-50">
-                      {ARABIC_EXECUTIVE_BRIEF.name}
-                    </h2>
-                    <p className="mt-1.5 text-base font-medium text-[#dfc490]">
-                      {ARABIC_EXECUTIVE_BRIEF.title}
-                    </p>
-                    <p className="mt-1 text-xs font-tech text-slate-400" dir="ltr">
-                      Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-[#dfc490]/50 bg-[#182338] shrink-0">
+                      <Image
+                        src="/assets/profile/ahmed-shaker-portrait.jpg"
+                        alt={ARABIC_EXECUTIVE_BRIEF.name}
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
+                        {ARABIC_EXECUTIVE_BRIEF.name}
+                      </h2>
+                      <p className="mt-1.5 text-sm sm:text-base font-medium text-[#dfc490]">
+                        {ARABIC_EXECUTIVE_BRIEF.title}
+                      </p>
+                      <p className="mt-1 text-xs font-tech text-slate-400" dir="ltr">
+                        Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
+                      </p>
+                    </div>
                   </div>
                   <div className="text-xs text-slate-300 space-y-1">
                     <div>{ARABIC_EXECUTIVE_BRIEF.location}</div>
