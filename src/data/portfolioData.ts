@@ -77,6 +77,8 @@ export interface BankingProduct {
   appStoreUrl?: string;
   playStoreUrl?: string;
   secondaryPlayStoreUrl?: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
   featured: boolean;
 }
 
@@ -654,32 +656,39 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
   },
   {
     id: "kib-bin-sponsorship",
-    name: "KIB BIN Sponsorship, BaaS & Backoffice Suite",
+    name: "KIB BIN Sponsorship & Multi-Tenant BaaS (Al Muzaini Travel)",
     institution: "Kuwait International Bank (KIB)",
     factoryTag: "KIB Digital Factory",
-    category: "Banking-as-a-Service (BaaS) & Internal Operations",
+    category: "Banking-as-a-Service (BaaS) & Multi-Tenant Card Issuing",
     tagline:
-      "Visa-Ready BIN Sponsorship infrastructure and enterprise Backoffice portals powering fintechs and bank operations.",
-    iconPath: "/assets/apps/icons/kib-baas.svg",
-    screenshots: ["/assets/apps/screenshots/kib-baas-1.svg"],
-    platforms: ["BaaS API", "Microservices", "Web", "Android", "iOS"],
+      "Multi-tenant Visa-Ready BIN Sponsorship platform powering white-label multi-currency prepaid card apps (such as Al Muzaini Travel) and enterprise Backoffice portals.",
+    iconPath: "/assets/apps/icons/kib-muzaini.png",
+    screenshots: [
+      "/assets/apps/screenshots/kib-muzaini-1.png",
+      "/assets/apps/screenshots/kib-muzaini-2.png",
+      "/assets/apps/screenshots/kib-muzaini-3.png",
+      "/assets/apps/screenshots/kib-muzaini-4.png",
+      "/assets/apps/screenshots/kib-muzaini-5.png",
+    ],
+    platforms: ["BaaS API", "Microservices", "Android", "iOS", "Web"],
     attributionBadge: "Executive Ownership & Direction",
     purposeAndExperience:
-      "Enables external fintechs and major exchange institutions to issue and manage digital multi-currency prepaid and payment cards backed by KIB’s banking license and technical infrastructure, paired with comprehensive internal Backoffice web portals.",
+      "Enables external fintechs and major exchange institutions—most notably Al Muzaini Exchange ('Muzaini Travel')—to launch full-featured mobile applications with seamless biometric onboarding, instant virtual & physical Visa prepaid card issuance, multi-currency wallets (KWD, USD, EUR, BHD, GBP, CAD, INR, JOD, etc.), live FX rate tracking, instant currency conversion, Click to Pay, and full card controls, backed by KIB’s banking license and Backoffice portals.",
     problemAddressed:
-      "Fintechs and exchange houses in Kuwait needed regulated card-issuing and settlement infrastructure without building a bank from scratch, while KIB operations needed unified backoffice tooling across all digital products.",
+      "Exchange houses and fintechs in Kuwait needed regulated, multi-tenant card-issuing, FX wallet management, and settlement infrastructure without building a core bank from scratch, while KIB operations needed unified backoffice governance across all partner tenants.",
     architectureAndTech: [
-      "NestJS & Java EE Microservices",
-      "Apache Kafka & RabbitMQ Event Mesh",
+      "Multi-Tenant BaaS & White-Label Mobile Architecture",
+      "NestJS & Java EE Microservices + Kafka / RabbitMQ",
+      "Instant Virtual Visa Card Issuance & Click to Pay",
+      "Multi-Currency Wallet & Real-Time FX Conversion Engine",
       "Kubernetes & Argo CD Cloud-Native Infrastructure",
-      "Visa Ready Partner API & Backoffice Web Portals",
     ],
     myRoleAndContribution:
-      "Own the digital technology delivery for KIB's BIN Sponsorship and Backoffice platforms, defining microservice architecture standards, API security (OWASP), and release governance.",
+      "Own the digital technology delivery for KIB's BIN Sponsorship multi-tenant applications (including the Al Muzaini Travel tenant) and Backoffice platforms, defining microservice architecture standards, API security (OWASP), and release governance.",
     organizationalDistinction:
-      "Delivered by KIB’s Digital Factory backend, web, and mobile engineering teams in alignment with payment scheme and regulatory standards.",
+      "Delivered by KIB’s Digital Factory backend, web, and mobile engineering teams in alignment with Visa payment scheme and Central Bank of Kuwait regulatory standards.",
     verifiableImpact:
-      "Powered KIB's milestone as the first bank in Kuwait to earn Visa Ready for Fintech Enablement certification and onboard institutional multi-currency card partners.",
+      "Powered KIB's milestone as the first bank in Kuwait to earn Visa Ready for Fintech Enablement certification and launched production multi-currency card tenants such as Al Muzaini Travel.",
     featured: true,
   },
 
@@ -760,8 +769,6 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     category: "Youth Digital Savings & Financial Literacy",
     tagline:
       "End-to-end digital savings application designed to cultivate financial literacy for children and families.",
-    iconPath: "/assets/apps/icons/warba-hassala.svg",
-    screenshots: ["/assets/apps/screenshots/warba-hassala-1.svg"],
     platforms: ["Android", "Flutter"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
@@ -1009,7 +1016,6 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     tagline:
       "Architectural migration of United Bank for Africa's mobile banking platform from legacy Cordova to high-performance Flutter.",
     iconPath: "/assets/apps/icons/uba-mobile.jpg",
-    screenshots: ["/assets/apps/screenshots/uba-mobile-1.svg"],
     platforms: ["Flutter", "Android", "iOS"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
@@ -1033,35 +1039,33 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
   },
   {
     id: "advicenode-platform",
-    name: "Advicenode — Dynamic Robo-Advisor Platform Generator",
+    name: "Advicenode — AI Robo-Advisor & Virtual Assistant Platform Generator",
     institution: "Advicenode",
     factoryTag: "Global Banking & FinTech",
-    category: "Automated WealthTech & Application Generator",
+    category: "AI Advisory Automation & Dynamic App Builder",
     tagline:
-      "Engineered a metadata-driven FinTech platform capable of dynamically generating customized robo-advisor and guided wealth applications.",
-    iconPath: "/assets/apps/icons/advicenode.svg",
-    screenshots: [
-      "/assets/apps/screenshots/advicenode-1.svg",
-      "/assets/apps/screenshots/advicenode-2.svg",
-    ],
+      "Engineered a dynamic advisory automation platform capable of generating AI virtual assistants, decision-support bots, and domain-specific robo-advisor applications in under 24 hours.",
+    iconPath: "/assets/apps/icons/advicenode.png",
     platforms: ["Android", "Web", "Microservices"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
-      "A foundational WealthTech platform engineered to dynamically generate tailored robo-advisor applications—complete with interactive investor onboarding decision trees, automated risk-tolerance profiling questionnaires, algorithmic portfolio allocation views, and guided financial advisory workflows.",
+      "An AI-powered advisory automation platform engineered to dynamically generate tailored robo-advisor applications, web/mobile virtual assistants, and interactive decision-support workflows across industries—including financial robo-advisory, business consulting automation, and vertical advisors such as SuggestCar (the first automated car advisor built on Advicenode)—complete with seamless third-party web service integrations.",
     problemAddressed:
-      "Financial advisors and wealth institutions needed customized digital robo-advisory applications without spending months building bespoke client codebases from scratch. Advicenode solved this by abstracting advisory logic, UI flows, and decision trees into dynamic JSON/XML schemas that compiled and rendered into full applications on the fly.",
+      "Enterprises, financial/consulting advisors, and startups needed intelligent robo-advisors and interactive web/mobile virtual assistants that could guide users through complex decisions without spending months building custom applications from scratch. Advicenode abstracted advisory decision trees, conversational flows, and third-party API integrations into a dynamic engine capable of generating production robo-advisors in less than 24 hours.",
     architectureAndTech: [
-      "Dynamic Schema-Driven UI & Workflow Engine",
-      "Automated Risk-Profiling & Decision-Tree Interpreter",
-      "Java, Android & JavaScript Client Generation",
-      "RESTful JSON/XML Configuration & Rule Pipelines",
+      "Dynamic Robo-Advisor & Virtual Assistant Generation Engine",
+      "Automated Decision-Tree & Advisory Workflow Interpreter",
+      "Java, Android & Responsive Web Client Generation",
+      "Third-Party Web Service & REST/JSON Integration Connectors",
     ],
     myRoleAndContribution:
-      "As Software Engineer at Advicenode (Oct 2016 – Oct 2017), I engineered the core platform engine that dynamically generated robo-advisor applications from configurable domain models and decision trees.",
+      "As Software Engineer at Advicenode (Oct 2016 – Oct 2017), I engineered the core platform engine that dynamically generated robo-advisor and virtual assistant applications across Web and Android from configurable domain models and decision trees.",
     organizationalDistinction:
-      "Hands-on core platform software engineering—marking the beginning of my 10+ year specialization in FinTech, WealthTech, and digital banking architecture.",
+      "Hands-on core platform software engineering—building the dynamic application generator that powered Advicenode's automated advisory products (including SuggestCar and virtual assistant integrations).",
     verifiableImpact:
-      "Enabled rapid, repeatable generation of digital robo-advisor applications and established the architectural patterns I later scaled in KIB Invest and banking digital factories.",
+      "Enabled rapid, repeatable generation of AI virtual assistants and automated robo-advisors across web and mobile, documented on the official Advicenode blog (tumblr.advicenode.com).",
+    websiteUrl: "https://tumblr.advicenode.com/",
+    websiteLabel: "Advicenode Official Blog",
     featured: true,
   },
 ];
@@ -1240,37 +1244,37 @@ export const CAREER_TIMELINE: CareerMilestone[] = [
     id: "advicenode-engineer",
     role: "Software Engineer",
     organization: "Advicenode",
-    organizationTag: "Dynamic Robo-Advisor & WealthTech Platform Generator",
+    organizationTag: "AI Robo-Advisor & Virtual Assistant Platform Generator",
     location: "Cairo, Egypt",
     period: "Oct 2016 – Oct 2017",
-    durationHighlight: "1 Yr · Dynamic FinTech Platform Engineering",
+    durationHighlight: "1 Yr · Dynamic Advisory Automation Platform",
     isDigitalFactoryRole: false,
     executiveHeadline:
-      "Engineered the core Advicenode platform—a metadata-driven FinTech engine that dynamically generated white-label robo-advisor and guided financial advisory applications.",
+      "Engineered the core Advicenode platform—an AI-powered advisory automation engine that dynamically generated robo-advisor applications, web/mobile virtual assistants, and automated decision-support bots.",
     strategicScope:
-      "Foundational FinTech engineering role designing a dynamic application generator capable of turning configurable financial decision trees, risk-profiling questionnaires, and portfolio allocation rules into production robo-advisor apps.",
+      "Foundational platform engineering role designing a dynamic application generator capable of turning configurable decision trees, advisory workflows, and third-party web service integrations into production robo-advisors and virtual assistants in under 24 hours.",
     achievements: [
       {
         category: "Architecture & Engineering",
-        text: "Architected and built the Advicenode dynamic application generator, enabling financial institutions and advisors to configure and deploy tailored robo-advisor apps without writing custom client code from scratch.",
+        text: "Architected and built the Advicenode dynamic application generator, enabling businesses, developers, and startups to build and deploy tailored robo-advisor and virtual assistant applications across Web and Android without writing custom client code from scratch.",
       },
       {
         category: "Product Delivery",
-        text: "Implemented the dynamic questionnaire & decision-tree rendering engine for investor onboarding, risk-tolerance scoring, and automated portfolio allocation recommendations.",
+        text: "Powered vertical automated advisory products launched on Advicenode—including SuggestCar (the first automated car advisor) alongside financial, consulting, and business decision-support virtual assistants.",
       },
       {
         category: "Architecture & Engineering",
-        text: "Designed schema-driven JSON/REST data pipelines that dynamically bound backend advisory logic to client UI components—establishing my early foundation in WealthTech and digital banking platforms.",
+        text: "Engineered third-party web service integration connectors and responsive UI generation pipelines (Java, Android, JavaScript, REST/JSON) that bound backend advisory rules to interactive client workflows.",
       },
     ],
     technologies: [
       "Java",
       "Android",
       "JavaScript",
-      "JSON Schema Engines",
-      "REST APIs",
       "Dynamic App Generation",
-      "Robo-Advisory Workflows",
+      "AI Virtual Assistants",
+      "Robo-Advisor Engine",
+      "REST & Web Integrations",
     ],
   },
 ];
@@ -1771,9 +1775,9 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
       "Abstract volatile domain rules, questionnaires, and multi-tenant branding into high-speed JSON/XML schemas and reusable core frameworks—allowing client applications to render complex workflows dynamically at 60fps.",
     executionPillars: [
       {
-        heading: "Advicenode — Dynamic Robo-Advisor Platform Generator",
+        heading: "Advicenode — AI Robo-Advisor & Virtual Assistant Platform Generator",
         detail:
-          "Engineered the core platform engine that ingested configurable JSON/REST advisory schemas, decision trees, and risk-scoring models to dynamically generate white-label robo-advisor and guided wealth applications across Android and Web.",
+          "Engineered the core platform engine that ingested configurable decision trees, advisory workflows, and third-party web service integrations to dynamically generate robo-advisor and virtual assistant applications (including SuggestCar, the first automated car advisor) across Android and Web in under 24 hours.",
       },
       {
         heading: "ITG Solutions — Complete EduWave Suite, MedXJordan, Great Tafsirs & Al-Zakah",
@@ -1857,9 +1861,9 @@ export const ARABIC_EXECUTIVE_BRIEF = {
     },
     {
       role: "مهندس برمجيات (Software Engineer)",
-      org: "Advicenode — منصة المستشار المالي الآلي (Robo-Advisor)",
+      org: "Advicenode — منصة المستشار الآلي والمساعدات الذكية (Robo-Advisor & AI Virtual Assistants)",
       period: "أكتوبر 2016 – أكتوبر 2017",
-      desc: "هندسة وتطوير المحرك الأساسي لمنصة Advicenode القائم على المخططات الديناميكية (Schema-Driven Engine) لتوليد تطبيقات المستشار المالي الآلي (Robo-Advisor) وتقييم المخاطر وتوزيع المحافظ الاستثمارية تلقائياً.",
+      desc: "هندسة وتطوير المحرك الأساسي لمنصة Advicenode القائم على التوليد الديناميكي للتطبيقات (Dynamic App Generator) لبناء تطبيقات المستشار الآلي (Robo-Advisors) والمساعدات الافتراضية الذكية عبر الويب وأندرويد (مثل منصة SuggestCar للاستشارات الآلية للسيارات وربط الخدمات السحابية).",
     },
   ],
 };

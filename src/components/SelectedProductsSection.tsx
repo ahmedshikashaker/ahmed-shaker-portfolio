@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   SELECTED_PRODUCTS,
   BankingProduct,
@@ -18,6 +18,7 @@ export default function SelectedProductsSection() {
   const [selectedProductId, setSelectedProductId] = useState<string>(
     SELECTED_PRODUCTS[0].id
   );
+  const [screenPage, setScreenPage] = useState<number>(0);
 
   const filteredProducts =
     filter === "ALL"
@@ -31,6 +32,7 @@ export default function SelectedProductsSection() {
 
   const handleFilterChange = (newFilter: FilterCategory) => {
     setFilter(newFilter);
+    setScreenPage(0);
     const nextList =
       newFilter === "ALL"
         ? SELECTED_PRODUCTS
@@ -39,6 +41,20 @@ export default function SelectedProductsSection() {
       setSelectedProductId(nextList[0].id);
     }
   };
+
+  const handleSelectProduct = (id: string) => {
+    setSelectedProductId(id);
+    setScreenPage(0);
+  };
+
+  const screenshots = activeProduct.screenshots || [];
+  const totalScreens = screenshots.length;
+  // Show 2 screens at a time with pagination/selector when there are > 2 screenshots
+  const visibleStart = Math.min(
+    screenPage,
+    Math.max(0, totalScreens - 2)
+  );
+  const visibleScreenshots = screenshots.slice(visibleStart, visibleStart + 2);
 
   return (
     <section
@@ -155,7 +171,7 @@ export default function SelectedProductsSection() {
               return (
                 <button
                   key={product.id}
-                  onClick={() => setSelectedProductId(product.id)}
+                  onClick={() => handleSelectProduct(product.id)}
                   className={`w-full p-4 sm:p-5 text-left transition-all flex items-center justify-between gap-3.5 cursor-pointer ${
                     isSelected
                       ? "bg-[#1c2942] border-l-4 border-l-[#dfc490]"
@@ -264,7 +280,7 @@ export default function SelectedProductsSection() {
                     </div>
                   </div>
 
-                  {/* Verified Store Links */}
+                  {/* Verified Store & Official Website Links */}
                   <div className="flex flex-wrap items-center gap-2 shrink-0">
                     {activeProduct.appStoreUrl && (
                       <a
@@ -288,19 +304,71 @@ export default function SelectedProductsSection() {
                         <ArrowUpRight className="w-3.5 h-3.5 text-[#5eead4]" />
                       </a>
                     )}
+                    {activeProduct.websiteUrl && (
+                      <a
+                        href={activeProduct.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#182338] hover:bg-[#1e2b45] border border-[#dfc490]/35 text-[#dfc490] text-xs font-medium transition-colors"
+                      >
+                        <span>{activeProduct.websiteLabel || "Official Site"}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
 
                 {/* Hardware Showcase Stage (when official screenshots exist) */}
-                {activeProduct.screenshots && activeProduct.screenshots.length > 0 ? (
+                {totalScreens > 0 ? (
                   <div className="relative py-8 px-6 bg-[#0f172a]/70 border-b border-slate-200/[0.08]">
-                    <div className="text-xs font-tech text-slate-400 mb-5 flex items-center justify-between">
-                      <span>Official Store Interface</span>
-                      <span className="text-[#dfc490]">Verified Production Screenshots</span>
+                    <div className="text-xs font-tech text-slate-400 mb-5 flex flex-wrap items-center justify-between gap-3">
+                      <span>
+                        Official Production Interface ({totalScreens} Screen{totalScreens > 1 ? "s" : ""})
+                      </span>
+
+                      {totalScreens > 2 ? (
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => setScreenPage((p) => Math.max(0, p - 1))}
+                            disabled={visibleStart === 0}
+                            className="p-1.5 rounded-lg bg-[#182338] border border-slate-200/10 text-slate-200 disabled:opacity-35 cursor-pointer"
+                            aria-label="Previous screens"
+                          >
+                            <ChevronLeft className="w-3.5 h-3.5" />
+                          </button>
+                          {screenshots.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() =>
+                                setScreenPage(Math.min(idx, Math.max(0, totalScreens - 2)))
+                              }
+                              className={`px-2.5 py-1 rounded-md text-[11px] font-tech transition-colors cursor-pointer ${
+                                idx >= visibleStart && idx < visibleStart + 2
+                                  ? "bg-[#dfc490] text-slate-950 font-semibold"
+                                  : "bg-[#182338] text-slate-400 hover:text-white"
+                              }`}
+                            >
+                              0{idx + 1}
+                            </button>
+                          ))}
+                          <button
+                            onClick={() =>
+                              setScreenPage((p) => Math.min(totalScreens - 2, p + 1))
+                            }
+                            disabled={visibleStart >= totalScreens - 2}
+                            className="p-1.5 rounded-lg bg-[#182338] border border-slate-200/10 text-slate-200 disabled:opacity-35 cursor-pointer"
+                            aria-label="Next screens"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-[#dfc490]">Verified Production Screenshots</span>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-2 gap-6 max-w-lg mx-auto">
-                      {activeProduct.screenshots.slice(0, 2).map((shot, i) => (
+                      {visibleScreenshots.map((shot, i) => (
                         <div
                           key={shot}
                           className="relative mx-auto w-full max-w-[215px] aspect-[9/19.2] rounded-[26px] p-2 bg-[#1e293b] border border-slate-200/15 shadow-2xl"
@@ -308,7 +376,7 @@ export default function SelectedProductsSection() {
                           <div className="relative w-full h-full rounded-[19px] overflow-hidden bg-[#0f172a]">
                             <Image
                               src={shot}
-                              alt={`${activeProduct.name} screen ${i + 1}`}
+                              alt={`${activeProduct.name} screen ${visibleStart + i + 1}`}
                               fill
                               sizes="(max-width: 768px) 45vw, 220px"
                               className="object-cover object-top"
