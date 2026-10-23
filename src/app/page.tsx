@@ -11,14 +11,12 @@ import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
 import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
 import ContactSection from "@/components/ContactSection";
 import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
-import AmbientSpotlight from "@/components/AmbientSpotlight";
 
 export default function HomePage() {
   const [dossierOpen, setDossierOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#05070b] text-slate-100 selection:bg-amber-400/30 selection:text-amber-100">
-      <AmbientSpotlight />
+    <div className="min-h-screen bg-[#080807] text-[#F4F0E8]">
       <Navbar onOpenDossier={() => setDossierOpen(true)} />
       <main>
         <HeroSection onOpenDossier={() => setDossierOpen(true)} />

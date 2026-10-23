@@ -1,95 +1,93 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import {
-  Layers,
-  CheckCircle2,
-  ShieldCheck,
-  Quote,
-} from "lucide-react";
 import { LEADERSHIP_PRINCIPLES } from "@/data/portfolioData";
 
 export default function LeadershipPhilosophySection() {
   return (
     <section
       id="leadership"
-      className="relative py-28 lg:py-36 border-t border-white/[0.08] bg-[#05070b]"
+      className="relative py-28 lg:py-40 bg-[#F2EFE9] text-[#0B0B0A] swiss-grid-ivory border-b border-[#0B0B0A]/15"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Leadership &amp; Engineering Excellence</span>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+        {/* Monograph Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b-2 border-[#0B0B0A]">
+          <div className="lg:col-span-4">
+            <span className="font-tech text-xs font-semibold uppercase tracking-[0.2em] text-[#8C6B2F]">
+              05 // LEADERSHIP DOCTRINE
+            </span>
+            <p className="mt-3 font-tech text-xs uppercase tracking-[0.14em] text-[#4A4843]">
+              ENGINEERING EXCELLENCE &amp; GOVERNANCE
+            </p>
           </div>
 
-          <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1]">
-            How I Build Organizations That{" "}
-            <span className="font-[family-name:var(--font-serif)] italic font-normal text-gold-gradient">
-              Ship &amp; Scale.
-            </span>
-          </h2>
-
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            Technology strategy is only as effective as the engineering culture and governance mechanisms that execute it. My leadership philosophy is forged from building real banking digital factories under regulatory scrutiny and competitive market timelines.
-          </p>
+          <div className="lg:col-span-8 space-y-5">
+            <h2 className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-[-0.04em] text-[#0B0B0A] leading-[0.96]">
+              How I Build Organizations{" "}
+              <span className="font-editorial italic font-normal normal-case text-[#8C6B2F]">
+                That Ship &amp; Endure.
+              </span>
+            </h2>
+            <p className="text-base sm:text-xl text-[#2B2A27] max-w-3xl leading-relaxed">
+              Sustainable digital transformation is an organizational design problem as much as a software architecture problem. These four principles govern how I structure teams, select technology, and align delivery with executive banking objectives.
+            </p>
+          </div>
         </div>
 
-        {/* 4 Leadership Principles Grid */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* 2x2 Swiss Editorial Monograph Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 border-b border-x border-[#0B0B0A]/20 divide-y lg:divide-y-0 lg:divide-x divide-[#0B0B0A]/20 bg-[#EAE5DC]">
           {LEADERSHIP_PRINCIPLES.map((principle, idx) => (
-            <motion.div
+            <div
               key={principle.id}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.45, delay: idx * 0.08 }}
-              className="p-7 sm:p-9 rounded-3xl bg-[#0a0f1c]/95 border border-white/[0.08] hover:border-amber-400/35 transition-all flex flex-col justify-between space-y-6"
+              className={`p-8 sm:p-12 flex flex-col justify-between space-y-8 ${
+                idx >= 2 ? "lg:border-t lg:border-[#0B0B0A]/20" : ""
+              }`}
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-[family-name:var(--font-mono)] text-xs font-bold uppercase tracking-widest text-amber-400">
-                    PRINCIPLE {principle.number}
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-[#0B0B0A]/15 pb-4">
+                  <span className="font-display text-4xl font-extrabold text-[#8C6B2F]">
+                    {principle.number}
                   </span>
-                  <Quote className="w-5 h-5 text-amber-400/40" />
+                  <span className="font-tech text-[10px] uppercase tracking-[0.16em] text-[#4A4843]">
+                    EXECUTIVE PRINCIPLE
+                  </span>
                 </div>
 
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white">
+                  <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0B0B0A] tracking-tight">
                     {principle.title}
                   </h3>
-                  <p className="text-xs sm:text-sm font-medium text-amber-200/90 mt-1">
+                  <p className="mt-1 font-tech text-xs uppercase tracking-[0.1em] text-[#8C6B2F]">
                     {principle.subtitle}
                   </p>
                 </div>
 
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-[#2B2A27] leading-relaxed">
                   {principle.narrative}
                 </p>
 
-                {/* Verified Evidence Box */}
-                <div className="p-4 rounded-2xl bg-emerald-500/[0.06] border border-emerald-400/25">
-                  <div className="flex items-center gap-1.5 text-[10px] font-[family-name:var(--font-mono)] uppercase tracking-widest text-emerald-300 mb-1">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Evidence from Career Record</span>
+                <div className="p-5 bg-[#F2EFE9] border-l-4 border-[#0B0B0A]">
+                  <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-1.5">
+                    INSTITUTIONAL EVIDENCE //
                   </div>
-                  <p className="text-xs text-slate-200 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#0B0B0A] font-medium leading-relaxed">
                     {principle.evidenceFromCareer}
                   </p>
                 </div>
               </div>
 
-              {/* Key Practices */}
-              <div className="pt-4 border-t border-white/[0.07] space-y-2">
-                {principle.keyPractices.map((practice) => (
-                  <div key={practice} className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <div className="pt-4 border-t border-[#0B0B0A]/15 space-y-2">
+                {principle.keyPractices.map((practice, i) => (
+                  <div
+                    key={practice}
+                    className="flex items-center gap-3 text-xs font-semibold text-[#0B0B0A]"
+                  >
+                    <span className="font-tech text-[#8C6B2F]">0{i + 1}</span>
                     <span>{practice}</span>
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

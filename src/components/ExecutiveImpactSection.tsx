@@ -1,191 +1,198 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import {
-  Building2,
-  Cpu,
-  GitBranch,
-  Layers,
-  ShieldCheck,
-  Compass,
-  Users,
-  Workflow,
-  CheckCircle2,
-} from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
 
-const IMPACT_DOMAINS = [
+const EXECUTIVE_PILLARS = [
   {
-    id: "digital-factory-creation",
-    badge: "PILLAR 01 · INSTITUTIONAL TRANSFORMATION",
-    title: "Establishing Banking Digital Factories from Scratch",
-    description:
-      "I help banks transition from slow, vendor-dependent IT procurement models into high-velocity internal engineering organizations—defining the strategic direction, multi-year technology roadmaps, hiring blueprints, and delivery structures required to ship digital products sustainably.",
-    highlights: [
-      "Key builder of two pioneering Digital Factories in Kuwait: Warba Bank (“Al-Wateen”) and Kuwait International Bank (KIB).",
-      "Aligned C-suite banking ambitions with pragmatic, phased engineering execution.",
-      "Created repeatable product-incubation engines capable of launching new banking verticals in-house.",
-    ],
-    icon: Building2,
-    accent: "from-amber-500/20 to-amber-500/5 border-amber-400/30 text-amber-300",
+    index: "01",
+    domain: "INSTITUTIONAL CAPABILITY",
+    title: "Digital Factory Establishment & Org Design",
+    summary:
+      "Transitioning financial institutions from outsourced vendor dependency to sovereign, in-house product engineering organizations.",
+    thesis:
+      "A Digital Factory is not a rebranded IT department. It requires establishing multi-year technology roadmaps, selecting cohesive polyglot stacks, structuring autonomous squads supported by specialized engineering chapters, and installing automated release governance from day one.",
+    proof:
+      "Key builder of two greenfield Digital Factories in Kuwait: Warba Bank’s “Al-Wateen” Digital Factory (2019–2022) and Kuwait International Bank’s Digital Factory (2022–Present).",
+    metricsOrScope: "Strategy · Roadmaps · Chapter Topology · Hiring Standards",
   },
   {
-    id: "multi-platform-ownership",
-    badge: "PILLAR 02 · MULTI-PRODUCT DELIVERY",
-    title: "Full-Ecosystem Command Across Retail, Corporate & BaaS",
-    description:
-      "At KIB, I own the digital technology function across mobile, web, and backend delivery—directing cross-platform teams across eight concurrent product ecosystems serving individuals, SMEs, large corporates, real estate investors, and external fintech partners.",
-    highlights: [
-      "Retail & Wealth: KIB Mobile (Retail), KIB Invest (Shariah WealthTech), Warba Bank Mobile, Hassala Kids.",
-      "Corporate & PropTech: KIB Corporate (multi-level commercial approvals) and KIB Aqari (automated rent & QR appraisals).",
-      "Embedded Finance & Marketplaces: Paytally (BuyNow 0% financing), Remittance/WAGE, and Visa-Ready BIN Sponsorship (BaaS).",
-    ],
-    icon: Layers,
-    accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-400/30 text-emerald-300",
+    index: "02",
+    domain: "PORTFOLIO COMMAND",
+    title: "Simultaneous Multi-Vertical Banking Delivery",
+    summary:
+      "Directing parallel engineering roadmaps across Retail, Corporate Treasury, PropTech, Shariah WealthTech, BNPL Marketplaces, and Embedded Finance.",
+    thesis:
+      "Modern banks compete across specialized verticals rather than a single monolithic app. As Head of Digital Technology at KIB, I direct cross-platform teams delivering eight interconnected product lines across Android, iOS, and Web without duplicating foundational architecture.",
+    proof:
+      "Directing KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, Paytally (BuyNow), Remittance (WAGE), Backoffice Suites, and Visa-Ready BIN Sponsorship (BaaS).",
+    metricsOrScope: "8+ Regulated Product Lines · Android · iOS · Web",
   },
   {
-    id: "enterprise-architecture",
-    badge: "PILLAR 03 · ENTERPRISE & APPLICATION ARCHITECTURE",
-    title: "Polyglot Technical Depth: Mobile, Web & Event-Driven Backends",
-    description:
-      "My executive leadership is anchored in deep hands-on architectural mastery. I define architecture standards across Native Android (Kotlin), Native iOS (Swift), and Flutter (Mobile & Web), paired with Domain-Driven microservices in NestJS and Java EE.",
-    highlights: [
-      "Pragmatic governance across Native (Kotlin/Swift) and Cross-Platform (Flutter) codebases.",
-      "Event-driven microservice architectures leveraging Apache Kafka, RabbitMQ, MongoDB, and relational stores.",
-      "Proven legacy modernization record—including migrating UBA Mobile Banking from Cordova to Flutter.",
-    ],
-    icon: Cpu,
-    accent: "from-sky-500/20 to-sky-500/5 border-sky-400/30 text-sky-300",
+    index: "03",
+    domain: "ENTERPRISE ARCHITECTURE",
+    title: "Polyglot Client & Event-Driven Microservice Architecture",
+    summary:
+      "Uniting Native mobile precision (Kotlin/Swift) and Flutter velocity with Domain-Driven backend microservices (NestJS, Java EE, Kafka, RabbitMQ).",
+    thesis:
+      "Architectural credibility requires knowing how systems behave in production. Having architected applications across Kotlin, Swift, Dart/Flutter, NestJS, and Java EE, I enforce clean Domain-Driven Design (DDD) boundaries, dependency injection (Hilt/Dagger), and asynchronous event choreography.",
+    proof:
+      "Built Warba Bank Mobile from scratch, developed Fayez & Fayez Admin (Flutter Web), migrated UBA Mobile Banking from Cordova to Flutter, and govern KIB’s enterprise architecture.",
+    metricsOrScope: "DDD · SOLID · Kotlin · Swift · Flutter · NestJS · Kafka",
   },
   {
-    id: "devops-release-governance",
-    badge: "PILLAR 04 · DEVOPS & RELEASE GOVERNANCE",
-    title: "Automated CI/CD, GitOps & Banking-Grade Security",
-    description:
-      "High velocity in regulated banking requires uncompromising engineering discipline. I establish automated build, test, and deployment pipelines alongside strict release governance so teams ship frequently with confidence.",
-    highlights: [
-      "Cloud-native deployment orchestration with Kubernetes (K8s) and Argo CD GitOps.",
-      "Designed and built Jenkins CI/CD pipelines and Git branching/release strategies from the ground up.",
-      "Enforced SOLID, Domain-Driven Design (DDD), Test-Driven Development (TDD), and OWASP security standards.",
-    ],
-    icon: GitBranch,
-    accent: "from-purple-500/20 to-purple-500/5 border-purple-400/30 text-purple-300",
+    index: "04",
+    domain: "RELEASE GOVERNANCE & DEVOPS",
+    title: "Cloud-Native GitOps, CI/CD & Banking Security",
+    summary:
+      "Embedding OWASP security, Test-Driven Development, Jenkins CI/CD, and Kubernetes / Argo CD GitOps into every commit.",
+    thesis:
+      "In regulated banking, release speed is only sustainable when compliance and quality gates are automated. I design branching governance and continuous delivery pipelines that turn multi-squad banking releases into repeatable, auditable routines.",
+    proof:
+      "Created the Jenkins CI/CD pipelines and Git release-management strategy for Warba Bank's mobile chapter, and govern Kubernetes + Argo CD GitOps delivery at KIB.",
+    metricsOrScope: "Kubernetes · Argo CD · Jenkins · OWASP · TDD",
   },
 ];
 
 export default function ExecutiveImpactSection() {
+  const [openIndex, setOpenIndex] = useState<number>(0);
+
   return (
     <section
       id="impact"
-      className="relative py-24 lg:py-32 border-t border-white/[0.06] bg-gradient-to-b from-[#05070b] via-[#080c14] to-[#05070b]"
+      className="relative py-28 lg:py-36 bg-[#080807] border-b border-[#F4F0E8]/[0.12]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 text-amber-300 text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Executive Positioning &amp; Impact</span>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+        {/* Editorial Asymmetric Split Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-[#F4F0E8]/[0.12]">
+          <div className="lg:col-span-4">
+            <div className="font-tech text-xs uppercase tracking-[0.2em] text-[#C8A464]">
+              00 // EXECUTIVE POSITIONING
+            </div>
+            <p className="mt-3 text-xs font-tech uppercase tracking-[0.12em] text-[#9A958B]">
+              BRIDGING C-SUITE STRATEGY &amp; PRODUCTION CODE
+            </p>
           </div>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.12]">
-            Where Boardroom Strategy Meets{" "}
-            <span className="font-[family-name:var(--font-serif)] italic font-normal text-gold-gradient">
-              Production Engineering.
-            </span>
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            True digital banking transformation requires leaders who can operate at two altitudes simultaneously: defining institutional technology strategy and organizational topology at the executive level, while governing architecture, microservices, and CI/CD pipelines at the code level.
-          </p>
+
+          <div className="lg:col-span-8 space-y-6">
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.035em] text-[#F4F0E8] leading-[1.06]">
+              Most executives understand strategy OR code.{" "}
+              <span className="font-editorial italic font-normal text-[#C8A464]">
+                Transforming a bank requires mastering both.
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg text-[#9A958B] max-w-3xl leading-relaxed">
+              My career has been defined by a single discipline: taking ambitious financial institutions from strategic intent to high-velocity, in-house product delivery—without sacrificing architectural rigor, security, or operational resilience.
+            </p>
+          </div>
         </div>
 
-        {/* 4 Impact Pillars Grid */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {IMPACT_DOMAINS.map((domain, idx) => {
-            const Icon = domain.icon;
+        {/* Interactive Swiss Architectural Ledger (Accordion Rows) */}
+        <div className="divide-y divide-[#F4F0E8]/[0.12] border-b border-[#F4F0E8]/[0.12]">
+          {EXECUTIVE_PILLARS.map((pillar, idx) => {
+            const isOpen = openIndex === idx;
             return (
-              <motion.div
-                key={domain.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="group relative p-7 sm:p-8 rounded-2xl bg-[#0a0f1b]/90 border border-white/[0.08] hover:border-amber-400/35 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-4 mb-5">
-                    <span className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-widest text-amber-300/90">
-                      {domain.badge}
+              <div key={pillar.index} className="group">
+                <button
+                  onClick={() => setOpenIndex(isOpen ? -1 : idx)}
+                  className="w-full py-8 sm:py-10 text-left grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline hover:bg-[#F4F0E8]/[0.015] transition-colors cursor-pointer"
+                  aria-expanded={isOpen}
+                >
+                  <div className="lg:col-span-2 flex items-center gap-4">
+                    <span className="font-tech text-sm text-[#C8A464]">
+                      /{pillar.index}
                     </span>
-                    <div
-                      className={`w-11 h-11 rounded-xl bg-gradient-to-br ${domain.accent} border flex items-center justify-center shrink-0`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
+                    <span className="font-tech text-[11px] uppercase tracking-[0.14em] text-[#9A958B]">
+                      {pillar.domain}
+                    </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-amber-200 transition-colors">
-                    {domain.title}
-                  </h3>
+                  <div className="lg:col-span-6">
+                    <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#F4F0E8] group-hover:text-[#C8A464] transition-colors tracking-tight">
+                      {pillar.title}
+                    </h3>
+                  </div>
 
-                  <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-                    {domain.description}
-                  </p>
-                </div>
+                  <div className="lg:col-span-3">
+                    <p className="text-xs sm:text-sm text-[#9A958B] leading-relaxed">
+                      {pillar.summary}
+                    </p>
+                  </div>
 
-                <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5">
-                  {domain.highlights.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+                  <div className="lg:col-span-1 flex justify-end">
+                    <span className="w-8 h-8 border border-[#F4F0E8]/20 flex items-center justify-center text-[#C8A464]">
+                      {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    </span>
+                  </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-10 pt-2 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div className="lg:col-span-2" />
+                        <div className="lg:col-span-5 p-6 bg-[#10100E] border-l-2 border-[#C8A464]">
+                          <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464] mb-2">
+                            ARCHITECTURAL &amp; EXECUTIVE THESIS
+                          </div>
+                          <p className="text-sm text-[#D6D1C7] leading-relaxed">
+                            {pillar.thesis}
+                          </p>
+                        </div>
+                        <div className="lg:col-span-5 p-6 bg-[#10100E] border border-[#F4F0E8]/[0.08] flex flex-col justify-between">
+                          <div>
+                            <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#9A958B] mb-2">
+                              VERIFIED CAREER EVIDENCE
+                            </div>
+                            <p className="text-sm text-[#F4F0E8] leading-relaxed">
+                              {pillar.proof}
+                            </p>
+                          </div>
+                          <div className="mt-4 pt-3 border-t border-[#F4F0E8]/[0.08] font-tech text-[11px] text-[#C8A464]">
+                            SCOPE: {pillar.metricsOrScope}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             );
           })}
         </div>
 
-        {/* Transparent Attribution & Integrity Charter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#0c1322] via-[#0a0f1c] to-[#0c1322] border border-white/[0.09] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
-        >
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest text-emerald-400">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Executive Attribution &amp; Verification Standard</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">
-              Clear Distinction Between Executive Direction, Hands-On Authorship &amp; Squad Delivery
+        {/* Attribution Charter Strip */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 sm:p-8 border border-[#F4F0E8]/[0.12] bg-[#0D0D0B]">
+          <div className="lg:col-span-4">
+            <span className="font-tech text-[11px] uppercase tracking-[0.18em] text-[#C8A464]">
+              ATTRIBUTION PROTOCOL //
+            </span>
+            <h3 className="mt-2 text-lg font-bold text-[#F4F0E8]">
+              Strict Distinction Between Executive Direction &amp; Direct Authorship
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Enterprise banking platforms are built by high-performing organizations. Throughout this portfolio, every case study explicitly distinguishes between products I <strong className="text-white">personally architected and coded from scratch</strong> (such as Warba Bank Mobile, Fayez, Fayez Admin, Hassala Kids, and UBA Flutter migration) and multi-platform ecosystems where I <strong className="text-white">own the digital technology function, define enterprise architecture, and direct cross-platform engineering teams</strong> (such as KIB’s 8+ digital product lines).
-            </p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-auto shrink-0">
-            <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-amber-400/25">
-              <div className="flex items-center gap-2 text-xs font-bold text-amber-300">
-                <Users className="w-4 h-4" />
-                <span>Executive Direction (KIB)</span>
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Head of Digital Technology · Owning Mobile, Web &amp; Backend squads + Architecture Governance
-              </p>
+          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-[#9A958B] leading-relaxed">
+            <div className="border-l border-[#C8A464]/50 pl-4">
+              <strong className="text-[#F4F0E8] font-tech uppercase tracking-wider block mb-1">
+                [A] Executive Function Ownership (KIB · 2022–Present)
+              </strong>
+              As Head of Digital Technology, I own the digital technology function, define enterprise architecture and release governance, and direct the cross-platform engineering squads that build and evolve KIB’s 8+ digital banking product lines.
             </div>
-            <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-emerald-400/25">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-300">
-                <Workflow className="w-4 h-4" />
-                <span>Hands-On &amp; Chapter Lead</span>
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Warba Bank, Cit Global (UBA), ITG &amp; Advicenode · Greenfield Architecture &amp; CI/CD
-              </p>
+            <div className="border-l border-[#F4F0E8]/30 pl-4">
+              <strong className="text-[#F4F0E8] font-tech uppercase tracking-wider block mb-1">
+                [B] Hands-On Architecture &amp; Chapter Lead (2016–2022)
+              </strong>
+              At Warba Bank, Cit Global (UBA), ITG Solutions, and Advicenode, I personally architected and engineered core applications from scratch (Warba Mobile, Fayez, Fayez Admin, Hassala Kids, UBA Flutter migration) while leading mobile chapters and CI/CD automation.
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

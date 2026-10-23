@@ -2,21 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Cpu,
-  Layers,
-  ShieldCheck,
-  Server,
-  Database,
-  GitBranch,
-  CheckCircle2,
-  Terminal,
-  ArrowRight,
-  Lock,
-} from "lucide-react";
 import { ARCHITECTURE_LAYERS, SKILL_MATRIX } from "@/data/portfolioData";
-
-const LAYER_ICONS = [Layers, ShieldCheck, Server, Database, GitBranch];
 
 export default function ArchitectureStrategySection() {
   const [selectedLayerIndex, setSelectedLayerIndex] = useState<number>(0);
@@ -25,219 +11,186 @@ export default function ArchitectureStrategySection() {
   return (
     <section
       id="architecture"
-      className="relative py-28 lg:py-36 border-t border-white/[0.08] bg-[#05070b] bg-blueprint-dots"
+      className="relative py-28 lg:py-40 bg-[#080807] text-[#F4F0E8] border-b border-[#F4F0E8]/[0.12]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>Enterprise Banking Reference Architecture</span>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+        {/* Editorial Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-[#F4F0E8]/[0.12]">
+          <div className="lg:col-span-4">
+            <span className="font-tech text-xs uppercase tracking-[0.2em] text-[#C8A464]">
+              03 // ENTERPRISE ARCHITECTURE
+            </span>
+            <p className="mt-3 font-tech text-xs uppercase tracking-[0.14em] text-[#9A958B]">
+              5-LAYER DIGITAL BANKING REFERENCE BLUEPRINT
+            </p>
           </div>
 
-          <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1]">
-            Technology Strategy &amp;{" "}
-            <span className="font-[family-name:var(--font-serif)] italic font-normal text-gold-gradient">
-              Architectural Governance.
-            </span>
-          </h2>
-
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            Delivering eight concurrent banking platforms requires more than individual app craftsmanship—it demands a coherent enterprise reference architecture that unifies Mobile (Android, iOS, Flutter), Web, Domain-Driven Microservices (NestJS, Java EE, Kafka, RabbitMQ), and GitOps delivery (Kubernetes, Argo CD, Jenkins).
-          </p>
+          <div className="lg:col-span-8 space-y-5">
+            <h2 className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-[-0.04em] text-[#F4F0E8] leading-[0.96]">
+              Technology Strategy &amp;{" "}
+              <span className="font-editorial italic font-normal normal-case text-bronze-foil">
+                System Topology.
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg text-[#9A958B] max-w-3xl leading-relaxed">
+              A banking Digital Factory succeeds when its underlying architecture decouples rapid product innovation from legacy core banking constraints. Below is the 5-layer enterprise reference architecture I govern across Mobile, Web, Domain-Driven Microservices, and GitOps infrastructure.
+            </p>
+          </div>
         </div>
 
-        {/* Interactive 5-Layer Banking Architecture Explorer */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Left Column: Interactive Architectural Stack Diagram (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-3">
-            <div className="flex items-center justify-between px-2 text-xs font-[family-name:var(--font-mono)] text-slate-400 uppercase tracking-wider">
-              <span>Interactive Reference Stack</span>
-              <span className="text-amber-300">Click Layer to Inspect</span>
+        {/* Interactive 5-Layer Blueprint Schematic */}
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 border border-[#F4F0E8]/[0.14] bg-[#0B0B09]">
+          {/* Left 5 Columns: Architectural Stack Selector */}
+          <div className="lg:col-span-5 divide-y divide-[#F4F0E8]/[0.1] border-b lg:border-b-0 lg:border-r border-[#F4F0E8]/[0.14]">
+            <div className="px-6 py-4 bg-[#10100E] flex items-center justify-between font-tech text-[10px] uppercase tracking-[0.18em] text-[#9A958B]">
+              <span>SYSTEM TOPOLOGY STACK</span>
+              <span className="text-[#C8A464]">SELECT LAYER [01–05]</span>
             </div>
 
             {ARCHITECTURE_LAYERS.map((layer, index) => {
-              const Icon = LAYER_ICONS[index] || Layers;
               const isSelected = selectedLayerIndex === index;
               return (
                 <button
                   key={layer.id}
                   onClick={() => setSelectedLayerIndex(index)}
-                  className={`group relative w-full text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
+                  className={`w-full p-6 sm:p-7 text-left transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? "bg-gradient-to-r from-amber-500/20 via-[#0d1424] to-[#0a0f1c] border-amber-400/60 shadow-[0_0_30px_rgba(212,175,55,0.18)]"
-                      : "bg-[#090d16]/90 border-white/[0.08] hover:border-white/25"
+                      ? "bg-[#171612] border-l-4 border-l-[#C8A464]"
+                      : "hover:bg-[#F4F0E8]/[0.02]"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3.5">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${
-                          isSelected
-                            ? "bg-amber-400 text-slate-950 border-amber-300"
-                            : "bg-white/[0.04] text-slate-300 border-white/[0.08] group-hover:text-amber-300"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-widest ${
-                              isSelected ? "text-amber-300 font-bold" : "text-slate-400"
-                            }`}
-                          >
-                            {layer.layerNumber}
-                          </span>
-                        </div>
-                        <h3 className="text-sm sm:text-base font-bold text-white mt-0.5">
-                          {layer.name}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <ArrowRight
-                      className={`w-4 h-4 shrink-0 transition-transform ${
-                        isSelected
-                          ? "text-amber-300 translate-x-1"
-                          : "text-slate-600 group-hover:text-slate-300"
-                      }`}
-                    />
+                  <div className="flex items-center justify-between font-tech text-xs">
+                    <span className={isSelected ? "text-[#C8A464] font-bold" : "text-[#9A958B]"}>
+                      {layer.layerNumber}
+                    </span>
+                    <span className="text-[10px] text-[#9A958B]">
+                      {layer.technologies.slice(0, 3).join(" · ")}
+                    </span>
                   </div>
+                  <h3
+                    className={`mt-2 font-display text-lg sm:text-xl font-bold tracking-tight ${
+                      isSelected ? "text-[#F4F0E8]" : "text-[#D6D1C7]"
+                    }`}
+                  >
+                    {layer.name}
+                  </h3>
                 </button>
               );
             })}
           </div>
 
-          {/* Right Column: Selected Layer Architectural Deep-Dive (7 cols) */}
-          <div className="lg:col-span-7">
+          {/* Right 7 Columns: Selected Layer Specification Sheet */}
+          <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-[#0D0D0B]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentLayer.id}
-                initial={{ opacity: 0, x: 14 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -14 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
-                className="h-full rounded-3xl p-6 sm:p-9 bg-[#0a0f1c]/95 border border-amber-400/30 border-glow-gold flex flex-col justify-between space-y-6"
+                className="space-y-8"
               >
-                <div className="space-y-6">
-                  {/* Top Bar */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 pb-5 border-b border-white/[0.08]">
-                    <div>
-                      <span className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-widest text-amber-300">
-                        {currentLayer.layerNumber} // ARCHITECTURAL SPECIFICATION
-                      </span>
-                      <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-                        {currentLayer.name}
-                      </h3>
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-[family-name:var(--font-mono)] bg-emerald-500/10 text-emerald-300 border border-emerald-400/30">
-                      <Lock className="w-3 h-3" />
-                      Production Proven
-                    </span>
+                <div className="pb-6 border-b border-[#F4F0E8]/[0.1]">
+                  <div className="font-tech text-xs uppercase tracking-[0.2em] text-[#C8A464]">
+                    {currentLayer.layerNumber} // ARCHITECTURAL SPECIFICATION
                   </div>
+                  <h3 className="mt-2 font-display text-2xl sm:text-4xl font-extrabold text-[#F4F0E8] tracking-tight">
+                    {currentLayer.name}
+                  </h3>
+                </div>
 
-                  {/* Executive Thesis */}
-                  <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/12 via-white/[0.02] to-transparent border border-amber-400/25">
-                    <div className="text-[10px] font-[family-name:var(--font-mono)] uppercase tracking-widest text-amber-300 mb-1">
-                      Executive Architectural Thesis
-                    </div>
-                    <p className="text-sm sm:text-base font-medium text-white leading-relaxed">
-                      “{currentLayer.executiveThesis}”
-                    </p>
+                {/* Executive Thesis Quote */}
+                <div className="p-6 bg-[#13120F] border-l-2 border-[#C8A464]">
+                  <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464] mb-2">
+                    ARCHITECTURAL THESIS
                   </div>
-
-                  {/* Detailed Narrative */}
-                  <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                    {currentLayer.description}
+                  <p className="font-editorial italic text-xl sm:text-2xl text-[#F4F0E8] leading-snug">
+                    “{currentLayer.executiveThesis}”
                   </p>
+                </div>
 
-                  {/* Design Principles & Technologies Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.07]">
-                      <div className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider text-emerald-300 mb-3">
-                        Core Design Principles
-                      </div>
-                      <ul className="space-y-2">
-                        {currentLayer.designPrinciples.map((p) => (
-                          <li key={p} className="flex items-start gap-2 text-xs text-slate-200">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                            <span>{p}</span>
-                          </li>
-                        ))}
-                      </ul>
+                <p className="text-sm sm:text-base text-[#D6D1C7] leading-relaxed">
+                  {currentLayer.description}
+                </p>
+
+                {/* Two-Column Spec Table */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                  <div className="p-5 border border-[#F4F0E8]/[0.1] bg-[#090908]">
+                    <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464] mb-3">
+                      ARCHITECTURAL INVARIANTS
                     </div>
+                    <ul className="space-y-2.5 text-xs text-[#D6D1C7]">
+                      {currentLayer.designPrinciples.map((p, i) => (
+                        <li key={p} className="flex items-start gap-2">
+                          <span className="font-tech text-[#C8A464]">0{i + 1}.</span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.07]">
-                      <div className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider text-amber-300 mb-3">
-                        Verified Technologies in Layer
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {currentLayer.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2.5 py-1 rounded-lg text-xs font-medium bg-white/[0.05] text-slate-100 border border-white/[0.1]"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+                  <div className="p-5 border border-[#F4F0E8]/[0.1] bg-[#090908]">
+                    <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464] mb-3">
+                      STANDARDIZED TECHNOLOGIES
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {currentLayer.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 font-tech text-[11px] bg-[#141310] text-[#F4F0E8] border border-[#F4F0E8]/[0.12]"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Banking Application Footnote */}
-                <div className="pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                  <div className="text-slate-300">
-                    <strong className="text-amber-300 font-[family-name:var(--font-mono)] uppercase">
-                      Applied Across:{" "}
-                    </strong>
-                    {currentLayer.bankingUseCase}
-                  </div>
+                <div className="pt-6 border-t border-[#F4F0E8]/[0.1] font-tech text-xs text-[#9A958B]">
+                  <span className="text-[#C8A464] uppercase">PRODUCTION DEPLOYMENT: </span>
+                  {currentLayer.bankingUseCase}
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Full Executive Technology & Competency Matrix */}
+        {/* Complete Technical Repertoire — 4-Column Swiss Ledger */}
         <div className="mt-20">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[#F4F0E8]/[0.12]">
             <div>
-              <span className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest text-amber-400">
-                Complete Technical Repertoire
+              <span className="font-tech text-xs uppercase tracking-[0.18em] text-[#C8A464]">
+                VERIFIED TECHNICAL INDEX //
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-                Executive &amp; Engineering Capability Matrix
+              <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-[#F4F0E8]">
+                Full-Spectrum Engineering Repertoire
               </h3>
             </div>
-            <p className="text-xs font-[family-name:var(--font-mono)] text-slate-400">
-              Strictly verified from production banking &amp; enterprise delivery
-            </p>
+            <span className="font-tech text-xs text-[#9A958B]">
+              LANGUAGES · MOBILE · BACKEND · DEVOPS · PRACTICES
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {SKILL_MATRIX.map((domain, idx) => (
-              <div
-                key={domain.category}
-                className="p-6 rounded-2xl bg-[#090d16]/95 border border-white/[0.08] hover:border-amber-400/30 transition-colors"
-              >
-                <div className="text-[10px] font-[family-name:var(--font-mono)] uppercase tracking-widest text-amber-400 mb-1">
-                  DOMAIN 0{idx + 1}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-x border-[#F4F0E8]/[0.12] divide-y sm:divide-y-0 sm:divide-x divide-[#F4F0E8]/[0.12]">
+            {SKILL_MATRIX.map((group, idx) => (
+              <div key={group.category} className="p-6 sm:p-8 bg-[#0A0A08]">
+                <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464]">
+                  DOMAIN // 0{idx + 1}
                 </div>
-                <h4 className="text-base font-bold text-white mb-4">
-                  {domain.category}
+                <h4 className="mt-2 font-display text-lg font-bold text-[#F4F0E8] pb-4 border-b border-[#F4F0E8]/[0.1]">
+                  {group.category}
                 </h4>
-                <div className="flex flex-wrap gap-2">
-                  {domain.items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2.5 py-1 rounded-lg text-xs bg-white/[0.04] text-slate-200 border border-white/[0.07]"
+                <ul className="mt-4 space-y-2.5">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="text-xs sm:text-sm text-[#D6D1C7] flex items-center justify-between"
                     >
-                      {skill}
-                    </span>
+                      <span>{item}</span>
+                      <span className="w-1 h-1 bg-[#C8A464]" />
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>

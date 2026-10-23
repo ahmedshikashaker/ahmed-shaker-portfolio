@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  ArrowUpRight,
-  Copy,
-  Check,
-  FileText,
-  Building2,
-  ExternalLink,
-  Send,
-} from "lucide-react";
+import { ArrowUpRight, Check, Copy } from "lucide-react";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 
 interface ContactSectionProps {
@@ -23,6 +11,7 @@ interface ContactSectionProps {
 const DIALOGUE_TOPICS = [
   {
     id: "executive-role",
+    code: "01",
     label: "CTO / VP / Head of Technology Mandate",
     subject: "Executive Technology Leadership Inquiry — Ahmed Shaker",
     template:
@@ -30,6 +19,7 @@ const DIALOGUE_TOPICS = [
   },
   {
     id: "digital-factory",
+    code: "02",
     label: "Establishing a Banking Digital Factory",
     subject: "Digital Factory & Banking Transformation Advisory — Ahmed Shaker",
     template:
@@ -37,6 +27,7 @@ const DIALOGUE_TOPICS = [
   },
   {
     id: "architecture-baas",
+    code: "03",
     label: "Enterprise Architecture & BaaS Strategy",
     subject: "Digital Banking Architecture & Platform Strategy — Ahmed Shaker",
     template:
@@ -61,229 +52,207 @@ export default function ContactSection({ onOpenDossier }: ContactSectionProps) {
   return (
     <footer
       id="contact"
-      className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 border-t border-white/[0.08] bg-gradient-to-b from-[#05070b] via-[#090e1a] to-[#040609] overflow-hidden"
+      className="relative pt-28 pb-16 lg:pt-40 lg:pb-24 bg-[#080807] text-[#F4F0E8] swiss-grid-dark"
     >
-      {/* Ambient Gold Glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-amber-500/[0.07] blur-[150px]"
-      />
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+        {/* Monumental Closing Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-[#F4F0E8]/[0.14]">
+          <div className="lg:col-span-4">
+            <span className="font-tech text-xs uppercase tracking-[0.2em] text-[#C8A464]">
+              06 // EXECUTIVE DIALOGUE
+            </span>
+            <p className="mt-3 font-tech text-xs uppercase tracking-[0.14em] text-[#9A958B]">
+              KUWAIT CITY · GCC · GLOBAL MANDATES
+            </p>
+          </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Executive Call to Action & Verified Channels (7 cols) */}
-          <div className="lg:col-span-7 space-y-8">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/35 text-amber-200 text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest">
-                <Mail className="w-3.5 h-3.5 text-amber-400" />
-                <span>Executive Connections &amp; Advisory</span>
-              </div>
+          <div className="lg:col-span-8 space-y-6">
+            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-[-0.04em] text-[#F4F0E8] leading-[0.94]">
+              Initiate An{" "}
+              <span className="font-editorial italic font-normal normal-case text-bronze-foil">
+                Executive Conversation.
+              </span>
+            </h2>
+            <p className="text-base sm:text-xl text-[#9A958B] max-w-3xl leading-relaxed">
+              Available for confidential discussions with Chief Executive Officers, Boards, Financial Institutions, and Executive Search Partners regarding <strong className="text-[#F4F0E8]">Chief Technology Officer / Head of Digital Technology mandates</strong>, <strong className="text-[#F4F0E8]">building Digital Factories</strong>, and <strong className="text-[#F4F0E8]">digital banking transformation</strong>.
+            </p>
+          </div>
+        </div>
 
-              <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.08]">
-                Initiate an{" "}
-                <span className="font-[family-name:var(--font-serif)] italic font-normal text-gold-gradient">
-                  Executive Dialogue.
-                </span>
-              </h2>
-
-              <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-                Available for conversations with Chief Executive Officers, Boards, Financial Institutions, and Executive Search Partners regarding <strong className="text-white">Chief Technology Officer / Head of Digital Technology mandates</strong>, <strong className="text-white">establishing Digital Factories</strong>, and <strong className="text-white">large-scale banking transformation</strong>.
-              </p>
-            </div>
-
-            {/* Direct Contact Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Email Card */}
-              <div className="p-5 rounded-2xl bg-[#0b101d] border border-white/[0.09] hover:border-amber-400/40 transition-all flex flex-col justify-between gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider text-amber-300">
-                    Direct Executive Email
-                  </span>
-                  <Mail className="w-4 h-4 text-amber-400" />
-                </div>
-                <div>
-                  <a
-                    href={`mailto:${EXECUTIVE_PROFILE.contact.email}`}
-                    className="text-sm sm:text-base font-bold text-white hover:text-amber-200 break-all"
-                  >
-                    {EXECUTIVE_PROFILE.contact.email}
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 pt-2 border-t border-white/[0.06]">
+        {/* Main Contact & Dispatch Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#F4F0E8]/[0.14]">
+          {/* Left 6 Columns: Direct Coordinates & Profiles */}
+          <div className="lg:col-span-6 py-12 lg:pr-12 lg:border-r border-[#F4F0E8]/[0.14] flex flex-col justify-between space-y-10">
+            <div className="space-y-8">
+              {/* Direct Email */}
+              <div className="pb-8 border-b border-[#F4F0E8]/[0.1]">
+                <div className="flex items-center justify-between font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464]">
+                  <span>DIRECT ELECTRONIC MAIL //</span>
                   <button
                     onClick={() =>
                       copyToClipboard(EXECUTIVE_PROFILE.contact.email, "email")
                     }
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-[#9A958B] hover:text-[#F4F0E8] cursor-pointer"
                   >
                     {copiedField === "email" ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-300">Copied to clipboard</span>
+                        <Check className="w-3.5 h-3.5 text-[#C8A464]" />
+                        <span className="text-[#C8A464]">COPIED</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Copy Address</span>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>COPY ADDRESS</span>
                       </>
                     )}
                   </button>
                 </div>
+                <a
+                  href={`mailto:${EXECUTIVE_PROFILE.contact.email}`}
+                  className="mt-3 block font-display text-2xl sm:text-3xl font-bold text-[#F4F0E8] hover:text-[#C8A464] transition-colors break-all"
+                >
+                  {EXECUTIVE_PROFILE.contact.email}
+                </a>
               </div>
 
-              {/* Phone & Location Card */}
-              <div className="p-5 rounded-2xl bg-[#0b101d] border border-white/[0.09] hover:border-emerald-400/40 transition-all flex flex-col justify-between gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider text-emerald-300">
-                    Direct Line · Kuwait City
-                  </span>
-                  <Phone className="w-4 h-4 text-emerald-400" />
-                </div>
-                <div>
-                  <a
-                    href={`tel:${EXECUTIVE_PROFILE.contact.phoneClean}`}
-                    className="text-base sm:text-lg font-bold text-white hover:text-emerald-200"
-                  >
-                    {EXECUTIVE_PROFILE.contact.phone}
-                  </a>
-                  <p className="text-xs text-slate-400 flex items-center gap-1 mt-1">
-                    <MapPin className="w-3 h-3 text-amber-400" />
-                    {EXECUTIVE_PROFILE.location} ({EXECUTIVE_PROFILE.timezone})
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 pt-2 border-t border-white/[0.06]">
+              {/* Direct Telephone */}
+              <div className="pb-8 border-b border-[#F4F0E8]/[0.1]">
+                <div className="flex items-center justify-between font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464]">
+                  <span>DIRECT TELEPHONE (KUWAIT) //</span>
                   <button
                     onClick={() =>
                       copyToClipboard(EXECUTIVE_PROFILE.contact.phone, "phone")
                     }
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-[#9A958B] hover:text-[#F4F0E8] cursor-pointer"
                   >
                     {copiedField === "phone" ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-300">Phone copied</span>
+                        <Check className="w-3.5 h-3.5 text-[#C8A464]" />
+                        <span className="text-[#C8A464]">COPIED</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Copy Number</span>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>COPY NUMBER</span>
                       </>
                     )}
                   </button>
                 </div>
+                <a
+                  href={`tel:${EXECUTIVE_PROFILE.contact.phoneClean}`}
+                  className="mt-3 block font-display text-2xl sm:text-3xl font-bold text-[#F4F0E8] hover:text-[#C8A464] transition-colors"
+                >
+                  {EXECUTIVE_PROFILE.contact.phone}
+                </a>
+                <p className="mt-1 font-tech text-xs text-[#9A958B]">
+                  {EXECUTIVE_PROFILE.location} · {EXECUTIVE_PROFILE.timezone}
+                </p>
               </div>
             </div>
 
-            {/* Verified Professional Profiles */}
-            <div className="pt-2">
-              <div className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-widest text-slate-400 mb-3">
-                Verified Professional &amp; Technical Profiles
+            {/* Verified External Links Grid */}
+            <div>
+              <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#9A958B] mb-4">
+                VERIFIED PROFESSIONAL CHANNELS &amp; DOSSIER
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 border border-[#F4F0E8]/[0.14] divide-y sm:divide-y-0 sm:divide-x divide-[#F4F0E8]/[0.14]">
                 <a
                   href={EXECUTIVE_PROFILE.contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/[0.1] hover:border-amber-400/40 transition-all"
+                  className="p-4 flex items-center justify-between font-tech text-xs uppercase tracking-wider text-[#F4F0E8] hover:bg-[#C8A464] hover:text-[#080807] transition-colors"
                 >
-                  <span>LinkedIn Profile</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
+                  <span>LinkedIn</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
-
                 <a
                   href={EXECUTIVE_PROFILE.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/[0.1] hover:border-amber-400/40 transition-all"
+                  className="p-4 flex items-center justify-between font-tech text-xs uppercase tracking-wider text-[#F4F0E8] hover:bg-[#C8A464] hover:text-[#080807] transition-colors"
                 >
-                  <span>GitHub (@ahmedmshaker)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
+                  <span>GitHub</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
-
                 <a
                   href={EXECUTIVE_PROFILE.contact.stackoverflow}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/[0.1] hover:border-amber-400/40 transition-all"
+                  className="p-4 flex items-center justify-between font-tech text-xs uppercase tracking-wider text-[#F4F0E8] hover:bg-[#C8A464] hover:text-[#080807] transition-colors"
                 >
-                  <span>Stack Overflow</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
+                  <span>StackOverflow</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
-
                 <button
                   onClick={onOpenDossier}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 hover:bg-amber-400/25 text-amber-200 border border-amber-400/35 transition-all cursor-pointer"
+                  className="p-4 flex items-center justify-between font-tech text-xs font-semibold uppercase tracking-wider text-[#C8A464] hover:bg-[#C8A464] hover:text-[#080807] transition-colors cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Open Printable CV Dossier</span>
+                  <span>Print CV</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive Executive Briefing Launcher (5 cols) */}
-          <div className="lg:col-span-5">
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0a0f1d] border border-amber-400/30 border-glow-gold space-y-5">
-              <div>
-                <span className="text-[11px] font-[family-name:var(--font-mono)] uppercase tracking-widest text-amber-300">
-                  Direct Executive Dispatch
-                </span>
-                <h3 className="text-xl font-bold text-white mt-1">
-                  Select a Conversation Topic
-                </h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Choose a focus area below to pre-configure a direct executive email inquiry.
-                </p>
+          {/* Right 6 Columns: Interactive Executive Dispatch Composer */}
+          <div className="lg:col-span-6 py-12 lg:pl-12 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#C8A464]">
+                EXECUTIVE BRIEFING DISPATCH //
               </div>
-
-              <div className="space-y-2">
-                {DIALOGUE_TOPICS.map((topic) => {
-                  const isSelected = selectedTopic.id === topic.id;
-                  return (
-                    <button
-                      key={topic.id}
-                      onClick={() => setSelectedTopic(topic)}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                        isSelected
-                          ? "bg-amber-400/15 text-amber-200 border-amber-400/50"
-                          : "bg-white/[0.03] text-slate-300 border-white/[0.07] hover:border-white/20"
-                      }`}
-                    >
-                      {topic.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="p-4 rounded-xl bg-[#060911] border border-white/[0.07] space-y-2">
-                <div className="text-[10px] font-[family-name:var(--font-mono)] uppercase tracking-wider text-slate-400">
-                  Subject: {selectedTopic.subject}
-                </div>
-                <p className="text-xs text-slate-300 whitespace-pre-line leading-relaxed">
-                  {selectedTopic.template}
-                </p>
-              </div>
-
-              <a
-                href={mailtoHref}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-bold text-slate-950 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 hover:brightness-110 transition-all shadow-[0_0_30px_rgba(212,175,55,0.25)]"
-              >
-                <Send className="w-4 h-4" />
-                <span>Launch Executive Email</span>
-              </a>
+              <h3 className="mt-2 font-display text-2xl font-bold text-[#F4F0E8]">
+                Select Mandate Subject
+              </h3>
             </div>
+
+            <div className="divide-y divide-[#F4F0E8]/[0.1] border border-[#F4F0E8]/[0.14]">
+              {DIALOGUE_TOPICS.map((topic) => {
+                const isSelected = selectedTopic.id === topic.id;
+                return (
+                  <button
+                    key={topic.id}
+                    onClick={() => setSelectedTopic(topic)}
+                    className={`w-full p-4 text-left flex items-center justify-between transition-colors cursor-pointer ${
+                      isSelected
+                        ? "bg-[#171612] text-[#C8A464] border-l-4 border-l-[#C8A464]"
+                        : "bg-[#0B0B09] text-[#D6D1C7] hover:bg-[#12110E]"
+                    }`}
+                  >
+                    <span className="font-tech text-xs uppercase tracking-wider">
+                      {topic.code} / {topic.label}
+                    </span>
+                    <span className="font-tech text-xs">→</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="p-6 bg-[#0D0D0B] border border-[#F4F0E8]/[0.12] space-y-3">
+              <div className="font-tech text-[10px] uppercase tracking-[0.16em] text-[#9A958B]">
+                SUBJECT: {selectedTopic.subject}
+              </div>
+              <p className="text-xs sm:text-sm text-[#D6D1C7] whitespace-pre-line leading-relaxed">
+                {selectedTopic.template}
+              </p>
+            </div>
+
+            <a
+              href={mailtoHref}
+              className="w-full py-4 px-6 bg-[#F4F0E8] text-[#080807] hover:bg-[#C8A464] font-tech text-xs font-bold uppercase tracking-[0.18em] flex items-center justify-between transition-colors"
+            >
+              <span>TRANSMIT EXECUTIVE INQUIRY VIA EMAIL CLIENT</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
 
-        {/* Bottom Copyright & Colophon */}
-        <div className="mt-20 pt-8 border-t border-white/[0.07] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-white">{EXECUTIVE_PROFILE.name}</span>
-            <span>·</span>
-            <span>Head of Digital Technology, Kuwait International Bank (KIB)</span>
+        {/* Bottom Architectural Colophon */}
+        <div className="pt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-tech text-[11px] uppercase tracking-[0.14em] text-[#9A958B]">
+          <div>
+            © {new Date().getFullYear()} {EXECUTIVE_PROFILE.name} — HEAD OF DIGITAL TECHNOLOGY, KIB
           </div>
-          <div className="font-[family-name:var(--font-mono)] text-[11px]">
-            Engineered with Next.js, TypeScript, Tailwind CSS &amp; Framer Motion · Kuwait City
+          <div>
+            KUWAIT CITY, KUWAIT · ALL RIGHTS RESERVED
           </div>
         </div>
       </div>

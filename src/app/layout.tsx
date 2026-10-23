@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 
-const jakarta = Plus_Jakarta_Sans({
+const interTight = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -26,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#05070b",
+  themeColor: "#080807",
   width: "device-width",
   initialScale: 1,
 };
@@ -122,12 +122,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} dark`}
+      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} dark`}
     >
-      <body className="bg-[#05070b] text-slate-100 font-[family-name:var(--font-sans)] antialiased selection:bg-amber-500/30 selection:text-amber-100 overflow-x-hidden">
+      <body className="bg-[#080807] text-[#F4F0E8] font-[family-name:var(--font-sans)] antialiased selection:bg-[#C8A464]/30 selection:text-[#F4F0E8] overflow-x-hidden">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Subtle Architectural Film Grain Overlay */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-[60] opacity-[0.028] mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
         />
         {children}
       </body>
