@@ -1016,10 +1016,16 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     tagline:
       "Architectural migration of United Bank for Africa's mobile banking platform from legacy Cordova to high-performance Flutter.",
     iconPath: "/assets/apps/icons/uba-mobile.jpg",
+    screenshots: [
+      "/assets/apps/screenshots/uba-mobile-1.jpg",
+      "/assets/apps/screenshots/uba-mobile-2.jpg",
+      "/assets/apps/screenshots/uba-mobile-3.jpg",
+      "/assets/apps/screenshots/uba-mobile-4.jpg",
+    ],
     platforms: ["Flutter", "Android", "iOS"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
-      "Modernized the mobile banking experience for United Bank for Africa (UBA), delivering native-grade 60fps UI responsiveness, push notification orchestration, and a dedicated Personal Finance Management (PFM) module.",
+      "Modernized the mobile banking experience for United Bank for Africa (UBA)—delivering Personal and SME/Business account management, bulk payments & payroll approvals, family/child digital accounts, international trade (PTA/BTA), lifestyle services, push notification orchestration, and a dedicated Personal Finance Management (PFM) module.",
     problemAddressed:
       "The legacy Apache Cordova hybrid wrapper suffered from performance bottlenecks and maintenance friction. Re-architecting in Flutter unified the codebase while dramatically improving speed and developer velocity.",
     architectureAndTech: [
@@ -1033,8 +1039,9 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     organizationalDistinction:
       "Direct architectural authorship, hands-on feature engineering, and technical mentorship.",
     verifiableImpact:
-      "Significantly improved runtime performance, UX responsiveness, and long-term codebase maintainability for pan-African mobile banking.",
+      "Live on Google Play (com.uba.vericash) and the Apple App Store, significantly improving runtime performance, UX responsiveness, and long-term codebase maintainability for pan-African mobile banking.",
     appStoreUrl: "https://apps.apple.com/kw/app/uba-mobile-banking/id1000669926",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.uba.vericash&hl=en",
     featured: true,
   },
   {
