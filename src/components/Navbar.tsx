@@ -14,8 +14,8 @@ const NAV_LINKS = [
   { id: "digital-factories", label: "Digital Factories" },
   { id: "products", label: "Products (16)" },
   { id: "architecture", label: "Architecture" },
-  { id: "experience", label: "Experience" },
-  { id: "leadership", label: "Leadership" },
+  { id: "case-studies", label: "Case Studies" },
+  { id: "experience", label: "Career" },
 ];
 
 export default function Navbar({ onOpenDossier }: NavbarProps) {

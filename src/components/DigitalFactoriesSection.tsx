@@ -1,38 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { DIGITAL_FACTORIES } from "@/data/portfolioData";
-
-const BLUEPRINT_PHASES = [
-  {
-    code: "Phase 01",
-    title: "Strategic Direction & Roadmap",
-    subtitle: "Executive Alignment",
-    spec: "Define which banking verticals move in-house, establish multi-year product sequencing, and align C-suite investment with measurable delivery milestones.",
-  },
-  {
-    code: "Phase 02",
-    title: "Polyglot Stack & DDD Core",
-    subtitle: "Architectural Foundation",
-    spec: "Standardize Native (Kotlin/Swift) & Flutter client architecture alongside Domain-Driven microservices (NestJS, Java EE, Kafka, RabbitMQ) wrapping legacy cores.",
-  },
-  {
-    code: "Phase 03",
-    title: "Chapters & Product Squads",
-    subtitle: "Organizational Topology",
-    spec: "Structure autonomous vertical squads (Retail, Corporate, PropTech, Wealth, BaaS) governed by horizontal engineering chapters that enforce code quality.",
-  },
-  {
-    code: "Phase 04",
-    title: "CI/CD & GitOps Release Spine",
-    subtitle: "Continuous Delivery",
-    spec: "Automate build, test, security (OWASP), and release promotion via Jenkins, Kubernetes, and Argo CD so regulatory compliance and release speed scale together.",
-  },
-];
+import { ArrowUpRight, Layers, ShieldCheck, Cpu } from "lucide-react";
+import {
+  DIGITAL_FACTORIES,
+  DIGITAL_FACTORY_TOPOLOGY,
+} from "@/data/portfolioData";
 
 export default function DigitalFactoriesSection() {
-  const [activePhase, setActivePhase] = useState<number>(0);
+  const [activeNodeIndex, setActiveNodeIndex] = useState<number>(0);
+  const activeNode = DIGITAL_FACTORY_TOPOLOGY[activeNodeIndex];
 
   const scrollToProducts = () => {
     const el = document.getElementById("products");
@@ -63,43 +40,138 @@ export default function DigitalFactoriesSection() {
           </p>
         </div>
 
-        {/* 4-Stage Digital Factory Methodology */}
-        <div className="mt-12">
-          <div className="text-xs font-tech text-slate-400 mb-4">
-            The 4-Stage Digital Factory Methodology
+        {/* Interactive 5-Stage End-to-End Digital Factory Operating Topology */}
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#131c31]/90 border border-slate-200/[0.09] shadow-xl shadow-slate-950/30">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-slate-200/[0.08]">
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs font-tech uppercase tracking-wider text-[#5eead4]">
+                <Layers className="w-3.5 h-3.5" />
+                <span>Interactive End-to-End Digital Factory Topology</span>
+              </div>
+              <h3 className="mt-1 text-lg sm:text-xl font-display font-semibold text-slate-100">
+                Select any architectural stage to inspect how I structured and governed it at KIB &amp; Warba Bank
+              </h3>
+            </div>
+            <span className="text-xs font-tech text-slate-400 shrink-0">
+              Stage {activeNodeIndex + 1} of {DIGITAL_FACTORY_TOPOLOGY.length}
+            </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {BLUEPRINT_PHASES.map((phase, idx) => {
-              const isSelected = activePhase === idx;
+
+          {/* 5 Connected Stage Selector Nodes */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-5 gap-3">
+            {DIGITAL_FACTORY_TOPOLOGY.map((node, idx) => {
+              const isSelected = activeNodeIndex === idx;
               return (
                 <button
-                  key={phase.code}
-                  onClick={() => setActivePhase(idx)}
-                  className={`p-5 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
+                  key={node.id}
+                  onClick={() => setActiveNodeIndex(idx)}
+                  className={`relative p-4 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? "bg-[#182338] border-[#d4b982]/50 shadow-lg shadow-slate-950/30"
-                      : "bg-[#131c31]/60 border-slate-200/[0.07] hover:border-slate-200/[0.15]"
+                      ? "bg-[#182338] border-[#dfc490]/55 shadow-md shadow-slate-950/40"
+                      : "bg-[#0f172a]/70 border-slate-200/[0.07] hover:border-slate-200/[0.18]"
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between text-xs font-tech">
-                      <span className="text-[#dfc490] font-medium">{phase.code}</span>
-                      <span className="text-[11px] text-slate-400">{phase.subtitle}</span>
+                    <div className="flex items-center justify-between text-[11px] font-tech">
+                      <span
+                        className={
+                          isSelected ? "text-[#dfc490] font-semibold" : "text-slate-400"
+                        }
+                      >
+                        {node.stageCode}
+                      </span>
+                      <span
+                        className={`w-2 h-2 rounded-full ${
+                          isSelected ? "bg-[#5eead4]" : "bg-slate-600"
+                        }`}
+                      />
                     </div>
-                    <h3 className="mt-2.5 text-base font-semibold text-slate-100">
-                      {phase.title}
-                    </h3>
+                    <div className="mt-2 text-sm font-semibold text-slate-100 leading-snug">
+                      {node.title}
+                    </div>
                   </div>
-                  <p className="mt-3 text-xs text-slate-300 leading-relaxed">
-                    {phase.spec}
-                  </p>
+                  <div className="mt-2.5 text-[11px] text-slate-400 leading-snug">
+                    {node.subtitle}
+                  </div>
                 </button>
               );
             })}
           </div>
+
+          {/* Active Stage Live Inspection Panel */}
+          <div className="mt-6 p-6 rounded-2xl bg-[#0f172a]/90 border border-slate-200/[0.08] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-5 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182338] border border-[#dfc490]/30 text-xs font-tech text-[#dfc490]">
+                <span>{activeNode.stageCode}</span>
+                <span>·</span>
+                <span>{activeNode.subtitle}</span>
+              </div>
+              <h4 className="text-xl font-display font-bold text-slate-50">
+                {activeNode.title}
+              </h4>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                {activeNode.architecturalRole}
+              </p>
+
+              {/* Key Standards */}
+              <div className="pt-2">
+                <div className="text-[11px] font-tech uppercase tracking-wider text-slate-400 mb-2">
+                  Core Engineering Standards Enforced
+                </div>
+                <ul className="space-y-2">
+                  {activeNode.keyStandards.map((std, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#5eead4] shrink-0 mt-0.5" />
+                      <span>{std}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 space-y-4 lg:pl-6 lg:border-l lg:border-slate-200/[0.08]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-[#131c31] border border-[#dfc490]/25">
+                  <div className="text-[11px] font-tech uppercase tracking-wider text-[#dfc490] mb-1.5">
+                    KIB Digital Factory Implementation
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    {activeNode.kibImplementation}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#131c31] border border-[#5eead4]/25">
+                  <div className="text-[11px] font-tech uppercase tracking-wider text-[#5eead4] mb-1.5">
+                    Warba Bank “Al-Wateen” Implementation
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    {activeNode.warbaImplementation}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-2 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-tech text-slate-400 mr-1">
+                  <Cpu className="w-3.5 h-3.5 text-[#dfc490]" />
+                  <span>Stage Stack:</span>
+                </span>
+                {activeNode.stackBadges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="px-2.5 py-1 rounded-lg bg-[#182338] border border-slate-200/[0.08] text-xs font-tech text-slate-200"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Two Digital Factory Case Studies */}
+        {/* Two Digital Factory Institutional Comparison Cards */}
         <div className="mt-16 space-y-12">
           {DIGITAL_FACTORIES.map((factory, index) => (
             <div
@@ -109,7 +181,7 @@ export default function DigitalFactoriesSection() {
               {/* Left 5 Columns: Institutional Context */}
               <div className="lg:col-span-5 space-y-5">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182338] border border-[#d4b982]/30 text-xs font-tech text-[#dfc490]">
-                  <span>Case Study 0{index + 1}</span>
+                  <span>Digital Factory 0{index + 1}</span>
                   <span>·</span>
                   <span>{factory.period}</span>
                 </div>

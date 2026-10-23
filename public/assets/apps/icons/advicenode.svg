@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="55%" stop-color="#152238" />
+      <stop offset="100%" stop-color="#0d282c" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f3dfb6" />
+      <stop offset="100%" stop-color="#c9a565" />
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5eead4" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#bg)" />
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="none" stroke="url(#gold)" stroke-width="2" stroke-opacity="0.35" />
+  <!-- Geometric Node Network representing Advicenode -->
+  <path d="M68 184 L128 60 L188 184" fill="none" stroke="url(#gold)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M90 144 L166 144" fill="none" stroke="url(#teal)" stroke-width="10" stroke-linecap="round" />
+  <!-- Nodes -->
+  <circle cx="128" cy="60" r="14" fill="url(#teal)" />
+  <circle cx="68" cy="184" r="12" fill="url(#gold)" />
+  <circle cx="188" cy="184" r="12" fill="url(#gold)" />
+</svg>

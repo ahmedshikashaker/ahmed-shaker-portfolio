@@ -660,6 +660,8 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     category: "Banking-as-a-Service (BaaS) & Internal Operations",
     tagline:
       "Visa-Ready BIN Sponsorship infrastructure and enterprise Backoffice portals powering fintechs and bank operations.",
+    iconPath: "/assets/apps/icons/kib-baas.svg",
+    screenshots: ["/assets/apps/screenshots/kib-baas-1.svg"],
     platforms: ["BaaS API", "Microservices", "Web", "Android", "iOS"],
     attributionBadge: "Executive Ownership & Direction",
     purposeAndExperience:
@@ -758,6 +760,8 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     category: "Youth Digital Savings & Financial Literacy",
     tagline:
       "End-to-end digital savings application designed to cultivate financial literacy for children and families.",
+    iconPath: "/assets/apps/icons/warba-hassala.svg",
+    screenshots: ["/assets/apps/screenshots/warba-hassala-1.svg"],
     platforms: ["Android", "Flutter"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
@@ -1005,6 +1009,7 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     tagline:
       "Architectural migration of United Bank for Africa's mobile banking platform from legacy Cordova to high-performance Flutter.",
     iconPath: "/assets/apps/icons/uba-mobile.jpg",
+    screenshots: ["/assets/apps/screenshots/uba-mobile-1.svg"],
     platforms: ["Flutter", "Android", "iOS"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
@@ -1034,6 +1039,11 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     category: "Automated WealthTech & Application Generator",
     tagline:
       "Engineered a metadata-driven FinTech platform capable of dynamically generating customized robo-advisor and guided wealth applications.",
+    iconPath: "/assets/apps/icons/advicenode.svg",
+    screenshots: [
+      "/assets/apps/screenshots/advicenode-1.svg",
+      "/assets/apps/screenshots/advicenode-2.svg",
+    ],
     platforms: ["Android", "Web", "Microservices"],
     attributionBadge: "Hands-On Architecture & Delivery",
     purposeAndExperience:
@@ -1504,3 +1514,353 @@ export const SKILL_MATRIX = [
     ],
   },
 ];
+
+export interface FactoryTopologyNode {
+  id: string;
+  stageCode: string;
+  title: string;
+  subtitle: string;
+  architecturalRole: string;
+  kibImplementation: string;
+  warbaImplementation: string;
+  keyStandards: string[];
+  stackBadges: string[];
+}
+
+export const DIGITAL_FACTORY_TOPOLOGY: FactoryTopologyNode[] = [
+  {
+    id: "squad-chapter-matrix",
+    stageCode: "STAGE 01",
+    title: "Squads & Engineering Chapters",
+    subtitle: "Organizational Topology & Capability Governance",
+    architecturalRole:
+      "Decouples vertical product delivery (Retail, Corporate, Real Estate, Wealth, BaaS) from horizontal technical excellence (Android, iOS, Flutter, Web, Backend, DevOps).",
+    kibImplementation:
+      "Structured multi-disciplinary squads across 8+ concurrent product verticals (Retail, Corporate, Aqari, Invest, Paytally, WAGE, BaaS, Backoffice) under unified Digital Technology governance.",
+    warbaImplementation:
+      "Co-built the foundational Al-Wateen Digital Factory model and led the Android Engineering Chapter—codifying hiring bars, peer review gates, and chapter-wide engineering standards.",
+    keyStandards: [
+      "Autonomous vertical squads with dedicated Product, Design, Mobile, Web & Backend engineers",
+      "Horizontal Chapter Leads enforcing code quality, SOLID architecture & shared libraries",
+      "Zero external vendor lock-in for core intellectual property",
+    ],
+    stackBadges: ["Squad Topology", "Chapter Governance", "In-House IP", "Agile / Jira"],
+  },
+  {
+    id: "multi-channel-clients",
+    stageCode: "STAGE 02",
+    title: "Multi-Channel Client Tier & Design System",
+    subtitle: "Native (Kotlin/Swift), Flutter & Responsive Web",
+    architecturalRole:
+      "Delivers consistent, 60fps customer experiences across mobile and web using modular multi-repo/monorepo boundaries, dependency injection, and shared design tokens.",
+    kibImplementation:
+      "Governs Native Android (Kotlin), Native iOS (Swift), Flutter (KIB Invest, WAGE), and React/TypeScript Web portals with shared biometric & security SDKs.",
+    warbaImplementation:
+      "Architected Warba Bank Mobile from scratch in Kotlin/Java with Dagger & Hilt DI, and pioneered Flutter Web for the Fayez Admin campaign management suite.",
+    keyStandards: [
+      "Clean Architecture & strict separation of UI, Domain, and Data layers",
+      "Biometric cryptographic binding & hardware-backed keystore storage",
+      "Bilingual RTL/LTR Arabic & English accessibility compliance",
+    ],
+    stackBadges: ["Kotlin", "Swift", "Flutter", "TypeScript", "Hilt / Dagger"],
+  },
+  {
+    id: "api-gateway-bff",
+    stageCode: "STAGE 03",
+    title: "API Gateway & Domain BFF Microservices",
+    subtitle: "Domain-Driven Design & Event-Driven Choreography",
+    architecturalRole:
+      "Shields mobile and web channels from monolithic core banking constraints by exposing tailored Backend-for-Frontend (BFF) APIs and asynchronous event streams.",
+    kibImplementation:
+      "Engineered domain-isolated NestJS (TypeScript) and Java EE microservices orchestrated via Apache Kafka and RabbitMQ across Retail, Corporate, Aqari, and BIN Sponsorship.",
+    warbaImplementation:
+      "Integrated modular mobile channels with REST/JSON domain services and real-time loyalty, savings (Hassala), and gamification (Fayez) backend engines.",
+    keyStandards: [
+      "Domain-Driven Design (DDD) bounded contexts per banking line of business",
+      "Asynchronous event streaming via Kafka & RabbitMQ for high-throughput resiliency",
+      "Anti-Corruption Layers (ACL) wrapping legacy SOAP/XML core banking interfaces",
+    ],
+    stackBadges: ["NestJS", "Java EE", "Apache Kafka", "RabbitMQ", "DDD"],
+  },
+  {
+    id: "gitops-secdevops",
+    stageCode: "STAGE 04",
+    title: "GitOps, Kubernetes & SecDevOps Spine",
+    subtitle: "Declarative Infrastructure & Automated Release Trains",
+    architecturalRole:
+      "Transforms compliance and security from manual pre-release bottlenecks into automated CI/CD quality gates and zero-downtime declarative deployments.",
+    kibImplementation:
+      "Scaled containerized workloads on Kubernetes (K8s) with declarative Argo CD GitOps pipelines, automated OWASP security gates, and formal release promotion governance.",
+    warbaImplementation:
+      "Built the mobile chapter's Jenkins CI/CD automation pipelines from scratch and authored the Git branching, signing, and release-train governance strategy.",
+    keyStandards: [
+      "Declarative cluster state synchronization with Kubernetes & Argo CD",
+      "Automated build, unit testing (TDD), static analysis & artifact signing via Jenkins",
+      "OWASP Mobile & API Top-10 security verification embedded in every pull request",
+    ],
+    stackBadges: ["Kubernetes", "Argo CD", "Jenkins CI/CD", "OWASP", "GitOps"],
+  },
+  {
+    id: "sovereign-banking-rails",
+    stageCode: "STAGE 05",
+    title: "Core Banking & National Sovereign Rails",
+    subtitle: "Regulated Settlement, Identity & Payment Ecosystems",
+    architecturalRole:
+      "Connects high-velocity digital experiences to regulated banking ledgers, national biometric identity providers, payment switches, and international card networks.",
+    kibImplementation:
+      "Integrated PACI Kuwait Mobile ID eKYC & digital signatures, WAMD instant payments, KNET, Visa Ready BIN Sponsorship rails, and certified QR property appraisals.",
+    warbaImplementation:
+      "Connected retail banking, Al Sunbula draws, Pocket loyalty, and youth savings directly into core Islamic banking ledgers and national payment switches.",
+    keyStandards: [
+      "100% branchless digital onboarding with PACI Mobile ID & cryptographic e-signatures",
+      "Visa-Ready BIN Sponsorship & multi-currency settlement infrastructure",
+      "Central Bank of Kuwait (CBK) regulatory & Shariah auditability compliance",
+    ],
+    stackBadges: ["PACI Mobile ID", "Visa Ready BaaS", "KNET / WAMD", "Core Banking"],
+  },
+];
+
+export interface ExecutiveCaseStudy {
+  id: string;
+  index: string;
+  category: string;
+  title: string;
+  subtitle: string;
+  readTime: string;
+  institutions: string[];
+  executiveSummary: string;
+  challenge: string;
+  architecturalThesis: string;
+  executionPillars: {
+    heading: string;
+    detail: string;
+  }[];
+  architecturalFlow: string[];
+  verifiedOutcomes: string[];
+  technologies: string[];
+}
+
+export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
+  {
+    id: "case-digital-factories",
+    index: "CASE STUDY 01",
+    category: "Organizational & Platform Transformation",
+    title: "Building Two Regulated Banking Digital Factories from Scratch",
+    subtitle:
+      "How Warba Bank ('Al-Wateen') and Kuwait International Bank (KIB) transitioned from vendor dependency to in-house, multi-product engineering sovereignty.",
+    readTime: "4 min executive brief",
+    institutions: ["Kuwait International Bank (KIB)", "Warba Bank"],
+    executiveSummary:
+      "Establishing a Digital Factory inside a regulated bank requires far more than hiring developers. It demands simultaneously designing the organizational squad matrix, defining a 5-year technology roadmap, standardizing modular client/microservice architectures, and automating release governance so multiple product lines can ship in parallel without compromising security.",
+    challenge:
+      "Traditional banks in the region historically relied on fragmented external vendors to build digital channels. This created slow release cycles, inconsistent UX across apps, brittle point-to-point core banking integrations, and zero internal ownership of strategic intellectual property.",
+    architecturalThesis:
+      "Treat the Digital Factory itself as a platform product: establish horizontal engineering chapters (Android, iOS, Flutter, Web, Backend, DevOps) that supply standardized architectures, CI/CD pipelines, and security primitives to autonomous vertical product squads.",
+    executionPillars: [
+      {
+        heading: "Phase I — Foundational Blueprint at Warba Bank ('Al-Wateen')",
+        detail:
+          "As Android Chapter Lead, built the flagship Warba Bank mobile app from scratch using modular Kotlin/Java and Dagger/Hilt DI, established Jenkins CI/CD automation and Git release governance, and personally delivered innovative non-traditional banking apps including Fayez (gamified fitness & loyalty), Fayez Admin (Flutter Web), and Hassala Kids.",
+      },
+      {
+        heading: "Phase II — Enterprise Multi-Vertical Scale at KIB",
+        detail:
+          "As Head of Digital Technology, co-architected KIB's Digital Factory from the ground up—expanding scope across mobile (Android, iOS, Flutter), Web, and backend microservices (NestJS, Java EE, Kafka, RabbitMQ) deployed via Kubernetes and Argo CD.",
+      },
+      {
+        heading: "Phase III — Institutionalized Release & Security Governance",
+        detail:
+          "Embedded OWASP security standards, Domain-Driven Design (DDD), Test-Driven Development (TDD), and declarative GitOps into the daily engineering workflow—enabling 8+ concurrent product lines to ship reliably.",
+      },
+    ],
+    architecturalFlow: [
+      "Chapter Standards & Hiring Bar",
+      "Modular SDKs & Design Tokens",
+      "NestJS / Java DDD Microservices",
+      "Jenkins + Argo CD / K8s GitOps",
+      "8+ Live Banking Product Lines",
+    ],
+    verifiedOutcomes: [
+      "Two operational Digital Factories established from zero in Kuwait's regulated Islamic banking sector.",
+      "Scaled KIB's Digital Factory to concurrently power Retail, Corporate, Aqari (PropTech), Invest (WealthTech), Paytally (BNPL), WAGE (Remittance), Backoffice, and BIN Sponsorship.",
+      "Eliminated single-vendor bottlenecks by institutionalizing in-house architecture, CI/CD automation, and code ownership.",
+    ],
+    technologies: [
+      "Kotlin",
+      "Swift",
+      "Flutter",
+      "NestJS",
+      "Java EE",
+      "Kafka",
+      "Kubernetes",
+      "Argo CD",
+      "Jenkins",
+      "DDD",
+    ],
+  },
+  {
+    id: "case-multi-vertical-ecosystem",
+    index: "CASE STUDY 02",
+    category: "Enterprise Ecosystem Architecture",
+    title: "Architecting Beyond Retail: PropTech, WealthTech, BNPL & BIN Sponsorship",
+    subtitle:
+      "Designing a decoupled microservice and multi-client architecture at KIB that turns a traditional bank into a multi-vertical digital ecosystem.",
+    readTime: "4 min executive brief",
+    institutions: ["Kuwait International Bank (KIB)"],
+    executiveSummary:
+      "Modern banking growth comes from embedding financial services into specialized customer journeys—real estate management, Shariah-compliant investments, 0%-profit merchant marketplaces, corporate treasury, and BaaS card issuing for external fintechs.",
+    challenge:
+      "Attempting to cram corporate maker-checker approvals, real estate appraisal verification, investment fund subscriptions, and consumer BNPL marketplaces into a single monolithic app creates cognitive overload for users and release gridlock for engineering teams.",
+    architecturalThesis:
+      "Combine a flagship Retail Super-App with specialized vertical companion platforms—all powered by a shared, event-driven microservice backbone (NestJS, Java EE, Kafka, RabbitMQ) and unified identity/security primitives.",
+    executionPillars: [
+      {
+        heading: "Specialized Vertical Client Architecture",
+        detail:
+          "Directed dedicated product experiences tailored to each customer segment: KIB Mobile (Retail), KIB Corporate (multi-tier commercial approvals), KIB Aqari (automated rent collection & QR-verified property appraisals), KIB Invest (100% digital PACI onboarding & fund management), Paytally/BuyNow (0%-profit marketplace), and WAGE.",
+      },
+      {
+        heading: "Event-Driven Microservices & Polyglot Persistence",
+        detail:
+          "Decoupled vertical apps from legacy core banking systems using Domain-Driven Design (DDD), NestJS and Java EE microservices, Apache Kafka / RabbitMQ event choreography, and hybrid SQL + MongoDB data stores.",
+      },
+      {
+        heading: "Visa-Ready BIN Sponsorship & BaaS Enablement",
+        detail:
+          "Extended the Digital Factory's API and microservice perimeter externally—enabling fintechs and exchange partners to issue and manage multi-currency prepaid cards backed by KIB's banking infrastructure.",
+      },
+    ],
+    architecturalFlow: [
+      "6 Public Mobile & Web Apps",
+      "OWASP & PACI Identity Layer",
+      "NestJS & Java EE BFF Mesh",
+      "Kafka & RabbitMQ Event Bus",
+      "Core Banking & Visa BaaS Rails",
+    ],
+    verifiedOutcomes: [
+      "Delivered Kuwait's first bank-led 0%-profit consumer marketplace (Paytally / BuyNow) accessible without salary transfer.",
+      "Launched KIB Aqari and KIB Invest with 100% digital onboarding, PACI Mobile ID integration, and cryptographic QR appraisal verification.",
+      "Powered KIB's milestone as the first bank in Kuwait to achieve Visa Ready for Fintech Enablement certification.",
+    ],
+    technologies: [
+      "NestJS",
+      "Java EE",
+      "Apache Kafka",
+      "RabbitMQ",
+      "MongoDB",
+      "Flutter",
+      "Android / iOS",
+      "PACI eKYC",
+      "Visa BaaS APIs",
+    ],
+  },
+  {
+    id: "case-schema-driven-platforms",
+    index: "CASE STUDY 03",
+    category: "Platform Engineering & Core Frameworks",
+    title: "Schema-Driven FinTech & National-Scale EdTech / Healthcare Re-Architecture",
+    subtitle:
+      "Engineering dynamic robo-advisor application generators at Advicenode and restructuring national-scale platforms (EduWave, MedXJordan, Great Tafsirs) at ITG Solutions.",
+    readTime: "3 min executive brief",
+    institutions: ["Advicenode", "ITG Solutions", "Cit Global (UBA)"],
+    executiveSummary:
+      "Before leading banking digital factories in Kuwait, my engineering foundation was forged by building metadata-driven application generators and re-architecting massive multi-edition platforms across FinTech, national education, medical tourism, and pan-African banking.",
+    challenge:
+      "Whether generating white-label robo-advisors for wealth managers at Advicenode or supporting millions of students across K-12, Higher-ED, and Assessment platforms at ITG Solutions, bespoke one-off client codebases fail to scale.",
+    architecturalThesis:
+      "Abstract volatile domain rules, questionnaires, and multi-tenant branding into high-speed JSON/XML schemas and reusable core frameworks—allowing client applications to render complex workflows dynamically at 60fps.",
+    executionPillars: [
+      {
+        heading: "Advicenode — Dynamic Robo-Advisor Platform Generator",
+        detail:
+          "Engineered the core platform engine that ingested configurable JSON/REST advisory schemas, decision trees, and risk-scoring models to dynamically generate white-label robo-advisor and guided wealth applications across Android and Web.",
+      },
+      {
+        heading: "ITG Solutions — Complete EduWave Suite, MedXJordan, Great Tafsirs & Al-Zakah",
+        detail:
+          "As Senior Mobile Developer & Acting Android Lead, restructured and redeveloped EduWave (K-12, Higher-ED, AMS) and MedXJordan with a modernized UX and shared Kotlin/Java frameworks, while engineering Great Tafsirs (التفاسير العظيمة) and the Al-Zakah calculation & endowment platform.",
+      },
+      {
+        heading: "Cit Global — UBA Cordova-to-Flutter Banking Migration",
+        detail:
+          "Re-architected United Bank for Africa's mobile banking app from legacy Apache Cordova to Flutter, building real-time push notifications and Personal Finance Management (PFM) while mentoring the internal engineering team.",
+      },
+    ],
+    architecturalFlow: [
+      "JSON / XML (SAX/DOM) Schemas",
+      "Reusable Core SDKs (Kotlin/Flutter)",
+      "Dynamic Decision-Tree Interpreter",
+      "Offline-Capable Local Indexing",
+      "Multi-Edition Production Apps",
+    ],
+    verifiedOutcomes: [
+      "Enabled rapid white-label robo-advisor application generation at Advicenode without custom client code rebuilds.",
+      "Successfully restructured and shipped 6 major platforms at ITG Solutions (EduWave K-12, EduWave Higher-ED, EduWave AMS, MedXJordan, Great Tafsirs, Al-Zakah).",
+      "Replaced legacy hybrid WebView bottlenecks with native-speed Flutter architecture for UBA Mobile Banking.",
+    ],
+    technologies: [
+      "Java",
+      "Kotlin",
+      "Flutter",
+      "JSON Schema Engine",
+      "XML (SAX, DOM)",
+      "REST & SOAP",
+      "Clean Architecture",
+    ],
+  },
+];
+
+export const ARABIC_EXECUTIVE_BRIEF = {
+  name: "أحمد شاكر",
+  title: "رئيس التكنولوجيا الرقمية (Head of Digital Technology) · مهندس ومؤسس المصانع الرقمية المصرفية",
+  location: "مدينة الكويت، دولة الكويت",
+  summary:
+    "قائد تنفيذي في قطاع التكنولوجيا المالية والتحول الرقمي المصرفي بخبرة تتجاوز 10 سنوات في بناء وقيادة المنظومات الهندسية والمصانع الرقمية (Digital Factories) من الصفر. ساهم بشكل رئيسي في تأسيس مصنعين رقميين في القطاع المصرفي الكويتي: مصنع «الوتين» الرقمي في بنك وربة، والمصنع الرقمي في البنك الدولي الكويتي (KIB)، مع قيادة فرق الهندسة عبر تطبيقات الهواتف الذكية (Android, iOS, Flutter)، وتطبيقات الويب، والخدمات المصغرة (Microservices)، والبنية السحابية (Kubernetes & Argo CD).",
+  highlights: [
+    {
+      label: "تأسيس المصانع الرقمية (Digital Factories)",
+      value: "بناء مصنعين رقميين من الصفر في بنك وربة والبنك الدولي الكويتي (KIB)",
+    },
+    {
+      label: "النطاق التنفيذي في KIB",
+      value: "قيادة التكنولوجيا الرقمية لأكثر من 8 منظومات ومنتجات مصرفية (الأفراد، الشركات، عقاري، استثمار، Paytally، WAGE، ورعاية BIN)",
+    },
+    {
+      label: "المنصات والتطبيقات المنشورة",
+      value: "أكثر من 16 منصة وتطبيقاً إنتاجياً في قطاعات البنوك، التكنولوجيا المالية (Advicenode)، التعليم (EduWave)، والصحة (MedXJordan)",
+    },
+  ],
+  careerSummary: [
+    {
+      role: "رئيس التكنولوجيا الرقمية (Head of Digital Technology)",
+      org: "البنك الدولي الكويتي (KIB)",
+      period: "يونيو 2022 – حتى الآن",
+      desc: "تأسيس وقيادة المصنع الرقمي في KIB، ووضع خارطة الطريق التكنولوجية ومعايير المعمارية المؤسسية والحوكمة لإطلاق وتشغيل تطبيقات KIB Mobile و KIB Corporate و KIB Aqari و KIB Invest و Paytally و WAGE ومنصة رعاية BIN والأنظمة الداخلية.",
+    },
+    {
+      role: "قائد فصل هندسة أندرويد (Android Chapter Lead)",
+      org: "بنك وربة (Warba Bank) — مصنع الوتين الرقمي",
+      period: "مارس 2019 – يونيو 2022",
+      desc: "أحد المؤسسين الرئيسيين لمصنع «الوتين» الرقمي في بنك وربة؛ بناء وإدارة تطبيق بنك وربة الأساسي من الصفر، وتأسيس خطوط التكامل المستمر (Jenkins CI/CD) وحوكمة الإطلاق، وتطوير تطبيق «فايز» ولوحة تحكم فايز (Flutter Web) وتطبيق «حصالة كيدز».",
+    },
+    {
+      role: "مستشار تطبيقات الهواتف الذكية (Android & Flutter)",
+      org: "Cit Global — بنك أفريقيا المتحد (UBA)",
+      period: "يناير 2020 – يناير 2021",
+      desc: "قيادة إعادة هيكلة وتحويل تطبيق الخدمات المصرفية لبنك UBA من منصة Cordova التقليدية إلى معمارية Flutter الحديثة مع بناء نظام الإدارة المالية الشخصية (PFM) والإشعارات الفورية.",
+    },
+    {
+      role: "مطور أول تطبيقات الهواتف وقائد فريق أندرويد بالإنابة",
+      org: "مجموعة التكنولوجيا المتكاملة (ITG Solutions)",
+      period: "نوفمبر 2017 – مارس 2019",
+      desc: "قيادة فرق Android و Flutter وإعادة هيكلة وتطوير منظومة EduWave التعليمية بجميع إصداراتها (K-12، التعليم العالي Higher-ED، ونظام التقييم AMS)، ومنصة السياحة العلاجية الوطنية MedXJordan، وتطبيق «التفاسير العظيمة» (Great Tafsirs)، وتطبيق حساب الزكاة ووقفية خير الأردن.",
+    },
+    {
+      role: "مهندس برمجيات (Software Engineer)",
+      org: "Advicenode — منصة المستشار المالي الآلي (Robo-Advisor)",
+      period: "أكتوبر 2016 – أكتوبر 2017",
+      desc: "هندسة وتطوير المحرك الأساسي لمنصة Advicenode القائم على المخططات الديناميكية (Schema-Driven Engine) لتوليد تطبيقات المستشار المالي الآلي (Robo-Advisor) وتقييم المخاطر وتوزيع المحافظ الاستثمارية تلقائياً.",
+    },
+  ],
+};
+

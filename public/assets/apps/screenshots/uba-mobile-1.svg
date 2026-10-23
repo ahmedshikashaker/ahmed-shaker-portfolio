@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" width="390" height="844">
+  <defs>
+    <linearGradient id="ubaBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1a1625" />
+    </linearGradient>
+  </defs>
+  <rect width="390" height="844" fill="url(#ubaBg)" />
+  <text x="28" y="68" fill="#dfc490" font-family="sans-serif" font-size="11" font-weight="700" letter-spacing="2">UBA MOBILE · FLUTTER MODERNIZATION</text>
+  <text x="28" y="94" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="700">Personal Finance &amp; Banking</text>
+
+  <!-- PFM Analytics Card -->
+  <rect x="24" y="120" width="342" height="210" rx="20" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="46" y="152" fill="#94a3b8" font-family="sans-serif" font-size="11" font-weight="600">PERSONAL FINANCE MANAGEMENT (PFM)</text>
+  <text x="46" y="188" fill="#f8fafc" font-family="sans-serif" font-size="28" font-weight="700">Monthly Cashflow</text>
+  <text x="46" y="218" fill="#5eead4" font-family="monospace" font-size="13">+24% Savings Rate vs Previous Month</text>
+
+  <!-- Category Bars -->
+  <rect x="46" y="242" width="220" height="10" rx="5" fill="#5eead4" />
+  <text x="278" y="251" fill="#cbd5e1" font-family="monospace" font-size="10">Transfers 48%</text>
+  <rect x="46" y="264" width="140" height="10" rx="5" fill="#dfc490" />
+  <text x="200" y="273" fill="#cbd5e1" font-family="monospace" font-size="10">Utilities &amp; Bills 30%</text>
+  <rect x="46" y="286" width="100" height="10" rx="5" fill="#60a5fa" />
+  <text x="158" y="295" fill="#cbd5e1" font-family="monospace" font-size="10">Merchant POS 22%</text>
+
+  <!-- Architecture Migration Highlight -->
+  <rect x="24" y="350" width="342" height="200" rx="20" fill="#162032" stroke="#334155" stroke-width="1" />
+  <text x="46" y="384" fill="#dfc490" font-family="sans-serif" font-size="12" font-weight="700">CORDOVA → FLUTTER RE-ARCHITECTURE</text>
+  <text x="46" y="416" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="600">60fps Native Skia Rendering</text>
+  <text x="46" y="444" fill="#94a3b8" font-family="sans-serif" font-size="12">Eliminated WebView bridge bottlenecks across</text>
+  <text x="46" y="464" fill="#94a3b8" font-family="sans-serif" font-size="12">pan-African retail banking channels with</text>
+  <text x="46" y="484" fill="#94a3b8" font-family="sans-serif" font-size="12">real-time push notifications and PFM insights.</text>
+
+  <!-- Push Notification Preview -->
+  <rect x="24" y="570" width="342" height="110" rx="18" fill="#0f172a" stroke="#5eead4" stroke-width="1" stroke-opacity="0.4" />
+  <text x="46" y="602" fill="#5eead4" font-family="monospace" font-size="10" font-weight="700">REAL-TIME PUSH ENGINE · INSTANT ALERT</text>
+  <text x="46" y="630" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="600">Credit Alert: Instant Transfer Received</text>
+  <text x="46" y="654" fill="#94a3b8" font-family="sans-serif" font-size="12">Categorized automatically in PFM Dashboard</text>
+</svg>

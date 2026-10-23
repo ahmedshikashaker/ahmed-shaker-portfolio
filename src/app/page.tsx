@@ -7,6 +7,7 @@ import ExecutiveImpactSection from "@/components/ExecutiveImpactSection";
 import DigitalFactoriesSection from "@/components/DigitalFactoriesSection";
 import SelectedProductsSection from "@/components/SelectedProductsSection";
 import ArchitectureStrategySection from "@/components/ArchitectureStrategySection";
+import ExecutiveCaseStudiesSection from "@/components/ExecutiveCaseStudiesSection";
 import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
 import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
 import ContactSection from "@/components/ContactSection";
@@ -24,6 +25,7 @@ export default function HomePage() {
         <DigitalFactoriesSection />
         <SelectedProductsSection />
         <ArchitectureStrategySection />
+        <ExecutiveCaseStudiesSection />
         <ExperienceTimelineSection />
         <LeadershipPhilosophySection />
       </main>
