@@ -1,0 +1,39 @@
+"use client";
+
+import React, { useState } from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import ExecutiveImpactSection from "@/components/ExecutiveImpactSection";
+import DigitalFactoriesSection from "@/components/DigitalFactoriesSection";
+import SelectedProductsSection from "@/components/SelectedProductsSection";
+import ArchitectureStrategySection from "@/components/ArchitectureStrategySection";
+import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
+import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
+import ContactSection from "@/components/ContactSection";
+import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
+import AmbientSpotlight from "@/components/AmbientSpotlight";
+
+export default function HomePage() {
+  const [dossierOpen, setDossierOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-[#05070b] text-slate-100 selection:bg-amber-400/30 selection:text-amber-100">
+      <AmbientSpotlight />
+      <Navbar onOpenDossier={() => setDossierOpen(true)} />
+      <main>
+        <HeroSection onOpenDossier={() => setDossierOpen(true)} />
+        <ExecutiveImpactSection />
+        <DigitalFactoriesSection />
+        <SelectedProductsSection />
+        <ArchitectureStrategySection />
+        <ExperienceTimelineSection />
+        <LeadershipPhilosophySection />
+      </main>
+      <ContactSection onOpenDossier={() => setDossierOpen(true)} />
+      <ExecutiveDossierModal
+        isOpen={dossierOpen}
+        onClose={() => setDossierOpen(false)}
+      />
+    </div>
+  );
+}
