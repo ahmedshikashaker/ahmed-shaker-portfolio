@@ -2,10 +2,13 @@ import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: "https://ahmedshaker.exec.tech/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+    ],
+    host: "https://www.ahmed-shaker.com",
+    sitemap: "https://www.ahmed-shaker.com/sitemap.xml",
   };
 }

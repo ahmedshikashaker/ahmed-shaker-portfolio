@@ -1,39 +1,27 @@
-"use client";
-
-import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import ExecutiveImpactSection from "@/components/ExecutiveImpactSection";
-import DigitalFactoriesSection from "@/components/DigitalFactoriesSection";
-import SelectedProductsSection from "@/components/SelectedProductsSection";
-import ArchitectureStrategySection from "@/components/ArchitectureStrategySection";
-import ExecutiveCaseStudiesSection from "@/components/ExecutiveCaseStudiesSection";
-import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
-import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
-import ContactSection from "@/components/ContactSection";
-import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
+import React from "react";
+import PortfolioShell from "@/components/PortfolioShell";
+import {
+  EXECUTIVE_PROFILE,
+  ARABIC_EXECUTIVE_BRIEF,
+} from "@/data/portfolioData";
 
 export default function HomePage() {
-  const [dossierOpen, setDossierOpen] = useState(false);
-
   return (
-    <div className="min-h-screen bg-[#0f172a] text-[#cbd5e1]">
-      <Navbar onOpenDossier={() => setDossierOpen(true)} />
-      <main>
-        <HeroSection onOpenDossier={() => setDossierOpen(true)} />
-        <ExecutiveImpactSection />
-        <DigitalFactoriesSection />
-        <SelectedProductsSection />
-        <ArchitectureStrategySection />
-        <ExecutiveCaseStudiesSection />
-        <ExperienceTimelineSection />
-        <LeadershipPhilosophySection />
-      </main>
-      <ContactSection onOpenDossier={() => setDossierOpen(true)} />
-      <ExecutiveDossierModal
-        isOpen={dossierOpen}
-        onClose={() => setDossierOpen(false)}
-      />
-    </div>
+    <>
+      <PortfolioShell />
+      {/* Server-rendered bilingual identity anchor for search engine crawlers */}
+      <aside className="sr-only" aria-label="Executive SEO Summary">
+        <h2>
+          {EXECUTIVE_PROFILE.name} (Ahmed Mahmoud Nady Shaker ·{" "}
+          {ARABIC_EXECUTIVE_BRIEF.name}) — {EXECUTIVE_PROFILE.title} at Kuwait
+          International Bank (KIB)
+        </h2>
+        <p>{EXECUTIVE_PROFILE.shortBio}</p>
+        <p lang="ar" dir="rtl">
+          {ARABIC_EXECUTIVE_BRIEF.name} — {ARABIC_EXECUTIVE_BRIEF.title}.{" "}
+          {ARABIC_EXECUTIVE_BRIEF.summary}
+        </p>
+      </aside>
+    </>
   );
 }

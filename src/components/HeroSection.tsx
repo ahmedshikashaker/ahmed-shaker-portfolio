@@ -52,6 +52,9 @@ export default function HeroSection({ onOpenDossier }: HeroSectionProps) {
               transition={{ duration: 0.6, delay: 0.06 }}
               className="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-slate-50 tracking-tight leading-[1.14]"
             >
+              <span className="block text-xs sm:text-sm font-tech font-medium uppercase tracking-[0.18em] text-[#dfc490] mb-3">
+                Ahmed Shaker · Executive Technology Portfolio
+              </span>
               Architecting{" "}
               <span className="font-editorial italic font-normal text-champagne-gradient">
                 Digital Factories

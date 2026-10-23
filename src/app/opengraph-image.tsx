@@ -102,7 +102,7 @@ export default function OpenGraphImage() {
           }}
         >
           <span>Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (K8s · Argo CD)</span>
-          <span style={{ color: "#dfc490" }}>10+ Years Executive & Technical Impact</span>
+          <span style={{ color: "#dfc490" }}>www.ahmed-shaker.com</span>
         </div>
       </div>
     ),
