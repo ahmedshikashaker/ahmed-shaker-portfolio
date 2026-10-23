@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 
-const interTight = Inter_Tight({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -22,11 +22,11 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
 });
 
 export const viewport: Viewport = {
-  themeColor: "#080807",
+  themeColor: "#0f172a",
   width: "device-width",
   initialScale: 1,
 };
@@ -54,9 +54,10 @@ export const metadata: Metadata = {
     "KIB Aqari",
     "KIB Invest",
     "Paytally",
-    "BIN Sponsorship",
-    "Banking as a Service",
-    "Kuwait FinTech",
+    "EduWave",
+    "MedXJordan",
+    "Great Tafsirs",
+    "Advicenode",
   ],
   authors: [{ name: "Ahmed Shaker", url: EXECUTIVE_PROFILE.contact.linkedin }],
   creator: "Ahmed Shaker",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     title: "Ahmed Shaker — Head of Digital Technology & Digital Factory Architect",
     description:
-      "10+ years building and scaling regulated banking platforms across Mobile, Backend Microservices, and DevOps. Key leader in establishing the Digital Factories at Kuwait International Bank (KIB) and Warba Bank.",
+      "10+ years building and scaling regulated banking and enterprise platforms across Mobile, Backend Microservices, and DevOps.",
     siteName: "Ahmed Shaker · Executive Technology Portfolio",
   },
   twitter: {
@@ -122,20 +123,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} dark`}
+      className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} dark`}
     >
-      <body className="bg-[#080807] text-[#F4F0E8] font-[family-name:var(--font-sans)] antialiased selection:bg-[#C8A464]/30 selection:text-[#F4F0E8] overflow-x-hidden">
+      <body className="bg-[#0f172a] text-[#e2e8f0] font-[family-name:var(--font-sans)] antialiased selection:bg-[#d4b982]/25 selection:text-[#f8fafc] overflow-x-hidden">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {/* Subtle Architectural Film Grain Overlay */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-[60] opacity-[0.028] mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
         />
         {children}
       </body>

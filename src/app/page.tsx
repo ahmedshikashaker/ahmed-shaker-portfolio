@@ -16,7 +16,7 @@ export default function HomePage() {
   const [dossierOpen, setDossierOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#080807] text-[#F4F0E8]">
+    <div className="min-h-screen bg-[#0f172a] text-[#cbd5e1]">
       <Navbar onOpenDossier={() => setDossierOpen(true)} />
       <main>
         <HeroSection onOpenDossier={() => setDossierOpen(true)} />

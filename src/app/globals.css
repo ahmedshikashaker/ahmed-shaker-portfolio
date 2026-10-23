@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --bg-carbon: #080807;
-  --bg-carbon-elevated: #10100e;
-  --bg-ivory: #f2efe9;
-  --bg-ivory-elevated: #e8e3d9;
-  --ink-light: #f4f0e8;
-  --ink-muted: #9a958b;
-  --ink-dark: #0b0b0a;
-  --accent-bronze: #c8a464;
-  --accent-bronze-deep: #8c6b2f;
+  --bg-primary: #0f172a;
+  --bg-secondary: #131c31;
+  --bg-surface: #182338;
+  --bg-surface-hover: #1e2b45;
+  --text-heading: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-champagne: #d4b982;
+  --accent-teal: #5eead4;
+  --border-soft: rgba(226, 232, 240, 0.09);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #080807;
-    color: #f4f0e8;
+    background-color: #0f172a;
+    color: #cbd5e1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -36,58 +37,56 @@
   }
 }
 
-/* Editorial Typography Utilities */
+/* Soft, Harmonious Typography Classes */
 .font-display {
   font-family: var(--font-sans), sans-serif;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
 .font-editorial {
   font-family: var(--font-serif), Georgia, serif;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 }
 
 .font-tech {
   font-family: var(--font-mono), monospace;
 }
 
-/* Metallic & Editorial Text Treatments */
-.text-bronze-foil {
-  background: linear-gradient(135deg, #f7efe0 0%, #d5b475 45%, #a37e3b 85%, #efe1c6 100%);
+/* Gentle Champagne Accent Text */
+.text-champagne {
+  color: #dfc490;
+}
+
+.text-champagne-gradient {
+  background: linear-gradient(135deg, #f8fafc 0%, #e5cfa3 55%, #c9ab74 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Exposed Architectural Hairline Grids */
-.swiss-grid-dark {
-  background-size: 80px 80px;
+/* Subtle Architectural Grid */
+.soft-grid-bg {
+  background-size: 72px 72px;
   background-image:
-    linear-gradient(to right, rgba(244, 240, 232, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(244, 240, 232, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(226, 232, 240, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.03) 1px, transparent 1px);
 }
 
-.swiss-grid-ivory {
-  background-size: 80px 80px;
-  background-image:
-    linear-gradient(to right, rgba(11, 11, 10, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(11, 11, 10, 0.05) 1px, transparent 1px);
-}
-
-/* Custom Minimal Scrollbar */
+/* Custom Subtle Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080807;
+  background: #0f172a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #292825;
+  background: #334155;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #c8a464;
+  background: #d4b982;
 }

@@ -7,82 +7,67 @@ export default function LeadershipPhilosophySection() {
   return (
     <section
       id="leadership"
-      className="relative py-28 lg:py-40 bg-[#F2EFE9] text-[#0B0B0A] swiss-grid-ivory border-b border-[#0B0B0A]/15"
+      className="relative py-24 lg:py-32 bg-[#11192c] border-b border-slate-200/[0.08]"
     >
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
-        {/* Monograph Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b-2 border-[#0B0B0A]">
-          <div className="lg:col-span-4">
-            <span className="font-tech text-xs font-semibold uppercase tracking-[0.2em] text-[#8C6B2F]">
-              05 // LEADERSHIP DOCTRINE
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl space-y-4">
+          <div className="text-xs font-tech uppercase tracking-widest text-[#dfc490]">
+            06 · Leadership &amp; Engineering Excellence
+          </div>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-50 tracking-tight leading-[1.15]">
+            How I Build Organizations{" "}
+            <span className="font-editorial italic font-normal text-[#dfc490]">
+              That Ship &amp; Scale.
             </span>
-            <p className="mt-3 font-tech text-xs uppercase tracking-[0.14em] text-[#4A4843]">
-              ENGINEERING EXCELLENCE &amp; GOVERNANCE
-            </p>
-          </div>
-
-          <div className="lg:col-span-8 space-y-5">
-            <h2 className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-[-0.04em] text-[#0B0B0A] leading-[0.96]">
-              How I Build Organizations{" "}
-              <span className="font-editorial italic font-normal normal-case text-[#8C6B2F]">
-                That Ship &amp; Endure.
-              </span>
-            </h2>
-            <p className="text-base sm:text-xl text-[#2B2A27] max-w-3xl leading-relaxed">
-              Sustainable digital transformation is an organizational design problem as much as a software architecture problem. These four principles govern how I structure teams, select technology, and align delivery with executive banking objectives.
-            </p>
-          </div>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 leading-[1.75]">
+            Sustainable digital transformation requires aligning executive banking strategy with disciplined software engineering practices. These four principles guide how I structure teams, select technology, and govern delivery.
+          </p>
         </div>
 
-        {/* 2x2 Swiss Editorial Monograph Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 border-b border-x border-[#0B0B0A]/20 divide-y lg:divide-y-0 lg:divide-x divide-[#0B0B0A]/20 bg-[#EAE5DC]">
-          {LEADERSHIP_PRINCIPLES.map((principle, idx) => (
+        {/* 2x2 Principles Grid */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {LEADERSHIP_PRINCIPLES.map((principle) => (
             <div
               key={principle.id}
-              className={`p-8 sm:p-12 flex flex-col justify-between space-y-8 ${
-                idx >= 2 ? "lg:border-t lg:border-[#0B0B0A]/20" : ""
-              }`}
+              className="p-6 sm:p-8 rounded-3xl bg-[#131c31] border border-slate-200/[0.09] flex flex-col justify-between space-y-6"
             >
-              <div className="space-y-5">
-                <div className="flex items-center justify-between border-b border-[#0B0B0A]/15 pb-4">
-                  <span className="font-display text-4xl font-extrabold text-[#8C6B2F]">
-                    {principle.number}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-tech text-[#dfc490]">
+                    Principle {principle.number}
                   </span>
-                  <span className="font-tech text-[10px] uppercase tracking-[0.16em] text-[#4A4843]">
-                    EXECUTIVE PRINCIPLE
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0B0B0A] tracking-tight">
-                    {principle.title}
-                  </h3>
-                  <p className="mt-1 font-tech text-xs uppercase tracking-[0.1em] text-[#8C6B2F]">
+                  <span className="text-xs text-slate-400">
                     {principle.subtitle}
-                  </p>
+                  </span>
                 </div>
 
-                <p className="text-sm sm:text-base text-[#2B2A27] leading-relaxed">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-50">
+                  {principle.title}
+                </h3>
+
+                <p className="text-sm sm:text-base text-slate-300 leading-[1.75]">
                   {principle.narrative}
                 </p>
 
-                <div className="p-5 bg-[#F2EFE9] border-l-4 border-[#0B0B0A]">
-                  <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-1.5">
-                    INSTITUTIONAL EVIDENCE //
+                <div className="p-4 rounded-xl bg-[#0f172a]/70 border-l-2 border-[#dfc490]">
+                  <div className="text-xs font-tech text-[#dfc490] mb-1">
+                    Verified Career Evidence
                   </div>
-                  <p className="text-xs sm:text-sm text-[#0B0B0A] font-medium leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
                     {principle.evidenceFromCareer}
                   </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#0B0B0A]/15 space-y-2">
+              <div className="pt-4 border-t border-slate-200/[0.08] space-y-1.5">
                 {principle.keyPractices.map((practice, i) => (
                   <div
                     key={practice}
-                    className="flex items-center gap-3 text-xs font-semibold text-[#0B0B0A]"
+                    className="flex items-center gap-2.5 text-xs text-slate-300"
                   >
-                    <span className="font-tech text-[#8C6B2F]">0{i + 1}</span>
+                    <span className="font-tech text-[#dfc490]">0{i + 1}.</span>
                     <span>{practice}</span>
                   </div>
                 ))}

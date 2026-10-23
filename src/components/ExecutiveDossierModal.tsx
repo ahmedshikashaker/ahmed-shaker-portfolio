@@ -37,7 +37,7 @@ export default function ExecutiveDossierModal({
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-6 overflow-y-auto"
+          className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="dossier-modal-title"
@@ -47,35 +47,35 @@ export default function ExecutiveDossierModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/85 backdrop-blur-sm"
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md"
           />
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.25 }}
-            className="relative z-10 w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-[#F2EFE9] text-[#0B0B0A] border-2 border-[#0B0B0A] shadow-[0_30px_100px_rgba(0,0,0,0.9)]"
+            className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[#131c31] text-slate-100 border border-slate-200/15 shadow-2xl"
           >
             {/* Top Bar */}
-            <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-[#080807] text-[#F4F0E8] border-b border-[#F4F0E8]/15">
+            <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-[#0f172a]/95 backdrop-blur-xl border-b border-slate-200/10">
               <span
                 id="dossier-modal-title"
-                className="font-tech text-xs uppercase tracking-[0.18em] text-[#C8A464]"
+                className="font-tech text-xs text-[#dfc490]"
               >
-                BOARD DOSSIER &amp; CURRICULUM VITAE // AHMED SHAKER
+                Executive Curriculum Vitae · Ahmed Shaker
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <button
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#C8A464] text-[#080807] font-tech text-[11px] font-bold uppercase tracking-wider cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#dfc490] text-slate-950 text-xs font-semibold cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>Print / Save PDF</span>
                 </button>
                 <button
                   onClick={onClose}
-                  className="p-1.5 text-[#9A958B] hover:text-[#F4F0E8] cursor-pointer"
+                  className="p-1.5 rounded-lg bg-[#182338] text-slate-300 hover:text-white cursor-pointer"
                   aria-label="Close Executive Dossier"
                 >
                   <X className="w-4 h-4" />
@@ -83,53 +83,51 @@ export default function ExecutiveDossierModal({
               </div>
             </div>
 
-            {/* Monograph Body */}
-            <div className="p-6 sm:p-12 space-y-10">
-              {/* Identity Header */}
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-2 border-[#0B0B0A]">
+            {/* Body */}
+            <div className="p-6 sm:p-10 space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-slate-200/10">
                 <div>
-                  <h2 className="font-display text-4xl sm:text-5xl font-extrabold uppercase tracking-[-0.04em] text-[#0B0B0A]">
+                  <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-50">
                     {EXECUTIVE_PROFILE.name}
                   </h2>
-                  <p className="mt-1 text-lg font-bold text-[#8C6B2F]">
+                  <p className="mt-1 text-base font-medium text-[#dfc490]">
                     {EXECUTIVE_PROFILE.title} · Digital Banking Transformation &amp; Architecture
                   </p>
-                  <p className="mt-1 font-tech text-xs text-[#4A4843]">
+                  <p className="mt-1 text-xs font-tech text-slate-400">
                     Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
                   </p>
                 </div>
-                <div className="font-tech text-xs text-[#2B2A27] space-y-1 md:text-right">
+                <div className="text-xs text-slate-300 space-y-1 md:text-right">
                   <div>{EXECUTIVE_PROFILE.location}</div>
                   <div>{EXECUTIVE_PROFILE.contact.phone}</div>
                   <div>{EXECUTIVE_PROFILE.contact.email}</div>
                 </div>
               </div>
 
-              {/* Profile Statement */}
               <div>
-                <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-2">
-                  01 // EXECUTIVE SUMMARY
-                </div>
-                <p className="text-sm sm:text-base text-[#0B0B0A] leading-relaxed">
+                <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-2">
+                  Executive Profile
+                </h3>
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
                   {EXECUTIVE_PROFILE.shortBio} Hands-on technical leader strong in architecture, team building, CI/CD automation, and microservices.
                 </p>
               </div>
 
-              {/* Two Digital Factories Summary */}
               <div>
-                <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-3">
-                  02 // KEY DIFFERENTIATOR: TWO DIGITAL FACTORIES BUILT FROM SCRATCH
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 border border-[#0B0B0A]/25 divide-y md:divide-y-0 md:divide-x divide-[#0B0B0A]/25 bg-[#EAE5DC]">
+                <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
+                  Key Differentiator: Two Digital Factories Built from Scratch
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {DIGITAL_FACTORIES.map((df) => (
-                    <div key={df.id} className="p-5">
-                      <div className="font-tech text-[10px] uppercase tracking-wider text-[#8C6B2F]">
-                        {df.period}
-                      </div>
-                      <div className="text-base font-bold text-[#0B0B0A] mt-0.5">
+                    <div
+                      key={df.id}
+                      className="p-4 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10"
+                    >
+                      <div className="text-xs font-tech text-[#dfc490]">{df.period}</div>
+                      <div className="text-base font-semibold text-slate-50 mt-0.5">
                         {df.institution} — {df.role}
                       </div>
-                      <p className="mt-2 text-xs text-[#2B2A27] leading-relaxed">
+                      <p className="mt-2 text-xs text-slate-300 leading-relaxed">
                         {df.executiveSummary}
                       </p>
                     </div>
@@ -137,26 +135,28 @@ export default function ExecutiveDossierModal({
                 </div>
               </div>
 
-              {/* Career Record */}
               <div>
-                <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-3">
-                  03 // CAREER RECORD (2016 — PRESENT)
-                </div>
-                <div className="divide-y divide-[#0B0B0A]/20 border-t border-b border-[#0B0B0A]/20">
+                <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
+                  Career Progression (2016 – Present)
+                </h3>
+                <div className="space-y-4">
                   {CAREER_TIMELINE.map((role) => (
-                    <div key={role.id} className="py-5">
+                    <div
+                      key={role.id}
+                      className="p-5 rounded-2xl bg-[#0f172a]/60 border border-slate-200/[0.08]"
+                    >
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h4 className="font-display text-lg font-bold text-[#0B0B0A]">
-                          {role.role} — <span className="text-[#8C6B2F]">{role.organization}</span>
+                        <h4 className="text-base font-bold text-slate-50">
+                          {role.role} — <span className="text-[#dfc490]">{role.organization}</span>
                         </h4>
-                        <span className="font-tech text-xs text-[#4A4843]">
+                        <span className="text-xs font-tech text-slate-400">
                           {role.period} · {role.location}
                         </span>
                       </div>
-                      <ul className="mt-2.5 space-y-1.5">
+                      <ul className="mt-3 space-y-1.5">
                         {role.achievements.map((ach, i) => (
-                          <li key={i} className="text-xs text-[#2B2A27] flex items-start gap-2">
-                            <span className="font-tech text-[#8C6B2F]">—</span>
+                          <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
+                            <span className="text-[#dfc490]">•</span>
                             <span>{ach.text}</span>
                           </li>
                         ))}
@@ -166,56 +166,46 @@ export default function ExecutiveDossierModal({
                 </div>
               </div>
 
-              {/* Skills & Education */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-2">
-                    04 // EDUCATION &amp; LANGUAGES
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-[#0f172a]/60 border border-slate-200/[0.08] text-xs space-y-1.5">
+                  <div className="font-tech text-[#dfc490] uppercase">Education</div>
+                  <div className="font-semibold text-sm text-slate-100">
+                    {EXECUTIVE_PROFILE.education.degree}
                   </div>
-                  <div className="p-4 border border-[#0B0B0A]/20 bg-[#EAE5DC] space-y-2 text-xs">
-                    <div className="font-bold text-sm text-[#0B0B0A]">
-                      {EXECUTIVE_PROFILE.education.degree}
-                    </div>
-                    <div>
-                      {EXECUTIVE_PROFILE.education.institution} ({EXECUTIVE_PROFILE.education.period})
-                    </div>
-                    <div className="pt-2 border-t border-[#0B0B0A]/15">
-                      <strong>Languages:</strong> Arabic (Native / Bilingual) · English (Professional Working Proficiency)
-                    </div>
+                  <div className="text-slate-300">
+                    {EXECUTIVE_PROFILE.education.institution} ({EXECUTIVE_PROFILE.education.period})
                   </div>
                 </div>
 
-                <div>
-                  <div className="font-tech text-[10px] uppercase tracking-[0.18em] text-[#8C6B2F] mb-2">
-                    05 // VERIFIED PROFILES
-                  </div>
-                  <div className="p-4 border border-[#0B0B0A]/20 bg-[#EAE5DC] space-y-2 text-xs font-tech">
+                <div className="p-4 rounded-2xl bg-[#0f172a]/60 border border-slate-200/[0.08] text-xs space-y-2">
+                  <div className="font-tech text-[#dfc490] uppercase">Verified Profiles</div>
+                  <div className="flex flex-wrap gap-3">
                     <a
                       href={EXECUTIVE_PROFILE.contact.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between hover:text-[#8C6B2F]"
+                      className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
                     >
-                      <span>LINKEDIN: {EXECUTIVE_PROFILE.contact.linkedinDisplay}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <span>LinkedIn</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </a>
                     <a
                       href={EXECUTIVE_PROFILE.contact.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between hover:text-[#8C6B2F]"
+                      className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
                     >
-                      <span>GITHUB: {EXECUTIVE_PROFILE.contact.githubDisplay}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <span>GitHub</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </a>
                     <a
                       href={EXECUTIVE_PROFILE.contact.stackoverflow}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between hover:text-[#8C6B2F]"
+                      className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
                     >
-                      <span>STACKOVERFLOW: {EXECUTIVE_PROFILE.contact.stackoverflowDisplay}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <span>Stack Overflow</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
