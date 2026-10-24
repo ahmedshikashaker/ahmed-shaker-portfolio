@@ -18,18 +18,20 @@ export default function PortfolioShell() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-[#cbd5e1]">
-      <Navbar onOpenDossier={() => setDossierOpen(true)} />
-      <main>
-        <HeroSection onOpenDossier={() => setDossierOpen(true)} />
-        <ExecutiveImpactSection />
-        <DigitalFactoriesSection />
-        <SelectedProductsSection />
-        <ArchitectureStrategySection />
-        <ExecutiveCaseStudiesSection />
-        <ExperienceTimelineSection />
-        <LeadershipPhilosophySection />
-      </main>
-      <ContactSection onOpenDossier={() => setDossierOpen(true)} />
+      <div className="no-print">
+        <Navbar onOpenDossier={() => setDossierOpen(true)} />
+        <main>
+          <HeroSection onOpenDossier={() => setDossierOpen(true)} />
+          <ExecutiveImpactSection />
+          <DigitalFactoriesSection />
+          <SelectedProductsSection />
+          <ArchitectureStrategySection />
+          <ExecutiveCaseStudiesSection />
+          <ExperienceTimelineSection />
+          <LeadershipPhilosophySection />
+        </main>
+        <ContactSection onOpenDossier={() => setDossierOpen(true)} />
+      </div>
       <ExecutiveDossierModal
         isOpen={dossierOpen}
         onClose={() => setDossierOpen(false)}
