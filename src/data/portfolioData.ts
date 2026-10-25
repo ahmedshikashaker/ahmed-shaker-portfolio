@@ -215,7 +215,7 @@ export const DIGITAL_FACTORIES: DigitalFactoryCaseStudy[] = [
     myDirectContribution: [
       "Defined the Digital Factory’s multi-year technology roadmap, target technology stacks, and enterprise architectural standards from scratch.",
       "Lead the bank's digital technology function, holding executive ownership of mobile, web, and backend delivery across both retail and corporate banking lines.",
-      "Direct cross-platform engineering squads delivering 8 flagship ecosystems: KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, Remittance (WAGE), Paytally (BuyNow), Backoffice portals, and BIN Sponsorship (BaaS).",
+      "Direct cross-platform engineering squads delivering 8 flagship ecosystems: KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, Remittance (WAGE), BuyNow by KIB, Backoffice portals, and BIN Sponsorship (BaaS).",
       "Established strict engineering practices (SOLID, Domain-Driven Design, TDD, OWASP security patterns) and release governance across native (Kotlin/Swift) and Flutter codebases.",
       "Aligned cloud-native DevOps capabilities using Kubernetes, Argo CD, Jenkins, and event-driven microservices to support high-velocity, audit-compliant banking releases.",
     ],
@@ -258,10 +258,10 @@ export const DIGITAL_FACTORIES: DigitalFactoryCaseStudy[] = [
         title: "02. Multi-Vertical Product Factory Scaling",
         subtitle: "Simultaneous Delivery Across 8 Banking Verticals",
         description:
-          "Structured engineering teams to deliver parallel roadmaps spanning core retail banking, corporate treasury approvals, PropTech (Aqari), WealthTech (Invest), BNPL (Paytally), and Financial Inclusion (WAGE).",
+          "Structured engineering teams to deliver parallel roadmaps spanning core retail banking, corporate treasury approvals, PropTech (Aqari), WealthTech (Invest), BNPL (BuyNow), and Financial Inclusion (WAGE).",
         outcomes: [
           "Published a comprehensive suite of verified production apps on App Store & Google Play",
-          "Expanded beyond traditional banking into non-bank customer acquisition (Paytally & Aqari)",
+          "Expanded beyond traditional banking into non-bank customer acquisition (BuyNow & Aqari)",
         ],
       },
       {
@@ -307,7 +307,7 @@ export const DIGITAL_FACTORIES: DigitalFactoryCaseStudy[] = [
         summary: "100% digital investment onboarding (PACI/e-signature) and Shariah fund portfolio management.",
       },
       {
-        name: "Paytally (BuyNow by KIB)",
+        name: "BuyNow by KIB",
         category: "BNPL & Marketplace",
         summary: "Kuwait's first bank-led digital marketplace offering 0% profit Islamic financing.",
       },
@@ -584,24 +584,24 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
     featured: true,
   },
   {
-    id: "kib-paytally",
-    name: "Paytally (BuyNow by KIB)",
+    id: "kib-buynow",
+    name: "BuyNow by KIB",
     institution: "Kuwait International Bank (KIB)",
     factoryTag: "KIB Digital Factory",
     category: "Bank-Led Marketplace & 0% Profit Financing",
     tagline:
       "Kuwait’s first bank-led digital marketplace and postpay financing platform—accessible without salary transfer.",
-    iconPath: "/assets/apps/icons/kib-paytally.jpg",
+    iconPath: "/assets/apps/icons/kib-buynow.jpg",
     screenshots: [
-      "/assets/apps/screenshots/kib-paytally-1.jpg",
-      "/assets/apps/screenshots/kib-paytally-2.jpg",
+      "/assets/apps/screenshots/kib-buynow-1.jpg",
+      "/assets/apps/screenshots/kib-buynow-2.jpg",
     ],
     platforms: ["Android", "iOS", "Web", "Microservices"],
     attributionBadge: "Executive Ownership & Direction",
     purposeAndExperience:
       "Combines an e-commerce partner marketplace with instant, Shariah-compliant 0% profit consumer financing across medical, education, electronics, automotive, and home categories—open to both KIB and non-KIB customers without requiring a salary transfer.",
     problemAddressed:
-      "Traditional consumer financing required lengthy paperwork and salary transfers. Paytally / BuyNow by KIB embeds digital Islamic financing directly into merchant discovery and checkout.",
+      "Traditional consumer financing required lengthy paperwork and salary transfers. BuyNow by KIB embeds digital Islamic financing directly into merchant discovery and checkout.",
     architectureAndTech: [
       "Digital Credit Decisioning & Onboarding Workflows",
       "Multi-Merchant Marketplace & Order Orchestration",
@@ -609,7 +609,7 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
       "Event-Driven Microservices (NestJS, Kafka/RabbitMQ)",
     ],
     myRoleAndContribution:
-      "Lead the digital engineering teams responsible for Paytally / BuyNow across mobile, web, and backend services, overseeing architecture, scalability, and release governance.",
+      "Lead the digital engineering teams responsible for BuyNow by KIB across mobile, web, and backend services, overseeing architecture, scalability, and release governance.",
     organizationalDistinction:
       "Built by KIB Digital Factory engineering squads as a flagship embedded-financing initiative under my technology leadership.",
     verifiableImpact:
@@ -1098,7 +1098,7 @@ export const CAREER_TIMELINE: CareerMilestone[] = [
       },
       {
         category: "Product Delivery",
-        text: "Direct cross-platform engineering teams delivering KIB Retail, KIB Aqari, KIB Corporate, KIB Invest, Remittance (WAGE), Paytally (BuyNow), Backoffice portals, and BIN Sponsorship across Android, iOS, and Web.",
+        text: "Direct cross-platform engineering teams delivering KIB Retail, KIB Aqari, KIB Corporate, KIB Invest, Remittance (WAGE), BuyNow by KIB, Backoffice portals, and BIN Sponsorship across Android, iOS, and Web.",
       },
       {
         category: "Architecture & Engineering",
@@ -1309,7 +1309,7 @@ export const ARCHITECTURE_LAYERS: ArchitectureLayer[] = [
       "Strict offline-resilience & optimistic UI patterns",
     ],
     bankingUseCase:
-      "Powers KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, Paytally, WAGE, Warba Bank Mobile, and Fayez Admin (Flutter Web).",
+      "Powers KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, BuyNow, WAGE, Warba Bank Mobile, and Fayez Admin (Flutter Web).",
   },
   {
     id: "layer-security",
@@ -1357,7 +1357,7 @@ export const ARCHITECTURE_LAYERS: ArchitectureLayer[] = [
       "Anti-corruption layers (ACL) wrapping legacy SOAP/XML cores",
     ],
     bankingUseCase:
-      "Orchestrates real-time WAMD payments, BIN Sponsorship card issuance for fintech partners, and Paytally 0%-profit financing workflows.",
+      "Orchestrates real-time WAMD payments, BIN Sponsorship card issuance for fintech partners, and BuyNow 0%-profit financing workflows.",
   },
   {
     id: "layer-data",
@@ -1366,7 +1366,7 @@ export const ARCHITECTURE_LAYERS: ArchitectureLayer[] = [
     executiveThesis:
       "Pairing the ACID guarantees of relational databases for financial ledgers with the schema agility of MongoDB for digital product catalogs, real estate listings, and customer journeys.",
     description:
-      "Modern banking super-apps and marketplaces handle diverse workloads—from strict double-entry transaction audit trails to dynamic merchant catalogs (Paytally), property appraisal records (Aqari), and legacy XML (SAX/DOM) core banking messages.",
+      "Modern banking super-apps and marketplaces handle diverse workloads—from strict double-entry transaction audit trails to dynamic merchant catalogs (BuyNow), property appraisal records (Aqari), and legacy XML (SAX/DOM) core banking messages.",
     technologies: [
       "Relational Databases (SQL)",
       "MongoDB (Document Store)",
@@ -1380,7 +1380,7 @@ export const ARCHITECTURE_LAYERS: ArchitectureLayer[] = [
       "Strict data ownership per microservice domain",
     ],
     bankingUseCase:
-      "Supports property appraisal records in KIB Aqari, merchant catalogs in BuyNow/Paytally, Great Tafsirs corpora, and core banking ledger synchronization.",
+      "Supports property appraisal records in KIB Aqari, merchant catalogs in BuyNow by KIB, Great Tafsirs corpora, and core banking ledger synchronization.",
   },
   {
     id: "layer-devops",
@@ -1462,7 +1462,7 @@ export const LEADERSHIP_PRINCIPLES: LeadershipPrinciple[] = [
     narrative:
       "Modern digital banking leadership requires thinking like a product strategist and commercial architect. Technology must not merely digitize existing forms—it must unlock entirely new customer segments, non-bank acquisition funnels, and B2B partnership models.",
     evidenceFromCareer:
-      "Directed the technical delivery of Kuwait's first bank-led 0%-profit marketplace (Paytally), PropTech ecosystem (KIB Aqari), digital Shariah wealth manager (KIB Invest), Visa-Ready BIN Sponsorship BaaS platform, gamified loyalty ecosystem (Fayez), and dynamic robo-advisor generator (Advicenode).",
+      "Directed the technical delivery of Kuwait's first bank-led 0%-profit marketplace (BuyNow by KIB), PropTech ecosystem (KIB Aqari), digital Shariah wealth manager (KIB Invest), Visa-Ready BIN Sponsorship BaaS platform, gamified loyalty ecosystem (Fayez), and dynamic robo-advisor generator (Advicenode).",
     keyPractices: [
       "Embedded finance & BIN Sponsorship (BaaS / CaaS) enablement",
       "Vertical ecosystem expansion (PropTech, WealthTech, BNPL, Youth)",
@@ -1547,7 +1547,7 @@ export const DIGITAL_FACTORY_TOPOLOGY: FactoryTopologyNode[] = [
     architecturalRole:
       "Decouples vertical product delivery (Retail, Corporate, Real Estate, Wealth, BaaS) from horizontal technical excellence (Android, iOS, Flutter, Web, Backend, DevOps).",
     kibImplementation:
-      "Structured multi-disciplinary squads across 8+ concurrent product verticals (Retail, Corporate, Aqari, Invest, Paytally, WAGE, BaaS, Backoffice) under unified Digital Technology governance.",
+      "Structured multi-disciplinary squads across 8+ concurrent product verticals (Retail, Corporate, Aqari, Invest, BuyNow, WAGE, BaaS, Backoffice) under unified Digital Technology governance.",
     warbaImplementation:
       "Co-built the foundational Al-Wateen Digital Factory model and led the Android Engineering Chapter—codifying hiring bars, peer review gates, and chapter-wide engineering standards.",
     keyStandards: [
@@ -1693,7 +1693,7 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
     ],
     verifiedOutcomes: [
       "Two operational Digital Factories established from zero in Kuwait's regulated Islamic banking sector.",
-      "Scaled KIB's Digital Factory to concurrently power Retail, Corporate, Aqari (PropTech), Invest (WealthTech), Paytally (BNPL), WAGE (Remittance), Backoffice, and BIN Sponsorship.",
+      "Scaled KIB's Digital Factory to concurrently power Retail, Corporate, Aqari (PropTech), Invest (WealthTech), BuyNow (BNPL), WAGE (Remittance), Backoffice, and BIN Sponsorship.",
       "Eliminated single-vendor bottlenecks by institutionalizing in-house architecture, CI/CD automation, and code ownership.",
     ],
     technologies: [
@@ -1728,7 +1728,7 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
       {
         heading: "Specialized Vertical Client Architecture",
         detail:
-          "Directed dedicated product experiences tailored to each customer segment: KIB Mobile (Retail), KIB Corporate (multi-tier commercial approvals), KIB Aqari (automated rent collection & QR-verified property appraisals), KIB Invest (100% digital PACI onboarding & fund management), Paytally/BuyNow (0%-profit marketplace), and WAGE.",
+          "Directed dedicated product experiences tailored to each customer segment: KIB Mobile (Retail), KIB Corporate (multi-tier commercial approvals), KIB Aqari (automated rent collection & QR-verified property appraisals), KIB Invest (100% digital PACI onboarding & fund management), BuyNow by KIB (0%-profit marketplace), and WAGE.",
       },
       {
         heading: "Event-Driven Microservices & Polyglot Persistence",
@@ -1749,7 +1749,7 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
       "Core Banking & Visa BaaS Rails",
     ],
     verifiedOutcomes: [
-      "Delivered Kuwait's first bank-led 0%-profit consumer marketplace (Paytally / BuyNow) accessible without salary transfer.",
+      "Delivered Kuwait's first bank-led 0%-profit consumer marketplace (BuyNow by KIB) accessible without salary transfer.",
       "Launched KIB Aqari and KIB Invest with 100% digital onboarding, PACI Mobile ID integration, and cryptographic QR appraisal verification.",
       "Powered KIB's milestone as the first bank in Kuwait to achieve Visa Ready for Fintech Enablement certification.",
     ],
@@ -1834,7 +1834,7 @@ export const ARABIC_EXECUTIVE_BRIEF = {
     },
     {
       label: "النطاق التنفيذي في KIB",
-      value: "قيادة التكنولوجيا الرقمية لأكثر من 8 منظومات ومنتجات مصرفية (الأفراد، الشركات، عقاري، استثمار، Paytally، WAGE، ورعاية BIN)",
+      value: "قيادة التكنولوجيا الرقمية لأكثر من 8 منظومات ومنتجات مصرفية (الأفراد، الشركات، عقاري، استثمار، BuyNow، WAGE، ورعاية BIN)",
     },
     {
       label: "المنصات والتطبيقات المنشورة",
@@ -1846,7 +1846,7 @@ export const ARABIC_EXECUTIVE_BRIEF = {
       role: "رئيس التكنولوجيا الرقمية (Head of Digital Technology)",
       org: "البنك الدولي الكويتي (KIB)",
       period: "يونيو 2022 – حتى الآن",
-      desc: "تأسيس وقيادة المصنع الرقمي في KIB، ووضع خارطة الطريق التكنولوجية ومعايير المعمارية المؤسسية والحوكمة لإطلاق وتشغيل تطبيقات KIB Mobile و KIB Corporate و KIB Aqari و KIB Invest و Paytally و WAGE ومنصة رعاية BIN والأنظمة الداخلية.",
+      desc: "تأسيس وقيادة المصنع الرقمي في KIB، ووضع خارطة الطريق التكنولوجية ومعايير المعمارية المؤسسية والحوكمة لإطلاق وتشغيل تطبيقات KIB Mobile و KIB Corporate و KIB Aqari و KIB Invest و BuyNow و WAGE ومنصة رعاية BIN والأنظمة الداخلية.",
     },
     {
       role: "قائد فصل هندسة أندرويد (Android Chapter Lead)",

@@ -178,7 +178,7 @@ export default function HeroSection({ onOpenDossier }: HeroSectionProps) {
                 Head of Digital Technology
               </p>
               <p className="mt-3 text-sm text-slate-300 leading-relaxed">
-                Leading mobile, web, and backend delivery across 8 ecosystems: KIB Retail, Corporate, Aqari, Invest, Paytally, Remittance (WAGE), Backoffice &amp; BIN Sponsorship.
+                Leading mobile, web, and backend delivery across 8 ecosystems: KIB Retail, Corporate, Aqari, Invest, BuyNow, Remittance (WAGE), Backoffice &amp; BIN Sponsorship.
               </p>
             </div>
 

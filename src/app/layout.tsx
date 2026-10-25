@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     "KIB Corporate",
     "KIB Aqari",
     "KIB Invest",
-    "Paytally",
+    "BuyNow by KIB",
     "WAGE by KIB",
     "Al Muzaini BIN Sponsorship",
     "UBA Mobile Banking",

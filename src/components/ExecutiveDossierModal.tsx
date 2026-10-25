@@ -54,7 +54,7 @@ const CV_EXPERIENCE_PRINT = [
     period: "Jun 2022 – Present",
     bullets: [
       "Lead the bank’s digital technology function and internal Digital Factory, owning mobile, web, and backend delivery across retail and corporate banking products.",
-      "Direct cross-platform teams delivering KIB Retail, Aqari, Corporate, Invest, Remittance (WAGE), Paytally, Backoffice, and multi-tenant BIN Sponsorship (Al Muzaini) across Android, iOS & Web.",
+      "Direct cross-platform teams delivering KIB Retail, Aqari, Corporate, Invest, Remittance (WAGE), BuyNow, Backoffice, and multi-tenant BIN Sponsorship (Al Muzaini) across Android, iOS & Web.",
       "Define enterprise architecture standards, engineering practices, and Kubernetes + Argo CD release governance across native and Flutter codebases.",
     ],
   },
@@ -201,7 +201,7 @@ export default function ExecutiveDossierModal({
                     <div>
                       <span className="font-bold text-[#0f172a]">KIB Factory: </span>
                       <span className="text-slate-600">
-                        KIB Mobile, Corporate, Aqari, Invest, Paytally, WAGE, BIN Sponsorship (Al Muzaini)
+                        KIB Mobile, Corporate, Aqari, Invest, BuyNow, WAGE, BIN Sponsorship (Al Muzaini)
                       </span>
                     </div>
                     <div>
