@@ -154,9 +154,9 @@ export default function ExecutiveDossierModal({
                   <div className="flex flex-wrap items-center gap-x-2">
                     <span>linkedin.com/in/ahmed-shaker-492413a2</span>
                     <span className="text-slate-300">/</span>
-                    <span>github.com/ahmedshikashaker</span>
+                    <span>{EXECUTIVE_PROFILE.contact.githubDisplay}</span>
                     <span className="text-slate-300">/</span>
-                    <span>stackoverflow.com/users/3097253/lifeissimple</span>
+                    <span>{EXECUTIVE_PROFILE.contact.stackoverflowDisplay}</span>
                   </div>
                 </div>
               </div>
