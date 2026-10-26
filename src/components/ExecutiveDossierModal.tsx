@@ -146,16 +146,27 @@ export default function ExecutiveDossierModal({
                     <span className="text-slate-300">/</span>
                     <span>{EXECUTIVE_PROFILE.contact.phone}</span>
                     <span className="text-slate-300">/</span>
-                    <span>{EXECUTIVE_PROFILE.contact.email}</span>
-                    <span className="text-slate-300">/</span>
-                    <span className="font-semibold text-[#0f172a]">www.ahmed-shaker.com</span>
+                    <a href={`mailto:${EXECUTIVE_PROFILE.contact.email}`} className="text-slate-600">
+                      {EXECUTIVE_PROFILE.contact.email}
+                    </a>
                   </div>
+                  {/* Profile links shown as clickable words (hyperlinks are preserved in the saved PDF) */}
                   <div className="flex flex-wrap items-center gap-x-2">
-                    <span>linkedin.com/in/ahmed-shaker-492413a2</span>
+                    <a href="https://www.ahmed-shaker.com" className="font-semibold text-[#0f172a] underline decoration-slate-300 underline-offset-2">
+                      www.ahmed-shaker.com
+                    </a>
                     <span className="text-slate-300">/</span>
-                    <span>{EXECUTIVE_PROFILE.contact.githubDisplay}</span>
+                    <a href={EXECUTIVE_PROFILE.contact.linkedin} className="font-semibold text-[#0f172a] underline decoration-slate-300 underline-offset-2">
+                      LinkedIn
+                    </a>
                     <span className="text-slate-300">/</span>
-                    <span>{EXECUTIVE_PROFILE.contact.stackoverflowDisplay}</span>
+                    <a href={EXECUTIVE_PROFILE.contact.github} className="font-semibold text-[#0f172a] underline decoration-slate-300 underline-offset-2">
+                      GitHub
+                    </a>
+                    <span className="text-slate-300">/</span>
+                    <a href={EXECUTIVE_PROFILE.contact.stackoverflow} className="font-semibold text-[#0f172a] underline decoration-slate-300 underline-offset-2">
+                      Stack Overflow
+                    </a>
                   </div>
                 </div>
               </div>
