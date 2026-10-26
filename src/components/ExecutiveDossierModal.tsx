@@ -127,12 +127,12 @@ export default function ExecutiveDossierModal({
             {/* Editorial Header */}
             <div className="pb-4 border-b border-slate-300 flex items-start justify-between gap-6">
               <div>
-                <h1
+                <div
                   className="font-editorial text-[34px] font-normal text-[#0f172a] leading-none tracking-tight"
                   style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                 >
                   {EXECUTIVE_PROFILE.name}
-                </h1>
+                </div>
                 <div className="mt-1.5 text-[14px] font-medium text-slate-700">
                   Head of Digital Technology · Banking Digital Factory Architect
                 </div>
@@ -306,9 +306,9 @@ export default function ExecutiveDossierModal({
           <div className="w-full text-[#0f172a] font-sans text-right" dir="rtl">
             <div className="pb-4 border-b border-slate-300 flex items-start justify-between gap-6">
               <div>
-                <h1 className="text-[30px] font-bold text-[#0f172a] leading-tight">
+                <div className="text-[30px] font-bold text-[#0f172a] leading-tight">
                   {ARABIC_EXECUTIVE_BRIEF.name}
-                </h1>
+                </div>
                 <div className="mt-1 text-[13px] font-semibold text-slate-700">
                   {ARABIC_EXECUTIVE_BRIEF.title}
                 </div>

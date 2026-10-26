@@ -46,12 +46,8 @@ export default function HeroSection({ onOpenDossier }: HeroSectionProps) {
               </span>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.06 }}
-              className="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-slate-50 tracking-tight leading-[1.14]"
-            >
+            {/* Rendered visible on first paint (no initial opacity:0) so crawlers weight the name heading fully */}
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-slate-50 tracking-tight leading-[1.14]">
               <span className="block text-xs sm:text-sm font-tech font-medium uppercase tracking-[0.18em] text-[#dfc490] mb-3">
                 Ahmed Shaker · Executive Technology Portfolio
               </span>
@@ -60,7 +56,7 @@ export default function HeroSection({ onOpenDossier }: HeroSectionProps) {
                 Digital Factories
               </span>{" "}
               &amp; Scalable Banking Ecosystems.
-            </motion.h1>
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}
