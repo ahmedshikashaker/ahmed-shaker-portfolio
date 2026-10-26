@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { X, Printer, ArrowUpRight, Globe } from "lucide-react";
 import {
   EXECUTIVE_PROFILE,
@@ -49,7 +48,7 @@ const CV_CORE_SKILLS = [
 
 const CV_EXPERIENCE_PRINT = [
   {
-    role: "Head of Digital Technology",
+    role: "Executive Manager – Head of Digital Technology",
     org: "Kuwait International Bank (KIB) · Kuwait",
     period: "Jun 2022 – Present",
     bullets: [
@@ -134,7 +133,7 @@ export default function ExecutiveDossierModal({
                   {EXECUTIVE_PROFILE.name}
                 </div>
                 <div className="mt-1.5 text-[14px] font-medium text-slate-700">
-                  Head of Digital Technology · Banking Digital Factory Architect
+                  Executive Manager – Head of Digital Technology
                 </div>
                 <div className="mt-1 text-[11px] text-slate-500">
                   Mobile (Android · iOS · Flutter) &bull; Backend (NestJS · Java) &bull; DevOps (Kubernetes · Argo CD · Jenkins)
@@ -159,15 +158,6 @@ export default function ExecutiveDossierModal({
                     <span>{EXECUTIVE_PROFILE.contact.stackoverflowDisplay}</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Crisp Executive Portrait */}
-              <div className="w-[62px] h-[62px] rounded-xl overflow-hidden border border-slate-300 shrink-0">
-                <img
-                  src="/assets/profile/ahmed-shaker-portrait.jpg"
-                  alt={EXECUTIVE_PROFILE.name}
-                  className="w-full h-full object-cover"
-                />
               </div>
             </div>
 
@@ -310,7 +300,7 @@ export default function ExecutiveDossierModal({
                   {ARABIC_EXECUTIVE_BRIEF.name}
                 </div>
                 <div className="mt-1 text-[13px] font-semibold text-slate-700">
-                  {ARABIC_EXECUTIVE_BRIEF.title}
+                  مدير تنفيذي – رئيس التكنولوجيا الرقمية (Executive Manager – Head of Digital Technology)
                 </div>
                 <div className="mt-1 text-[10.5px] text-slate-500" dir="ltr">
                   Mobile (Android · iOS · Flutter) &bull; Backend (NestJS · Java) &bull; DevOps (Kubernetes · Argo CD · Jenkins)
@@ -324,13 +314,6 @@ export default function ExecutiveDossierModal({
                   <span className="text-slate-300">/</span>
                   <span>Kuwait City, Kuwait</span>
                 </div>
-              </div>
-              <div className="w-[62px] h-[62px] rounded-xl overflow-hidden border border-slate-300 shrink-0">
-                <img
-                  src="/assets/profile/ahmed-shaker-portrait.jpg"
-                  alt={ARABIC_EXECUTIVE_BRIEF.name}
-                  className="w-full h-full object-cover"
-                />
               </div>
             </div>
 
@@ -474,21 +457,12 @@ export default function ExecutiveDossierModal({
                 <div className="p-6 sm:p-10 space-y-8" dir="ltr">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
                     <div className="flex items-center gap-4">
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-[#dfc490]/50 bg-[#182338] shrink-0">
-                        <Image
-                          src="/assets/profile/ahmed-shaker-portrait.jpg"
-                          alt={EXECUTIVE_PROFILE.name}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
                       <div>
                         <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
                           {EXECUTIVE_PROFILE.name}
                         </h2>
                         <p className="mt-1 text-sm sm:text-base font-medium text-[#dfc490]">
-                          {EXECUTIVE_PROFILE.title} · Digital Banking Transformation &amp; Architecture
+                          Executive Manager – Head of Digital Technology · Digital Banking Transformation &amp; Architecture
                         </p>
                         <p className="mt-1 text-xs font-tech text-slate-400">
                           Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
@@ -656,15 +630,6 @@ export default function ExecutiveDossierModal({
                 <div className="p-6 sm:p-10 space-y-8 text-right" dir="rtl">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
                     <div className="flex items-center gap-4">
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-[#dfc490]/50 bg-[#182338] shrink-0">
-                        <Image
-                          src="/assets/profile/ahmed-shaker-portrait.jpg"
-                          alt={ARABIC_EXECUTIVE_BRIEF.name}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
                       <div>
                         <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
                           {ARABIC_EXECUTIVE_BRIEF.name}

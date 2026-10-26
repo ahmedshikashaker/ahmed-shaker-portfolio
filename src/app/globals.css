@@ -115,6 +115,13 @@
     display: none !important;
   }
 
+  /* Prevent the dark site background from bleeding below the printed CV */
+  body > div,
+  .min-h-screen {
+    background: #ffffff !important;
+    min-height: 0 !important;
+  }
+
   .print-only-cv {
     display: block !important;
     width: 210mm !important;
