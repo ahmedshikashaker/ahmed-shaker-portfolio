@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --bg-primary: #0f172a;
@@ -89,6 +90,92 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #d4b982;
+}
+
+/* ------------------------------------------------------------------ Blog */
+.font-arabic,
+.font-arabic h1,
+.font-arabic h2,
+.font-arabic h3,
+.font-arabic h4 {
+  font-family: var(--font-arabic), var(--font-sans), sans-serif;
+  letter-spacing: 0;
+}
+
+.blog-prose {
+  --tw-prose-invert-body: #cbd5e1;
+  --tw-prose-invert-headings: #f8fafc;
+  --tw-prose-invert-links: #dfc490;
+  --tw-prose-invert-bold: #f8fafc;
+  --tw-prose-invert-counters: #94a3b8;
+  --tw-prose-invert-bullets: #dfc490;
+  --tw-prose-invert-hr: rgba(226, 232, 240, 0.1);
+  --tw-prose-invert-quotes: #e2e8f0;
+  --tw-prose-invert-quote-borders: #dfc490;
+  --tw-prose-invert-captions: #94a3b8;
+  --tw-prose-invert-code: #f1e3c4;
+  --tw-prose-invert-th-borders: rgba(226, 232, 240, 0.15);
+  --tw-prose-invert-td-borders: rgba(226, 232, 240, 0.08);
+  line-height: 1.8;
+}
+.blog-prose :where(h2, h3, h4) {
+  scroll-margin-top: 6rem;
+  letter-spacing: -0.015em;
+}
+.blog-prose :where(h2) {
+  margin-top: 2.4em;
+}
+.blog-prose :where(a) {
+  text-decoration-color: rgba(223, 196, 144, 0.45);
+  text-underline-offset: 3px;
+}
+.blog-prose :where(a):hover {
+  text-decoration-color: #dfc490;
+}
+.blog-prose :where(code):not(pre code) {
+  background: rgba(223, 196, 144, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+.blog-prose :where(code):not(pre code)::before,
+.blog-prose :where(code):not(pre code)::after {
+  content: none;
+}
+.blog-prose :where(img) {
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.08);
+}
+.blog-prose :where(blockquote) {
+  font-style: normal;
+  font-weight: 400;
+}
+.blog-prose :where(blockquote p)::before,
+.blog-prose :where(blockquote p)::after {
+  content: none;
+}
+.blog-table-wrap {
+  overflow-x: auto;
+  margin: 2em 0;
+  border: 1px solid rgba(226, 232, 240, 0.1);
+  border-radius: 0.875rem;
+}
+.blog-table-wrap table {
+  margin: 0 !important;
+}
+.blog-table-wrap :where(th, td) {
+  padding: 0.65em 1em !important;
+}
+.blog-table-wrap :where(thead) {
+  background: rgba(24, 35, 56, 0.9);
+}
+/* Arabic articles: slightly larger, airier text */
+.blog-prose-ar {
+  font-size: 1.15rem;
+  line-height: 2;
+}
+.blog-prose-ar :where(h2, h3, h4) {
+  letter-spacing: 0;
 }
 
 /* Professional A4 Executive CV Print Stylesheet */

@@ -4,11 +4,13 @@ import {
   EXECUTIVE_PROFILE,
   ARABIC_EXECUTIVE_BRIEF,
 } from "@/data/portfolioData";
+import { getAllPosts } from "@/lib/blog";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const latestPosts = (await getAllPosts()).slice(0, 3);
   return (
     <>
-      <PortfolioShell />
+      <PortfolioShell latestPosts={latestPosts} />
       {/* Server-rendered bilingual identity anchor for search engine crawlers */}
       <aside className="sr-only" aria-label="Executive SEO Summary">
         <h2>

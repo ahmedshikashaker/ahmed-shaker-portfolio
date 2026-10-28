@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { FileText, ArrowUpRight, Menu, X } from "lucide-react";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 
@@ -116,6 +117,12 @@ export default function Navbar({ onOpenDossier }: NavbarProps) {
               </button>
             );
           })}
+          <Link
+            href="/blog"
+            className="relative px-3.5 py-1.5 rounded-lg text-[13px] font-medium text-slate-300 hover:text-white transition-colors"
+          >
+            Blog
+          </Link>
         </nav>
 
         {/* Zone 3: Two Clear Executive Actions */}
@@ -180,6 +187,12 @@ export default function Navbar({ onOpenDossier }: NavbarProps) {
                   </button>
                 );
               })}
+              <Link
+                href="/blog"
+                className="block w-full px-4 py-2.5 rounded-lg text-left text-sm font-medium text-slate-300 hover:bg-[#182338]"
+              >
+                Blog
+              </Link>
               <div className="pt-3 mt-2 border-t border-slate-200/[0.08] grid grid-cols-2 gap-2.5">
                 <button
                   onClick={() => {

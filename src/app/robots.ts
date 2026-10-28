@@ -6,6 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/keystatic", "/api/"],
       },
     ],
     host: "https://www.ahmed-shaker.com",

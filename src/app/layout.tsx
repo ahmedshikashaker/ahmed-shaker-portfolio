@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { EXECUTIVE_PROFILE, SELECTED_PRODUCTS } from "@/data/portfolioData";
 
@@ -25,6 +25,15 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+// Arabic typeface for Arabic blog articles; not preloaded so English pages pay no cost.
+const plexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-arabic",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  preload: false,
+});
+
 export const viewport: Viewport = {
   themeColor: "#0f172a",
   width: "device-width",
@@ -45,6 +54,9 @@ export const metadata: Metadata = {
   applicationName: "Ahmed Shaker Portfolio",
   alternates: {
     canonical: SITE_URL,
+    types: {
+      "application/rss+xml": [{ url: `${SITE_URL}/blog/rss.xml`, title: "Ahmed Shaker — Blog" }],
+    },
   },
   keywords: [
     "Ahmed Shaker",
@@ -229,7 +241,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} dark`}
+      className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${plexArabic.variable} dark`}
     >
       <body className="bg-[#0f172a] text-[#e2e8f0] font-[family-name:var(--font-sans)] antialiased selection:bg-[#d4b982]/25 selection:text-[#f8fafc] overflow-x-hidden">
         <script

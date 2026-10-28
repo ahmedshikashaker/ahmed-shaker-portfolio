@@ -12,8 +12,10 @@ import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
 import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
 import ContactSection from "@/components/ContactSection";
 import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
+import LatestArticlesSection from "@/components/LatestArticlesSection";
+import type { PostMeta } from "@/lib/blog";
 
-export default function PortfolioShell() {
+export default function PortfolioShell({ latestPosts = [] }: { latestPosts?: PostMeta[] }) {
   const [dossierOpen, setDossierOpen] = useState(false);
 
   return (
@@ -29,6 +31,7 @@ export default function PortfolioShell() {
           <ExecutiveCaseStudiesSection />
           <ExperienceTimelineSection />
           <LeadershipPhilosophySection />
+          <LatestArticlesSection posts={latestPosts} />
         </main>
         <ContactSection onOpenDossier={() => setDossierOpen(true)} />
       </div>

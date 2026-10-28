@@ -1,0 +1,103 @@
+---
+title: 'Writing guide: how to format articles on this blog'
+excerpt: >-
+  A private reference (draft) showing every formatting option available in the
+  blog editor: headings, lists, code, tables, callouts, quotes, images, and
+  videos.
+language: en
+category: insights
+tags:
+  - Guide
+  - Writing
+publishedDate: '2026-10-28'
+featured: false
+draft: true
+seoTitle: ''
+---
+This article is a **draft**, so it only shows up on your computer while you run the site locally; it never appears on www.ahmed-shaker.com. Keep it as a reference, or delete it once you're comfortable with the editor.
+
+## Headings build the table of contents
+
+Every *Heading 2* and *Heading 3* you add appears automatically in the "On this page" sidebar, so readers can jump between sections. Use Heading 2 for main sections and Heading 3 for sub-sections.
+
+### Text formatting
+
+You can use **bold**, *italic*, ~~strikethrough~~, `inline code`, and [links](https://www.ahmed-shaker.com). Links to other websites open in a new tab automatically.
+
+## Lists
+
+- Bullet lists for unordered points
+- Keep each point short and scannable
+- Nest ideas sparingly
+
+1. Numbered lists for steps
+2. Or for ranked items
+3. Or for sequences
+
+## Callout boxes
+
+{% callout tone="insight" title="Key insight" %}
+Use callouts to highlight the one idea you want a busy executive to remember from the article.
+{% /callout %}
+
+{% callout tone="tip" %}
+Tips work well for practical advice readers can apply immediately.
+{% /callout %}
+
+{% callout tone="warning" %}
+Warnings flag risks, pitfalls, or common mistakes.
+{% /callout %}
+
+## Pull quotes
+
+{% pullquote quote="Release speed is only sustainable when compliance and quality gates are automated." attribution="Example pull quote" /%}
+
+## Code blocks
+
+Choose the language in the code block settings to get syntax highlighting. Readers get a one-click **Copy** button.
+
+```kotlin
+@HiltViewModel
+class AccountsViewModel @Inject constructor(
+    private val repository: AccountsRepository
+) : ViewModel() {
+    val accounts = repository.observeAccounts()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+}
+```
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payments-service
+spec:
+  destination:
+    namespace: payments
+```
+
+## Tables
+
+| Option | Best for | Notes |
+| --- | --- | --- |
+| Native (Kotlin / Swift) | Deep OS integration | Highest performance |
+| Flutter | Fast cross-platform delivery | One codebase for iOS, Android & Web |
+| Web | Back-office portals | Responsive layouts |
+
+## Quotes
+
+> A standard blockquote is good for citing someone else's words or a source.
+
+## Images and videos
+
+Use the image button in the editor toolbar to upload an image; it's stored with the article automatically. To embed a video, insert the **YouTube video** block and paste the link.
+
+---
+
+## Publishing checklist
+
+1. Write a clear **Summary**: it's what people see on LinkedIn, WhatsApp, and Google.
+2. Add a **cover image** (1600×840) for the best share previews.
+3. Pick a **category** and 3–5 **tags**.
+4. Untick **Draft** and click **Save**. The article goes live after the site redeploys (about 1–2 minutes).
+5. Open the article and use the share buttons to post it on LinkedIn and elsewhere.
