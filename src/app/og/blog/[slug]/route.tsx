@@ -31,22 +31,22 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          background: "radial-gradient(circle at 88% 12%, #1e2b45 0%, #0f172a 70%)",
-          color: "#f8fafc",
+          background: "radial-gradient(circle at 88% 12%, #161f33 0%, #0a0e17 70%)",
+          color: "#f2ede3",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ width: 10, height: 44, background: "#dfc490", borderRadius: 4 }} />
+            <div style={{ width: 10, height: 44, background: "#d8bb84", borderRadius: 4 }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ fontSize: 26, fontWeight: 700 }}>Ahmed Shaker</span>
-              <span style={{ fontSize: 17, color: "#94a3b8" }}>Executive Manager – Head of Digital Technology</span>
+              <span style={{ fontSize: 17, color: "#8e919c" }}>Executive Manager – Head of Digital Technology</span>
             </div>
           </div>
           <span
             style={{
               fontSize: 18,
-              color: "#5eead4",
+              color: "#7dd3bf",
               border: "1px solid rgba(94,234,212,0.4)",
               borderRadius: 999,
               padding: "8px 18px",
@@ -68,11 +68,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
             borderTop: "1px solid rgba(148,163,184,0.18)",
             paddingTop: 24,
             fontSize: 20,
-            color: "#94a3b8",
+            color: "#8e919c",
           }}
         >
           <span>{post ? `${post.readingMinutes} min read${isAr ? " · Arabic" : ""}` : ""}</span>
-          <span style={{ color: "#dfc490" }}>ahmed-shaker.com/blog</span>
+          <span style={{ color: "#d8bb84" }}>ahmed-shaker.com/blog</span>
         </div>
       </div>
     ),

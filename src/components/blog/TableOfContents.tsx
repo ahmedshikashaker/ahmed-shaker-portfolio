@@ -1,6 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/cn";
+import { SPRING } from "@/lib/motion";
 
 interface TocItem {
   id: string;
@@ -11,46 +14,62 @@ interface TocItem {
 export default function TableOfContents({ items, language }: { items: TocItem[]; language: "en" | "ar" }) {
   const [active, setActive] = useState<string | null>(items[0]?.id ?? null);
 
+  // The active heading is the last one above a reading line near the top of the viewport.
+  // Computed per frame on scroll, so fast scrolling can never skip a section.
   useEffect(() => {
     const headings = items
       .map((i) => document.getElementById(i.id))
       .filter((el): el is HTMLElement => Boolean(el));
     if (!headings.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
-      },
-      { rootMargin: "-90px 0px -65% 0px", threshold: 0 }
-    );
-    headings.forEach((h) => observer.observe(h));
-    return () => observer.disconnect();
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = Math.min(160, window.innerHeight * 0.25);
+      let current = headings[0].id;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top <= line) current = heading.id;
+        else break;
+      }
+      setActive(current);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [items]);
 
   if (items.length < 2) return null;
 
   return (
     <nav aria-label={language === "ar" ? "محتويات المقال" : "Table of contents"}>
-      <div className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
-        {language === "ar" ? "في هذا المقال" : "On this page"}
-      </div>
-      <ul className="space-y-1.5 border-s border-slate-200/10">
-        {items.map((item) => (
-          <li key={item.id}>
-            <a
-              href={`#${item.id}`}
-              className={`block -ms-px border-s py-0.5 text-[13px] leading-snug transition-colors ${
-                item.level === 3 ? "ps-6" : "ps-3"
-              } ${
-                active === item.id
-                  ? "border-[#dfc490] text-[#dfc490] font-medium"
-                  : "border-transparent text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              {item.text}
-            </a>
-          </li>
-        ))}
+      <div className="eyebrow mb-4 text-fg-3">{language === "ar" ? "في هذا المقال" : "On this page"}</div>
+      <ul className="relative space-y-0.5 border-s border-line-2">
+        {items.map((item) => {
+          const current = active === item.id;
+          return (
+            <li key={item.id} className="relative">
+              {current && <motion.span layoutId="toc-active" transition={SPRING} className="absolute -start-px inset-y-0 w-px bg-accent" />}
+              <a
+                href={`#${item.id}`}
+                aria-current={current ? "location" : undefined}
+                className={cn(
+                  "block py-1.5 text-[13px] leading-snug transition-colors duration-200",
+                  item.level === 3 ? "ps-7" : "ps-4",
+                  current ? "text-fg" : "text-fg-4 hover:text-fg-2"
+                )}
+              >
+                {item.text}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

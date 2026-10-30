@@ -6,25 +6,33 @@ import CopyCodeButton from "./CopyCodeButton";
 
 /* ---------------------------------------------------------------- Code blocks */
 
+// Both themes are emitted as CSS variables; globals.css picks one per site theme.
+const SHIKI_THEMES = { dark: "github-dark-dimmed", light: "github-light" } as const;
+
 async function CodeBlock({ content, language }: { content?: string; language?: string }) {
   const code = (content ?? "").replace(/\n$/, "");
   const lang = (language || "text").toLowerCase();
   let html: string;
   try {
-    html = await codeToHtml(code, { lang, theme: "github-dark-dimmed" });
+    html = await codeToHtml(code, { lang, themes: SHIKI_THEMES, defaultColor: false });
   } catch {
-    html = await codeToHtml(code, { lang: "text", theme: "github-dark-dimmed" });
+    html = await codeToHtml(code, { lang: "text", themes: SHIKI_THEMES, defaultColor: false });
   }
   return (
-    <div className="blog-code not-prose group relative my-7" dir="ltr">
-      <div className="flex items-center justify-between px-4 py-2 rounded-t-xl bg-[#0b1222] border border-b-0 border-slate-200/10">
-        <span className="font-tech text-[11px] uppercase tracking-wider text-slate-400">
-          {lang === "text" ? "code" : lang}
+    <div className="blog-code not-prose group relative my-8 overflow-hidden rounded-xl border border-line-2 bg-surface" dir="ltr">
+      <div className="flex items-center justify-between border-b border-line bg-bg-2/70 px-4 py-2">
+        <span className="flex items-center gap-3">
+          <span aria-hidden="true" className="flex gap-1.5">
+            <span className="size-2.5 rounded-full bg-line-3" />
+            <span className="size-2.5 rounded-full bg-line-3" />
+            <span className="size-2.5 rounded-full bg-line-3" />
+          </span>
+          <span className="eyebrow text-[10px] text-fg-4">{lang === "text" ? "code" : lang}</span>
         </span>
         <CopyCodeButton code={code} />
       </div>
       <div
-        className="overflow-x-auto rounded-b-xl border border-slate-200/10 text-[13.5px] leading-relaxed [&_pre]:!bg-[#111a2e] [&_pre]:p-4 [&_pre]:m-0"
+        className="overflow-x-auto font-mono text-[13.5px] leading-relaxed [&_pre]:m-0 [&_pre]:p-5"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
@@ -34,10 +42,10 @@ async function CodeBlock({ content, language }: { content?: string; language?: s
 /* ---------------------------------------------------------------- Callouts */
 
 const CALLOUT_STYLES = {
-  note: { icon: Info, ring: "border-sky-400/30 bg-sky-400/[0.06]", accent: "text-sky-300", label: "Note" },
-  tip: { icon: Lightbulb, ring: "border-teal-300/30 bg-teal-300/[0.06]", accent: "text-teal-300", label: "Tip" },
-  insight: { icon: Sparkles, ring: "border-[#dfc490]/35 bg-[#dfc490]/[0.07]", accent: "text-[#dfc490]", label: "Key insight" },
-  warning: { icon: TriangleAlert, ring: "border-amber-400/35 bg-amber-400/[0.07]", accent: "text-amber-300", label: "Warning" },
+  note: { icon: Info, ring: "border-sky-400/30 bg-sky-400/[0.06]", accent: "text-sky-500 dark:text-sky-300", label: "Note" },
+  tip: { icon: Lightbulb, ring: "border-signal/35 bg-signal/[0.06]", accent: "text-signal", label: "Tip" },
+  insight: { icon: Sparkles, ring: "border-accent/40 bg-accent/[0.07]", accent: "text-accent", label: "Key insight" },
+  warning: { icon: TriangleAlert, ring: "border-amber-500/40 bg-amber-400/[0.08]", accent: "text-amber-600 dark:text-amber-300", label: "Warning" },
 } as const;
 
 function Callout({
@@ -52,12 +60,12 @@ function Callout({
   const style = CALLOUT_STYLES[tone] ?? CALLOUT_STYLES.note;
   const Icon = style.icon;
   return (
-    <aside className={`not-prose my-7 rounded-2xl border ${style.ring} px-5 py-4`}>
-      <div className={`flex items-center gap-2 text-sm font-semibold ${style.accent}`}>
-        <Icon className="w-4 h-4 shrink-0" />
+    <aside className={`not-prose my-8 rounded-xl border ${style.ring} px-5 py-4 font-sans`}>
+      <div className={`flex items-center gap-2 text-[13px] font-semibold ${style.accent}`}>
+        <Icon className="size-4 shrink-0" strokeWidth={1.75} />
         <span>{title || style.label}</span>
       </div>
-      <div className="mt-2 text-[15px] leading-relaxed text-slate-200 [&_p]:my-2 [&_a]:text-[#dfc490] [&_a]:underline [&_ul]:list-disc [&_ul]:ps-5 [&_ol]:list-decimal [&_ol]:ps-5">
+      <div className="mt-2 text-[15px] leading-relaxed text-fg-2 [&_a]:text-accent [&_a]:underline [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:my-2 [&_ul]:list-disc [&_ul]:ps-5">
         {children}
       </div>
     </aside>
@@ -83,18 +91,18 @@ function YouTube({ url, caption }: { url: string; caption?: string }) {
   const id = youtubeId(url);
   if (!id) return null;
   return (
-    <figure className="not-prose my-8">
-      <div className="relative w-full overflow-hidden rounded-2xl border border-slate-200/10 bg-black" style={{ aspectRatio: "16 / 9" }}>
+    <figure className="not-prose my-10">
+      <div className="relative w-full overflow-hidden rounded-xl border border-line-2 bg-black" style={{ aspectRatio: "16 / 9" }}>
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${id}`}
           title={caption || "YouTube video"}
           loading="lazy"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 h-full w-full"
         />
       </div>
-      {caption && <figcaption className="mt-2 text-center text-sm text-slate-400">{caption}</figcaption>}
+      {caption && <figcaption className="mt-3 text-center font-sans text-[13px] text-fg-3">{caption}</figcaption>}
     </figure>
   );
 }
@@ -103,11 +111,12 @@ function YouTube({ url, caption }: { url: string; caption?: string }) {
 
 function PullQuote({ quote, attribution }: { quote: string; attribution?: string }) {
   return (
-    <figure className="not-prose my-10 border-s-2 border-[#dfc490] ps-6">
-      <blockquote className="font-editorial italic text-2xl sm:text-[1.7rem] leading-snug text-slate-50">
-        “{quote}”
-      </blockquote>
-      {attribution && <figcaption className="mt-3 text-sm text-[#dfc490]">— {attribution}</figcaption>}
+    <figure className="not-prose relative my-12 border-y border-line-2 py-8">
+      <span aria-hidden="true" className="absolute -top-5 start-0 bg-bg pe-3 font-display text-[3.5rem] leading-none text-accent">
+        “
+      </span>
+      <blockquote className="font-display text-[clamp(1.6rem,3vw,2.1rem)] italic leading-snug text-fg">{quote}</blockquote>
+      {attribution && <figcaption className="eyebrow mt-4 text-accent">— {attribution}</figcaption>}
     </figure>
   );
 }

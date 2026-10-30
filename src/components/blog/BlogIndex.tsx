@@ -1,11 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, X, Clock, ArrowUpRight, PenLine } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Clock, PenLine, Rss, Search, X } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
-import PostCard from "./PostCard";
+import { readingLabel } from "@/lib/blog-format";
+import { ArrowGlyph, Button } from "@/components/ui/Button";
+import { Kbd } from "@/components/ui/primitives";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { cn } from "@/lib/cn";
+import { EASE_OUT } from "@/lib/motion";
+import PostCard, { GeneratedCover } from "./PostCard";
 
 type LangFilter = "all" | "en" | "ar";
 
@@ -14,14 +21,42 @@ export default function BlogIndex({ posts }: { posts: PostMeta[] }) {
   const [lang, setLang] = useState<LangFilter>("all");
   const [category, setCategory] = useState<string | null>(null);
   const [tag, setTag] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Allow deep links like /blog?tag=Kubernetes or /blog?category=architecture
+  // Deep links like /blog?tag=Kubernetes, /blog?category=architecture or /blog?lang=ar
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setTag(params.get("tag"));
     setCategory(params.get("category"));
     const l = params.get("lang");
     if (l === "en" || l === "ar") setLang(l);
+    setReady(true);
+  }, []);
+
+  // Keep the URL shareable as filters change.
+  useEffect(() => {
+    if (!ready) return;
+    const params = new URLSearchParams();
+    if (tag) params.set("tag", tag);
+    if (category) params.set("category", category);
+    if (lang !== "all") params.set("lang", lang);
+    const search = params.toString();
+    window.history.replaceState(null, "", search ? `/blog?${search}` : "/blog");
+  }, [tag, category, lang, ready]);
+
+  // "/" focuses search, like most documentation sites.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const typing = target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
+      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey) {
+        event.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const categories = useMemo(() => {
@@ -42,7 +77,7 @@ export default function BlogIndex({ posts }: { posts: PostMeta[] }) {
   }, [posts, query, lang, category, tag]);
 
   const hasFilters = Boolean(query || lang !== "all" || category || tag);
-  const featured = !hasFilters ? posts.find((p) => p.featured) ?? posts[0] : null;
+  const featured = !hasFilters ? (posts.find((p) => p.featured) ?? posts[0]) : null;
   const grid = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
 
   const clear = () => {
@@ -50,139 +85,207 @@ export default function BlogIndex({ posts }: { posts: PostMeta[] }) {
     setLang("all");
     setCategory(null);
     setTag(null);
-    window.history.replaceState(null, "", "/blog");
   };
 
   if (posts.length === 0) {
     return (
-      <div className="mt-14 rounded-3xl border border-dashed border-slate-200/15 bg-[#131c31]/60 p-12 text-center">
-        <PenLine className="w-8 h-8 mx-auto text-[#dfc490]" />
-        <h2 className="mt-4 text-xl font-semibold text-slate-100">The first articles are on their way</h2>
-        <p className="mt-2 text-slate-400 max-w-md mx-auto">
-          Insights on digital banking, architecture, and engineering leadership will be published here soon.
-          Subscribe via RSS to get notified.
-        </p>
+      <div className="relative mt-14 overflow-hidden border border-dashed border-line-3 bg-surface/40 px-6 py-16 text-center sm:px-12">
+        <div aria-hidden="true" className="blueprint-grid pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_60%_70%_at_50%_50%,#000,transparent)]" />
+        <div className="relative">
+          <span className="mx-auto grid size-14 place-items-center rounded-full border border-accent/40 bg-accent/10 text-accent">
+            <PenLine className="size-6" strokeWidth={1.5} />
+          </span>
+          <h2 className="mt-6 font-display text-[1.9rem] text-fg">The first articles are on their way</h2>
+          <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-fg-3">
+            Insights on digital banking, architecture, and engineering leadership will be published here soon. Subscribe via RSS to get
+            notified.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button href="/blog/rss.xml" iconLeading={<Rss className="size-4" strokeWidth={1.75} />}>
+              Subscribe via RSS
+            </Button>
+            <Button href="/" variant="secondary" icon={<ArrowGlyph />}>
+              Explore the portfolio
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mt-10 space-y-10">
-      {/* Controls */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <label className="relative flex-1">
-            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+    <div className="mt-12 space-y-12">
+      <div className="space-y-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <label className="group relative flex-1">
+            <span className="sr-only">Search articles</span>
+            <Search className="pointer-events-none absolute start-4 top-1/2 size-4 -translate-y-1/2 text-fg-4 transition-colors group-focus-within:text-accent" strokeWidth={1.75} />
             <input
+              ref={inputRef}
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={(event) => event.key === "Escape" && setQuery("")}
               placeholder="Search articles, topics, tags… / ابحث"
-              className="w-full h-11 ps-10 pe-4 rounded-xl bg-[#131c31] border border-slate-200/10 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-[#d4b982]/60"
+              className="h-12 w-full rounded-full border border-line-2 bg-surface/60 pe-24 ps-11 text-[15px] text-fg outline-none transition-colors placeholder:text-fg-4 focus:border-accent/60 [&::-webkit-search-cancel-button]:hidden"
             />
+            <span className="absolute end-2 top-1/2 flex -translate-y-1/2 items-center gap-1">
+              {query ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuery("");
+                    inputRef.current?.focus();
+                  }}
+                  aria-label="Clear search"
+                  className="grid size-8 cursor-pointer place-items-center rounded-full text-fg-3 transition-colors hover:bg-surface-2 hover:text-fg"
+                >
+                  <X className="size-4" strokeWidth={1.75} />
+                </button>
+              ) : (
+                <Kbd className="me-2.5 hidden sm:inline-flex">/</Kbd>
+              )}
+            </span>
           </label>
-          <div className="inline-flex h-11 items-center rounded-xl bg-[#131c31] p-1 border border-slate-200/10 self-start sm:self-auto">
-            {(
-              [
-                ["all", "All"],
-                ["en", "English"],
-                ["ar", "العربية"],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                onClick={() => setLang(value)}
-                className={`h-full px-3.5 rounded-lg text-sm transition-colors cursor-pointer ${
-                  lang === value ? "bg-[#dfc490] text-slate-950 font-semibold" : "text-slate-300 hover:text-white"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <SegmentedControl
+            label="Filter by language"
+            value={lang}
+            onChange={setLang}
+            options={[
+              { value: "all", label: "All" },
+              { value: "en", label: "English" },
+              { value: "ar", label: <span className="font-arabic">العربية</span> },
+            ]}
+          />
         </div>
 
         {categories.length > 1 && (
-          <div className="flex flex-wrap gap-2">
-            {categories.map(([value, label]) => (
-              <button
-                key={value}
-                onClick={() => setCategory(category === value ? null : value)}
-                className={`px-3 py-1.5 rounded-full text-[13px] border transition-colors cursor-pointer ${
-                  category === value
-                    ? "bg-[#dfc490]/15 border-[#dfc490]/60 text-[#dfc490]"
-                    : "border-slate-200/10 text-slate-300 hover:border-slate-200/25"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+            {categories.map(([value, label]) => {
+              const selected = category === value;
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setCategory(selected ? null : value)}
+                  className={cn(
+                    "cursor-pointer rounded-full border px-3.5 py-1.5 text-[13px] transition-colors duration-200",
+                    selected ? "border-accent/60 bg-accent/10 text-accent" : "border-line-2 text-fg-3 hover:border-line-3 hover:text-fg"
+                  )}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
         )}
 
-        {hasFilters && (
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
-            <span>
-              {filtered.length} {filtered.length === 1 ? "article" : "articles"}
-              {tag && (
-                <>
-                  {" "}tagged <span className="text-[#dfc490]">#{tag}</span>
-                </>
-              )}
-            </span>
-            <button onClick={clear} className="inline-flex items-center gap-1 text-[#dfc490] hover:underline cursor-pointer">
-              <X className="w-3.5 h-3.5" /> Clear filters
-            </button>
-          </div>
-        )}
+        <AnimatePresence initial={false}>
+          {hasFilters && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: EASE_OUT }}
+              className="overflow-hidden"
+            >
+              <div className="flex flex-wrap items-center gap-3 text-[13.5px] text-fg-3" aria-live="polite">
+                <span>
+                  <span className="numeric text-fg">{filtered.length}</span> {filtered.length === 1 ? "article" : "articles"}
+                </span>
+                {tag && (
+                  <button
+                    type="button"
+                    onClick={() => setTag(null)}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-[12.5px] text-accent"
+                    aria-label={`Remove tag filter ${tag}`}
+                  >
+                    #{tag} <X className="size-3" />
+                  </button>
+                )}
+                <button type="button" onClick={clear} className="link-sweep cursor-pointer text-accent">
+                  Clear all filters
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Featured */}
-      {featured && (
-        <Link
-          href={`/blog/${featured.slug}`}
-          className="group grid lg:grid-cols-2 rounded-3xl overflow-hidden border border-slate-200/[0.09] hover:border-[#d4b982]/45 bg-[#131c31]/80 transition-colors"
-        >
-          <div className="relative min-h-[240px] bg-[#182338]">
-            {featured.coverImage ? (
-              <Image src={featured.coverImage} alt={featured.coverAlt} fill priority sizes="(min-width: 1024px) 560px, 100vw" className="object-cover group-hover:scale-[1.02] transition-transform duration-500" />
-            ) : (
-              <div className="absolute inset-0 soft-grid-bg bg-gradient-to-br from-[#1e2b45] via-[#131c31] to-[#0f172a] flex items-end p-8">
-                <span className="font-editorial italic text-5xl text-[#dfc490]/80">{featured.categoryLabel}</span>
-              </div>
-            )}
-          </div>
-          <div className="p-7 sm:p-9 flex flex-col justify-center" dir={featured.language === "ar" ? "rtl" : "ltr"} lang={featured.language}>
-            <div className="text-xs font-tech text-[#5eead4]">{featured.featured ? "Featured article" : "Latest article"}</div>
-            <h2 className={`mt-3 text-2xl sm:text-3xl font-bold text-slate-50 leading-tight group-hover:text-[#dfc490] transition-colors ${featured.language === "ar" ? "font-arabic" : ""}`}>
-              {featured.title}
-            </h2>
-            <p className={`mt-3 text-slate-300 leading-relaxed ${featured.language === "ar" ? "font-arabic" : ""}`}>{featured.excerpt}</p>
-            <div className="mt-6 flex items-center gap-4 text-sm text-slate-400">
-              <span className="text-[#dfc490]">{featured.categoryLabel}</span>
-              <span>{featured.displayDate}</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                {featured.readingMinutes} min
-              </span>
-              <ArrowUpRight className="ms-auto w-5 h-5 text-[#dfc490] rtl:-scale-x-100" />
-            </div>
-          </div>
-        </Link>
-      )}
+      {featured && <FeaturedPost post={featured} />}
 
-      {/* Grid */}
       {grid.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {grid.map((post, i) => (
-            <PostCard key={post.slug} post={post} priority={i < 3} />
-          ))}
-        </div>
+        <motion.ul layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence initial={false} mode="popLayout">
+            {grid.map((post, i) => (
+              <motion.li
+                key={post.slug}
+                layout
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.15 } }}
+                transition={{ duration: 0.4, ease: EASE_OUT }}
+              >
+                <PostCard post={post} priority={i < 3} />
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       ) : (
         hasFilters && (
-          <p className="text-center text-slate-400 py-10">No articles match your filters.</p>
+          <div className="border border-dashed border-line-3 px-6 py-14 text-center">
+            <p className="font-display text-[1.5rem] text-fg">No articles match these filters</p>
+            <p className="mt-2 text-[14px] text-fg-3">Try a broader search, another language, or clear the filters.</p>
+            <div className="mt-6">
+              <Button variant="secondary" onClick={clear}>
+                Clear all filters
+              </Button>
+            </div>
+          </div>
         )
       )}
     </div>
+  );
+}
+
+function FeaturedPost({ post }: { post: PostMeta }) {
+  const isAr = post.language === "ar";
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group grid overflow-hidden border border-line-2 bg-surface/50 transition-colors duration-500 hover:border-line-3 lg:grid-cols-12"
+    >
+      <div className="relative min-h-[260px] overflow-hidden border-b border-line lg:col-span-7 lg:min-h-[380px] lg:border-b-0 lg:border-r">
+        {post.coverImage ? (
+          <Image
+            src={post.coverImage}
+            alt={post.coverAlt}
+            fill
+            priority
+            sizes="(min-width: 1024px) 760px, 100vw"
+            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+          />
+        ) : (
+          <GeneratedCover post={post} large />
+        )}
+      </div>
+      <div className="flex flex-col p-7 sm:p-10 lg:col-span-5" dir={isAr ? "rtl" : "ltr"} lang={post.language}>
+        <div className="eyebrow text-signal">{post.featured ? "Featured article" : "Latest article"}</div>
+        <h2 className={cn("mt-4 text-[clamp(1.75rem,2.6vw,2.4rem)] leading-[1.12] text-fg transition-colors group-hover:text-accent", isAr ? "font-arabic font-semibold" : "font-display")}>
+          {post.title}
+        </h2>
+        <p className={cn("mt-4 text-[15px] leading-relaxed text-fg-3", isAr && "font-arabic")}>{post.excerpt}</p>
+        <div className="mt-auto flex items-center gap-4 pt-8 text-[13px] text-fg-4">
+          <span className="text-accent">{post.categoryLabel}</span>
+          <span className="numeric">{post.displayDate}</span>
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="size-3.5" strokeWidth={1.75} />
+            {readingLabel(post.readingMinutes, post.language)}
+          </span>
+          <ArrowGlyph className="ms-auto size-5 text-accent rtl:-scale-x-100" />
+        </div>
+      </div>
+    </Link>
   );
 }

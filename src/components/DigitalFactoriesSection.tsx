@@ -1,311 +1,427 @@
 "use client";
 
-import React, { useState } from "react";
-import { ArrowUpRight, Layers, ShieldCheck, Cpu } from "lucide-react";
-import {
-  DIGITAL_FACTORIES,
-  DIGITAL_FACTORY_TOPOLOGY,
-} from "@/data/portfolioData";
+import { AnimatePresence, motion } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { DIGITAL_FACTORIES, DIGITAL_FACTORY_TOPOLOGY, type DigitalFactoryCaseStudy } from "@/data/portfolioData";
+import { ArrowGlyph } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/primitives";
+import { Reveal } from "@/components/ui/Reveal";
+import { CornerTicks, Eyebrow, Section, SectionHeader } from "@/components/ui/SectionHeader";
+import { SplitReveal } from "@/components/ui/SplitReveal";
+import { cn } from "@/lib/cn";
+import { emit, PORTFOLIO_EVENTS, scrollToSection } from "@/lib/events";
+import { pad2 } from "@/lib/format";
+import { useWindowEvent } from "@/lib/hooks";
+import { EASE_OUT, SPRING, swap } from "@/lib/motion";
+
+type FactoryId = DigitalFactoryCaseStudy["id"];
+
+/** Chronological order: Factory I (Warba) → Factory II (KIB). */
+const ORDER: { id: FactoryId; roman: string; tone: "signal" | "accent" }[] = [
+  { id: "warba", roman: "I", tone: "signal" },
+  { id: "kib", roman: "II", tone: "accent" },
+];
+
+/** Factory "key products" that also have a page in the platform showroom. */
+const SHOWROOM_LINKS: Record<string, string> = {
+  "KIB Mobile (Retail)": "kib-mobile",
+  "KIB Corporate": "kib-corporate",
+  "KIB Aqari": "kib-aqari",
+  "KIB Invest": "kib-invest",
+  "BuyNow by KIB": "kib-buynow",
+  "Remittance & WAGE by KIB": "kib-remittance-wage",
+  "BIN Sponsorship & BaaS": "kib-bin-sponsorship",
+  "Warba Bank Mobile App": "warba-mobile",
+  "Fayez & Fayez Admin": "warba-fayez",
+  "Hassala Kids": "warba-hassala-kids",
+};
 
 export default function DigitalFactoriesSection() {
-  const [activeNodeIndex, setActiveNodeIndex] = useState<number>(0);
-  const activeNode = DIGITAL_FACTORY_TOPOLOGY[activeNodeIndex];
-
-  const scrollToProducts = () => {
-    const el = document.getElementById("products");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const [factoryId, setFactoryId] = useState<FactoryId>("kib");
+  useWindowEvent<string>(PORTFOLIO_EVENTS.selectFactory, (id) => {
+    if (id === "kib" || id === "warba") setFactoryId(id);
+  });
+  const factory = DIGITAL_FACTORIES.find((f) => f.id === factoryId) ?? DIGITAL_FACTORIES[0];
+  const tone = ORDER.find((o) => o.id === factory.id)?.tone ?? "accent";
 
   return (
-    <section
-      id="digital-factories"
-      className="relative py-24 lg:py-32 bg-[#11192c] border-b border-slate-200/[0.08]"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="text-xs font-tech uppercase tracking-widest text-[#dfc490]">
-            02 · Signature Career Differentiator
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-50 tracking-tight leading-[1.15]">
-            Building{" "}
-            <span className="font-editorial italic font-normal text-[#dfc490]">
-              Two Banking Digital Factories
-            </span>{" "}
-            from the Ground Up.
-          </h2>
-          <p className="text-base sm:text-lg text-slate-300 leading-[1.75]">
-            At both <strong className="text-slate-100 font-semibold">Warba Bank</strong> and{" "}
-            <strong className="text-slate-100 font-semibold">Kuwait International Bank (KIB)</strong>, I was one of the core leaders responsible for establishing their internal Digital Factories from scratch—defining strategic roadmaps, technology stacks, architectural standards, CI/CD governance, and engineering team structures.
-          </p>
-        </div>
+    <Section id="digital-factories" labelledBy="factories-title" className="py-28 lg:py-40">
+      <div className="shell">
+        <SectionHeader
+          index="02"
+          label="Signature career differentiator"
+          titleId="factories-title"
+          title="Building *two banking digital factories* from the ground up."
+          lede={
+            <>
+              At both <strong>Warba Bank</strong> and <strong>Kuwait International Bank (KIB)</strong>, I was one of the core leaders
+              responsible for establishing their internal Digital Factories from scratch—defining strategic roadmaps, technology stacks,
+              architectural standards, CI/CD governance, and engineering team structures.
+            </>
+          }
+        />
 
-        {/* Interactive 5-Stage End-to-End Digital Factory Operating Topology */}
-        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#131c31]/90 border border-slate-200/[0.09] shadow-xl shadow-slate-950/30">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-slate-200/[0.08]">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs font-tech uppercase tracking-wider text-[#5eead4]">
-                <Layers className="w-3.5 h-3.5" />
-                <span>Interactive End-to-End Digital Factory Topology</span>
-              </div>
-              <h3 className="mt-1 text-lg sm:text-xl font-display font-semibold text-slate-100">
-                Select any architectural stage to inspect how I structured and governed it at KIB &amp; Warba Bank
-              </h3>
-            </div>
-            <span className="text-xs font-tech text-slate-400 shrink-0">
-              Stage {activeNodeIndex + 1} of {DIGITAL_FACTORY_TOPOLOGY.length}
-            </span>
-          </div>
+        <Reveal className="mt-16 lg:mt-24">
+          <FactorySelector value={factoryId} onChange={setFactoryId} />
+        </Reveal>
 
-          {/* 5 Connected Stage Selector Nodes */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-5 gap-3">
-            {DIGITAL_FACTORY_TOPOLOGY.map((node, idx) => {
-              const isSelected = activeNodeIndex === idx;
-              return (
-                <button
-                  key={node.id}
-                  onClick={() => setActiveNodeIndex(idx)}
-                  className={`relative p-4 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
-                    isSelected
-                      ? "bg-[#182338] border-[#dfc490]/55 shadow-md shadow-slate-950/40"
-                      : "bg-[#0f172a]/70 border-slate-200/[0.07] hover:border-slate-200/[0.18]"
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between text-[11px] font-tech">
-                      <span
-                        className={
-                          isSelected ? "text-[#dfc490] font-semibold" : "text-slate-400"
-                        }
-                      >
-                        {node.stageCode}
-                      </span>
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          isSelected ? "bg-[#5eead4]" : "bg-slate-600"
-                        }`}
-                      />
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-slate-100 leading-snug">
-                      {node.title}
-                    </div>
-                  </div>
-                  <div className="mt-2.5 text-[11px] text-slate-400 leading-snug">
-                    {node.subtitle}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={factory.id} variants={swap} initial="initial" animate="animate" exit="exit">
+            <FactoryDossier factory={factory} tone={tone} />
+          </motion.div>
+        </AnimatePresence>
 
-          {/* Active Stage Live Inspection Panel */}
-          <div className="mt-6 p-6 rounded-2xl bg-[#0f172a]/90 border border-slate-200/[0.08] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-5 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182338] border border-[#dfc490]/30 text-xs font-tech text-[#dfc490]">
-                <span>{activeNode.stageCode}</span>
-                <span>·</span>
-                <span>{activeNode.subtitle}</span>
-              </div>
-              <h4 className="text-xl font-display font-bold text-slate-50">
-                {activeNode.title}
-              </h4>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                {activeNode.architecturalRole}
-              </p>
+        <OperatingModel />
+      </div>
+    </Section>
+  );
+}
 
-              {/* Key Standards */}
-              <div className="pt-2">
-                <div className="text-[11px] font-tech uppercase tracking-wider text-slate-400 mb-2">
-                  Core Engineering Standards Enforced
-                </div>
-                <ul className="space-y-2">
-                  {activeNode.keyStandards.map((std, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#5eead4] shrink-0 mt-0.5" />
-                      <span>{std}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+function FactorySelector({ value, onChange }: { value: FactoryId; onChange: (id: FactoryId) => void }) {
+  const refs = useRef<(HTMLButtonElement | null)[]>([]);
 
-            <div className="lg:col-span-7 space-y-4 lg:pl-6 lg:border-l lg:border-slate-200/[0.08]">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-[#131c31] border border-[#dfc490]/25">
-                  <div className="text-[11px] font-tech uppercase tracking-wider text-[#dfc490] mb-1.5">
-                    KIB Digital Factory Implementation
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                    {activeNode.kibImplementation}
-                  </p>
-                </div>
+  const onKeyDown = (event: KeyboardEvent, index: number) => {
+    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+    event.preventDefault();
+    const next = (index + 1) % ORDER.length;
+    refs.current[next]?.focus();
+    onChange(ORDER[next].id);
+  };
 
-                <div className="p-4 rounded-xl bg-[#131c31] border border-[#5eead4]/25">
-                  <div className="text-[11px] font-tech uppercase tracking-wider text-[#5eead4] mb-1.5">
-                    Warba Bank “Al-Wateen” Implementation
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                    {activeNode.warbaImplementation}
-                  </p>
-                </div>
-              </div>
+  const selectedIndex = ORDER.findIndex((o) => o.id === value);
 
-              <div className="pt-2 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-tech text-slate-400 mr-1">
-                  <Cpu className="w-3.5 h-3.5 text-[#dfc490]" />
-                  <span>Stage Stack:</span>
-                </span>
-                {activeNode.stackBadges.map((badge) => (
-                  <span
-                    key={badge}
-                    className="px-2.5 py-1 rounded-lg bg-[#182338] border border-slate-200/[0.08] text-xs font-tech text-slate-200"
-                  >
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Two Digital Factory Institutional Comparison Cards */}
-        <div className="mt-16 space-y-12">
-          {DIGITAL_FACTORIES.map((factory, index) => (
-            <div
-              key={factory.id}
-              className="p-6 sm:p-10 rounded-3xl bg-[#131c31]/90 border border-slate-200/[0.09] grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+  return (
+    <div>
+      <div role="radiogroup" aria-label="Choose a digital factory to inspect" className="grid gap-px border border-line bg-line md:grid-cols-2">
+        {ORDER.map((entry, index) => {
+          const f = DIGITAL_FACTORIES.find((x) => x.id === entry.id);
+          if (!f) return null;
+          const selected = entry.id === value;
+          return (
+            <button
+              key={entry.id}
+              ref={(el) => {
+                refs.current[index] = el;
+              }}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              tabIndex={selected ? 0 : -1}
+              onClick={() => onChange(entry.id)}
+              onKeyDown={(event) => onKeyDown(event, index)}
+              className="group relative flex min-h-[20rem] cursor-pointer flex-col overflow-hidden bg-bg p-7 text-left outline-offset-[-3px] sm:p-9 lg:min-h-[25rem] lg:p-11"
             >
-              {/* Left 5 Columns: Institutional Context */}
-              <div className="lg:col-span-5 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182338] border border-[#d4b982]/30 text-xs font-tech text-[#dfc490]">
-                  <span>Digital Factory 0{index + 1}</span>
-                  <span>·</span>
-                  <span>{factory.period}</span>
-                </div>
+              {selected && <motion.span layoutId="factory-plate" transition={SPRING} className="absolute inset-0 bg-surface" />}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "pointer-events-none absolute -right-4 -top-16 select-none font-display text-[12rem] leading-none text-transparent transition-[-webkit-text-stroke-color] duration-500 [-webkit-text-stroke-width:1px] lg:text-[15.5rem]",
+                  selected
+                    ? entry.tone === "accent"
+                      ? "[-webkit-text-stroke-color:var(--c-accent-deep)]"
+                      : "[-webkit-text-stroke-color:color-mix(in_oklab,var(--c-signal)_55%,transparent)]"
+                    : "[-webkit-text-stroke-color:var(--c-line-2)]"
+                )}
+              >
+                {entry.roman}
+              </span>
+              <span className="eyebrow relative flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className={entry.tone === "accent" ? "text-accent" : "text-signal"}>Digital factory {entry.roman}</span>
+                <span className="text-fg-4">· {f.period}</span>
+              </span>
+              <span className="relative mt-auto block pt-20 font-display text-[clamp(1.9rem,3.2vw,2.9rem)] leading-[1.04] text-fg">
+                {f.institution}
+              </span>
+              <span className="relative mt-2 block text-[14px] text-fg-3">
+                {f.role} · {f.location}
+              </span>
+              <span
+                className={cn(
+                  "relative mt-7 inline-flex items-center gap-2 text-[13px] transition-colors",
+                  selected ? "text-fg" : "text-fg-3 group-hover:text-fg"
+                )}
+              >
+                {selected ? "Now inspecting" : "Inspect this factory"}
+                <ArrowGlyph direction="down-right" className="size-3.5" />
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-                <div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight">
-                    {factory.institution}
-                  </h3>
-                  <p className="text-sm font-medium text-[#dfc490] mt-1">
-                    {factory.role} — {factory.factoryName}
-                  </p>
-                </div>
+      {/* Career progression axis: Factory I → Factory II */}
+      <div aria-hidden="true" className="relative mt-5 grid grid-cols-2">
+        <div className="absolute inset-x-0 top-[5px] h-px bg-line-2" />
+        <motion.div
+          className="absolute top-[4px] h-[3px] w-1/2 bg-accent"
+          initial={false}
+          animate={{ x: selectedIndex === 0 ? "0%" : "100%" }}
+          transition={SPRING}
+          style={{ left: 0 }}
+        />
+        {["Mar 2019", "Jun 2022", "Present"].map((label, i) => (
+          <span
+            key={label}
+            className={cn("eyebrow numeric absolute top-4 text-[10px] text-fg-4", i === 0 && "left-0", i === 1 && "left-1/2 -translate-x-1/2", i === 2 && "right-0")}
+          >
+            {label}
+          </span>
+        ))}
+        {[0, 50, 100].map((pct) => (
+          <span key={pct} className="absolute top-0 size-[11px] -translate-x-1/2 rounded-full border border-line-3 bg-bg" style={{ left: `${pct}%` }} />
+        ))}
+        <span className="eyebrow col-span-2 mt-12 text-center text-[10px] text-fg-4">Android Chapter Lead → Head of Digital Technology</span>
+      </div>
+    </div>
+  );
+}
 
-                <p className="text-sm sm:text-base text-slate-300 leading-[1.75]">
-                  {factory.executiveSummary}
-                </p>
+function FactoryDossier({ factory, tone }: { factory: DigitalFactoryCaseStudy; tone: "accent" | "signal" }) {
+  const stacks = [
+    { label: "Mobile & Web", items: factory.technologyFoundation.mobileAndWeb },
+    { label: "Backend & Data", items: factory.technologyFoundation.backendAndData },
+    { label: "DevOps & Governance", items: factory.technologyFoundation.devopsAndGovernance },
+  ];
 
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {factory.strategicContext}
-                </p>
+  return (
+    <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-x-12">
+      <div className="lg:col-span-5">
+        <Eyebrow>{factory.factoryName}</Eyebrow>
+        <p className="mt-6 font-display text-[1.6rem] leading-[1.35] text-fg">{factory.executiveSummary}</p>
+        <p className="mt-6 text-[15px] leading-[1.75] text-fg-3">{factory.strategicContext}</p>
 
-                <div className="p-4 rounded-xl bg-[#0f172a]/80 border border-slate-200/[0.07] text-xs text-slate-300 leading-relaxed">
-                  <strong className="text-slate-100 block mb-1">
-                    Organizational Scope &amp; Attribution:
-                  </strong>
-                  {factory.organizationScope}
-                </div>
-              </div>
+        <div className="relative mt-8 border border-line-2 bg-surface/50 p-6">
+          <CornerTicks className="-inset-px" />
+          <div className={cn("eyebrow", tone === "accent" ? "text-accent" : "text-signal")}>Architectural mandate</div>
+          <p className="mt-3 text-[14.5px] leading-[1.7] text-fg-2">{factory.architecturalMandate}</p>
+          <div className="eyebrow mt-6 text-fg-4">Organisational scope &amp; attribution</div>
+          <p className="mt-2 text-[13.5px] leading-[1.7] text-fg-3">{factory.organizationScope}</p>
+        </div>
+      </div>
 
-              {/* Right 7 Columns: Contributions, Stack & Products */}
-              <div className="lg:col-span-7 space-y-8 lg:pl-6 lg:border-l lg:border-slate-200/[0.08]">
-                {/* Direct Contributions */}
-                <div>
-                  <h4 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
-                    Direct Leadership &amp; Architectural Contributions
-                  </h4>
-                  <ul className="space-y-2.5">
-                    {factory.myDirectContribution.map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 text-sm text-slate-200 leading-relaxed"
-                      >
-                        <span className="font-tech text-xs text-[#dfc490] mt-1 shrink-0">
-                          0{i + 1}.
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      <div className="lg:col-span-7">
+        <h3 className="eyebrow text-fg-3">Direct leadership &amp; architectural contributions</h3>
+        <ol className="mt-5 border-t border-line">
+          {factory.myDirectContribution.map((item, i) => (
+            <li key={i} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-3 border-b border-line py-4">
+              <span className={cn("numeric font-mono text-[12px] leading-[1.7]", tone === "accent" ? "text-accent" : "text-signal")}>{pad2(i + 1)}</span>
+              <span className="text-[15px] leading-[1.7] text-fg-2">{item}</span>
+            </li>
+          ))}
+        </ol>
 
-                {/* Technology Stack */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="p-4 rounded-xl bg-[#0f172a]/70 border border-slate-200/[0.07]">
-                    <div className="text-[11px] font-tech text-[#dfc490] mb-2">
-                      Mobile &amp; Web
-                    </div>
-                    <ul className="space-y-1 text-xs text-slate-300">
-                      {factory.technologyFoundation.mobileAndWeb.map((t) => (
-                        <li key={t}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="p-4 rounded-xl bg-[#0f172a]/70 border border-slate-200/[0.07]">
-                    <div className="text-[11px] font-tech text-[#5eead4] mb-2">
-                      Backend &amp; Data
-                    </div>
-                    <ul className="space-y-1 text-xs text-slate-300">
-                      {factory.technologyFoundation.backendAndData.map((t) => (
-                        <li key={t}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="p-4 rounded-xl bg-[#0f172a]/70 border border-slate-200/[0.07]">
-                    <div className="text-[11px] font-tech text-sky-300 mb-2">
-                      DevOps &amp; Governance
-                    </div>
-                    <ul className="space-y-1 text-xs text-slate-300">
-                      {factory.technologyFoundation.devopsAndGovernance.map((t) => (
-                        <li key={t}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Key Products Delivered */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-tech uppercase tracking-wider text-slate-400">
-                      Key Products &amp; Capabilities ({factory.keyProductsDelivered.length})
-                    </span>
-                    <button
-                      onClick={scrollToProducts}
-                      className="inline-flex items-center gap-1 text-xs font-medium text-[#dfc490] hover:underline cursor-pointer"
-                    >
-                      <span>View in Product Showroom</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {factory.keyProductsDelivered.map((prod) => (
-                      <div
-                        key={prod.name}
-                        onClick={scrollToProducts}
-                        className="p-3.5 rounded-xl bg-[#182338]/70 hover:bg-[#1e2b45] border border-slate-200/[0.07] transition-colors cursor-pointer"
-                      >
-                        <div className="text-[11px] font-tech text-[#dfc490]">
-                          {prod.category}
-                        </div>
-                        <div className="text-sm font-semibold text-slate-100 mt-0.5">
-                          {prod.name}
-                        </div>
-                        <p className="text-xs text-slate-400 mt-1 leading-snug">
-                          {prod.summary}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+        <h3 className="eyebrow mt-12 text-fg-3">Technology foundation</h3>
+        <div className="mt-5 grid gap-px border border-line bg-line sm:grid-cols-3">
+          {stacks.map((stack) => (
+            <div key={stack.label} className="bg-bg p-5">
+              <div className="eyebrow text-[10px] text-fg-4">{stack.label}</div>
+              <ul className="mt-3 space-y-2">
+                {stack.items.map((item) => (
+                  <li key={item} className="flex gap-2 text-[13px] leading-snug text-fg-2">
+                    <span aria-hidden="true" className={cn("mt-[7px] size-1 shrink-0 rounded-full", tone === "accent" ? "bg-accent" : "bg-signal")} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
+
+        <div className="mt-12 flex items-center justify-between gap-4">
+          <h3 className="eyebrow text-fg-3">
+            Key products &amp; capabilities <span className="numeric text-fg-4">({factory.keyProductsDelivered.length})</span>
+          </h3>
+          <button
+            type="button"
+            onClick={() => scrollToSection("products")}
+            className="link-sweep inline-flex cursor-pointer items-center gap-1.5 text-[13px] text-accent"
+          >
+            Open the showroom <ArrowGlyph className="size-3.5" />
+          </button>
+        </div>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+          {factory.keyProductsDelivered.map((product) => {
+            const productId = SHOWROOM_LINKS[product.name];
+            return (
+              <li key={product.name}>
+                <button
+                  type="button"
+                  onClick={() => (productId ? emit(PORTFOLIO_EVENTS.selectProduct, productId) : scrollToSection("products"))}
+                  className="group flex h-full w-full cursor-pointer flex-col border border-line bg-surface/40 p-4 text-left transition-[border-color,background-color] duration-300 hover:border-line-3 hover:bg-surface-2/70"
+                >
+                  <span className="eyebrow text-[10px] text-fg-4">{product.category}</span>
+                  <span className="mt-2 flex items-start justify-between gap-3">
+                    <span className="text-[15px] font-medium text-fg">{product.name}</span>
+                    <ArrowGlyph className="mt-0.5 size-3.5 text-fg-4 group-hover:text-accent" />
+                  </span>
+                  <span className="mt-1.5 text-[13px] leading-snug text-fg-3">{product.summary}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-    </section>
+    </div>
+  );
+}
+
+function OperatingModel() {
+  const [active, setActive] = useState(0);
+  const tabsId = useId();
+  const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const node = DIGITAL_FACTORY_TOPOLOGY[active];
+  const count = DIGITAL_FACTORY_TOPOLOGY.length;
+
+  const onKeyDown = (event: KeyboardEvent, index: number) => {
+    const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+    const forward = event.key === "ArrowRight" || event.key === "ArrowDown";
+    const next = event.key === "Home" ? 0 : event.key === "End" ? count - 1 : (index + (forward ? 1 : -1) + count) % count;
+    refs.current[next]?.focus();
+    setActive(next);
+  };
+
+  return (
+    <div className="mt-28 lg:mt-40">
+      <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-x-12">
+        <div className="lg:col-span-8">
+          <Reveal y={10}>
+            <Eyebrow index="02 · B">Factory operating model</Eyebrow>
+          </Reveal>
+          <h3 className="mt-6 font-display text-display-3 text-fg">
+            <SplitReveal text="The factory, end to end, *stage by stage.*" />
+          </h3>
+        </div>
+        <Reveal delay={0.1} className="lg:col-span-4">
+          <p className="text-[15px] leading-relaxed text-fg-3">
+            Select any architectural stage to inspect how I structured and governed it at KIB &amp; Warba Bank.
+          </p>
+        </Reveal>
+      </div>
+
+      <Reveal className="relative mt-12">
+        <div role="tablist" aria-label="Digital factory stages" className="relative grid gap-2 md:grid-cols-5 md:gap-0">
+          {/* Pipeline rail with a travelling packet */}
+          <div aria-hidden="true" className="pointer-events-none absolute left-[10%] right-[10%] top-[36px] hidden h-px overflow-hidden bg-line-2 md:block">
+            <span className="absolute inset-y-0 left-0 w-full animate-travel">
+              <span className="absolute right-0 top-0 h-px w-24 bg-gradient-to-r from-transparent to-accent" />
+              <span className="absolute -right-[3px] -top-[2px] size-[5px] rounded-full bg-accent shadow-[0_0_10px_2px_var(--c-accent)]" />
+            </span>
+          </div>
+          {DIGITAL_FACTORY_TOPOLOGY.map((stage, index) => {
+            const selected = index === active;
+            return (
+              <button
+                key={stage.id}
+                ref={(el) => {
+                  refs.current[index] = el;
+                }}
+                id={`${tabsId}-tab-${index}`}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                aria-controls={`${tabsId}-panel`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => setActive(index)}
+                onKeyDown={(event) => onKeyDown(event, index)}
+                className={cn(
+                  "group relative flex cursor-pointer items-start gap-4 border px-4 py-4 text-left transition-colors duration-300 md:flex-col md:items-center md:border-0 md:px-3 md:pb-5 md:pt-3 md:text-center",
+                  selected ? "border-accent/40 bg-surface/60 md:bg-transparent" : "border-line"
+                )}
+              >
+                <span className="relative grid size-12 shrink-0 place-items-center">
+                  {selected && <motion.span layoutId="stage-halo" transition={SPRING} className="absolute inset-0 rounded-full border border-accent/50 bg-accent/10" />}
+                  <span
+                    className={cn(
+                      "relative size-3 rounded-full border transition-colors duration-300",
+                      selected ? "border-accent bg-accent" : "border-line-3 bg-bg group-hover:border-fg-3"
+                    )}
+                  />
+                </span>
+                <span className="min-w-0 md:mt-2">
+                  <span className={cn("eyebrow block text-[10px]", selected ? "text-accent" : "text-fg-4")}>{stage.stageCode}</span>
+                  <span className={cn("mt-1.5 block font-display text-[1.12rem] leading-snug transition-colors", selected ? "text-fg" : "text-fg-2 group-hover:text-fg")}>
+                    {stage.title}
+                  </span>
+                  <span className="mt-1 block text-[12px] leading-snug text-fg-4">{stage.subtitle}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </Reveal>
+
+      <div id={`${tabsId}-panel`} role="tabpanel" aria-labelledby={`${tabsId}-tab-${active}`} className="relative mt-8 border border-line-2 bg-surface/40">
+        <CornerTicks className="-inset-px" />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={node.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT } }}
+            exit={{ opacity: 0, y: -6, transition: { duration: 0.18 } }}
+            className="grid lg:grid-cols-12"
+          >
+            <div className="p-6 sm:p-8 lg:col-span-5 lg:p-10">
+              <div className="eyebrow flex items-start gap-3 text-fg-3">
+                <span className="numeric shrink-0 whitespace-nowrap text-accent">
+                  {pad2(active + 1)} / {pad2(count)}
+                </span>
+                <span aria-hidden="true" className="mt-[7px] h-px w-6 shrink-0 bg-line-3" />
+                <span>{node.subtitle}</span>
+              </div>
+              <h4 className="mt-5 font-display text-[1.9rem] leading-tight text-fg">{node.title}</h4>
+              <p className="mt-4 text-[15px] leading-[1.75] text-fg-2">{node.architecturalRole}</p>
+              <div className="eyebrow mt-8 text-[10px] text-fg-4">Core engineering standards enforced</div>
+              <ul className="mt-3 space-y-3">
+                {node.keyStandards.map((standard) => (
+                  <li key={standard} className="flex gap-3 text-[14px] leading-relaxed text-fg-2">
+                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-signal" strokeWidth={1.75} />
+                    {standard}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="border-t border-line p-6 sm:p-8 lg:col-span-7 lg:border-l lg:border-t-0 lg:p-10">
+              <div className="grid gap-px border border-line bg-line sm:grid-cols-2">
+                <div className="bg-bg p-5">
+                  <div className="eyebrow text-[10px] text-accent">KIB · Digital Factory II</div>
+                  <p className="mt-3 text-[14px] leading-[1.7] text-fg-2">{node.kibImplementation}</p>
+                </div>
+                <div className="bg-bg p-5">
+                  <div className="eyebrow text-[10px] text-signal">Warba · “Al-Wateen” Factory I</div>
+                  <p className="mt-3 text-[14px] leading-[1.7] text-fg-2">{node.warbaImplementation}</p>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                <span className="eyebrow mr-1 text-[10px] text-fg-4">Stage stack</span>
+                {node.stackBadges.map((badge) => (
+                  <Chip key={badge} tone="mono">
+                    {badge}
+                  </Chip>
+                ))}
+              </div>
+              <div className="mt-8 flex items-center justify-between gap-3 border-t border-line pt-5">
+                <button
+                  type="button"
+                  onClick={() => setActive((active - 1 + count) % count)}
+                  className="inline-flex cursor-pointer items-center gap-2 text-[13px] text-fg-3 transition-colors hover:text-fg"
+                >
+                  <span aria-hidden="true">←</span> Previous stage
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActive((active + 1) % count)}
+                  className="inline-flex cursor-pointer items-center gap-2 text-[13px] text-fg-3 transition-colors hover:text-fg"
+                >
+                  Next stage <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }

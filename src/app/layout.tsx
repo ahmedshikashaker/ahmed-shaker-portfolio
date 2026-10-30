@@ -1,41 +1,47 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Newsreader } from "next/font/google";
 import "./globals.css";
-import { EXECUTIVE_PROFILE, SELECTED_PRODUCTS } from "@/data/portfolioData";
+import { EXECUTIVE_CASE_STUDIES, EXECUTIVE_PROFILE, SELECTED_PRODUCTS } from "@/data/portfolioData";
+import { AppProviders } from "@/components/site/AppProviders";
+import { SiteCanvas } from "@/components/site/SiteCanvas";
+import { getAllPosts } from "@/lib/blog";
+import type { PaletteIndex } from "@/lib/site";
+import { THEME_COLORS, themeInitScript } from "@/lib/theme";
 
-const jakarta = Plus_Jakarta_Sans({
+// Display serif with an optical-size axis: sharper contrast at headline sizes, calmer at text sizes.
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-newsreader",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-  weight: "400",
   style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-plex",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
   display: "swap",
   weight: ["400", "500"],
 });
 
-// Arabic typeface for Arabic blog articles; not preloaded so English pages pay no cost.
+// Same superfamily as the Latin UI face, so Arabic and English share one voice. Not preloaded:
+// English pages pay no cost.
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
-  variable: "--font-arabic",
+  variable: "--font-plex-arabic",
   display: "swap",
   weight: ["400", "500", "600", "700"],
   preload: false,
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: THEME_COLORS.dark,
   width: "device-width",
   initialScale: 1,
 };
@@ -129,11 +135,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const posts = await getAllPosts();
+  const paletteIndex: PaletteIndex = {
+    products: SELECTED_PRODUCTS.map((p) => ({ id: p.id, name: p.name, institution: p.institution, iconPath: p.iconPath })),
+    cases: EXECUTIVE_CASE_STUDIES.map((c) => ({ id: c.id, title: c.title, category: c.category })),
+    posts: posts.slice(0, 12).map((p) => ({ slug: p.slug, title: p.title, language: p.language })),
+    contact: { email: EXECUTIVE_PROFILE.contact.email, linkedin: EXECUTIVE_PROFILE.contact.linkedin },
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -241,14 +255,25 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${plexArabic.variable} dark`}
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable} ${plexArabic.variable}`}
     >
-      <body className="bg-[#0f172a] text-[#e2e8f0] font-[family-name:var(--font-sans)] antialiased selection:bg-[#d4b982]/25 selection:text-[#f8fafc] overflow-x-hidden">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      {/* Extensions such as Grammarly stamp data-* attributes on <body> before React hydrates;
+          this ignores attribute differences on <body> itself only, never its children. */}
+      <body className="bg-bg font-sans text-fg-2 antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <a href="#main" className="skip-link no-print">
+          Skip to content
+        </a>
+        <SiteCanvas />
+        <AppProviders paletteIndex={paletteIndex}>{children}</AppProviders>
       </body>
     </html>
   );

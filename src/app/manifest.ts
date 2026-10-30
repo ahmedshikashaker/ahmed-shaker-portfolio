@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Official executive portfolio of Ahmed Shaker (أحمد شاكر), Head of Digital Technology at Kuwait International Bank (KIB) and former Android Chapter Lead at Warba Bank.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0f172a",
-    theme_color: "#0f172a",
+    background_color: "#0a0e17",
+    theme_color: "#0a0e17",
     icons: [
       {
         src: "/icon",

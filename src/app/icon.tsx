@@ -6,6 +6,7 @@ export const size = {
 };
 export const contentType = "image/png";
 
+/** Stacked-plates mark (the 5-layer reference architecture as a glyph), matching the site header. */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -16,16 +17,16 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0f172a 0%, #182338 100%)",
-          border: "2px solid rgba(223, 196, 144, 0.55)",
+          background: "#0a0e17",
+          border: "2px solid rgba(216, 187, 132, 0.45)",
           borderRadius: "16px",
-          color: "#dfc490",
-          fontSize: 28,
-          fontWeight: 700,
-          letterSpacing: "-0.04em",
         }}
       >
-        AS
+        <svg width="42" height="42" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3.5 24.5 8.75 14 14 3.5 8.75Z" fill="#d8bb84" />
+          <path d="M3.5 13.6 14 18.85 24.5 13.6" stroke="#d8bb84" strokeWidth="1.8" strokeLinejoin="round" strokeOpacity="0.75" />
+          <path d="M3.5 18.6 14 23.85 24.5 18.6" stroke="#d8bb84" strokeWidth="1.8" strokeLinejoin="round" strokeOpacity="0.45" />
+        </svg>
       </div>
     ),
     {

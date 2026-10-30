@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebookF, FaTelegram } from "react-icons/fa6";
 import { Mail, Link2, Check, Share2 } from "lucide-react";
+import { useToast } from "@/components/ui/Toast";
+import { cn } from "@/lib/cn";
+import { copyText } from "@/lib/hooks";
 
 interface ShareBarProps {
   url: string;
@@ -14,12 +17,13 @@ interface ShareBarProps {
 }
 
 const T = {
-  en: { share: "Share this article", copy: "Copy link", copied: "Link copied", more: "More", email: "Email" },
-  ar: { share: "شارك هذا المقال", copy: "نسخ الرابط", copied: "تم نسخ الرابط", more: "المزيد", email: "البريد" },
+  en: { share: "Share this article", copy: "Copy link", copied: "Link copied", failed: "Couldn't copy the link", more: "More", email: "Email" },
+  ar: { share: "شارك هذا المقال", copy: "نسخ الرابط", copied: "تم نسخ الرابط", failed: "تعذّر نسخ الرابط", more: "المزيد", email: "البريد" },
 };
 
 export default function ShareBar({ url, title, excerpt, language, variant = "full" }: ShareBarProps) {
   const t = T[language];
+  const notify = useToast();
   const [copied, setCopied] = useState(false);
   const [canNativeShare, setCanNativeShare] = useState(false);
 
@@ -46,9 +50,12 @@ export default function ShareBar({ url, title, excerpt, language, variant = "ful
   ];
 
   const copy = async () => {
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    const result = await copyText(url);
+    if (result === "copied") {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    }
+    notify(result === "copied" ? t.copied : t.failed, result === "copied" ? "success" : "error");
   };
 
   const nativeShare = async () => {
@@ -60,11 +67,12 @@ export default function ShareBar({ url, title, excerpt, language, variant = "ful
   };
 
   const btn =
-    "inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200/10 bg-[#182338] text-slate-200 hover:text-white hover:border-transparent transition-colors cursor-pointer";
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-line-2 bg-surface/60 text-fg-2 transition-[background-color,color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-transparent hover:text-white";
+  const size = variant === "full" ? "h-10 px-4 text-[13px]" : "size-9";
 
   return (
-    <div className={variant === "full" ? "space-y-3" : ""}>
-      {variant === "full" && <div className="text-xs font-tech uppercase tracking-wider text-[#dfc490]">{t.share}</div>}
+    <div className={variant === "full" ? "space-y-4" : ""}>
+      {variant === "full" && <div className="eyebrow text-fg-3">{t.share}</div>}
       <div className="flex flex-wrap items-center gap-2">
         {targets.map(({ name, icon: Icon, href, color }) => (
           <a
@@ -74,9 +82,9 @@ export default function ShareBar({ url, title, excerpt, language, variant = "ful
             rel="noopener noreferrer"
             aria-label={`Share on ${name}`}
             title={name}
-            className={`${btn} ${color} ${variant === "full" ? "h-10 px-3.5 text-sm" : "h-9 w-9"}`}
+            className={cn(btn, color, size)}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="size-[15px]" />
             {variant === "full" && <span>{name}</span>}
           </a>
         ))}
@@ -85,20 +93,14 @@ export default function ShareBar({ url, title, excerpt, language, variant = "ful
           onClick={copy}
           aria-label={t.copy}
           title={t.copy}
-          className={`${btn} hover:bg-[#dfc490] hover:!text-slate-950 ${variant === "full" ? "h-10 px-3.5 text-sm" : "h-9 w-9"}`}
+          className={cn(btn, "hover:!text-on-accent hover:bg-accent", size)}
         >
-          {copied ? <Check className="w-4 h-4" /> : <Link2 className="w-4 h-4" />}
+          {copied ? <Check className="size-4" /> : <Link2 className="size-4" />}
           {variant === "full" && <span>{copied ? t.copied : t.copy}</span>}
         </button>
         {canNativeShare && (
-          <button
-            type="button"
-            onClick={nativeShare}
-            aria-label={t.more}
-            title={t.more}
-            className={`${btn} hover:bg-slate-600 ${variant === "full" ? "h-10 px-3.5 text-sm" : "h-9 w-9"}`}
-          >
-            <Share2 className="w-4 h-4" />
+          <button type="button" onClick={nativeShare} aria-label={t.more} title={t.more} className={cn(btn, "hover:bg-slate-600", size)}>
+            <Share2 className="size-4" />
             {variant === "full" && <span>{t.more}</span>}
           </button>
         )}

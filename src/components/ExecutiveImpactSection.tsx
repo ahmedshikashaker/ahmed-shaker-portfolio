@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useId, useState } from "react";
+import { Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { Section, SectionHeader } from "@/components/ui/SectionHeader";
+import { cn } from "@/lib/cn";
+import { EASE_IN_OUT, EASE_OUT } from "@/lib/motion";
 
 const EXECUTIVE_PILLARS = [
   {
@@ -57,115 +60,118 @@ const EXECUTIVE_PILLARS = [
 
 export default function ExecutiveImpactSection() {
   const [openIndex, setOpenIndex] = useState<number>(0);
+  const baseId = useId();
 
   return (
-    <section
-      id="impact"
-      className="relative py-24 lg:py-32 bg-[#0f172a] border-b border-slate-200/[0.08]"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="text-xs font-tech uppercase tracking-widest text-[#dfc490]">
-            01 · Executive Positioning &amp; Impact
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-50 tracking-tight leading-[1.15]">
-            Where Executive Strategy Meets{" "}
-            <span className="font-editorial italic font-normal text-[#dfc490]">
-              Production Architecture.
-            </span>
-          </h2>
-          <p className="text-base sm:text-lg text-slate-300 leading-[1.75]">
-            Transforming a financial institution requires operating at two altitudes simultaneously: defining technology strategy, roadmaps, and organizational structures at the executive level while governing architecture, microservices, and CI/CD pipelines at the engineering level.
-          </p>
-        </div>
+    <Section id="impact" labelledBy="impact-title" className="py-28 lg:py-40">
+      <div className="shell">
+        <SectionHeader
+          index="01"
+          label="Executive positioning & impact"
+          titleId="impact-title"
+          title="Where executive strategy meets *production architecture.*"
+          lede="Transforming a financial institution requires operating at two altitudes simultaneously: defining technology strategy, roadmaps, and organizational structures at the executive level while governing architecture, microservices, and CI/CD pipelines at the engineering level."
+          aside={
+            <dl className="mt-8 grid grid-cols-2 gap-px border border-line bg-line text-[12.5px]">
+              <div className="bg-bg p-4">
+                <dt className="eyebrow text-accent">↑ Boardroom</dt>
+                <dd className="mt-1.5 text-fg-3">Strategy, roadmaps, organisation design</dd>
+              </div>
+              <div className="bg-bg p-4">
+                <dt className="eyebrow text-signal">↓ Production</dt>
+                <dd className="mt-1.5 text-fg-3">Architecture, microservices, CI/CD</dd>
+              </div>
+            </dl>
+          }
+        />
 
-        {/* Clean, Soothing Expandable Pillars */}
-        <div className="mt-12 space-y-3">
+        <Stagger as="ol" className="mt-16 border-t border-line lg:mt-24" stagger={0.07}>
           {EXECUTIVE_PILLARS.map((pillar, idx) => {
-            const isOpen = openIndex === idx;
+            const open = openIndex === idx;
+            const panelId = `${baseId}-panel-${idx}`;
+            const buttonId = `${baseId}-button-${idx}`;
             return (
-              <div
-                key={pillar.index}
-                className={`rounded-2xl border transition-colors ${
-                  isOpen
-                    ? "bg-[#131c31] border-[#d4b982]/40"
-                    : "bg-[#131c31]/50 border-slate-200/[0.08] hover:border-slate-200/[0.16]"
-                }`}
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? -1 : idx)}
-                  className="w-full p-6 sm:p-7 text-left flex flex-col lg:flex-row lg:items-center justify-between gap-4 cursor-pointer"
-                  aria-expanded={isOpen}
-                >
-                  <div className="space-y-1 max-w-2xl">
-                    <div className="flex items-center gap-3 text-xs font-tech text-[#dfc490]">
-                      <span>{pillar.index}</span>
-                      <span>·</span>
-                      <span>{pillar.domain}</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-semibold text-slate-100">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {pillar.summary}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3 self-start lg:self-center shrink-0">
-                    <span className="text-xs font-tech text-slate-400">
-                      {isOpen ? "Hide details" : "Read more"}
-                    </span>
-                    <div
-                      className={`w-8 h-8 rounded-lg bg-[#182338] border border-slate-200/10 flex items-center justify-center text-[#dfc490] transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
+              <StaggerItem as="li" key={pillar.index} className="border-b border-line">
+                <h3>
+                  <button
+                    id={buttonId}
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    onClick={() => setOpenIndex(open ? -1 : idx)}
+                    className="group grid w-full cursor-pointer grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-start gap-x-4 py-8 text-left sm:grid-cols-[4.5rem_minmax(0,1fr)_2.75rem] lg:grid-cols-[5.5rem_minmax(0,1.15fr)_minmax(0,0.85fr)_2.75rem] lg:gap-x-10 lg:py-10"
+                  >
+                    <span
+                      className={cn(
+                        "numeric font-display text-[2rem] leading-none transition-colors duration-300 sm:text-[2.75rem]",
+                        open ? "text-accent" : "text-fg-4 group-hover:text-fg-3"
+                      )}
                     >
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
-                  </div>
-                </button>
+                      {pillar.index}
+                    </span>
+                    <span className="block transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5">
+                      <span className="eyebrow block text-fg-3">{pillar.domain}</span>
+                      <span className="mt-3 block font-display text-title text-fg lg:text-[2rem] lg:leading-[1.12]">{pillar.title}</span>
+                      <span className="mt-3 block text-[14.5px] leading-relaxed text-fg-3 lg:hidden">{pillar.summary}</span>
+                    </span>
+                    <span className="hidden pt-7 text-[15px] leading-relaxed text-fg-3 lg:block">{pillar.summary}</span>
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "relative mt-1 grid size-11 place-items-center rounded-full border transition-colors duration-300",
+                        open ? "border-accent/60 bg-accent/10 text-accent" : "border-line-2 text-fg-3 group-hover:border-line-3 group-hover:text-fg"
+                      )}
+                    >
+                      <span className="absolute h-px w-3.5 bg-current" />
+                      <span
+                        className={cn(
+                          "absolute h-3.5 w-px bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                          open && "rotate-90 scale-y-0"
+                        )}
+                      />
+                    </span>
+                  </button>
+                </h3>
 
                 <AnimatePresence initial={false}>
-                  {isOpen && (
+                  {open && (
                     <motion.div
+                      key="panel"
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
+                      animate={{ height: "auto", opacity: 1, transition: { height: { duration: 0.55, ease: EASE_OUT }, opacity: { duration: 0.4, delay: 0.1 } } }}
+                      exit={{ height: 0, opacity: 0, transition: { height: { duration: 0.4, ease: EASE_IN_OUT }, opacity: { duration: 0.2 } } }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-7 sm:px-7 pt-2 border-t border-slate-200/[0.07] grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="p-5 rounded-xl bg-[#0f172a]/80 border border-slate-200/[0.06]">
-                          <div className="text-xs font-tech text-[#dfc490] mb-2">
-                            Executive &amp; Architectural Approach
-                          </div>
-                          <p className="text-sm text-slate-300 leading-relaxed">
-                            {pillar.thesis}
-                          </p>
-                        </div>
-                        <div className="p-5 rounded-xl bg-[#0f172a]/80 border border-slate-200/[0.06] flex flex-col justify-between">
-                          <div>
-                            <div className="text-xs font-tech text-[#5eead4] mb-2">
-                              Verified Career Evidence
+                      <div className="pb-10 sm:pl-[calc(4.5rem+1rem)] lg:pl-[calc(5.5rem+2.5rem)] lg:pr-[calc(2.75rem+2.5rem)]">
+                        <div className="relative grid gap-px border border-line bg-line md:grid-cols-2">
+                          <div className="bg-bg p-6 sm:p-7">
+                            <div className="eyebrow flex items-center gap-2 text-accent">
+                              <span aria-hidden="true">↑</span> Boardroom altitude · Approach
                             </div>
-                            <p className="text-sm text-slate-200 leading-relaxed">
-                              {pillar.proof}
-                            </p>
+                            <p className="mt-4 text-[15px] leading-[1.75] text-fg-2">{pillar.thesis}</p>
                           </div>
-                          <div className="mt-4 pt-3 border-t border-slate-200/[0.06] text-xs font-tech text-slate-400">
-                            Scope: {pillar.scope}
+                          <div className="flex flex-col bg-bg p-6 sm:p-7">
+                            <div className="eyebrow flex items-center gap-2 text-signal">
+                              <span aria-hidden="true">↓</span> Production altitude · Evidence
+                            </div>
+                            <p className="mb-6 mt-4 text-[15px] leading-[1.75] text-fg">{pillar.proof}</p>
+                            <p className="eyebrow mt-auto border-t border-line pt-4 text-[10px] leading-relaxed text-fg-3">
+                              <span className="text-fg-4">Scope —</span> {pillar.scope}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </Stagger>
       </div>
-    </section>
+    </Section>
   );
 }

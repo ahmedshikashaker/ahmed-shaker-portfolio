@@ -1,32 +1,39 @@
 "use client";
 
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 
-/** Thin champagne bar at the top of the viewport showing how far the reader has scrolled. */
+/** Champagne bar at the top of the viewport tracking progress through #article-body. */
 export default function ReadingProgress() {
-  const [progress, setProgress] = useState(0);
+  const { scrollY } = useScroll();
+  const [range, setRange] = useState<[number, number]>([0, 1]);
 
   useEffect(() => {
-    const onScroll = () => {
+    const measure = () => {
       const el = document.getElementById("article-body");
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = el.offsetHeight - window.innerHeight;
-      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
-      setProgress(total > 0 ? (scrolled / total) * 100 : 100);
+      const top = el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3;
+      const end = top + el.offsetHeight - window.innerHeight * 0.7;
+      setRange([top, Math.max(end, top + 1)]);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    window.addEventListener("resize", measure);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
     };
   }, []);
 
+  const progress = useTransform(scrollY, range, [0, 1]);
+  const scaleX = useSpring(progress, { stiffness: 220, damping: 40, restDelta: 0.001 });
+
   return (
-    <div className="fixed top-0 inset-x-0 z-[60] h-[3px] bg-transparent" aria-hidden="true">
-      <div className="h-full bg-gradient-to-r from-[#5eead4] to-[#dfc490] transition-[width] duration-100" style={{ width: `${progress}%` }} />
-    </div>
+    <motion.div
+      aria-hidden="true"
+      className="fixed inset-x-0 top-0 z-[61] h-[3px] origin-left bg-gradient-to-r from-signal via-accent to-accent print:hidden"
+      style={{ scaleX }}
+    />
   );
 }

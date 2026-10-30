@@ -1,8 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Printer, ArrowUpRight, Globe } from "lucide-react";
+import { X, Printer, ArrowUpRight } from "lucide-react";
+import { buttonClasses } from "@/components/ui/Button";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { PORTFOLIO_EVENTS } from "@/lib/events";
+import { useEscape, useFocusTrap, useScrollLock, useWindowEvent } from "@/lib/hooks";
+import { EASE_IN_OUT, EASE_OUT } from "@/lib/motion";
 import {
   EXECUTIVE_PROFILE,
   CAREER_TIMELINE,
@@ -10,10 +15,6 @@ import {
   ARABIC_EXECUTIVE_BRIEF,
 } from "@/data/portfolioData";
 
-interface ExecutiveDossierModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const CV_CORE_SKILLS = [
   {
@@ -95,25 +96,31 @@ const CV_EXPERIENCE_PRINT = [
   },
 ];
 
-export default function ExecutiveDossierModal({
-  isOpen,
-  onClose,
-}: ExecutiveDossierModalProps) {
+const swapProps = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE_OUT } },
+  exit: { opacity: 0, transition: { duration: 0.15 } },
+};
+
+export default function ExecutiveDossierModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = useCallback(() => {
+    setIsOpen(false);
+    if (window.location.hash === "#cv") {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }, []);
   const [lang, setLang] = useState<"en" | "ar">("en");
 
+  useWindowEvent(PORTFOLIO_EVENTS.openDossier, () => setIsOpen(true));
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [isOpen, onClose]);
+    if (window.location.hash === "#cv") setIsOpen(true);
+  }, []);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+  useScrollLock(isOpen);
+  useFocusTrap(panelRef, isOpen);
+  useEscape(onClose, isOpen);
 
   return (
     <>
@@ -385,336 +392,256 @@ export default function ExecutiveDossierModal({
       </div>
 
       {/* =====================================================================
-          INTERACTIVE ON-SCREEN MODAL (Hidden during print via .no-print)
+          INTERACTIVE ON-SCREEN DOSSIER (Hidden during print via .no-print)
          ===================================================================== */}
       <AnimatePresence>
         {isOpen && (
-          <div
-            className="no-print fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="dossier-modal-title"
-          >
+          <div className="no-print fixed inset-0 z-[90]">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.25, delay: 0.05 } }}
               onClick={onClose}
-              className="fixed inset-0 bg-slate-950/80 backdrop-blur-md"
+              className="absolute inset-0 bg-bg/75 backdrop-blur-md"
             />
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 16 }}
-              transition={{ duration: 0.25 }}
-              className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[#131c31] text-slate-100 border border-slate-200/15 shadow-2xl"
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="dossier-modal-title"
+              initial={{ x: "100%" }}
+              animate={{ x: "0%" }}
+              exit={{ x: "100%", transition: { duration: 0.4, ease: EASE_IN_OUT } }}
+              transition={{ type: "spring", stiffness: 240, damping: 34, mass: 0.9 }}
+              className="absolute inset-y-0 right-0 flex w-full max-w-[64rem] flex-col border-l border-line-2 bg-surface shadow-float"
             >
-              {/* Top Bar */}
-              <div className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3 px-6 py-4 bg-[#0f172a]/95 backdrop-blur-xl border-b border-slate-200/10">
-                <span
-                  id="dossier-modal-title"
-                  className="font-tech text-xs text-[#dfc490]"
-                >
-                  {lang === "en"
-                    ? "Executive Curriculum Vitae · Ahmed Shaker (1-Page A4 Print-Ready)"
-                    : "الملف التنفيذي والسيرة الذاتية · أحمد شاكر (جاهز للطباعة A4)"}
-                </span>
-                <div className="flex items-center gap-2.5">
-                  {/* Language Switcher */}
-                  <div className="inline-flex items-center rounded-lg bg-[#182338] p-0.5 border border-slate-200/10">
-                    <button
-                      onClick={() => setLang("en")}
-                      className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
-                        lang === "en"
-                          ? "bg-[#dfc490] text-slate-950 font-semibold"
-                          : "text-slate-300 hover:text-white"
-                      }`}
-                    >
-                      English
-                    </button>
-                    <button
-                      onClick={() => setLang("ar")}
-                      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
-                        lang === "ar"
-                          ? "bg-[#dfc490] text-slate-950 font-semibold"
-                          : "text-slate-300 hover:text-white"
-                      }`}
-                    >
-                      <Globe className="w-3 h-3" />
-                      <span>العربية</span>
-                    </button>
-                  </div>
-
+              {/* Top bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 sm:px-8">
+                <div className="min-w-0">
+                  <div className="eyebrow text-accent">{lang === "en" ? "Executive dossier" : "الملف التنفيذي"}</div>
+                  <span id="dossier-modal-title" className="mt-1 block truncate text-[13px] text-fg-3">
+                    {lang === "en"
+                      ? "Curriculum vitae · 1-page A4, print-ready"
+                      : "السيرة الذاتية · صفحة A4 واحدة جاهزة للطباعة"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <SegmentedControl
+                    label="CV language"
+                    size="sm"
+                    value={lang}
+                    onChange={setLang}
+                    options={[
+                      { value: "en", label: "English" },
+                      { value: "ar", label: <span className="font-arabic">العربية</span> },
+                    ]}
+                  />
                   <button
+                    type="button"
                     onClick={() => window.print()}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#dfc490] hover:bg-[#e8d1a4] text-slate-950 text-xs font-semibold transition-colors cursor-pointer"
+                    className={buttonClasses({ size: "sm" })}
                   >
-                    <Printer className="w-3.5 h-3.5" />
-                    <span>{lang === "en" ? "Print / Save 1-Page PDF" : "طباعة / حفظ PDF"}</span>
+                    <Printer className="size-3.5" strokeWidth={1.75} />
+                    <span className="hidden sm:inline">{lang === "en" ? "Print / Save PDF" : "طباعة / حفظ PDF"}</span>
                   </button>
                   <button
+                    type="button"
                     onClick={onClose}
-                    className="p-1.5 rounded-lg bg-[#182338] text-slate-300 hover:text-white cursor-pointer"
-                    aria-label="Close Executive Dossier"
+                    data-autofocus
+                    aria-label="Close executive dossier"
+                    className="grid size-9 cursor-pointer place-items-center rounded-full border border-line-2 text-fg transition-colors hover:bg-surface-2"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="size-4" strokeWidth={1.75} />
                   </button>
                 </div>
               </div>
 
               {/* Body */}
-              {lang === "en" ? (
-                <div className="p-6 sm:p-10 space-y-8" dir="ltr">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
-                          {EXECUTIVE_PROFILE.name}
-                        </h2>
-                        <p className="mt-1 text-sm sm:text-base font-medium text-[#dfc490]">
-                          Executive Manager – Head of Digital Technology · Digital Banking Transformation &amp; Architecture
-                        </p>
-                        <p className="mt-1 text-xs font-tech text-slate-400">
-                          Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-xs text-slate-300 space-y-1 md:text-right">
-                      <div>{EXECUTIVE_PROFILE.location}</div>
-                      <div>{EXECUTIVE_PROFILE.contact.phone}</div>
-                      <div>{EXECUTIVE_PROFILE.contact.email}</div>
-                      <div className="text-[#dfc490] font-tech">www.ahmed-shaker.com</div>
-                    </div>
-                  </div>
-
-                  {/* Two-Column Executive Resume Layout on Screen */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    {/* Left Column: Core Skills, Education, Languages, Profiles */}
-                    <div className="lg:col-span-4 space-y-6">
-                      <div className="p-5 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10 space-y-3.5">
-                        <div className="text-xs font-tech uppercase tracking-wider text-[#dfc490]">
-                          Core Skills
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+                <AnimatePresence mode="wait" initial={false}>
+                  {lang === "en" ? (
+                    <motion.div key="en" {...swapProps} className="space-y-10 p-6 sm:p-10" dir="ltr">
+                      <header className="grid gap-6 border-b border-line pb-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                        <div>
+                          <h2 className="font-display text-[clamp(2.25rem,4vw,3.25rem)] leading-none text-fg">{EXECUTIVE_PROFILE.name}</h2>
+                          <p className="mt-3 text-[15px] font-medium text-accent">
+                            Executive Manager – Head of Digital Technology · Digital Banking Transformation &amp; Architecture
+                          </p>
+                          <p className="eyebrow mt-2 text-[10px] leading-relaxed text-fg-4">
+                            Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
+                          </p>
                         </div>
-                        {CV_CORE_SKILLS.map((group) => (
-                          <div key={group.category} className="space-y-0.5">
-                            <div className="text-xs font-semibold text-slate-100">
-                              {group.category}
+                        <dl className="space-y-1 text-[12.5px] text-fg-3 md:text-right">
+                          <dd>{EXECUTIVE_PROFILE.location}</dd>
+                          <dd className="numeric">{EXECUTIVE_PROFILE.contact.phone}</dd>
+                          <dd>{EXECUTIVE_PROFILE.contact.email}</dd>
+                          <dd className="font-mono text-accent">www.ahmed-shaker.com</dd>
+                        </dl>
+                      </header>
+
+                      <div className="grid gap-10 lg:grid-cols-12">
+                        <aside className="space-y-8 lg:col-span-4">
+                          <div>
+                            <div className="eyebrow text-accent">Core skills</div>
+                            <dl className="mt-4 space-y-3.5 border-t border-line pt-4">
+                              {CV_CORE_SKILLS.map((group) => (
+                                <div key={group.category}>
+                                  <dt className="text-[13px] font-medium text-fg">{group.category}</dt>
+                                  <dd className="mt-0.5 text-[12.5px] leading-relaxed text-fg-3">{group.items}</dd>
+                                </div>
+                              ))}
+                            </dl>
+                          </div>
+                          <div>
+                            <div className="eyebrow text-accent">Education</div>
+                            <div className="mt-4 border-t border-line pt-4">
+                              <div className="text-[14px] font-medium text-fg">{EXECUTIVE_PROFILE.education.degree}</div>
+                              <div className="mt-1 text-[12.5px] leading-relaxed text-fg-3">
+                                {EXECUTIVE_PROFILE.education.institution} ({EXECUTIVE_PROFILE.education.period})
+                              </div>
                             </div>
-                            <div className="text-xs text-slate-400 leading-relaxed">
-                              {group.items}
+                          </div>
+                          <div>
+                            <div className="eyebrow text-accent">Languages</div>
+                            <dl className="mt-4 space-y-2 border-t border-line pt-4 text-[13px]">
+                              <div className="flex justify-between gap-3">
+                                <dt className="text-fg">Arabic</dt>
+                                <dd className="text-fg-3">Native / Bilingual</dd>
+                              </div>
+                              <div className="flex justify-between gap-3">
+                                <dt className="text-fg">English</dt>
+                                <dd className="text-fg-3">Professional Working</dd>
+                              </div>
+                            </dl>
+                          </div>
+                          <div>
+                            <div className="eyebrow text-accent">Verified profiles</div>
+                            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-line pt-4 text-[13px]">
+                              {[
+                                { href: EXECUTIVE_PROFILE.contact.linkedin, label: "LinkedIn" },
+                                { href: EXECUTIVE_PROFILE.contact.github, label: "GitHub" },
+                                { href: EXECUTIVE_PROFILE.contact.stackoverflow, label: "Stack Overflow" },
+                              ].map((link) => (
+                                <a
+                                  key={link.href}
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-fg-2 transition-colors hover:text-accent"
+                                >
+                                  {link.label}
+                                  <ArrowUpRight className="size-3" />
+                                </a>
+                              ))}
                             </div>
+                          </div>
+                        </aside>
+
+                        <div className="space-y-10 lg:col-span-8">
+                          <div>
+                            <div className="eyebrow text-accent">Executive profile</div>
+                            <p className="mt-4 font-display text-[1.25rem] leading-[1.55] text-fg">
+                              {EXECUTIVE_PROFILE.shortBio} Hands-on technical leader strong in architecture, team building, CI/CD automation, and microservices.
+                            </p>
+                          </div>
+
+                          <div>
+                            <div className="eyebrow text-accent">Key differentiator · Two digital factories built from scratch</div>
+                            <div className="mt-4 grid gap-px border border-line bg-line md:grid-cols-2">
+                              {DIGITAL_FACTORIES.map((df) => (
+                                <div key={df.id} className="bg-surface p-5">
+                                  <div className="eyebrow numeric text-[10px] text-fg-4">{df.period}</div>
+                                  <div className="mt-2 text-[15px] font-medium text-fg">
+                                    {df.institution} — {df.role}
+                                  </div>
+                                  <p className="mt-2 text-[12.5px] leading-relaxed text-fg-3">{df.executiveSummary}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="eyebrow text-accent">Career progression · 2016 – present</div>
+                            <ol className="mt-4 border-t border-line">
+                              {CAREER_TIMELINE.map((role) => (
+                                <li key={role.id} className="border-b border-line py-5">
+                                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                                    <h4 className="font-display text-[1.2rem] text-fg">
+                                      {role.role} — <span className="text-accent">{role.organization}</span>
+                                    </h4>
+                                    <span className="eyebrow numeric text-[10px] text-fg-4">
+                                      {role.period} · {role.location}
+                                    </span>
+                                  </div>
+                                  <ul className="mt-3 space-y-1.5">
+                                    {role.achievements.map((ach, i) => (
+                                      <li key={i} className="flex gap-2.5 text-[13px] leading-relaxed text-fg-2">
+                                        <span aria-hidden="true" className="mt-[8px] size-1 shrink-0 rounded-full bg-accent" />
+                                        {ach.text}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div key="ar" {...swapProps} className="font-arabic space-y-10 p-6 text-right sm:p-10" dir="rtl" lang="ar">
+                      <header className="grid gap-6 border-b border-line pb-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                        <div>
+                          <h2 className="text-[clamp(2rem,3.6vw,2.75rem)] font-bold leading-tight text-fg">{ARABIC_EXECUTIVE_BRIEF.name}</h2>
+                          <p className="mt-3 text-[15px] font-medium leading-relaxed text-accent">{ARABIC_EXECUTIVE_BRIEF.title}</p>
+                          <p className="eyebrow mt-2 text-[10px] leading-relaxed text-fg-4" dir="ltr">
+                            Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
+                          </p>
+                        </div>
+                        <dl className="space-y-1 text-[12.5px] text-fg-3">
+                          <dd>{ARABIC_EXECUTIVE_BRIEF.location}</dd>
+                          <dd dir="ltr" className="numeric">
+                            {EXECUTIVE_PROFILE.contact.phone}
+                          </dd>
+                          <dd dir="ltr">{EXECUTIVE_PROFILE.contact.email}</dd>
+                        </dl>
+                      </header>
+
+                      <div>
+                        <div className="text-[12px] font-semibold text-accent">الملخص التنفيذي</div>
+                        <p className="mt-4 text-[16px] leading-[1.95] text-fg">{ARABIC_EXECUTIVE_BRIEF.summary}</p>
+                      </div>
+
+                      <div className="grid gap-px border border-line bg-line md:grid-cols-3">
+                        {ARABIC_EXECUTIVE_BRIEF.highlights.map((item, idx) => (
+                          <div key={idx} className="bg-surface p-5">
+                            <div className="text-[12.5px] font-semibold text-accent">{item.label}</div>
+                            <p className="mt-2 text-[13.5px] leading-relaxed text-fg-2">{item.value}</p>
                           </div>
                         ))}
                       </div>
 
-                      <div className="p-5 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10 text-xs space-y-1.5">
-                        <div className="font-tech text-[#dfc490] uppercase tracking-wider">
-                          Education
-                        </div>
-                        <div className="font-semibold text-sm text-slate-100">
-                          {EXECUTIVE_PROFILE.education.degree}
-                        </div>
-                        <div className="text-slate-300 leading-relaxed">
-                          {EXECUTIVE_PROFILE.education.institution} ({EXECUTIVE_PROFILE.education.period})
-                        </div>
-                      </div>
-
-                      <div className="p-5 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10 text-xs space-y-2">
-                        <div className="font-tech text-[#dfc490] uppercase tracking-wider">
-                          Languages
-                        </div>
-                        <div className="flex justify-between text-slate-200">
-                          <span className="font-semibold">Arabic</span>
-                          <span className="text-slate-400">Native / Bilingual</span>
-                        </div>
-                        <div className="flex justify-between text-slate-200">
-                          <span className="font-semibold">English</span>
-                          <span className="text-slate-400">Professional Working</span>
-                        </div>
-                      </div>
-
-                      <div className="p-5 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10 text-xs space-y-2.5">
-                        <div className="font-tech text-[#dfc490] uppercase tracking-wider">
-                          Verified Profiles
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                          <a
-                            href={EXECUTIVE_PROFILE.contact.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
-                          >
-                            <span>LinkedIn</span>
-                            <ArrowUpRight className="w-3 h-3" />
-                          </a>
-                          <a
-                            href={EXECUTIVE_PROFILE.contact.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
-                          >
-                            <span>GitHub</span>
-                            <ArrowUpRight className="w-3 h-3" />
-                          </a>
-                          <a
-                            href={EXECUTIVE_PROFILE.contact.stackoverflow}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-200 hover:text-[#dfc490]"
-                          >
-                            <span>Stack Overflow</span>
-                            <ArrowUpRight className="w-3 h-3" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right Column: Profile, 2 Digital Factories, Experience */}
-                    <div className="lg:col-span-8 space-y-6">
                       <div>
-                        <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-2">
-                          Executive Profile
-                        </h3>
-                        <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                          {EXECUTIVE_PROFILE.shortBio} Hands-on technical leader strong in architecture, team building, CI/CD automation, and microservices.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
-                          Key Differentiator: Two Digital Factories Built from Scratch
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {DIGITAL_FACTORIES.map((df) => (
-                            <div
-                              key={df.id}
-                              className="p-4 rounded-2xl bg-[#0f172a]/70 border border-slate-200/10"
-                            >
-                              <div className="text-xs font-tech text-[#dfc490]">{df.period}</div>
-                              <div className="text-base font-semibold text-slate-50 mt-0.5">
-                                {df.institution} — {df.role}
-                              </div>
-                              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
-                                {df.executiveSummary}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xs font-tech uppercase tracking-wider text-[#dfc490] mb-3">
-                          Career Progression (2016 – Present)
-                        </h3>
-                        <div className="space-y-4">
-                          {CAREER_TIMELINE.map((role) => (
-                            <div
-                              key={role.id}
-                              className="p-5 rounded-2xl bg-[#0f172a]/60 border border-slate-200/[0.08]"
-                            >
+                        <div className="text-[12px] font-semibold text-accent">المسيرة المهنية والقيادية (2016 – حتى الآن)</div>
+                        <ol className="mt-4 border-t border-line">
+                          {ARABIC_EXECUTIVE_BRIEF.careerSummary.map((item, idx) => (
+                            <li key={idx} className="border-b border-line py-5">
                               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                                <h4 className="text-base font-bold text-slate-50">
-                                  {role.role} — <span className="text-[#dfc490]">{role.organization}</span>
+                                <h4 className="text-[16px] font-bold text-fg">
+                                  {item.role} — <span className="text-accent">{item.org}</span>
                                 </h4>
-                                <span className="text-xs font-tech text-slate-400">
-                                  {role.period} · {role.location}
-                                </span>
+                                <span className="text-[12px] text-fg-4">{item.period}</span>
                               </div>
-                              <ul className="mt-3 space-y-1.5">
-                                {role.achievements.map((ach, i) => (
-                                  <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
-                                    <span className="text-[#dfc490]">•</span>
-                                    <span>{ach.text}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                              <p className="mt-2.5 text-[14px] leading-[1.9] text-fg-2">{item.desc}</p>
+                            </li>
                           ))}
-                        </div>
+                        </ol>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* Arabic Executive Brief (RTL) */
-                <div className="p-6 sm:p-10 space-y-8 text-right" dir="rtl">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/10">
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-50">
-                          {ARABIC_EXECUTIVE_BRIEF.name}
-                        </h2>
-                        <p className="mt-1.5 text-sm sm:text-base font-medium text-[#dfc490]">
-                          {ARABIC_EXECUTIVE_BRIEF.title}
-                        </p>
-                        <p className="mt-1 text-xs font-tech text-slate-400" dir="ltr">
-                          Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-xs text-slate-300 space-y-1">
-                      <div>{ARABIC_EXECUTIVE_BRIEF.location}</div>
-                      <div dir="ltr">{EXECUTIVE_PROFILE.contact.phone}</div>
-                      <div dir="ltr">{EXECUTIVE_PROFILE.contact.email}</div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xs font-semibold text-[#dfc490] mb-2">
-                      الملخص التنفيذي
-                    </h3>
-                    <p className="text-sm sm:text-base text-slate-200 leading-[1.85]">
-                      {ARABIC_EXECUTIVE_BRIEF.summary}
-                    </p>
-                  </div>
-
-                  {/* Highlights */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {ARABIC_EXECUTIVE_BRIEF.highlights.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="p-4 rounded-2xl bg-[#0f172a]/80 border border-[#dfc490]/25"
-                      >
-                        <div className="text-xs font-semibold text-[#dfc490]">
-                          {item.label}
-                        </div>
-                        <p className="mt-1.5 text-xs sm:text-sm text-slate-100 leading-relaxed">
-                          {item.value}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Career Progression in Arabic */}
-                  <div>
-                    <h3 className="text-xs font-semibold text-[#dfc490] mb-3">
-                      المسيرة المهنية والقيادية (2016 – حتى الآن)
-                    </h3>
-                    <div className="space-y-4">
-                      {ARABIC_EXECUTIVE_BRIEF.careerSummary.map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="p-5 rounded-2xl bg-[#0f172a]/60 border border-slate-200/[0.08]"
-                        >
-                          <div className="flex flex-wrap items-baseline justify-between gap-2">
-                            <h4 className="text-base font-bold text-slate-50">
-                              {item.role} —{" "}
-                              <span className="text-[#dfc490]">{item.org}</span>
-                            </h4>
-                            <span className="text-xs font-tech text-slate-400">
-                              {item.period}
-                            </span>
-                          </div>
-                          <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-[1.8]">
-                            {item.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </motion.div>
           </div>
         )}

@@ -118,126 +118,139 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <article lang={post.language} dir={dir} className={isAr ? "font-arabic" : ""}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_220px] gap-12">
-        <div className="min-w-0 max-w-3xl w-full mx-auto lg:mx-0 lg:ms-auto">
-        {/* Header */}
-        <header className="pt-12 sm:pt-16 text-start">
-          <Link href="/blog" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-[#dfc490]" dir="ltr">
-            <ArrowLeft className="w-4 h-4" /> All articles
-          </Link>
+      <article lang={post.language} dir={dir} className={`print-article ${isAr ? "font-arabic" : ""}`}>
+        <div className="shell grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[minmax(0,1fr)_15rem] xl:gap-20">
+          <div className="mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:ms-auto">
+            <header className="pt-32 text-start sm:pt-40 print:pt-0">
+              <nav aria-label="Breadcrumb" className="eyebrow flex items-center gap-2 text-fg-4 print:hidden" dir="ltr">
+                <Link href="/" className="transition-colors hover:text-fg">
+                  Portfolio
+                </Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/blog" className="inline-flex items-center gap-1.5 transition-colors hover:text-fg">
+                  <ArrowLeft className="size-3" /> Writing
+                </Link>
+              </nav>
 
-          {post.draft && (
-            <div className="mt-6 rounded-xl border border-amber-400/40 bg-amber-400/10 px-4 py-2 text-sm text-amber-200" dir="ltr">
-              Draft: visible only in local development. Untick “Draft” in the editor to publish.
-            </div>
-          )}
+              {post.draft && (
+                <div className="mt-6 rounded-xl border border-amber-400/40 bg-amber-400/10 px-4 py-2.5 text-sm text-amber-700 dark:text-amber-200 print:hidden" dir="ltr">
+                  Draft: visible only in local development. Untick “Draft” in the editor to publish.
+                </div>
+              )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px]">
-            <Link href={`/blog?category=${post.category}`} className="font-medium text-[#dfc490] hover:underline">
-              {post.categoryLabel}
-            </Link>
-            <span className="text-slate-600">·</span>
-            <span className="inline-flex items-center gap-1.5 text-slate-400">
-              <CalendarDays className="w-3.5 h-3.5" />
-              <time dateTime={post.publishedDate}>{post.displayDate}</time>
-            </span>
-            <span className="text-slate-600">·</span>
-            <span className="inline-flex items-center gap-1.5 text-slate-400">
-              <Clock className="w-3.5 h-3.5" />
-              {readingLabel(post.readingMinutes, post.language)}
-            </span>
-            {post.updatedDate && (
-              <>
-                <span className="text-slate-600">·</span>
-                <span className="inline-flex items-center gap-1.5 text-slate-400">
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  {isAr ? "حُدّث " : "Updated "}
-                  <time dateTime={post.updatedDate}>{formatDate(post.updatedDate, post.language)}</time>
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px]">
+                <Link
+                  href={`/blog?category=${post.category}`}
+                  className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-medium text-accent transition-colors hover:border-accent"
+                >
+                  {post.categoryLabel}
+                </Link>
+                <span className="inline-flex items-center gap-1.5 text-fg-3">
+                  <CalendarDays className="size-3.5" strokeWidth={1.75} />
+                  <time dateTime={post.publishedDate}>{post.displayDate}</time>
                 </span>
-              </>
-            )}
-          </div>
-
-          <h1 className={`mt-4 text-3xl sm:text-[2.6rem] font-bold text-slate-50 tracking-tight leading-[1.18] ${isAr ? "" : "font-display"}`}>
-            {post.title}
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl text-slate-300 leading-relaxed">{post.excerpt}</p>
-
-          <div className="mt-6 flex items-center justify-between gap-4 flex-wrap border-y border-slate-200/[0.07] py-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#dfc490]/50">
-                <Image src="/assets/profile/ahmed-shaker-portrait.jpg" alt="Ahmed Shaker" width={40} height={40} className="w-full h-full object-cover" />
+                <span className="inline-flex items-center gap-1.5 text-fg-3">
+                  <Clock className="size-3.5" strokeWidth={1.75} />
+                  {readingLabel(post.readingMinutes, post.language)}
+                </span>
+                {post.updatedDate && (
+                  <span className="inline-flex items-center gap-1.5 text-fg-3">
+                    <RefreshCw className="size-3.5" strokeWidth={1.75} />
+                    {isAr ? "حُدّث " : "Updated "}
+                    <time dateTime={post.updatedDate}>{formatDate(post.updatedDate, post.language)}</time>
+                  </span>
+                )}
               </div>
-              <div className="leading-tight">
-                <div className="text-sm font-semibold text-slate-100">{isAr ? "أحمد شاكر" : "Ahmed Shaker"}</div>
-                <div className="text-xs text-slate-400">
-                  {isAr ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية، KIB" : "Executive Manager – Head of Digital Technology, KIB"}
+
+              <h1 className={`mt-6 text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.06] tracking-[-0.025em] text-fg ${isAr ? "font-semibold leading-[1.3] tracking-normal" : "font-display"}`}>
+                {post.title}
+              </h1>
+              <p className={`mt-6 text-[1.25rem] leading-relaxed text-fg-3 ${isAr ? "" : "font-display italic"}`}>{post.excerpt}</p>
+
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-y border-line py-4">
+                <div className="flex items-center gap-3">
+                  <div className="duotone relative size-11 overflow-hidden rounded-full border border-line-2">
+                    <Image src="/assets/profile/ahmed-shaker-portrait.jpg" alt="Ahmed Shaker" fill sizes="44px" className="object-cover object-[50%_24%]" />
+                  </div>
+                  <div className="leading-tight">
+                    <div className="text-[14px] font-medium text-fg">{isAr ? "أحمد شاكر" : "Ahmed Shaker"}</div>
+                    <div className="mt-0.5 text-[12px] text-fg-3">
+                      {isAr ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية، KIB" : "Executive Manager – Head of Digital Technology, KIB"}
+                    </div>
+                  </div>
+                </div>
+                <div className="print:hidden">
+                  <ShareBar url={post.url} title={post.title} excerpt={post.excerpt} language={post.language} variant="icons" />
                 </div>
               </div>
-            </div>
-            <ShareBar url={post.url} title={post.title} excerpt={post.excerpt} language={post.language} variant="icons" />
-          </div>
-        </header>
+            </header>
 
-        {/* Cover */}
-        {post.coverImage && (
-          <div className="mt-10">
-            <div className="relative w-full overflow-hidden rounded-3xl border border-slate-200/[0.08]" style={{ aspectRatio: "1.9 / 1" }}>
-              <Image src={post.coverImage} alt={post.coverAlt} fill priority sizes="(min-width: 1024px) 768px, 100vw" className="object-cover" />
-            </div>
-          </div>
-        )}
-
-        {/* Body */}
-          <div id="article-body" className="mt-12">
-            <div className={`blog-prose prose prose-invert prose-lg max-w-none ${isAr ? "blog-prose-ar" : ""}`}>
-              {renderMarkdoc(post.renderable)}
-            </div>
-
-            {post.tags.length > 0 && (
-              <div className="mt-12 flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <Link
-                    key={tag}
-                    href={`/blog?tag=${encodeURIComponent(tag)}`}
-                    className="px-3 py-1 rounded-full border border-slate-200/10 text-[13px] text-slate-300 hover:border-[#d4b982]/50 hover:text-[#dfc490]"
-                  >
-                    #{tag}
-                  </Link>
-                ))}
+            {post.coverImage && (
+              <div className="mt-10">
+                <div className="relative w-full overflow-hidden rounded-xl border border-line-2" style={{ aspectRatio: "1.9 / 1" }}>
+                  <Image src={post.coverImage} alt={post.coverAlt} fill priority sizes="(min-width: 1024px) 768px, 100vw" className="object-cover" />
+                </div>
               </div>
             )}
 
-            <div className="mt-10 rounded-2xl border border-slate-200/[0.09] bg-[#131c31]/70 p-6">
-              <ShareBar url={post.url} title={post.title} excerpt={post.excerpt} language={post.language} variant="full" />
-            </div>
+            <div id="article-body" className="mt-12">
+              <div className={`blog-prose prose prose-lg max-w-none ${isAr ? "blog-prose-ar" : ""}`}>{renderMarkdoc(post.renderable)}</div>
 
-            <div className="mt-8">
-              <AuthorCard language={post.language} />
-            </div>
+              {post.tags.length > 0 && (
+                <div className="mt-14 flex flex-wrap gap-2 print:hidden">
+                  {post.tags.map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`/blog?tag=${encodeURIComponent(tag)}`}
+                      className="rounded-full border border-line-2 px-3 py-1 text-[13px] text-fg-3 transition-colors hover:border-accent/50 hover:text-accent"
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
+              )}
 
-            {(newer || older) && (
-              <nav className="mt-10 grid sm:grid-cols-2 gap-4" dir="ltr" aria-label="More articles">
-                {older ? (
-                  <Link href={`/blog/${older.slug}`} className="group rounded-2xl border border-slate-200/[0.08] p-5 hover:border-[#d4b982]/45">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500"><ArrowLeft className="w-3.5 h-3.5" /> Previous</div>
-                    <div className="mt-1.5 font-semibold text-slate-100 group-hover:text-[#dfc490]" dir={older.language === "ar" ? "rtl" : "ltr"}>{older.title}</div>
-                  </Link>
-                ) : <span />}
-                {newer && (
-                  <Link href={`/blog/${newer.slug}`} className="group rounded-2xl border border-slate-200/[0.08] p-5 text-end hover:border-[#d4b982]/45">
-                    <div className="flex items-center justify-end gap-1.5 text-xs text-slate-500">Next <ArrowRight className="w-3.5 h-3.5" /></div>
-                    <div className="mt-1.5 font-semibold text-slate-100 group-hover:text-[#dfc490]" dir={newer.language === "ar" ? "rtl" : "ltr"}>{newer.title}</div>
-                  </Link>
-                )}
-              </nav>
-            )}
+              <div className="mt-10 border border-line-2 bg-surface/50 p-6 sm:p-8 print:hidden">
+                <ShareBar url={post.url} title={post.title} excerpt={post.excerpt} language={post.language} variant="full" />
+              </div>
+
+              <div className="mt-8 print:hidden">
+                <AuthorCard language={post.language} />
+              </div>
+
+              {(newer || older) && (
+                <nav className="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 print:hidden" dir="ltr" aria-label="More articles">
+                  {older ? (
+                    <Link href={`/blog/${older.slug}`} className="group bg-bg p-6 transition-colors hover:bg-surface">
+                      <div className="eyebrow flex items-center gap-1.5 text-fg-4">
+                        <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-0.5" /> Previous
+                      </div>
+                      <div className="mt-2 font-display text-[1.2rem] leading-snug text-fg transition-colors group-hover:text-accent" dir={older.language === "ar" ? "rtl" : "ltr"}>
+                        {older.title}
+                      </div>
+                    </Link>
+                  ) : (
+                    <span className="bg-bg" />
+                  )}
+                  {newer ? (
+                    <Link href={`/blog/${newer.slug}`} className="group bg-bg p-6 text-end transition-colors hover:bg-surface">
+                      <div className="eyebrow flex items-center justify-end gap-1.5 text-fg-4">
+                        Next <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </div>
+                      <div className="mt-2 font-display text-[1.2rem] leading-snug text-fg transition-colors group-hover:text-accent" dir={newer.language === "ar" ? "rtl" : "ltr"}>
+                        {newer.title}
+                      </div>
+                    </Link>
+                  ) : (
+                    <span className="bg-bg" />
+                  )}
+                </nav>
+              )}
+            </div>
           </div>
-        </div>
 
-          <aside className="hidden lg:block pt-16">
-            <div className="sticky top-24 space-y-8">
+          <aside className="hidden pt-40 lg:block print:hidden">
+            <div className="sticky top-28 space-y-8">
               <TableOfContents items={post.toc} language={post.language} />
             </div>
           </aside>
@@ -245,13 +258,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </article>
 
       {related.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 mt-20">
-          <h2 className="text-xs font-tech uppercase tracking-widest text-[#dfc490]">Keep reading</h2>
-          <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((p) => (
-              <PostCard key={p.slug} post={p} />
-            ))}
+        <section className="shell mt-28 print:hidden" aria-labelledby="related-title">
+          <div className="flex items-end justify-between gap-6 border-t border-line pt-10">
+            <h2 id="related-title" className="font-display text-display-3 text-fg">
+              Keep <em className="text-accent">reading</em>
+            </h2>
+            <Link href="/blog" className="link-sweep text-[13.5px] text-fg-3 hover:text-fg">
+              All articles
+            </Link>
           </div>
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <li key={p.slug}>
+                <PostCard post={p} />
+              </li>
+            ))}
+          </ul>
         </section>
       )}
     </>

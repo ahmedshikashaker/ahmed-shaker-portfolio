@@ -39,19 +39,24 @@ export default async function BlogPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-20">
+    <main className="shell pt-32 sm:pt-40">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="max-w-3xl">
-        <div className="text-xs font-tech uppercase tracking-widest text-[#dfc490]">Insights & Articles</div>
-        <h1 className="mt-3 font-display text-4xl sm:text-5xl font-bold text-slate-50 tracking-tight leading-[1.1]">
-          Notes on building{" "}
-          <span className="font-editorial italic font-normal text-champagne-gradient">digital banks</span>.
-        </h1>
-        <p className="mt-4 text-lg text-slate-300 leading-relaxed">
-          Digital banking, software architecture, engineering leadership, and lessons from building two banking
-          digital factories, in English and العربية.
+      <header className="grid gap-8 border-b border-line pb-12 lg:grid-cols-12 lg:items-end lg:gap-x-12">
+        <div className="lg:col-span-8">
+          <div className="eyebrow flex items-center gap-3 text-fg-3">
+            <span className="text-accent">Writing</span>
+            <span aria-hidden="true" className="h-px w-8 bg-line-3" />
+            <span>Insights &amp; articles</span>
+          </div>
+          <h1 className="mt-6 font-display text-display-2 text-fg">
+            Notes on building <em className="text-accent">digital banks</em>.
+          </h1>
+        </div>
+        <p className="text-lede text-fg-3 lg:col-span-4">
+          Digital banking, software architecture, engineering leadership, and lessons from building two banking digital factories, in
+          English and <span className="font-arabic">العربية</span>.
         </p>
-      </div>
+      </header>
       <BlogIndex posts={posts} />
     </main>
   );
