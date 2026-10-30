@@ -41,7 +41,10 @@ const plexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const viewport: Viewport = {
-  themeColor: THEME_COLORS.dark,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: THEME_COLORS.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLORS.dark },
+  ],
   width: "device-width",
   initialScale: 1,
 };
