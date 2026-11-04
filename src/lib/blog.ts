@@ -110,7 +110,15 @@ const markdocConfig: Config = (() => {
   const base = fields.markdoc.createMarkdocConfig({
     components: contentComponents,
     render: {
-      tags: { callout: "Callout", youtube: "YouTube", pullquote: "PullQuote" },
+      tags: {
+        callout: "Callout",
+        youtube: "YouTube",
+        pullquote: "PullQuote",
+        twoclocks: "TwoClocks",
+        queuelab: "QueueLab",
+        trustrings: "TrustRings",
+        boardcard: "BoardCard",
+      },
     },
   });
   return {

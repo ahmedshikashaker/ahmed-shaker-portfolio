@@ -63,6 +63,45 @@ export const contentComponents = {
       attribution: fields.text({ label: "Attribution (optional)" }),
     },
   }),
+  twoclocks: block({
+    label: "Visual · Two Clocks",
+    description: "Animated factory clock vs. bank clock. 'Intro' is a 3-step scroll story; 'In sync' is a closing illustration.",
+    schema: {
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Intro (scroll story)", value: "intro" },
+          { label: "In sync (closing)", value: "sync" },
+        ],
+        defaultValue: "intro",
+      }),
+      step1: fields.text({ label: "Step 1 text (optional)", multiline: true }),
+      step2: fields.text({ label: "Step 2 text (optional)", multiline: true }),
+      step3: fields.text({ label: "Step 3 text (optional)", multiline: true }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  queuelab: block({
+    label: "Interactive · Queue Lab",
+    description: "Explorable queueing model: factory output vs. boundary capacity, lead time, and Little's Law.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  trustrings: block({
+    label: "Visual · Rings of Trust",
+    description: "Animated staged release: team → staff → early customers → everyone.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  boardcard: wrapper({
+    label: "Board card",
+    description: "A shareable summary card. Put a numbered list inside.",
+    schema: {
+      title: fields.text({ label: "Title" }),
+    },
+  }),
 };
 
 export default config({

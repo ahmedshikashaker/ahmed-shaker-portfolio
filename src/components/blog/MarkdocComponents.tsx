@@ -3,6 +3,10 @@ import Markdoc, { type RenderableTreeNode } from "@markdoc/markdoc";
 import { codeToHtml } from "shiki";
 import { Info, Lightbulb, Sparkles, TriangleAlert } from "lucide-react";
 import CopyCodeButton from "./CopyCodeButton";
+import TwoClocks from "./visuals/TwoClocks";
+import QueueLab from "./visuals/QueueLab";
+import TrustRings from "./visuals/TrustRings";
+import BoardCard from "./visuals/BoardCard";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -138,6 +142,6 @@ function SmartLink({ href, title, children }: { href: string; title?: string; ch
 
 export function renderMarkdoc(renderable: RenderableTreeNode) {
   return Markdoc.renderers.react(renderable, React, {
-    components: { CodeBlock, Callout, YouTube, PullQuote, SmartLink },
+    components: { CodeBlock, Callout, YouTube, PullQuote, SmartLink, TwoClocks, QueueLab, TrustRings, BoardCard },
   });
 }

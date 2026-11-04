@@ -1,0 +1,162 @@
+---
+title: The Factory Is the Easy Part
+excerpt: >-
+  I've helped build two banking digital factories. Both times, the hardest
+  problem was outside them. Where digital transformation actually stalls: at
+  the boundary, in the arithmetic of queues, and in the people and processes
+  around the factory.
+language: en
+category: digital-transformation
+tags:
+  - Digital Transformation
+  - Digital Factory
+  - Operating Model
+  - Banking
+  - Flow
+publishedDate: '2026-11-04'
+featured: true
+draft: false
+seoTitle: 'The Factory Is the Easy Part: Digital Transformation in Banking'
+---
+Almost every bank I know now has a slide with the word *factory* on it. Squads, pipelines, a design system, a cloud platform, a room with glass walls and sticky notes. Ten years ago that slide was a bet. Today it's a recipe, and recipes can be followed.
+
+I have helped build two of these factories in Kuwait. The first time I was in the engine room, as one of the engineers who built Warba Bank's digital factory and its flagship app. The second time I was on the bridge, leading digital technology at Kuwait International Bank. Both times the factory itself came together faster than anyone expected. And both times the hardest problem was waiting just outside its walls.
+
+This essay is about that problem. It's written for the people who fund factories, boards and chief executives, because the most important decisions about it aren't technical.
+
+{% twoclocks variant="intro" /%}
+
+## The recipe is known
+
+Strip away the vocabulary and a digital factory is three things. Small, cross-functional teams that own a product from idea to production. An engineering platform that turns a change into a safe release in hours instead of months, with automated builds, tests, security checks and deployments. And a way of deciding what to build that starts with customers rather than with internal requests.
+
+None of this is secret anymore. It's documented in public research, taught in courses, sold by every consultancy, and measurable. A decade of [DORA research](https://dora.dev/research/) has shown that the teams that deliver fastest are also the most stable. When the engineering is done well, speed and safety aren't a trade-off.
+
+So if you're a board member being asked to fund a factory, the question is no longer *can we build one?* You can. You can hire the squads and buy the platforms, and within a year or so have teams that ship to production every week.
+
+The real question is what happens to everything those teams produce once it leaves the factory floor.
+
+## The factory gets fast. The bank doesn't.
+
+Here's a pattern I've watched repeat more times than I can count.
+
+A squad finishes a feature. It's tested, demoed, and accepted by the product owner on a Thursday afternoon. By the factory's clock, it's done.
+
+Then it waits. It waits for a slot in the core banking system's change calendar. It waits for a risk review that meets once a month. It waits for operations to update procedures and train the contact centre, and for marketing to fit it into a campaign calendar planned last quarter. Each wait is reasonable on its own, and each team is doing its job well. Together they add up to weeks, sometimes months, while a finished thing sits on a shelf.
+
+Meanwhile the squad has moved on two sprints. When questions finally come back from review, the people who built the feature have to stop what they're doing and pick up work they put down weeks ago. The factory slows down too. That's not because it's slow, but because the boundary keeps pulling it back.
+
+That's what I mean by two clocks. Inside the factory, the clock ticks every two weeks. Outside it, the clock of a regulated bank ticks every month, every quarter, every committee cycle. Both clocks exist for good reasons. The problem is where they meet.
+
+{% pullquote quote="The queue doesn't disappear. It moves." /%}
+
+It's tempting to call this a culture problem, the old bank against the new factory, and to fix it with workshops. Culture matters, and I'll come back to it, because people are the hardest part of any transformation. But the first problem is more mechanical than culture. The function hardest to bring into the rhythm was rarely the one with the strictest rules. It was the one with the fullest calendar.
+
+That distinction matters more than it sounds. [DORA's 2024 report](https://dora.dev/research/2024/dora-report/) approaches the same issue from another angle: unstable organisational priorities cause meaningful drops in productivity and substantial increases in burnout. Priorities that shift because work is stuck downstream are set *outside* the factory. You can't sprint your way out of them.
+
+## Where the queue goes
+
+To see why the fullest calendar matters more than the strictest rule, you need two pieces of arithmetic that every operations engineer knows and almost no business case contains.
+
+The first is **Little's Law**, proved by John Little in 1961. The amount of work waiting in a system equals the rate at which work arrives multiplied by how long each item stays. If a review team receives four changes a week and each takes three weeks to clear, twelve changes are sitting in its queue at any given moment. This isn't a rule of thumb. It's a theorem.
+
+The second is what happens to waiting time as a team gets busier. Intuition says it grows in a straight line: a team at 90% capacity should be a little slower than one at 80%. Queueing theory says otherwise. In the simplest standard model, the time a piece of work spends at a stage is the work itself divided by the team's *spare* capacity. At 50% busy, a change takes twice as long as the work it needs. At 80%, five times. At 90%, ten. At 95%, twenty. Near full utilisation, the curve goes nearly vertical.
+
+Put those together and you get the most counter-intuitive point in this essay. Try it yourself. The model is deliberately simple: a factory feeding three boundary stages (integration, risk and compliance, and go-to-market), each able to clear five changes a week.
+
+{% queuelab /%}
+
+At four changes a week, each boundary stage is 80% busy and the whole boundary takes about three weeks. Now push the factory to 4.75 changes a week, less than 20% more output. Each stage is now 95% busy, and the boundary takes twelve weeks. Press *Double the factory* and the queue never clears at all.
+
+This is the trap. A board funds the factory and the factory gets faster. The teams around it, whose capacity was never in the business case, are asked to absorb the difference. They're praised for being fully utilised. Meanwhile lead time, the only thing the customer actually experiences, gets worse.
+
+Don Reinertsen's work on product development flow explains why organisations keep walking into this. In manufacturing you can see inventory piling up on the floor. In product development the inventory is invisible (designs, approvals, finished code awaiting release), so it gets treated as if it were free. Nobody walks past a pile of waiting compliance reviews.
+
+Two lessons fall out of the model. First, the boundary is only as fast as its slowest stage: fund one handoff and the queue just moves to the next, so try funding stages one at a time. Second, and this is the one that makes boards uncomfortable, the boundary needs slack. A risk team running at 95% isn't efficient. It's the reason your factory looks slow.
+
+{% callout tone="note" title="About the models" %}
+The interactive models in this essay are illustrative. They use standard queueing formulas and round numbers, not data from any bank. Real work arrives in lumps rather than evenly, which makes queues worse than the model suggests, not better.
+{% /callout %}
+
+## Built twice
+
+The first time I saw this was from the engine room. At Warba I was one of the engineers building the factory and its flagship app; I led the Android chapter and built its release pipelines. From there, the boundary looked like weather, something that happened to us. A release would be ready and then sit, and we heard the reasons second-hand.
+
+The second time, at KIB, I was on the bridge, responsible for the bank's digital technology across mobile, web and backend, and for the release governance that connects them. That changed what I could see, and what I could no longer blame on the weather.
+
+**What carried over almost unchanged was the factory itself.** Pipelines, branching and release discipline, automated quality and security checks, how squads are formed and how they demo their work. The second time those foundations went in faster and with fewer arguments. That's exactly why I call the factory the easy part: it's the part that transfers.
+
+**What I deliberately didn't repeat was treating the factory as an island**, a separate place with its own culture that the rest of the bank watched through the glass. From inside a chapter, the island feels like protection. From the bridge, you see that every wall around the factory is also a handoff.
+
+**What surprised me was scale.** I assumed that once the boundary was sorted out for one squad, it would stay sorted. Instead, every new squad sent more work to the same handoffs. More teams, same calendar: exactly the curve in the model above. Growth made the boundary problem worse before it made anything better.
+
+## The hardest part is people
+
+Ask anyone who has been through a transformation what the hardest part was, and most will give the same answer: people. Fear of change. Old mindsets. *We've always done it this way.*
+
+They're right about the what, but the usual diagnosis is wrong. Fear of change is rarely irrational. Look at it from the other side of the glass. The compliance officer whose name goes on the approval is asked to approve faster, with less paperwork, a product she first saw last week. The operations manager who gets the call when something breaks is told that releases will now come every two weeks instead of twice a year. The branch team watches customers move to an app and wonders what that means for them. None of these people is resisting progress. They're weighing their own risk, and with the information they have, the sensible answer is *no*, or *not yet*.
+
+That's why I no longer believe you can change a mindset with a town hall. Mindsets change through experience. It happens the first time a risk partner watches a feature evolve across three demos and realises she's no longer approving blind. The first time operations sees a release go to staff before customers and nothing breaks. The first small win someone can point to and say *I was part of that*. Each of the moves in the next section is, at heart, a way of creating those experiences safely.
+
+And experience only sticks if the organisation's processes change with it. This is the step most transformations skip. The factory adopts new ways of working, but the approval matrix, the change-management policy, the procurement rules, the job descriptions and the performance targets all stay written for the old world. People are then asked to be brave inside a system that still rewards the old behaviour. Most, sensibly, aren't.
+
+{% pullquote quote="You can't ask people to change their mindset while their processes still punish the new behaviour." /%}
+
+So adapting the organisation's processes isn't paperwork that comes after the transformation. It *is* the transformation. Rewrite the approval path so evidence from the pipeline counts. Make a staged release the default rather than an exception that needs a committee. Give the people at the boundary targets that reward lead time, not just the absence of incidents. When the official process makes the new way the safe way, the fear fades on its own. In my experience, mindsets follow systems far more often than systems follow mindsets.
+
+## What actually works at the boundary
+
+None of what follows is exotic. It's mostly a matter of where you put attention and money.
+
+### 1. Put the boundary on the factory's clock
+
+Invite the people who approve, operate and market a product into the rhythm where the work takes shape, in planning and demos, not only where it gets signed off. A risk partner who has watched a feature evolve over three demos can review it in an afternoon. One who meets it for the first time in a committee needs a month.
+
+### 2. Turn controls into evidence, and evidence into a service
+
+At some point I stopped asking for faster approvals and started building the evidence approvers need into the pipeline: test results, security scans, dependency checks, and an audit trail generated automatically with every release. Approval becomes a review of evidence rather than a meeting. *[Team Topologies](https://teamtopologies.com/book)* calls this end state *X-as-a-Service*: a capability other teams use without negotiating for it every time. In a bank, compliance evidence is one of the most valuable services you can build.
+
+### 3. Leave slack in the teams around the factory
+
+The arithmetic is unambiguous. If you want short lead times, the teams at the boundary can't run at full utilisation. That means funding them with people, tools and time as part of the transformation, not as an afterthought paid for in goodwill.
+
+### 4. Widen the circle gradually
+
+{% trustrings /%}
+
+Don't release to everyone at once. Release to the team, then to staff, then to a small group of early customers, then to everyone. Each ring is a chance to find what testing missed while a problem is still cheap. And each ring gives the boundary functions something they value more than speed: evidence from real use before the bank's reputation is on the line.
+
+## What I'd reverse
+
+If I could change one thing, I'd measure the whole journey from the first week: from an approved idea to a customer actually using it. It's natural to start by measuring what the factory controls, such as sprint velocity, deployment frequency and defect counts. Those numbers improve quickly and they're satisfying to report. But they describe only the fast clock, and what you measure is what you end up optimising.
+
+One thing felt like failure at the time and wasn't: slowing a launch down to run it past internal users first. It looked like lost weeks. It's where the most important problems surfaced, while they were still cheap to fix.
+
+## What I'd tell a board
+
+{% boardcard title="Five things to know before funding a digital factory" %}
+1. **The factory is the easy part.** Squads, pipelines and platforms are a known recipe. Budget for them, but don't mistake them for the transformation.
+2. **Fund the boundary as seriously as the factory.** Integration, risk, compliance, operations and marketing decide your lead time. Their capacity belongs in the business case.
+3. **Busy is not efficient.** Teams around the factory need slack. At 95% busy, work takes about four times as long to clear as at 80%.
+4. **Measure the whole journey.** Watch lead time from approved idea to customer. Ignore velocity, story points and headcount; they describe only the fast clock.
+5. **Change the processes, and mindsets will follow.** Fear of change is rational while the old rules still apply. Rewrite approval paths, policies and targets so the new way becomes the official, safe way.
+{% /boardcard %}
+
+## Two clocks, one customer
+
+The two clocks will never tick at the same speed, and they shouldn't. A bank that approved everything at the factory's pace would be a reckless bank. But the clocks can mesh. The factory can be built to hand over evidence instead of paperwork. The boundary can be funded so it has room to absorb the work. And the whole thing can be measured from the customer's side, where there's only one clock.
+
+{% twoclocks variant="sync" /%}
+
+When people ask me what digital transformation is, I no longer start with technology. I start with a question: *when something is finished in your factory, how long until a customer can use it, and where does it wait?* The answer to that question is your transformation, and almost none of it is about technology. It's about people, and the processes that tell them what's safe. The factory is just where it begins.
+
+---
+
+### Sources
+
+- John D. C. Little, "[A Proof for the Queuing Formula: L = λW](https://doi.org/10.1287/opre.9.3.383)," *Operations Research* 9(3), 1961.
+- J. F. C. Kingman, "[The single server queue in heavy traffic](https://doi.org/10.1017/S0305004100036094)," *Mathematical Proceedings of the Cambridge Philosophical Society* 57(4), 1961.
+- Donald G. Reinertsen, *The Principles of Product Development Flow*, Celeritas Publishing, 2009.
+- DORA, *[Accelerate State of DevOps Report 2024](https://dora.dev/research/2024/dora-report/)*, Google Cloud, 2024.
+- Nicole Forsgren, Jez Humble and Gene Kim, *Accelerate*, IT Revolution, 2018.
+- Matthew Skelton and Manuel Pais, *[Team Topologies](https://teamtopologies.com/book)*, IT Revolution, 2019.
