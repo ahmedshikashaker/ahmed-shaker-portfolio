@@ -1,0 +1,156 @@
+---
+title: 'Evidence, Not Meetings'
+excerpt: >-
+  Your bank already lets machines check every card payment in a fraction of a
+  second. So why does a one-line software change still wait two weeks for a
+  two-minute meeting? How a regulated bank can release faster without taking on
+  more risk.
+language: en
+category: digital-transformation
+tags:
+  - Digital Transformation
+  - DevSecOps
+  - Compliance
+  - Release Governance
+  - Banking
+publishedDate: '2026-11-05'
+featured: false
+draft: false
+seoTitle: 'Evidence, Not Meetings: Faster Releases Without More Risk in Banking'
+---
+Change 27 is invented, but if you work in a bank, you've met it.
+
+It's one line: a fix to a confusing sentence on the screen customers see after they send money abroad, the sentence that has been sending worried callers to the contact centre for a month. A developer fixed it in an afternoon, and a colleague reviewed it the same day. Here's how long it takes to reach a customer.
+
+{% changejourney /%}
+
+Fifteen days, almost all of them spent waiting: for a test cycle, a security queue, a component list, a weekly meeting and a release window. The meeting that finally approved it gave it two minutes. Someone asked, "Has this been tested?" Someone said, "Yes." Every day of the wait, the contact centre took more of those calls.
+
+Nobody in that room was careless. They did exactly what the process asks of them. But in two minutes, nobody can verify anything. The meeting didn't produce assurance. It produced a record that a meeting took place.
+
+*This is the second essay in a series on digital transformation in banking. [The first](/blog/the-factory-is-the-easy-part) argued that building a digital factory is the easy part, and that the real work happens at the boundary, where finished work waits. This one goes to the busiest spot on that boundary: the approval.*
+
+## The meeting that makes things riskier
+
+It would be comforting to think all that waiting at least buys safety. [DORA's research](https://dora.dev/research/2019/dora-report/) says it doesn't.
+
+{% approvalloop /%}
+
+The loop explains why. Slow approval makes changes pile up, so they ship together in bigger releases, which are harder to test and harder to undo. When one fails, the instinct is to add more approval, and the next turn is slower still.
+
+So here's the question boards ask most often about transformation in a regulated business: *how do we go faster without taking on more risk?* My answer is short. Stop asking people to remember, and start asking systems to prove.
+
+## Your bank already does this, with money
+
+Banks already know how to approve at speed, safely. They do it all day long, with payments.
+
+{% twolanes /%}
+
+Every card payment is checked against limits, rules and fraud models in a fraction of a second, and every decision is logged. People write the rules, tune the models and decide the cases the system flags. Nobody proposes a weekly meeting to approve card payments in bulk. It would be slower, and it would catch less.
+
+{% pullquote quote="A bank trusts machines to check its customers' money. For its own software, it still trusts a Tuesday meeting." /%}
+
+## A control is not a meeting
+
+Strip an approval down to what it's for, and it comes to six questions. Regulators, auditors and risk committees don't need a meeting. They need those six questions answered, with proof.
+
+{% controlcards /%}
+
+People don't disappear from the process. They move: from re-checking routine changes one at a time to owning the rules, reviewing the code, and making the decisions that genuinely need judgement.
+
+None of this is exotic. DORA recommends meeting the regulatory requirement for segregation of duties through [peer review captured in the development platform](https://dora.dev/capabilities/streamlining-change-approval/). NIST's [Secure Software Development Framework](https://csrc.nist.gov/pubs/sp/800/218/final), OWASP's [verification standard](https://owasp.org/www-project-application-security-verification-standard/) and the [SLSA](https://slsa.dev/spec/v1.0/) framework describe, in public, what good looks like. What's rare isn't the knowledge. It's the decision to treat the pipeline's evidence as the official record.
+
+## Send change 27 through both worlds
+
+Below, change 27 meets six gates, each run the way many banks run it today: as a queue for people. Send it through. Then switch the gates to automated, one at a time, and send it again.
+
+{% pipelinegates /%}
+
+{% callout tone="note" title="About the models" %}
+The models in this essay are illustrative. They use round numbers, not data from any bank, and their assumptions are shown in each model's notes.
+{% /callout %}
+
+## Three questions from the risk team
+
+Whenever I've put this idea in front of risk and compliance colleagues, the first questions have never been about technology. They come in roughly this order.
+
+### “If a machine approves it, who’s accountable?”
+
+The same people, for something more important. Accountability moves from the meeting to the policy. The risk team decides which tests must pass, which vulnerabilities block a release, and which changes always need a person. The pipeline enforces those rules on every change, without fatigue. The rules get reviewed once, carefully, instead of each change briefly.
+
+### “What will the auditors say?”
+
+This is where the argument flips. A meeting gives an auditor minutes and a sample. A pipeline gives them a complete record for every release, and signed build provenance can make that record tamper-evident.
+
+{% coveragegrid /%}
+
+### “What if the pipeline gets it wrong?”
+
+Sometimes it will. So does the meeting. But a meeting's lesson lives in the memory of whoever was in the room, while a pipeline's lesson becomes a new check that runs on every change after it. One condition makes all of this work: the pipeline has to be the only road to production. If people can go around it, its evidence proves nothing.
+
+What convinced people, in my experience, was never a presentation. It was running both side by side, on the same changes, until the risk team could see for themselves that the pipeline caught what the meeting caught, and more. That's the lesson of the first essay again: mindsets change through experience, not argument.
+
+## What should never be automated
+
+Automation isn't the goal. Good judgement in the right places is.
+
+{% cardgrid label="Stays with people" %}
+- **Accepting risk.** A pipeline can tell you a vulnerability exists. Releasing anyway, with mitigations, is a human decision with a name attached.
+- **Anything genuinely new.** A new third party, a new kind of customer data, a new product, a new way money moves. Rules written yesterday are weakest exactly here.
+- **Exceptions.** Every override of a rule should be rare, visible and owned by a person.
+- **Decisions about customers.** Pricing, terms, and how a change is explained to customers belong to the business, not the build.
+{% /cardgrid %}
+
+Try the *novel change* switch in the model above. Even with every gate automated, a novel change goes to a person for a risk decision. That isn't a failure of automation. It's the design.
+
+{% pullquote quote="Automate the routine. Escalate the novel. Never automate the acceptance of risk." /%}
+
+## How to start
+
+Don't launch a programme. Pick a control.
+
+{% steps %}
+1. **Inventory your controls.** Write down the evidence each one demands today. Most banks find controls nobody can explain and evidence nobody looks at.
+2. **Start with the busiest, simplest control.** Automated tests and dependency scanning usually come first, and the win is visible quickly.
+3. **Run old and new side by side.** Let the risk team compare the meeting's verdicts with the pipeline's evidence, on the same changes, until they trust it.
+4. **Change the policy, not just the tools.** Write it down: for standard changes, automated evidence is sufficient approval. Until the policy says so, people will keep holding the meeting, and they'll be right to.
+5. **Keep a smaller, better meeting.** Exceptions and novel changes deserve real time. Now they can have it.
+{% /steps %}
+
+## What I'd tell a board
+
+{% boardcard title="Five things to know about going faster without more risk" %}
+1. **Approval meetings are not control.** At two minutes a change, nobody can verify anything. In DORA's research, teams with heavyweight approval were 2.6 times likelier to be low performers, with no evidence of fewer failures.
+2. **Ask for evidence, not attendance.** For every control, require proof that it operated, produced automatically with every release.
+3. **Move accountability to the policy.** Risk teams should own the rules the pipeline enforces, not the queue of changes waiting for them.
+4. **Automate the routine, escalate the novel.** People's attention belongs on new risks and exceptions, never on re-checking what a machine can check.
+5. **Change the policy, or nothing changes.** Until automated evidence is officially sufficient, the old meeting will survive, and so will the old lead time.
+{% /boardcard %}
+
+## Change 27, the second time
+
+Now run the story again, in a bank that has made the switch.
+
+{% changejourney variant="after" /%}
+
+Written on Monday morning, reviewed before lunch, and live before the contact centre's evening shift, with the evidence an auditor would ask for already attached.
+
+The Tuesday meeting still happens. It just has a different job.
+
+{% meetingagenda /%}
+
+That's close to what DORA's own report recommends. Approving every change individually is impossible at this pace, so the change board's role becomes strategic: helping teams improve the process, and weighing business trade-offs such as speed to market against risk.
+
+That's the trade I'd offer any risk committee. Give up the illusion of checking everything, and get the reality of properly checking everything that matters.
+
+---
+
+### Sources
+
+- DORA, *[Accelerate State of DevOps Report 2019](https://dora.dev/research/2019/dora-report/)*, Google Cloud, 2019. Change approval findings on pp. 50–51.
+- DORA, "[Streamlining change approval](https://dora.dev/capabilities/streamlining-change-approval/)."
+- NIST, *[SP 800-218: Secure Software Development Framework (SSDF) Version 1.1](https://csrc.nist.gov/pubs/sp/800/218/final)*, 2022.
+- OWASP, *[Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/)*.
+- OpenSSF, *[SLSA: Supply-chain Levels for Software Artifacts, v1.0](https://slsa.dev/spec/v1.0/)*.
+- CISA, *[Software Bill of Materials (SBOM)](https://www.cisa.gov/sbom)*.
+- Nicole Forsgren, Jez Humble and Gene Kim, *Accelerate*, IT Revolution, 2018.

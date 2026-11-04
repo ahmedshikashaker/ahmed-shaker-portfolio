@@ -95,6 +95,78 @@ export const contentComponents = {
       caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
+  pipelinegates: block({
+    label: "Interactive · Pipeline Gates",
+    description: "A change moving through six control gates; switch each between manual queue and automated evidence.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  coveragegrid: block({
+    label: "Visual · Coverage Grid",
+    description: "A sample checked by people vs. every change checked by the pipeline (100 releases).",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  changejourney: block({
+    label: "Visual · Change Journey",
+    description: "One change travelling from finished to live, drawn to scale. 'Today' shows the waits and the 2-minute meeting; 'Second time' shows the automated route on the same scale, zoomed in.",
+    schema: {
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Today (manual gates)", value: "before" },
+          { label: "Second time (automated)", value: "after" },
+        ],
+        defaultValue: "before",
+      }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  approvalloop: block({
+    label: "Visual · Approval Loop",
+    description: "The vicious cycle of heavyweight change approval, beside DORA's two findings (2.6× and no evidence of fewer failures).",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  twolanes: block({
+    label: "Visual · Two Lanes",
+    description: "Card payments checked one by one in milliseconds vs. software changes queuing for a weekly change board.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  controlcards: block({
+    label: "Interactive · Control Cards",
+    description: "The six questions every approval must answer, answered in a meeting or by the pipeline (with evidence).",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  meetingagenda: block({
+    label: "Visual · Meeting Agenda",
+    description: "The change board on one time scale: 40 changes in 90 minutes vs. 3 decisions in 60.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  steps: wrapper({
+    label: "Steps (numbered path)",
+    description: "Put a numbered list inside. Each item's bold opening becomes the step's title.",
+    schema: {
+      title: fields.text({ label: "Small heading above (optional)" }),
+    },
+  }),
+  cardgrid: wrapper({
+    label: "Card grid",
+    description: "Put a bulleted list inside. Each item becomes a card; its bold opening becomes the card's title.",
+    schema: {
+      title: fields.text({ label: "Small heading above (optional)" }),
+      label: fields.text({ label: "Label on every card (optional)" }),
+    },
+  }),
   boardcard: wrapper({
     label: "Board card",
     description: "A shareable summary card. Put a numbered list inside.",

@@ -572,7 +572,8 @@
 .blog-prose :where(ul, ol, table, figcaption, li::marker) {
   font-family: var(--font-sans);
 }
-.blog-prose :where(li) {
+/* Blocks marked `not-prose` (interactive visuals, cards) keep their own type sizes. */
+.blog-prose :where(li):not(:where(.not-prose, .not-prose *)) {
   font-size: 0.94em;
 }
 .blog-prose :where(code):not(pre code) {
@@ -781,4 +782,195 @@
 .board-card-body strong {
   font-weight: 600;
   color: var(--c-fg);
+}
+
+/* ---------------------------------------------------------------- Approval loop (ApprovalLoop.tsx) */
+.approval-loop .loop-orbit {
+  transform-origin: 200px 200px;
+  animation: loop-spin var(--loop-period, 10s) linear infinite;
+}
+.approval-loop .loop-node-pill {
+  fill: var(--c-surface);
+  stroke: var(--c-line-3);
+  stroke-width: 1.25;
+  animation: loop-node-pill var(--loop-period, 10s) linear infinite;
+  animation-delay: inherit;
+}
+.approval-loop .loop-node-text {
+  fill: var(--c-fg);
+}
+.approval-loop .loop-node-sub {
+  fill: var(--c-fg-3);
+}
+.approval-loop[data-playing="false"] .loop-orbit,
+.approval-loop[data-playing="false"] .loop-node-pill {
+  animation-play-state: paused;
+}
+@keyframes loop-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loop-node-pill {
+  0%,
+  9% {
+    fill: color-mix(in oklab, var(--c-accent) 16%, var(--c-surface));
+    stroke: var(--c-accent);
+  }
+  17%,
+  100% {
+    fill: var(--c-surface);
+    stroke: var(--c-line-3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .approval-loop .loop-orbit,
+  .approval-loop .loop-node-pill {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------- List visuals (ListBlocks.tsx) */
+.reveal-list li {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+.reveal-list li:nth-child(2) { transition-delay: 90ms; }
+.reveal-list li:nth-child(3) { transition-delay: 180ms; }
+.reveal-list li:nth-child(4) { transition-delay: 270ms; }
+.reveal-list li:nth-child(5) { transition-delay: 360ms; }
+.reveal-list li:nth-child(6) { transition-delay: 450ms; }
+.reveal-list li:nth-child(n + 7) { transition-delay: 540ms; }
+.reveal-list[data-reveal="armed"] li {
+  opacity: 0;
+  transform: translateY(12px);
+  transition-delay: 0ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-list li {
+    transition: none;
+  }
+}
+
+/* Steps: a numbered path */
+.steps-body ol,
+.steps-body ul {
+  counter-reset: st;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.steps-body li {
+  counter-increment: st;
+  position: relative;
+  padding-inline-start: 3.6rem;
+  padding-bottom: 1.75rem;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--c-fg-2);
+}
+.steps-body li:last-child {
+  padding-bottom: 0;
+}
+.steps-body li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: -0.2rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--c-accent) 55%, transparent);
+  background: var(--c-surface);
+  color: var(--c-accent);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.steps-body li::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(1.2rem - 0.5px);
+  top: 2.5rem;
+  bottom: 0.3rem;
+  width: 1px;
+  background: linear-gradient(var(--c-line-3), var(--c-line));
+}
+.steps-body li:last-child::after {
+  display: none;
+}
+.steps-body li strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  font-weight: 450;
+  line-height: 1.3;
+  color: var(--c-fg);
+}
+.steps-body li p {
+  margin: 0;
+}
+
+/* Card grid: each list item becomes a card, its bold lead the title */
+.cardgrid-body ul,
+.cardgrid-body ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 40rem) {
+  .cardgrid-body ul,
+  .cardgrid-body ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.cardgrid-body li {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--c-line-2);
+  border-radius: 1rem;
+  background: var(--c-surface);
+  padding: 1.15rem 1.25rem 1.25rem;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--c-fg-2);
+  box-shadow: var(--shadow-soft);
+}
+.cardgrid-body li::before {
+  content: var(--card-label, none);
+  display: block;
+  margin-bottom: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+.cardgrid-body li::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--c-accent);
+  opacity: 0.7;
+}
+.cardgrid-body li strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 450;
+  line-height: 1.25;
+  color: var(--c-fg);
+}
+.cardgrid-body li p {
+  margin: 0;
 }

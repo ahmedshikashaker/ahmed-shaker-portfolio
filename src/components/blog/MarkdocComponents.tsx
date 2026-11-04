@@ -7,6 +7,14 @@ import TwoClocks from "./visuals/TwoClocks";
 import QueueLab from "./visuals/QueueLab";
 import TrustRings from "./visuals/TrustRings";
 import BoardCard from "./visuals/BoardCard";
+import PipelineGates from "./visuals/PipelineGates";
+import CoverageGrid from "./visuals/CoverageGrid";
+import ChangeJourney from "./visuals/ChangeJourney";
+import ApprovalLoop from "./visuals/ApprovalLoop";
+import TwoLanes from "./visuals/TwoLanes";
+import ControlCards from "./visuals/ControlCards";
+import MeetingAgenda from "./visuals/MeetingAgenda";
+import { CardGrid, Steps } from "./visuals/ListBlocks";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -142,6 +150,25 @@ function SmartLink({ href, title, children }: { href: string; title?: string; ch
 
 export function renderMarkdoc(renderable: RenderableTreeNode) {
   return Markdoc.renderers.react(renderable, React, {
-    components: { CodeBlock, Callout, YouTube, PullQuote, SmartLink, TwoClocks, QueueLab, TrustRings, BoardCard },
+    components: {
+      CodeBlock,
+      Callout,
+      YouTube,
+      PullQuote,
+      SmartLink,
+      TwoClocks,
+      QueueLab,
+      TrustRings,
+      BoardCard,
+      PipelineGates,
+      CoverageGrid,
+      ChangeJourney,
+      ApprovalLoop,
+      TwoLanes,
+      ControlCards,
+      MeetingAgenda,
+      Steps,
+      CardGrid,
+    },
   });
 }
