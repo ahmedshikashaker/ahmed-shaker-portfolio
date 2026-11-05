@@ -33,6 +33,11 @@ import CouplingMap from "./visuals/CouplingMap";
 import TwoSpeeds from "./visuals/TwoSpeeds";
 import BigBangCurve from "./visuals/BigBangCurve";
 import StranglerFig from "./visuals/StranglerFig";
+import YearLanes from "./visuals/YearLanes";
+import JCurve from "./visuals/JCurve";
+import ChangeYear from "./visuals/ChangeYear";
+import QuarterQuestions from "./visuals/QuarterQuestions";
+import YearScoreboard from "./visuals/YearScoreboard";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -205,6 +210,11 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       TwoSpeeds,
       BigBangCurve,
       StranglerFig,
+      YearLanes,
+      JCurve,
+      ChangeYear,
+      QuarterQuestions,
+      YearScoreboard,
     },
   });
 }

@@ -314,6 +314,41 @@ export const contentComponents = {
       caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
+  yearlanes: block({
+    label: "Visual · Year One Lanes",
+    description: "The first twelve months: what the board pack showed vs. what was being built underneath, month by month.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  jcurve: block({
+    label: "Visual · The J-Curve",
+    description: "Customer-visible value in year one: what boards expect vs. the usual dip and rise, with DORA 2018 and Brynjolfsson et al. notes.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  changeyear: block({
+    label: "Interactive · Change 27's Year",
+    description: "Change 27's lead time month by month through year one (waiting, gates, the factory's afternoon), plus change 28's strip.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  quarterquestions: block({
+    label: "Visual · One Question a Quarter",
+    description: "Four quarters of year one: the question to ask, a good answer, and the warning sign.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  yearscoreboard: block({
+    label: "Visual · Year One, Scored",
+    description: "The series' numbers at month 1 and month 12, side by side, each linked to its essay.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
   boardcard: wrapper({
     label: "Board card",
     description: "A shareable summary card. Put a numbered list inside.",

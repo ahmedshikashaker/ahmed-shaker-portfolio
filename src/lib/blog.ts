@@ -145,6 +145,11 @@ const markdocConfig: Config = (() => {
         twospeeds: "TwoSpeeds",
         bigbangcurve: "BigBangCurve",
         stranglerfig: "StranglerFig",
+        yearlanes: "YearLanes",
+        jcurve: "JCurve",
+        changeyear: "ChangeYear",
+        quarterquestions: "QuarterQuestions",
+        yearscoreboard: "YearScoreboard",
       },
     },
   });
