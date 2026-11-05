@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllPosts, SITE_URL } from "@/lib/blog";
 import BlogIndex from "@/components/blog/BlogIndex";
+import SeriesBanner from "@/components/blog/SeriesBanner";
 
 export const metadata: Metadata = {
   title: "Blog — Digital Banking, Architecture & Engineering Leadership",
@@ -57,6 +58,7 @@ export default async function BlogPage() {
           English and <span className="font-arabic">العربية</span>.
         </p>
       </header>
+      <SeriesBanner />
       <BlogIndex posts={posts} />
     </main>
   );

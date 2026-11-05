@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts, SITE_URL } from "@/lib/blog";
+import { SERIES, seriesUrl } from "@/lib/series";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = (await getAllPosts()).filter((p) => !p.draft && !p.canonicalUrl);
@@ -16,6 +17,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...SERIES.filter((s) => s.parts.some((part) => posts.some((p) => p.slug === part.slug))).map((s) => ({
+      url: seriesUrl(s.slug),
+      lastModified: new Date(
+        posts
+          .filter((p) => s.parts.some((part) => part.slug === p.slug))
+          .map((p) => p.updatedDate ?? p.publishedDate)
+          .sort()
+          .at(-1)!
+      ),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
     ...posts.map((p) => ({
       url: p.url,
       lastModified: new Date(p.updatedDate ?? p.publishedDate),

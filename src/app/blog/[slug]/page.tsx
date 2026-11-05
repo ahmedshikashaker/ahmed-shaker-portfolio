@@ -18,6 +18,7 @@ import TableOfContents from "@/components/blog/TableOfContents";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import AuthorCard from "@/components/blog/AuthorCard";
 import PostCard from "@/components/blog/PostCard";
+import { seriesForPost, seriesPath } from "@/lib/series";
 
 export const dynamicParams = false;
 
@@ -74,6 +75,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const [related, { newer, older }] = await Promise.all([getRelatedPosts(post), getAdjacentPosts(post.slug)]);
   const isAr = post.language === "ar";
   const dir = isAr ? "rtl" : "ltr";
+  const inSeries = seriesForPost(post.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -145,6 +147,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 >
                   {post.categoryLabel}
                 </Link>
+                {inSeries && (
+                  <Link
+                    href={seriesPath(inSeries.series.slug)}
+                    className="rounded-full border border-line-2 px-3 py-1 text-fg-2 transition-colors hover:border-accent/50 hover:text-accent"
+                  >
+                    Part {inSeries.part} of {inSeries.total} · {inSeries.series.title}
+                  </Link>
+                )}
                 <span className="inline-flex items-center gap-1.5 text-fg-3">
                   <CalendarDays className="size-3.5" strokeWidth={1.75} />
                   <time dateTime={post.publishedDate}>{post.displayDate}</time>
