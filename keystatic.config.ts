@@ -271,6 +271,49 @@ export const contentComponents = {
       caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
+  releasecalendar: block({
+    label: "Visual · Release Calendar (change 28)",
+    description: "One quarter of working days: weekly edge releases, one core release. Change 28 waits for the core (coupled) or ships next day (decoupled).",
+    schema: {
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Coupled to the core", value: "coupled" },
+          { label: "Decoupled (closing)", value: "decoupled" },
+        ],
+        defaultValue: "coupled",
+      }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  couplingmap: block({
+    label: "Interactive · Coupling Map",
+    description: "Pick a change and an architecture (point to point vs. edge layer): systems touched, teams, release trains, lead time.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  twospeeds: block({
+    label: "Visual · Two Speeds (core vs. edge)",
+    description: "What belongs in the core (the bank's memory) and at the edge (the bank's voice), joined by contracts.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  bigbangcurve: block({
+    label: "Visual · Big Bang vs. Strangler",
+    description: "Value delivered and customers exposed over 36 months, with the TSB 2018 migration as a sourced example.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  stranglerfig: block({
+    label: "Interactive · Strangler Fig",
+    description: "Quarter by quarter, capabilities move from the core to the edge; the ledger stays. Plays once, then scrubbable.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
   boardcard: wrapper({
     label: "Board card",
     description: "A shareable summary card. Put a numbered list inside.",

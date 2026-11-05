@@ -140,6 +140,11 @@ const markdocConfig: Config = (() => {
         statgrid: "StatGrid",
         hopereward: "HopeReward",
         rulekit: "RuleKit",
+        releasecalendar: "ReleaseCalendar",
+        couplingmap: "CouplingMap",
+        twospeeds: "TwoSpeeds",
+        bigbangcurve: "BigBangCurve",
+        stranglerfig: "StranglerFig",
       },
     },
   });

@@ -994,3 +994,62 @@
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------- Two speeds (TwoSpeeds.tsx) */
+.two-speeds .ts-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  opacity: 0;
+}
+/* Stacked on phones: the core is above the band, the edge below. */
+.two-speeds .ts-up {
+  left: 38%;
+  animation: ts-down-move 2.7s linear infinite;
+}
+.two-speeds .ts-down {
+  left: 60%;
+  animation: ts-up-move 2.7s linear infinite;
+}
+@keyframes ts-down-move {
+  0% { top: 0; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { top: calc(100% - 8px); opacity: 0; }
+}
+@keyframes ts-up-move {
+  0% { top: calc(100% - 8px); opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { top: 0; opacity: 0; }
+}
+/* Side by side from tablet up: the core on the left, the edge on the right. */
+@media (min-width: 48rem) {
+  .two-speeds .ts-up {
+    left: auto;
+    top: 32%;
+    animation-name: ts-right-move;
+  }
+  .two-speeds .ts-down {
+    left: auto;
+    top: 62%;
+    animation-name: ts-left-move;
+  }
+}
+@keyframes ts-right-move {
+  0% { left: 0; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { left: calc(100% - 8px); opacity: 0; }
+}
+@keyframes ts-left-move {
+  0% { left: calc(100% - 8px); opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { left: 0; opacity: 0; }
+}
+.two-speeds[data-playing="false"] .ts-dot {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .two-speeds .ts-dot {
+    display: none;
+  }
+}

@@ -1,0 +1,95 @@
+---
+title: Fast Edge, Steady Core
+excerpt: >-
+  Change 28 was ready in two weeks, then waited eleven more for the core's
+  quarterly release. You don't fix that by replacing the core. You fix it by
+  making sure only the changes that belong in the core ever wait for it.
+language: en
+category: digital-transformation
+tags:
+  - Digital Transformation
+  - Architecture
+  - Core Banking
+  - Legacy Modernisation
+  - Banking
+publishedDate: '2026-11-05'
+featured: false
+draft: false
+seoTitle: 'Fast Edge, Steady Core: Modernising Around a Legacy Core'
+---
+Change 28 is invented too. It's change 27's sibling, on the same screen customers see when they send money abroad. This time the request is to show the exchange rate and the fee *before* the customer confirms, so nobody is surprised afterwards. It's small and sensible, and the contact centre would love it. The squad finished it in two weeks.
+
+{% releasecalendar /%}
+
+It had just missed the core's last release, so it waited for the next one, eleven and a half weeks away. Twelve releases of the app went out without it.
+
+The first four essays fixed the factory, the approvals, the measures and the incentives. Change 28 runs into the last wall: the architecture.
+
+*This is the fifth essay in a series on digital transformation in banking. [The first](/blog/the-factory-is-the-easy-part) described a bank running on two clocks. This one is about the place where those clocks are built into the systems themselves.*
+
+## It isn't the old system. It's the wiring.
+
+The usual conclusion is that the core is too old and has to be replaced. Before reaching for that, find out which changes actually need the core.
+
+{% couplingmap /%}
+
+In the point-to-point world, change 28 needed the core only because the app had no other way to get a quote. With an edge layer, the core doesn't change at all. The new savings product waits either way, because it genuinely belongs in the core.
+
+DORA's research makes the same point from the other side. What predicts fast, safe delivery is whether teams can test and deploy on their own, not how new their technology is.
+
+{% pullquote quote="It's possible to achieve these outcomes with mainframe technologies." attribution="DORA, on loosely coupled architecture" /%}
+
+## Slow on purpose, fast on purpose
+
+The goal isn't a fast core. A core that changed every week would be a reckless core. The goal is to stop the things that should be fast from waiting for the one thing that should be slow.
+
+{% twospeeds /%}
+
+These are the first essay's two clocks, built into the architecture. The core keeps its quarterly clock, as it should. The edge runs on the factory's clock. The contracts between them change slowly and deliberately, so neither side surprises the other.
+
+## Don't replace it. Surround it.
+
+When the wiring hurts, the tempting fix is to replace the core in one go. Martin Fowler, who named the alternative, has seen that simple-sounding plan "go down in flames most of the time".
+
+{% bigbangcurve /%}
+
+The alternative is named after the strangler fig, which grows around a host tree until it can stand on its own. You build new capabilities at the edge, move customer journeys out one at a time, and leave the core with the job it does best.
+
+{% stranglerfig /%}
+
+Notice where the curve rises fastest. If, as in many banking apps, most of what customers do is look at things, such as balances, statements and notifications, then moving those first takes most interactions off the core's calendar within months. The riskiest part, the ledger, never has to move at all.
+
+## Where to start
+
+{% steps %}
+1. **Sort last quarter's changes.** For each one, ask whether it needed the core, or only the core's data. The second kind is what an edge layer frees.
+2. **Expose the data the edge keeps asking for.** Balances, rates and product details, published through stable APIs and events, each owned by a team.
+3. **Move the most-used journeys first.** The things customers do every day, not the ones that are hardest to build.
+4. **Strangle by capability, not by system.** Move one journey at a time, each in rings, starting with staff.
+5. **Leave the ledger alone.** Replace it later, if ever, when nothing urgent depends on it any more.
+{% /steps %}
+
+## What I'd tell a board
+
+{% boardcard title="Five things to know about the core banking system" %}
+1. **The core isn't the problem; the wiring is.** Old systems can support fast delivery. Tight coupling can't.
+2. **Count which changes really need the core.** In many banks, it's far fewer than the ones that wait for it.
+3. **Fund the edge layer as infrastructure, not as a project.** It's what lets everything else move.
+4. **Prefer a strangler to a big bang.** Value every quarter, and risk in small, reversible steps.
+5. **Let the core be slow on purpose.** A careful core is a feature, as long as nothing urgent waits for it.
+{% /boardcard %}
+
+## Change 28, the second time
+
+{% releasecalendar variant="decoupled" /%}
+
+Same quarter, same core, same quarterly release. Change 28 went out the day after it was ready, and the core didn't change at all. Nothing about the core got faster. It just stopped being in the way.
+
+---
+
+### Sources and further reading
+
+- DORA, "[Loosely coupled architecture](https://dora.dev/capabilities/loosely-coupled-architecture/)": the outcomes that predict continuous delivery, the mainframe point, and the strangler fig pattern.
+- Martin Fowler, "[Strangler Fig](https://martinfowler.com/bliki/StranglerFigApplication.html)," martinfowler.com, 2024.
+- Financial Conduct Authority, "[TSB fined £48.65m for operational resilience failings](https://www.fca.org.uk/news/press-releases/tsb-fined-48m-operational-resilience-failings)," press release, 20 December 2022.
+- Sam Newman, *Monolith to Microservices*, O'Reilly, 2019.

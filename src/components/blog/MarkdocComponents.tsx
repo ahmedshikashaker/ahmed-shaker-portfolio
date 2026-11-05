@@ -28,6 +28,11 @@ import AnswerUp from "./visuals/AnswerUp";
 import StatGrid from "./visuals/StatGrid";
 import HopeReward from "./visuals/HopeReward";
 import RuleKit from "./visuals/RuleKit";
+import ReleaseCalendar from "./visuals/ReleaseCalendar";
+import CouplingMap from "./visuals/CouplingMap";
+import TwoSpeeds from "./visuals/TwoSpeeds";
+import BigBangCurve from "./visuals/BigBangCurve";
+import StranglerFig from "./visuals/StranglerFig";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -195,6 +200,11 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       StatGrid,
       HopeReward,
       RuleKit,
+      ReleaseCalendar,
+      CouplingMap,
+      TwoSpeeds,
+      BigBangCurve,
+      StranglerFig,
     },
   });
 }
