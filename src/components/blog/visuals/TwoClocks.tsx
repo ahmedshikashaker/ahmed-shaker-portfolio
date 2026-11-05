@@ -76,7 +76,10 @@ function newSim(): Sim {
   };
 }
 
-const polar = (r: number, a: number) => [C + r * Math.cos(a), C + r * Math.sin(a)] as const;
+// Rounded to 0.01: Node (server) and the browser can differ in the last digit of sin/cos, which would make
+// the server-rendered SVG attributes disagree with the client's during hydration.
+const r2 = (n: number) => Math.round(n * 100) / 100;
+const polar = (r: number, a: number) => [r2(C + r * Math.cos(a)), r2(C + r * Math.sin(a))] as const;
 const ease = (x: number) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
 
 function queuePos(gate: number, k: number) {

@@ -119,6 +119,7 @@ export default function LeadTimeChart({ caption }: { caption?: string }) {
           <input
             id={sliderId}
             type="range"
+            suppressHydrationWarning
             min={50}
             max={95}
             step={5}

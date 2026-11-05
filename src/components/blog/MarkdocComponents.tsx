@@ -20,6 +20,14 @@ import ClockStart from "./visuals/ClockStart";
 import GamingCards from "./visuals/GamingCards";
 import LeadTimeChart from "./visuals/LeadTimeChart";
 import FlowLab from "./visuals/FlowLab";
+import FourChairs from "./visuals/FourChairs";
+import GatekeeperMath from "./visuals/GatekeeperMath";
+import MessengerTest from "./visuals/MessengerTest";
+import LookCloser from "./visuals/LookCloser";
+import AnswerUp from "./visuals/AnswerUp";
+import StatGrid from "./visuals/StatGrid";
+import HopeReward from "./visuals/HopeReward";
+import RuleKit from "./visuals/RuleKit";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -179,6 +187,14 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       GamingCards,
       LeadTimeChart,
       FlowLab,
+      FourChairs,
+      GatekeeperMath,
+      MessengerTest,
+      LookCloser,
+      AnswerUp,
+      StatGrid,
+      HopeReward,
+      RuleKit,
     },
   });
 }

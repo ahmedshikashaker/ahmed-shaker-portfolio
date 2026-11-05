@@ -974,3 +974,23 @@
 .cardgrid-body li p {
   margin: 0;
 }
+
+/* ---------------------------------------------------------------- Look closer (LookCloser.tsx) */
+.look-closer[open] .look-closer-body {
+  animation: look-open 0.35s ease both;
+}
+@keyframes look-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .look-closer[open] .look-closer-body {
+    animation: none;
+  }
+}

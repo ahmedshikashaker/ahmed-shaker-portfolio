@@ -202,6 +202,75 @@ export const contentComponents = {
       label: fields.text({ label: "Label on every card (optional)" }),
     },
   }),
+  fourchairs: block({
+    label: "Visual · Four Chairs",
+    description: "Change 27's 45 days seen from the product owner, security reviewer, operations and contact-centre lead. 'Old rules' shows what each is measured on and the rule that flips it; 'New rules' shows what each does now.",
+    schema: {
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Old rules (tabs)", value: "before" },
+          { label: "New rules (closing)", value: "after" },
+        ],
+        defaultValue: "before",
+      }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  answerup: block({
+    label: "Visual · Lost on the Way Up",
+    description: "The board's question about change 27 travels down; the precise answer comes back up, vaguer at each level, as 'resistance to change'.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  statgrid: block({
+    label: "Visual · Stat Grid (100 squares)",
+    description: "One share drawn as 100 squares, with a big number, two labels and a source.",
+    schema: {
+      value: fields.integer({ label: "Highlighted squares (out of 100)", defaultValue: 50 }),
+      label: fields.text({ label: "Label for the highlighted squares" }),
+      restLabel: fields.text({ label: "Label for the rest" }),
+      title: fields.text({ label: "Small heading (optional)" }),
+      source: fields.text({ label: "Source (optional)" }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  hopereward: block({
+    label: "Visual · Hope vs. Reward",
+    description: "Kerr's folly as a balance: what the bank hopes for vs. what it actually rewards.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  rulekit: block({
+    label: "Visual · The New Rules, Assembled",
+    description: "The four pieces of the new rules, where each comes from in the series, and which payoff cell each one changes.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  gatekeepermath: block({
+    label: "Interactive · Gatekeeper's Arithmetic",
+    description: "Personal payoff of approving now vs. holding for the committee under old rules, old rules + a speed target, and new rules, with a risk slider and loss aversion.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  messengertest: block({
+    label: "Interactive · Messenger Test",
+    description: "Four moments handled by Westrum's pathological, bureaucratic and generative cultures, and what people learn from each.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  lookcloser: block({
+    label: "Interactive · Look Closer",
+    description: "The 'culture problem' diagnoses a board hears, each opened to the rule underneath and the rewrite that fixes it.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
   boardcard: wrapper({
     label: "Board card",
     description: "A shareable summary card. Put a numbered list inside.",

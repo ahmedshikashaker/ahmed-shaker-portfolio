@@ -181,6 +181,7 @@ export default function QueueLab({ caption }: { caption?: string }) {
           <input
             id={sliderId}
             type="range"
+            suppressHydrationWarning
             min={MIN_LAMBDA}
             max={MAX_LAMBDA}
             step={0.25}
