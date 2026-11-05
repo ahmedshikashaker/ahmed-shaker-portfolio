@@ -1,0 +1,134 @@
+---
+title: The One Number a Board Should Watch
+excerpt: >-
+  Every tile in the board pack was green, and change 27 still took 45 days to
+  reach customers. Why factory metrics mislead boards, and the one number, with
+  two guardrails, that tells the truth about a transformation.
+language: en
+category: digital-transformation
+tags:
+  - Digital Transformation
+  - Metrics
+  - Flow
+  - Leadership
+  - Banking
+publishedDate: '2026-11-05'
+featured: false
+draft: false
+seoTitle: 'The One Number a Board Should Watch: Measuring Digital Transformation'
+---
+Change 27 is still invented, and you've still met it.
+
+In the [last essay](/blog/evidence-not-meetings), it was a one-line fix to a confusing sentence customers saw after sending money abroad. It took fifteen days to get from *finished* to *live*. This time, let's look at the quarter it shipped in, the way a board saw it.
+
+{% watermelon /%}
+
+Every tile in the pack was green. Velocity was up. Deployments were up. Teams met almost all their sprint commitments. Three new squads had joined the factory. The board, reasonably, was pleased, and approved budget for more squads.
+
+Nothing in the pack was false. It just measured the wrong thing. Every tile described the factory. None described what customers lived through.
+
+*This is the third essay in a series on digital transformation in banking. [The first](/blog/the-factory-is-the-easy-part) argued that the factory is the easy part. [The second](/blog/evidence-not-meetings) showed how approvals can move from meetings to evidence. Both ended with the same advice: measure the whole journey, not the factory. This one is about how.*
+
+## Where does the clock start?
+
+Ask three honest people how long change 27 took, and you'll get three different answers.
+
+{% clockstart /%}
+
+The factory will say half a day: an afternoon to write it, a review the same day. That's effort, and it's accurate.
+
+An engineer who follows DORA's research will say fifteen days. DORA's [change lead time](https://dora.dev/guides/dora-metrics/) runs from code committed to code running in production. It's a good engineering measure, and the right one for the teams that build software. But it starts after the code is written.
+
+The customer, if they could answer, would say forty-five days. That's the time from the moment the bank decided to fix the sentence to the moment the fix was on their screen. For a month of it, change 27 sat in a backlog, approved and untouched, behind other work that had been started first.
+
+{% pullquote quote="Change 27 was being worked on for about one percent of its life. The rest of the time, it was waiting." /%}
+
+Only the third number is the one the customer lived. It's also the only one a board can't get from the factory's own dashboards, because most of it happens outside the factory.
+
+## Why every factory metric turns green
+
+The board pack wasn't wrong because someone cheated. It was wrong because of a law older than agile: when a measure becomes a target, it stops being a good measure. Economists call it Goodhart's law. DORA's own guide to its metrics [warns about it](https://dora.dev/guides/dora-metrics/) by name, and tells organisations not to turn metrics into goals.
+
+Try it. Pick a number a board might set as a target, and see what happens to it.
+
+{% gamingcards /%}
+
+None of the first four is cheating, exactly. Estimates drift. Teams learn which work counts. People optimise what they're measured on, and the dashboard turns green while the customer's wait stays the same.
+
+Lead time from idea to customer is different. To make it look better, you have to deliver sooner, or stop starting work you can't finish. Both are what the board wanted in the first place. It has one weak spot: where the clock starts. If "approved" is allowed to mean "approved, and we've already started", the number improves while nothing changes. So the board, not the factory, should define the start of the clock: the moment the bank commits to doing the work.
+
+## Don't report the average
+
+Once you measure lead time, there's a second trap waiting: the average.
+
+{% leadtimechart /%}
+
+Lead times are never spread evenly. Most changes are quick, and a long tail of slow ones drags behind. In this quarter, the average was 70 days, and more than a third of all changes took longer than that. The average isn't a promise. It's a midpoint that hides the tail, and the tail is where the complaints come from.
+
+A percentile is a promise. "85% of changes reach customers within 112 days" is something a business can plan with. When the tail grows, the number moves, and you can see it. It also raises the right question, which an average hides: *what happened to the other 15%?*
+
+And notice where change 27 sits. Forty-five days for one line of code was quicker than most of the quarter's work.
+
+## The early warning: work in progress
+
+Lead time tells you what already happened. A board also needs to know what's about to happen, and for that, there's one number that moves first: how much work is in progress.
+
+The first essay in this series introduced Little's Law: average lead time equals work in progress divided by how many changes are finished each week. That's why the board pack's two red numbers moved together. Work in progress rose from 210 to 340 while delivery stayed at 34 a week, so lead time had nowhere to go but up, from 43 days to 70.
+
+Here's the same factory over half a year. Choose how work gets started, then decide whether to fund the boundary.
+
+{% flowlab /%}
+
+Starting everything that's approved feels like progress. Teams are busy, deployments rise, and the board pack stays green. But the boundary can only release 34 changes a week, and the bank approves 44. Ten more changes pile up every week, and lead time climbs from 70 days to nearly 100.
+
+Limiting work in progress doesn't make the work smaller. It moves the queue to the one place where waiting is cheap: before anyone has started. Work that is started now finishes in a predictable 43 days. And the backlog becomes visible, which turns a hidden queue into an honest decision for the board: *what are we not going to do yet?*
+
+Only funding the boundary moves the customer's number. That's the argument of the first two essays, and the arithmetic hasn't changed.
+
+## The guardrail: fast and safe
+
+One more number keeps the first one honest. A factory can cut lead time by cutting corners, and for a while the dashboard won't notice.
+
+DORA measures this side of delivery too. Its [change fail rate](https://dora.dev/guides/dora-metrics/) is the share of releases that need immediate intervention after they go out, and its newer deployment rework rate counts the unplanned releases that follow incidents. A board doesn't need both. It needs one, watched alongside lead time: if lead time falls while failures rise, nothing has improved.
+
+## The board pack I'd want
+
+The most misleading number in most board packs isn't wrong. It's velocity: accurate, carefully collected, and almost entirely about effort rather than outcome. If I could replace a whole page of factory metrics with one chart, it would be the lead-time histogram above, for our own bank, with change 27's real counterpart circled.
+
+Here's the whole pack:
+
+{% steps title="One number, two guardrails, one story" %}
+1. **Lead time, idea to customer.** Reported as a promise ("85% within N days"), with the trend over the last four quarters.
+2. **Work in progress.** The early warning. When it rises faster than delivery, lead time will follow.
+3. **Change fail rate.** The guardrail. Speed that breaks things isn't speed.
+4. **One change, followed end to end.** Every quarter, pick one real change and show where it waited. Numbers persuade analysts; stories persuade boards.
+{% /steps %}
+
+And what to take out of the pack, or at least out of the targets: velocity, story points, deployment counts, commitment percentages and headcount. They're useful inside teams, for teams. On a board's scorecard, they turn into goals, and goals get gamed.
+
+## What I'd tell a board
+
+{% boardcard title="Five things to know about measuring a transformation" %}
+1. **Watch one number: lead time from approved idea to customer.** It's the only metric the customer actually lives through.
+2. **Ask for a promise, not an average.** "85% within N days" can be planned with. An average hides the work customers complain about.
+3. **Watch work in progress.** It moves before lead time does. Starting more work is not progress.
+4. **Keep one quality guardrail.** Change fail rate alongside lead time: faster and failing isn't better.
+5. **Decide where the clock starts, then steer with it.** Use the number to ask questions, not to score teams. The moment it becomes a team target, it starts to lie.
+{% /boardcard %}
+
+## Change 27, on the dashboard
+
+In a bank that measures this way, change 27 doesn't disappear into an average or hide behind a green tile. It's a dot on the lead-time chart, somewhere in the middle, and somebody at the board table asks why a one-line fix took forty-five days.
+
+That question is the point. The right number doesn't make a board pack look better. It makes the board ask better questions, and the answers are where the transformation happens.
+
+---
+
+### Sources and further reading
+
+- DORA, "[DORA's software delivery metrics](https://dora.dev/guides/dora-metrics/)": definitions of change lead time, change fail rate and deployment rework rate, and the warning against setting metrics as goals.
+- John D. C. Little, "[A Proof for the Queuing Formula: L = λW](https://doi.org/10.1287/opre.9.3.383)," *Operations Research* 9(3), 1961.
+- Charles Goodhart, "Problems of Monetary Management: The U.K. Experience," *Papers in Monetary Economics*, Reserve Bank of Australia, 1975; the common phrasing is Marilyn Strathern's, "'Improving ratings': audit in the British University system," *European Review* 5(3), 1997.
+- Donald G. Reinertsen, *The Principles of Product Development Flow*, Celeritas Publishing, 2009.
+- Mik Kersten, *[Project to Product](https://itrevolution.com/product/project-to-product/)*, IT Revolution, 2018.
+- Daniel S. Vacanti, *[Actionable Agile Metrics for Predictability](https://actionableagile.com/books/aamfp/)*, 2015.

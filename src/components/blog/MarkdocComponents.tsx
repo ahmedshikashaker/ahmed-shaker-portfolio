@@ -15,6 +15,11 @@ import TwoLanes from "./visuals/TwoLanes";
 import ControlCards from "./visuals/ControlCards";
 import MeetingAgenda from "./visuals/MeetingAgenda";
 import { CardGrid, Steps } from "./visuals/ListBlocks";
+import Watermelon from "./visuals/Watermelon";
+import ClockStart from "./visuals/ClockStart";
+import GamingCards from "./visuals/GamingCards";
+import LeadTimeChart from "./visuals/LeadTimeChart";
+import FlowLab from "./visuals/FlowLab";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -169,6 +174,11 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       MeetingAgenda,
       Steps,
       CardGrid,
+      Watermelon,
+      ClockStart,
+      GamingCards,
+      LeadTimeChart,
+      FlowLab,
     },
   });
 }

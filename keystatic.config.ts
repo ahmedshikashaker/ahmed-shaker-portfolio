@@ -152,6 +152,41 @@ export const contentComponents = {
       caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
+  watermelon: block({
+    label: "Visual · Watermelon dashboard",
+    description: "The board pack (all green) vs. what customers lived (red), for the same quarter.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  clockstart: block({
+    label: "Visual · Where the clock starts",
+    description: "Change 27 from decision to customer, to scale, with three honest lead-time numbers.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  gamingcards: block({
+    label: "Interactive · Make it a target",
+    description: "Pick a metric as a target and see how it gets gamed (Goodhart's law).",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  leadtimechart: block({
+    label: "Interactive · Lead-time histogram",
+    description: "One quarter's lead times; a slider turns a percentile into a promise.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  flowlab: block({
+    label: "Interactive · Flow Lab",
+    description: "26 weeks of cumulative flow: start everything vs. limit work in progress vs. fund the boundary.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
   steps: wrapper({
     label: "Steps (numbered path)",
     description: "Put a numbered list inside. Each item's bold opening becomes the step's title.",
