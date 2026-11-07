@@ -11,9 +11,8 @@ export const SITE_URL = "https://www.ahmed-shaker.com";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
-/** Drafts are visible in local dev (and when BLOG_SHOW_DRAFTS=1), never on the live site. */
-const SHOW_DRAFTS =
-  process.env.NODE_ENV === "development" || process.env.BLOG_SHOW_DRAFTS === "1";
+/** Drafts are hidden unless BLOG_SHOW_DRAFTS=1 is explicitly set. */
+const SHOW_DRAFTS = process.env.BLOG_SHOW_DRAFTS === "1";
 
 export type BlogLanguage = "en" | "ar";
 
@@ -150,6 +149,17 @@ const markdocConfig: Config = (() => {
         changeyear: "ChangeYear",
         quarterquestions: "QuarterQuestions",
         yearscoreboard: "YearScoreboard",
+        aievolution: "AiEvolutionSpectrum",
+        executionjourney: "ExecutionJourneyLab",
+        splittrust: "SplitTrustBoundary",
+        riskmatrix: "RiskTierMatrix",
+        canonicalcontract: "CanonicalContractExplorer",
+        blueprintledger: "BlueprintRealityLedger",
+        threatmatrix: "ThreatDefenseMatrix",
+        hybridruntime: "HybridOrchestrationLab",
+        continuousauth: "ContinuousAuthInspector",
+        auditchain: "AuditChainExplorer",
+        rolloutgates: "ProductionRolloutGate",
       },
     },
   });

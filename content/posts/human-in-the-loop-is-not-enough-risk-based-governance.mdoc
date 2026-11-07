@@ -1,0 +1,66 @@
+---
+title: 'Human-in-the-Loop Is Not Enough: Designing R0–R4 Risk-Based AI Governance'
+excerpt: 'When every action asks for confirmation, humans click "Approve" blindly. How a five-tier risk model (R0–R4) combines zero-friction reads, hash-bound confirmations, step-up MFA, and four-eyes segregation of duties.'
+publishedDate: '2026-11-05'
+category: ai-governance
+tags:
+  - Risk Governance
+  - Human in the Loop
+  - Segregation of Duties
+  - Enterprise Security
+  - AI Approvals
+coverAlt: 'Interactive R0 to R4 risk governance matrix and dynamic escalation simulator for enterprise AI actions'
+language: en
+featured: false
+draft: true
+seoTitle: 'Human-in-the-Loop Is Not Enough: R0–R4 Risk-Based AI Governance | Ahmed Shaker'
+---
+
+When engineering teams realize that autonomous tool execution is dangerous, their default fix is almost always the same: *"Put a human-in-the-loop confirmation button in front of every tool call."*
+
+Within two weeks of production rollout, that button fails in two opposite ways:
+
+1. **The Cookie-Banner Effect (Approval Fatigue):** If employees must click *Confirm* twenty times a day for harmless diagnostics or draft creations, they stop reading the payload and click *Approve* by muscle memory.
+2. **The Authority Fallacy:** Asking the *person who typed the prompt* to click *"Yes, I'm sure"* before adjusting a credit limit or modifying a payroll record confuses **user confirmation** with **organizational authorization**.
+
+{% callout tone="insight" title="Risk-Proportional Governance" %}
+Human oversight only works when friction is proportional to blast radius—and when high-consequence actions require an **independent institutional approver** rather than the initiating user.
+{% /callout %}
+
+---
+
+## 1. Interactive Matrix: The `R0`–`R4` Risk Taxonomy & Dynamic Escalation Simulator
+
+In a risk-proportional governance architecture, every certified capability contract carries a baseline risk tier (`R0` through `R4`). At runtime, the policy engine evaluates contextual triggers—such as data sensitivity, bulk target counts (`> 10`), financial thresholds, or non-reversible side effects—and escalates the effective risk tier upward under a strict **`most-restrictive wins`** rule.
+
+Click any tier (`R0`–`R4`) below and toggle the runtime escalation triggers to see how the required approval gate adapts dynamically:
+
+{% riskmatrix /%}
+
+---
+
+## 2. What Makes an AI Approval Cryptographically Tamper-Proof?
+
+In naive workflow tools, an approver looks at a chat summary while the backend executes a mutable JSON dictionary. In a governed control plane, an `R2` confirmation or `R3` four-eyes approval is a **cryptographic commitment** bound to four immutable artifacts:
+
+{% cardgrid title="Four Cryptographic Bindings Inside Every R2/R3 Approval" label="Approval Binding" %}
+- **1. Deterministic Preview & `planHash` (`SHA-256`).** The approval UI renders a deterministic diff from the canonical `resolvedInput` payload—never an LLM-written summary. The human decision signs the exact `planHash`.
+- **2. Single-Use `confirmationNonce` & TTL.** Every confirmation challenge issues a short-lived, single-attempt nonce (`15m` for `R2`, policy-bounded SLA for `R3`), preventing replay of old approvals.
+- **3. Segregation of Duties (`requesterMayFinalApprove: false`).** For `R3` operations, the control plane enforces four-eyes separation: the principal who initiated the turn is mathematically barred from acting as the final approver.
+- **4. Step-Up MFA Freshness (`<= 5m`).** Approving an `R3` action requires a fresh multi-factor authentication claim verified within the last 5 minutes, plus live re-evaluation of `expectedTargetVersion` before grant issuance.
+{% /cardgrid %}
+
+---
+
+## 3. Interactive Walkthrough: Tracing an `R3` Four-Eyes Approval End to End
+
+Select the **R3 · Payroll Four-Eyes** scenario in the simulator below (or switch between `R1`, `R2`, and `R4`) and test the **Revoke role pre-grant** and **Stale target version** fault switches to watch what happens when state changes while an approval is pending:
+
+{% executionjourney initialScenario="r3-payroll" /%}
+
+{% boardcard title="Four rules to replace rubber-stamp Human-in-the-Loop" %}
+1. **Eliminate confirmation popups on `R0` reads and `R1` low-risk reversible writes.** Save human attention for operations where human judgment actually reduces institutional risk.
+2. **Never show an approver an LLM-generated summary of what is about to happen.** Render the preview deterministically from the canonical `resolvedInput` JSON and bind the click to `planHash`.
+3. **Separate `R2` user confirmation from `R3` institutional authorization.** A user can confirm their own leave request (`R2`); they cannot approve their own compensation adjustment (`R3`, `requesterMayFinalApprove: false`).
+4. **Quarantine every unreviewed connector capability at `R4` by default.** No newly discovered OpenAPI or MCP operation may execute until a governance owner explicitly lowers its tier from `R4`.
+{% /boardcard %}

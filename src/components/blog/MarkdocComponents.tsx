@@ -38,6 +38,17 @@ import JCurve from "./visuals/JCurve";
 import ChangeYear from "./visuals/ChangeYear";
 import QuarterQuestions from "./visuals/QuarterQuestions";
 import YearScoreboard from "./visuals/YearScoreboard";
+import AiEvolutionSpectrum from "./visuals/AiEvolutionSpectrum";
+import ExecutionJourneyLab from "./visuals/ExecutionJourneyLab";
+import SplitTrustBoundary from "./visuals/SplitTrustBoundary";
+import RiskTierMatrix from "./visuals/RiskTierMatrix";
+import CanonicalContractExplorer from "./visuals/CanonicalContractExplorer";
+import BlueprintRealityLedger from "./visuals/BlueprintRealityLedger";
+import ThreatDefenseMatrix from "./visuals/ThreatDefenseMatrix";
+import HybridOrchestrationLab from "./visuals/HybridOrchestrationLab";
+import ContinuousAuthInspector from "./visuals/ContinuousAuthInspector";
+import AuditChainExplorer from "./visuals/AuditChainExplorer";
+import ProductionRolloutGate from "./visuals/ProductionRolloutGate";
 
 /* ---------------------------------------------------------------- Code blocks */
 
@@ -215,6 +226,17 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       ChangeYear,
       QuarterQuestions,
       YearScoreboard,
+      AiEvolutionSpectrum,
+      ExecutionJourneyLab,
+      SplitTrustBoundary,
+      RiskTierMatrix,
+      CanonicalContractExplorer,
+      BlueprintRealityLedger,
+      ThreatDefenseMatrix,
+      HybridOrchestrationLab,
+      ContinuousAuthInspector,
+      AuditChainExplorer,
+      ProductionRolloutGate,
     },
   });
 }

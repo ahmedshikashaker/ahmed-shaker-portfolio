@@ -18,6 +18,7 @@ const useGitHub = Boolean(
 );
 
 export const BLOG_CATEGORIES = [
+  { label: "AI & Governance", value: "ai-governance" },
   { label: "Digital Banking", value: "digital-banking" },
   { label: "Architecture", value: "architecture" },
   { label: "Engineering Leadership", value: "engineering-leadership" },
@@ -354,6 +355,101 @@ export const contentComponents = {
     description: "A shareable summary card. Put a numbered list inside.",
     schema: {
       title: fields.text({ label: "Title" }),
+    },
+  }),
+  aievolution: block({
+    label: "Interactive · AI Evolution Spectrum",
+    description: "Four-stage enterprise AI evolution comparator: Knowledge AI → Contextual Co-Pilot → Unconstrained Agent → Governed AI Manager.",
+    schema: {
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Full (topology + 6 dimensions)", value: "full" },
+          { label: "Compact (topology only)", value: "compact" },
+        ],
+        defaultValue: "full",
+      }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  executionjourney: block({
+    label: "Interactive · Governed Execution Journey Lab",
+    description: "9-stage interactive execution simulator with R1, R2, R3, and adversarial scenarios plus live runtime fault injection.",
+    schema: {
+      initialScenario: fields.select({
+        label: "Initial Scenario",
+        options: [
+          { label: "R1 · Read + RAG", value: "r1-read" },
+          { label: "R2 · Read-Then-Write DAG", value: "r2-leave-dag" },
+          { label: "R3 · Payroll Four-Eyes", value: "r3-payroll" },
+          { label: "Adversarial · R4 Block", value: "adversarial-block" },
+        ],
+        defaultValue: "r2-leave-dag",
+      }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  splittrust: block({
+    label: "Interactive · Split-Service Trust Boundaries",
+    description: "3-zone architecture blueprint and 5 trust boundaries (Boundary A–E) with interactive breach/fault containment drills.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  riskmatrix: block({
+    label: "Interactive · R0–R4 Risk Governance Matrix",
+    description: "Interactive R0–R4 risk policy explorer and dynamic escalation simulator.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  canonicalcontract: block({
+    label: "Interactive · Canonical Capability Contract Explorer",
+    description: "Compares raw OpenAPI and MCP schemas against the normalized Canonical Capability Contract and simulates upstream drift.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  blueprintledger: block({
+    label: "Interactive · Enterprise Qualification & Verification Matrix",
+    description: "Three-tier verification matrix distinguishing deterministic core guarantees from integration replay and target deployment attestation.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  threatmatrix: block({
+    label: "Interactive · Enterprise AI Threat & Containment Matrix",
+    description: "Interactive threat model laboratory comparing unconstrained agent breaches against defense-in-depth containment.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  hybridruntime: block({
+    label: "Interactive · Two-Engine State-Graph & Workflow Orchestration Lab",
+    description: "Interactive 10-stage explicit planner graph, bounded DAG invariants, and post-fence timeout (outcome_unknown) simulator.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  continuousauth: block({
+    label: "Interactive · 7-Stage Continuous Authorization & Grant Inspector",
+    description: "Walks through 7 continuous authorization checkpoints and lets readers simulate payload tampering against Signed Execution Grant digests.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  auditchain: block({
+    label: "Interactive · 17-ID Correlation & SHA-256 Audit Chain Explorer",
+    description: "Interactive SHA-256 hash-chain tamper detector, 17-identifier correlation strip, and audience-specific redaction projector.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
+  rolloutgates: block({
+    label: "Interactive · 5-Ring Rollout, 12 Release Gates & Kill-Switch Console",
+    description: "Interactive production rollout ring explorer and live emergency containment kill-switch console.",
+    schema: {
+      caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
 };

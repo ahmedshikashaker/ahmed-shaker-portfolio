@@ -1,6 +1,7 @@
 /** Formatting helpers shared by server and client blog components. */
 
 const CATEGORY_AR: Record<string, string> = {
+  "ai-governance": "الذكاء الاصطناعي والحوكمة",
   "digital-banking": "الخدمات المصرفية الرقمية",
   architecture: "هندسة البرمجيات",
   "engineering-leadership": "القيادة الهندسية",

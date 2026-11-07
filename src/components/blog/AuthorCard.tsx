@@ -6,7 +6,13 @@ import { ArrowGlyph, Button } from "@/components/ui/Button";
 import { CornerTicks } from "@/components/ui/SectionHeader";
 import { cn } from "@/lib/cn";
 
-export default function AuthorCard({ language }: { language: "en" | "ar" }) {
+export default function AuthorCard({
+  language,
+  independentProject = false,
+}: {
+  language: "en" | "ar";
+  independentProject?: boolean;
+}) {
   const isAr = language === "ar";
   return (
     <section
@@ -24,9 +30,13 @@ export default function AuthorCard({ language }: { language: "en" | "ar" }) {
           {isAr ? "أحمد شاكر" : "Ahmed Shaker"}
         </div>
         <p className={cn("mt-2 text-[14.5px] leading-relaxed text-fg-3", isAr && "font-arabic")}>
-          {isAr
-            ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية في البنك الدولي الكويتي (KIB). ساهم في تأسيس مصنعين رقميين مصرفيين من الصفر."
-            : "Executive Manager – Head of Digital Technology at Kuwait International Bank (KIB). Helped build two banking digital factories from scratch."}
+          {independentProject
+            ? isAr
+              ? "قائد تكنولوجيا المؤسسات ومصمم الأنظمة. تستكشف هذه السلسلة أنماطاً معمارية مرجعية لحوكمة الذكاء الاصطناعي المؤسسي والتنفيذ المستقل المنضبط، وهي نتاج أبحاث معمارية مستقلة."
+              : "Enterprise Technology Leader & Systems Architect. The reference architectures and governance patterns explored in this series represent independent systems research and architectural thought leadership."
+            : isAr
+              ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية في البنك الدولي الكويتي (KIB). ساهم في تأسيس مصنعين رقميين مصرفيين من الصفر."
+              : "Executive Manager – Head of Digital Technology at Kuwait International Bank (KIB). Helped build two banking digital factories from scratch."}
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <Button href="/" size="sm" icon={<ArrowGlyph className="size-3.5 rtl:-scale-x-100" />}>

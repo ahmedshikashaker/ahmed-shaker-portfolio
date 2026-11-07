@@ -1,0 +1,65 @@
+---
+title: 'The Principle of Least Privilege for AI Agents: Continuous Authorization & Cryptographic Grants'
+excerpt: 'An API schema describes shapes, not permissions. How seven-stage continuous authorization, context-injected fields, Ed25519 retrieval scopes, and RFC 8785 execution grants eliminate the confused deputy.'
+publishedDate: '2026-11-05'
+category: ai-governance
+tags:
+  - Least Privilege
+  - Zero Trust
+  - Ed25519
+  - Policy Engine
+  - Authorization
+coverAlt: 'Seven-stage continuous authorization pipeline and RFC 8785 JCS Signed Execution Grant digest verification'
+language: en
+featured: false
+draft: true
+seoTitle: 'The Principle of Least Privilege for AI Agents: 7-Stage Authorization & Cryptographic Grants | Ahmed Shaker'
+---
+
+In traditional web applications, authorization is usually a perimeter gate: verify the user's JWT when the HTTP request arrives, check their role, and let the backend controller run.
+
+In an autonomous AI system, a single perimeter check at login is dangerously insufficient.
+
+Between the moment a user sends a prompt and the moment a durable worker opens a network socket to an enterprise API, the system searches vector indexes, ranks thousands of tools, drafts multi-step plans, and potentially waits hours for human approval. If permissions are only checked at turn ingress—or if the AI runtime holds an ambient service token—the agent becomes a **Confused Deputy** with more authority than the human who invoked it.
+
+{% callout tone="insight" title="The Law of Delegated AI Authority" %}
+An AI agent must never possess intrinsic permissions of its own. Its effective authority at any millisecond is the strict intersection of the **authenticated human principal**, the **assistant profile ceiling**, the **live resource ownership check**, and a **single-attempt cryptographic grant**.
+{% /callout %}
+
+---
+
+## 1. Interactive Inspector: 7-Stage Continuous Authorization & Grant Tamper Test
+
+In a governed enterprise architecture, authorization is not a single check—it is a **seven-stage continuous pipeline** that re-verifies identity, scope, and payload integrity from turn ingress to the exact millisecond of external I/O.
+
+Click through **Stages 1 to 7** below, then click **Simulate Post-Approval Payload Tamper** in the cryptographic grant inspector to see how pre-dispatch digest verification catches a 1-byte mutation (`days: 4 → 14`) before any secret is fetched:
+
+{% continuousauth /%}
+
+---
+
+## 2. Four Mechanisms That Eliminate the Confused Deputy
+
+How do you guarantee that a language model can never trick a downstream API into acting on the wrong user's record or reading restricted documents?
+
+{% cardgrid title="Four Pillars of Agent Least Privilege" label="Control Pillar" %}
+- **1. Context-Injected Identity Fields (`contextInjectedFields`).** Fields like `employeeId`, `tenantId`, and `costCenter` are stripped from the JSON schema shown to the LLM. The model cannot see or populate them; the control plane injects them directly from verified OIDC claims.
+- **2. Two-Stage Capability Selection (`10,000+` Actions).** Semantic search never runs over the full catalog. Stage 1 computes a hard deterministic policy allow-set for the caller's role; Stage 2 ranks only within that authorized subset.
+- **3. Control-Plane-Brokered RAG.** The reasoning runtime has no direct network route to the retrieval engine. The control plane brokers every query with a 60-second `Ed25519`-signed scope and re-authorizes matched document IDs before snippet release.
+- **4. Single-Attempt Signed Execution Grant.** Minted only after policy and approval gates pass, canonicalized via RFC 8785 JCS, and bound to 15+ SHA-256 digests (`resolvedInputHash`, `connectorContractHash`, `authorityHash`, `egressPolicyHash`).
+{% /cardgrid %}
+
+---
+
+## 3. Tracing Least Privilege Across Physical Trust Boundaries
+
+Inspect how **Boundary B** (Control-Plane-Brokered Knowledge Retrieval) and **Boundary D** (Cryptographic Execution Grant Handoff) isolate the untrusted reasoning planner from both enterprise data and enterprise credentials:
+
+{% splittrust /%}
+
+{% boardcard title="Four least-privilege mandates for enterprise AI architecture" %}
+1. **Strip identity parameters from LLM schemas.** Never rely on a prompt or policy rule to check whether the LLM filled the right `userId`; make principal-identifying fields `contextInjectedFields` injected by the control plane.
+2. **Filter capabilities by deterministic policy before semantic ranking.** A model cannot hallucinate or be prompt-injected into calling a tool that was excluded from its turn catalog before planning began.
+3. **Broker all knowledge retrieval with short-lived cryptographic scopes.** Never give the agent planner direct credentials to your vector database; enforce two-step citation release reauthorization against live ACLs.
+4. **Re-verify live principal state at the millisecond of grant issuance.** If a user's role is revoked or a target record's ETag changes while an approval is pending, abort execution before minting the grant.
+{% /boardcard %}

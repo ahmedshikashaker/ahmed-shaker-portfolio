@@ -1,0 +1,67 @@
+---
+title: 'From AI Intent to Controlled Execution: The Handshake Between Reasoning and Authority'
+excerpt: 'Inside the two-engine handshake between a bounded 10-stage graph planner and deterministic durable workflows: typed action DAGs, preconditions, optimistic concurrency, and outcome reconciliation.'
+publishedDate: '2026-11-05'
+category: ai-governance
+tags:
+  - AI Orchestration
+  - Workflow Engines
+  - Distributed Systems
+  - Idempotency
+  - State Machines
+coverAlt: 'Two-engine orchestration diagram showing a 10-stage reasoning state graph handing off a bounded DAG to a deterministic workflow engine'
+language: en
+featured: false
+draft: true
+seoTitle: 'From AI Intent to Controlled Execution: Two-Engine AI Orchestration | Ahmed Shaker'
+---
+
+In a developer demo, an AI agent is a `while` loop: prompt the model, parse a tool call, run `requests.post()`, feed the JSON back into the prompt, and repeat until the model decides it is done.
+
+In an enterprise system of record, that `while` loop is a distributed systems disaster.
+
+What happens when step 1 of a multi-step request succeeds, step 2 pauses for four hours waiting for a manager's approval, and step 3 encounters a network timeout after dispatching a write to the ERP? If your orchestration state lives inside an in-memory LLM scratchpad, a pod restart wipes out the workflow—or worse, a naive retry duplicates the financial transaction.
+
+{% callout tone="insight" title="The Two-Engine Orchestration Split" %}
+Non-deterministic reasoning and deterministic execution require two fundamentally different engines. A **bounded state-graph planner** owns the stateless reasoning turn; a **durable workflow engine** owns long-running approvals and idempotent external execution.
+{% /callout %}
+
+---
+
+## 1. Interactive Lab: The 10-Stage Planner Graph & Post-Fence Timeout Simulator
+
+Instead of an unconstrained ReAct loop, the reasoning runtime executes an explicit **10-stage state graph** where every transition is bounded by deterministic caps (`<= 6` total DAG nodes, `<= 3` mutations, sequential mutation width `= 1`, and at most `1` schema repair attempt).
+
+Click any of the **10 stages** below to inspect its inputs, outputs, and state transitions—then click **Simulate Post-Dispatch HTTP Timeout** at the bottom of the lab to watch how the durable workflow engine prevents duplicate writes using `outcome_unknown` quarantine:
+
+{% hybridruntime /%}
+
+---
+
+## 2. Why Multi-Action Requests Are Bounded DAGs, Not Open Loops
+
+When an employee asks: *"Check my leave balance, verify team coverage for next Sunday to Wednesday, and submit 4 days of annual leave,"* the planner does not execute tools one by one on a whim. It drafts a single **Typed Action DAG** (`draft_plan`, Stage 5) with explicit data-flow bindings and declarative JSONPath preconditions:
+
+{% cardgrid title="Four Structural Guarantees of the Bounded Action DAG" label="DAG Invariant" %}
+- **1. Parallel Reads, Strictly Serialized Writes.** Read-only `R0` nodes (`leave.balance.get`, `team.calendar.check`) execute in parallel. State-mutating nodes (`leave.request.create`) are serialized (`maxParallelMutations = 1`) so partial failures never race.
+- **2. Declarative Preconditions (`$.steps.balance.remainingDays >= 4`).** Before the write node is even eligible for grant issuance, the control plane evaluates JSONPath preconditions against the verified output of upstream read nodes.
+- **3. Optimistic Concurrency (`expectedTargetVersion`).** Read nodes capture the target resource's current ETag or version stamp. If the record is modified by another system before the write executes, the grant fails with `409 Conflict` instead of silently overwriting data.
+- **4. Post-Fence `outcome_unknown` Quarantine.** Once the worker records the pre-send persistence fence in the relational store, any socket timeout locks the operation in `outcome_unknown` and triggers read-after-timeout reconciliation by `idempotencyKey`.
+{% /cardgrid %}
+
+---
+
+## 3. Stress-Testing the Execution Pipeline Under Live Faults
+
+How does the end-to-end handshake behave when things go wrong mid-flight?
+
+Use the simulator below to step through the **R2 Read-Then-Write DAG** and toggle the three **Fault-Injection Switches** in the top bar (*Revoke role pre-grant*, *Stale target version*, and *Timeout after dispatch*) to see the exact gate where each fault is caught:
+
+{% executionjourney initialScenario="r2-leave-dag" /%}
+
+{% boardcard title="Four rules for orchestrating multi-step AI actions" %}
+1. **Separate the planner from the workflow engine.** Use a bounded state-graph planner to draft and repair structured plans, and a durable workflow engine to execute side effects across hours or days.
+2. **Bound every plan graph deterministically.** Enforce hard ceilings on total nodes (`<= 6`), write mutations (`<= 3`), parallel writes (`1`), and schema repair retries (`1`) so a confused model can never enter a runaway loop.
+3. **Never treat a multi-API workflow like a database rollback.** External REST and MCP calls do not share ACID transactions; require explicit compensation actions (`compensatingActionId`) and optimistic concurrency (`expectedTargetVersion`).
+4. **Quarantine post-send network timeouts (`outcome_unknown`).** Never let an LLM retry a timed-out write mutation; reconcile outcome state deterministically using a pre-persisted idempotency key.
+{% /boardcard %}

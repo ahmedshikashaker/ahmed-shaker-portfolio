@@ -2,13 +2,35 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, BrickWall, CalendarRange, DoorOpen, Factory, Users } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  BrickWall,
+  CalendarRange,
+  CheckCircle2,
+  Clock,
+  Compass,
+  DoorOpen,
+  Factory,
+  FileKey2,
+  GitBranch,
+  KeyRound,
+  Layers,
+  Scale,
+  ShieldAlert,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { useStepsOnView } from "./visuals/useMotionReady";
+import { openComingSoonPart, type ComingSoonPartPayload } from "./ComingSoonSeriesModal";
 
 /**
- * "Five walls": the series as one route. Change 27 leaves the factory and meets five walls on its way to the
- * customer, one per essay; each wall opens as the change passes. The sixth essay is the year underneath, which
- * puts all five on one calendar. Plays once when scrolled into view; the server render is the finished route.
+ * Series visual route:
+ * - For "digital-transformation": "Five walls" — Change 27 leaves the factory and meets five walls on its way
+ *   to the customer, one per essay; the sixth essay puts all five on one twelve-month board calendar.
+ * - For "governed-ai": "Eight Governance Boundaries" — An enterprise AI request moves from natural-language
+ *   intent through trust boundaries, split-service control planes, deterministic DAGs, least-privilege scopes,
+ *   R0–R4 risk gates, and hash-chained audit ledgers into production qualification.
  */
 
 export interface MapPart {
@@ -16,14 +38,141 @@ export interface MapPart {
   wall: string;
   title: string;
   href: string;
+  published?: boolean;
+  comingSoonPayload?: ComingSoonPartPayload;
 }
 
-export default function SeriesMap({ parts }: { parts: MapPart[] }) {
+const GOVERNED_AI_ICONS = [
+  Sparkles,
+  ShieldAlert,
+  Layers,
+  GitBranch,
+  KeyRound,
+  Scale,
+  FileKey2,
+  Compass,
+];
+
+function GovernedAiSeriesMap({ parts }: { parts: MapPart[] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const steps = parts.length;
+  const step = useStepsOnView(ref, steps, 480, 0.25);
+
+  return (
+    <div ref={ref} className="rounded-2xl border border-line-2 bg-surface p-4 shadow-[var(--shadow-soft)] sm:p-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-4">
+        <div>
+          <p className="eyebrow text-accent">From AI Knowledge to Governed Action · 8-Part Architectural Route</p>
+          <p className="mt-1 text-[12.5px] text-fg-3">
+            How an enterprise intent crosses seven architectural control gates before earning production trust in Part 8.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 text-[11.5px] font-mono text-fg-3">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-signal" /> Published Essay
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-accent" /> Editorial Roadmap
+          </span>
+        </div>
+      </div>
+
+      <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {parts.map((w, i) => {
+          const Icon = GOVERNED_AI_ICONS[i % GOVERNED_AI_ICONS.length];
+          const active = step > i;
+          const current = step === i + 1;
+          const isPublished = w.published !== false;
+
+          const cardClassName = `group flex h-full w-full flex-col justify-between rounded-xl border p-3.5 text-left transition-all duration-500 ${
+            isPublished
+              ? "border-signal/50 bg-signal/[0.07] hover:border-signal"
+              : active
+                ? "border-accent/40 bg-accent/[0.05] hover:border-accent"
+                : "border-line bg-bg-2/40 hover:border-line-3"
+          }`;
+
+          const cardInner = (
+            <>
+              {current && (
+                <span className="absolute -top-2.5 end-2.5 rounded-full bg-accent px-2 py-0.5 font-mono text-[9.5px] font-semibold uppercase tracking-wider text-on-accent shadow-[var(--shadow-soft)]">
+                  Gate {w.n}
+                </span>
+              )}
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-4">
+                    <Icon
+                      className={`size-4 shrink-0 ${isPublished ? "text-signal" : active ? "text-accent" : "text-fg-4"}`}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
+                    Part {w.n}
+                  </span>
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-wider ${
+                      isPublished
+                        ? "border border-signal/40 bg-signal/15 text-signal"
+                        : "border border-accent/35 bg-accent/10 text-accent"
+                    }`}
+                  >
+                    {isPublished ? (
+                      <>
+                        <CheckCircle2 className="size-2.5" /> Live
+                      </>
+                    ) : (
+                      <>
+                        <Clock className="size-2.5" /> Coming Soon
+                      </>
+                    )}
+                  </span>
+                </div>
+                <p className="mt-2.5 text-[13px] font-semibold leading-tight text-fg transition-colors group-hover:text-accent">
+                  {w.wall}
+                </p>
+                <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-fg-3">{w.title}</p>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between border-t border-line/60 pt-2 text-[10.5px] font-mono text-fg-4">
+                <span>{isPublished ? "Read full article" : "Coming soon · Preview"}</span>
+                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+              </div>
+            </>
+          );
+
+          return (
+            <li key={w.n} className="relative">
+              {isPublished || !w.comingSoonPayload ? (
+                <Link href={w.href} className={cardClassName}>
+                  {cardInner}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => w.comingSoonPayload && openComingSoonPart(w.comingSoonPayload)}
+                  className={cardClassName}
+                >
+                  {cardInner}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+export default function SeriesMap({ parts, seriesSlug }: { parts: MapPart[]; seriesSlug?: string }) {
   const walls = parts.slice(0, 5);
   const year = parts[5];
   const ref = useRef<HTMLDivElement>(null);
   const steps = walls.length + 1; // through each wall, then to the customer
   const step = useStepsOnView(ref, steps, 650, 0.35);
+
+  if (seriesSlug === "governed-ai" || parts.length > 6) {
+    return <GovernedAiSeriesMap parts={parts} />;
+  }
 
   const arrow = (i: number) => (
     <span key={`a${i}`} aria-hidden="true" className={`flex items-center justify-center transition-colors duration-500 ${step > i ? "text-accent" : "text-fg-4"}`}>

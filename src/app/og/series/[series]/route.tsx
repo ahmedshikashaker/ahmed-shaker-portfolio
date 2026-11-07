@@ -13,7 +13,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ series:
   const { series: slug } = await params;
   const data = await getSeriesWithPosts(slug);
   const title = data?.series.title ?? "A series by Ahmed Shaker";
-  const parts = data?.parts ?? [];
+  const parts = data?.allParts ?? [];
 
   return new ImageResponse(
     (
@@ -62,7 +62,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ series:
               >
                 {p.n}
               </span>
-              <span style={{ fontSize: 23, color: "#d6d3cc" }}>{p.post.title}</span>
+              <span style={{ fontSize: 21, color: "#d6d3cc" }}>{p.title}</span>
             </div>
           ))}
         </div>

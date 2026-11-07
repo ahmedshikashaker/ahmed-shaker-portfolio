@@ -18,7 +18,8 @@ import TableOfContents from "@/components/blog/TableOfContents";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import AuthorCard from "@/components/blog/AuthorCard";
 import PostCard from "@/components/blog/PostCard";
-import { seriesForPost, seriesPath } from "@/lib/series";
+import ComingSoonSeriesModal, { ComingSoonPartTrigger } from "@/components/blog/ComingSoonSeriesModal";
+import { getSeriesWithPosts, seriesForPost, seriesPath } from "@/lib/series";
 
 export const dynamicParams = false;
 
@@ -76,6 +77,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const isAr = post.language === "ar";
   const dir = isAr ? "rtl" : "ltr";
   const inSeries = seriesForPost(post.slug);
+  const seriesData = inSeries ? await getSeriesWithPosts(inSeries.series.slug) : null;
+  const nextSeriesPart = seriesData?.allParts.find((p) => p.n === (inSeries?.part ?? 0) + 1) ?? null;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -185,7 +188,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   <div className="leading-tight">
                     <div className="text-[14px] font-medium text-fg">{isAr ? "أحمد شاكر" : "Ahmed Shaker"}</div>
                     <div className="mt-0.5 text-[12px] text-fg-3">
-                      {isAr ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية، KIB" : "Executive Manager – Head of Digital Technology, KIB"}
+                      {post.category === "ai-governance"
+                        ? isAr
+                          ? "قائد تكنولوجيا المؤسسات ومصمم الأنظمة · أبحاث معمارية مستقلة"
+                          : "Enterprise Technology Leader & Systems Architect · Independent Architecture Research"
+                        : isAr
+                          ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية، KIB"
+                          : "Executive Manager – Head of Digital Technology, KIB"}
                     </div>
                   </div>
                 </div>
@@ -206,6 +215,128 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div id="article-body" className="mt-12">
               <div className={`blog-prose prose prose-lg max-w-none ${isAr ? "blog-prose-ar" : ""}`}>{renderMarkdoc(post.renderable)}</div>
 
+              {inSeries && seriesData && (
+                <div className="mt-14 rounded-2xl border border-accent/40 bg-surface p-5 shadow-[var(--shadow-soft)] sm:p-7 print:hidden" dir="ltr">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+                    <div>
+                      <p className="eyebrow text-accent">
+                        Part {inSeries.part} of {inSeries.total} in Series
+                      </p>
+                      <Link
+                        href={seriesPath(inSeries.series.slug)}
+                        className="mt-1 block font-display text-[1.45rem] leading-tight text-fg transition-colors hover:text-accent"
+                      >
+                        {inSeries.series.title}
+                      </Link>
+                    </div>
+                    <Link
+                      href={seriesPath(inSeries.series.slug)}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line-2 bg-bg px-3.5 py-1.5 text-[12.5px] font-medium text-fg-2 transition-colors hover:border-accent hover:text-accent"
+                    >
+                      View full {inSeries.total}-part roadmap <ArrowRight className="size-3.5" />
+                    </Link>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-4 gap-1.5 sm:grid-cols-8">
+                    {seriesData.allParts.map((sp) => {
+                      const isCurrent = sp.n === inSeries.part;
+                      const isPublished = sp.post !== null;
+                      const pillClassName = `rounded-lg border px-2.5 py-2 text-left transition-colors ${
+                        isCurrent
+                          ? "border-accent bg-accent/15 text-fg"
+                          : isPublished
+                            ? "border-signal/40 bg-signal/[0.06] text-fg-2 hover:border-signal"
+                            : "border-line bg-bg-2/40 text-fg-4 hover:border-accent/50 hover:text-fg-2"
+                      }`;
+
+                      if (isPublished) {
+                        return (
+                          <Link key={sp.slug} href={`/blog/${sp.slug}`} className={pillClassName}>
+                            <span className="block font-mono text-[9.5px] uppercase tracking-wider">Part {sp.n}</span>
+                            <span className="mt-0.5 block truncate text-[11px] font-medium">{sp.wall}</span>
+                          </Link>
+                        );
+                      }
+
+                      return (
+                        <ComingSoonPartTrigger
+                          key={sp.slug}
+                          part={{
+                            n: sp.n,
+                            total: seriesData.allParts.length,
+                            seriesTitle: inSeries.series.title,
+                            seriesSlug: inSeries.series.slug,
+                            wall: sp.wall,
+                            title: sp.title,
+                            excerpt: sp.excerpt,
+                            objective: sp.objective,
+                            keyConcepts: sp.keyConcepts,
+                            stat: sp.stat,
+                            boardLine: sp.boardLine,
+                          }}
+                          className={pillClassName}
+                        >
+                          <span className="block font-mono text-[9.5px] uppercase tracking-wider">Part {sp.n}</span>
+                          <span className="mt-0.5 block truncate text-[11px] font-medium">{sp.wall}</span>
+                        </ComingSoonPartTrigger>
+                      );
+                    })}
+                  </div>
+
+                  {nextSeriesPart && (
+                    <div className="mt-5 rounded-xl border border-line-2 bg-bg-2/45 p-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">
+                          Next in Series · Part {nextSeriesPart.n} · {nextSeriesPart.wall}
+                        </span>
+                        <span className="rounded-full border border-line-2 bg-surface px-2.5 py-0.5 font-mono text-[10px] text-fg-3">
+                          {nextSeriesPart.post ? "Published" : "Coming Soon"}
+                        </span>
+                      </div>
+                      {nextSeriesPart.post ? (
+                        <Link href={`/blog/${nextSeriesPart.slug}`} className="group mt-2 block">
+                          <p className="font-display text-[1.25rem] leading-snug text-fg transition-colors group-hover:text-accent">
+                            {nextSeriesPart.title}
+                          </p>
+                          <p className="mt-1 text-[13px] leading-relaxed text-fg-3">{nextSeriesPart.excerpt}</p>
+                          <span className="mt-2.5 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-accent">
+                            Continue to Part {nextSeriesPart.n}{" "}
+                            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        </Link>
+                      ) : (
+                        <ComingSoonPartTrigger
+                          part={{
+                            n: nextSeriesPart.n,
+                            total: seriesData.allParts.length,
+                            seriesTitle: inSeries.series.title,
+                            seriesSlug: inSeries.series.slug,
+                            wall: nextSeriesPart.wall,
+                            title: nextSeriesPart.title,
+                            excerpt: nextSeriesPart.excerpt,
+                            objective: nextSeriesPart.objective,
+                            keyConcepts: nextSeriesPart.keyConcepts,
+                            stat: nextSeriesPart.stat,
+                            boardLine: nextSeriesPart.boardLine,
+                          }}
+                          className="group mt-2 block w-full text-left"
+                        >
+                          <p className="font-display text-[1.25rem] leading-snug text-fg transition-colors group-hover:text-accent">
+                            {nextSeriesPart.title}
+                          </p>
+                          <p className="mt-1 text-[13px] leading-relaxed text-fg-3">{nextSeriesPart.excerpt}</p>
+                          <span className="mt-2.5 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-accent">
+                            Coming soon · Click to preview Part {nextSeriesPart.n}{" "}
+                            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        </ComingSoonPartTrigger>
+                      )}
+                    </div>
+                  )}
+                  <ComingSoonSeriesModal />
+                </div>
+              )}
+
               {post.tags.length > 0 && (
                 <div className="mt-14 flex flex-wrap gap-2 print:hidden">
                   {post.tags.map((tag) => (
@@ -225,7 +356,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div className="mt-8 print:hidden">
-                <AuthorCard language={post.language} />
+                <AuthorCard language={post.language} independentProject={post.category === "ai-governance"} />
               </div>
 
               {(newer || older) && (

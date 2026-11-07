@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Clock, Layers } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock, Compass, Layers } from "lucide-react";
 import { SITE_URL } from "@/lib/blog";
 import { SERIES, getSeriesWithPosts, seriesUrl } from "@/lib/series";
 import { ArrowGlyph } from "@/components/ui/Button";
 import ShareBar from "@/components/blog/ShareBar";
 import BoardCard from "@/components/blog/visuals/BoardCard";
 import SeriesMap from "@/components/blog/SeriesMap";
+import ComingSoonSeriesModal, {
+  ComingSoonPartTrigger,
+  type ComingSoonPartPayload,
+} from "@/components/blog/ComingSoonSeriesModal";
 
 export const dynamicParams = false;
 
@@ -19,8 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ series: s
   const { series: slug } = await params;
   const data = await getSeriesWithPosts(slug);
   if (!data) return {};
-  const { series } = data;
-  const title = `${series.title}: a series in ${data.parts.length} parts`;
+  const { series, allParts } = data;
+  const title = `${series.title}: a series in ${allParts.length} parts`;
   const image = `${SITE_URL}/og/series/${series.slug}`;
   return {
     title,
@@ -47,11 +51,12 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
   const { series: slug } = await params;
   const data = await getSeriesWithPosts(slug);
   if (!data || data.parts.length === 0) notFound();
-  const { series, parts, minutes } = data;
+  const { series, parts, allParts, minutes } = data;
   const first = parts[0];
   const url = seriesUrl(series.slug);
   const dates = parts.map((p) => p.post.publishedDate).sort();
   const since = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${dates[0]}T00:00:00Z`));
+  const hasRoadmapParts = allParts.length > parts.length;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -66,12 +71,12 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
     mainEntity: {
       "@type": "ItemList",
       itemListOrder: "https://schema.org/ItemListOrderAscending",
-      numberOfItems: parts.length,
-      itemListElement: parts.map((p) => ({
+      numberOfItems: allParts.length,
+      itemListElement: allParts.map((p) => ({
         "@type": "ListItem",
         position: p.n,
-        url: p.post.url,
-        name: p.post.title,
+        url: p.post ? p.post.url : `${url}#part-${p.n}`,
+        name: p.title,
       })),
     },
   };
@@ -103,23 +108,38 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
       {/* Hero */}
       <header className="mt-8 grid gap-8 border-b border-line pb-10 lg:grid-cols-12 lg:items-end lg:gap-x-12">
         <div className="lg:col-span-8">
-          <div className="eyebrow flex items-center gap-3 text-fg-3">
-            <span className="text-accent">A series in {parts.length} parts</span>
+          <div className="eyebrow flex flex-wrap items-center gap-3 text-fg-3">
+            <span className="text-accent">A series in {allParts.length} parts</span>
             <span aria-hidden="true" className="h-px w-8 bg-line-3" />
-            <span>Digital transformation</span>
+            <span>{series.eyebrowLabel ?? "Digital transformation"}</span>
+            {series.slug === "governed-ai" && (
+              <>
+                <span aria-hidden="true" className="h-px w-8 bg-line-3" />
+                <span className="rounded-full border border-line-2 bg-surface px-2.5 py-0.5 font-mono text-[10px] text-fg-2">
+                  Independent Architecture Research
+                </span>
+              </>
+            )}
           </div>
           <h1 className="mt-6 font-display text-display-2 text-fg">
             {series.title.split(", ")[0]}, <em className="text-accent">{series.title.split(", ").slice(1).join(", ")}</em>
           </h1>
           <p className="mt-6 max-w-2xl text-lede text-fg-3">{series.tagline}</p>
+          {series.centralThesis && (
+            <blockquote className="mt-6 max-w-2xl rounded-xl border border-accent/35 bg-accent/[0.06] px-4 py-3.5 text-[14px] leading-relaxed text-fg-2">
+              <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-accent">Core Architectural Thesis</span>
+              <span className="mt-1 block font-display text-[1.15rem] italic text-fg">“{series.centralThesis}”</span>
+            </blockquote>
+          )}
         </div>
         <div className="space-y-5 lg:col-span-4">
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-fg-3">
             <li className="inline-flex items-center gap-1.5">
-              <Layers className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> {parts.length} essays
+              <Layers className="size-3.5" strokeWidth={1.75} aria-hidden="true" />{" "}
+              {hasRoadmapParts ? `${parts.length} of ${allParts.length} published` : `${allParts.length} essays`}
             </li>
             <li className="inline-flex items-center gap-1.5">
-              <Clock className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> {minutes} min in all
+              <Clock className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> {minutes} min published
             </li>
             <li className="inline-flex items-center gap-1.5">
               <BookOpen className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> Since {since}
@@ -136,65 +156,251 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
 
       {/* The route */}
       <section className="mt-12" aria-label="The series as one route">
-        <SeriesMap parts={parts.map((p) => ({ n: p.n, wall: p.wall, title: p.post.title, href: `/blog/${p.slug}` }))} />
+        <SeriesMap
+          seriesSlug={series.slug}
+          parts={allParts.map((p) => ({
+            n: p.n,
+            wall: p.wall,
+            title: p.title,
+            href: p.post ? `/blog/${p.slug}` : `#part-${p.n}`,
+            published: p.post !== null,
+            comingSoonPayload:
+              p.post === null
+                ? {
+                    n: p.n,
+                    total: allParts.length,
+                    seriesTitle: series.title,
+                    seriesSlug: series.slug,
+                    firstPublishedSlug: first.slug,
+                    firstPublishedTitle: first.title,
+                    wall: p.wall,
+                    title: p.title,
+                    excerpt: p.excerpt,
+                    objective: p.objective,
+                    keyConcepts: p.keyConcepts,
+                    stat: p.stat,
+                    boardLine: p.boardLine,
+                  }
+                : undefined,
+          }))}
+        />
       </section>
 
-      {/* The six essays */}
+      {/* The essays & editorial roadmap */}
       <section className="mt-16" aria-labelledby="essays-title">
         <div className="flex items-end justify-between gap-6 border-b border-line pb-5">
           <h2 id="essays-title" className="font-display text-display-3 text-fg">
-            The <em className="text-accent">essays</em>
+            {hasRoadmapParts ? (
+              <>
+                Essays &amp; <em className="text-accent">editorial roadmap</em>
+              </>
+            ) : (
+              <>
+                The <em className="text-accent">essays</em>
+              </>
+            )}
           </h2>
-          <p className="hidden text-[13px] text-fg-3 sm:block">Read in order, or start with the wall you’re facing.</p>
+          <p className="hidden text-[13px] text-fg-3 sm:block">
+            {hasRoadmapParts
+              ? "Each installment builds one layer of the governed execution stack."
+              : "Read in order, or start with the wall you’re facing."}
+          </p>
         </div>
-        <ol className="mt-8 grid gap-4 md:grid-cols-2">
-          {parts.map((p) => (
-            <li key={p.slug}>
-              <Link
-                href={`/blog/${p.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-line-2 bg-surface p-5 shadow-[var(--shadow-soft)] transition-colors hover:border-accent/50 sm:p-6"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2.5">
-                    <span className="flex size-9 items-center justify-center rounded-full border border-accent/50 font-display text-[1.15rem] text-accent">{p.n}</span>
-                    <span className="eyebrow text-fg-4">{p.wall}</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-[12px] text-fg-4">
-                    <Clock className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> {p.post.readingMinutes} min
-                  </span>
-                </div>
-                <h3 className="mt-4 font-display text-[1.6rem] leading-tight text-fg transition-colors group-hover:text-accent">{p.post.title}</h3>
-                <p className="mt-2 line-clamp-3 text-[14px] leading-relaxed text-fg-3">{p.post.excerpt}</p>
-
-                <div className="mt-5 rounded-xl border border-line bg-bg-2/40 px-4 py-3">
-                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                    {p.stat.before && (
-                      <>
-                        <span className="font-mono text-[12.5px] tabular-nums text-fg-4 line-through decoration-danger/60">{p.stat.before}</span>
-                        <span className="text-fg-4" aria-hidden="true">
-                          →
+        <ol className="mt-8 grid gap-5 md:grid-cols-2">
+          {allParts.map((p) => {
+            if (p.post) {
+              return (
+                <li key={p.slug} id={`part-${p.n}`}>
+                  <Link
+                    href={`/blog/${p.slug}`}
+                    className="group flex h-full flex-col rounded-2xl border border-signal/45 bg-surface p-5 shadow-[var(--shadow-soft)] transition-colors hover:border-signal sm:p-6"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="flex items-center gap-2.5">
+                        <span className="flex size-9 items-center justify-center rounded-full border border-signal bg-signal/15 font-display text-[1.15rem] text-signal">
+                          {p.n}
                         </span>
-                      </>
-                    )}
-                    <span className="font-display text-[1.7rem] leading-none tabular-nums text-signal">{p.stat.value}</span>
-                  </p>
-                  <p className="mt-1.5 text-[12px] leading-snug text-fg-3">{p.stat.label}</p>
-                </div>
+                        <span className="eyebrow text-fg-3">{p.wall}</span>
+                      </span>
+                      <span className="inline-flex items-center gap-2 text-[12px] text-fg-4">
+                        {hasRoadmapParts && (
+                          <span className="inline-flex items-center gap-1 rounded-full border border-signal/40 bg-signal/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-signal">
+                            <CheckCircle2 className="size-3" /> Published
+                          </span>
+                        )}
+                        <span className="inline-flex items-center gap-1">
+                          <Clock className="size-3.5" strokeWidth={1.75} aria-hidden="true" /> {p.post.readingMinutes} min
+                        </span>
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-display text-[1.6rem] leading-tight text-fg transition-colors group-hover:text-accent">
+                      {p.post.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-relaxed text-fg-3">{p.post.excerpt}</p>
 
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-medium text-accent">
-                  Read part {p.n} <ArrowGlyph direction="right" />
-                </span>
-              </Link>
-            </li>
-          ))}
+                    {p.objective && (
+                      <div className="mt-4 rounded-xl border border-line bg-bg-2/35 px-3.5 py-2.5 text-[12.5px] leading-relaxed text-fg-2">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-accent">Objective: </span>
+                        {p.objective}
+                      </div>
+                    )}
+
+                    {p.keyConcepts && p.keyConcepts.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {p.keyConcepts.map((c) => (
+                          <span
+                            key={c}
+                            className="rounded-md border border-line-2 bg-bg px-2 py-0.5 font-mono text-[10.5px] text-fg-3"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="mt-5 rounded-xl border border-line bg-bg-2/40 px-4 py-3">
+                      <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                        {p.stat.before && (
+                          <>
+                            <span className="font-mono text-[12.5px] tabular-nums text-fg-4 line-through decoration-danger/60">
+                              {p.stat.before}
+                            </span>
+                            <span className="text-fg-4" aria-hidden="true">
+                              →
+                            </span>
+                          </>
+                        )}
+                        <span className="font-display text-[1.7rem] leading-none tabular-nums text-signal">{p.stat.value}</span>
+                      </p>
+                      <p className="mt-1.5 text-[12px] leading-snug text-fg-3">{p.stat.label}</p>
+                    </div>
+
+                    {p.connectionToNext && (
+                      <p className="mt-4 flex items-start gap-2 border-t border-line pt-3 text-[12px] text-fg-3">
+                        <ArrowRight className="mt-0.5 size-3.5 shrink-0 text-accent" />
+                        <span>
+                          <strong className="text-fg-2">Bridge to Part {p.n + 1}:</strong> {p.connectionToNext}
+                        </span>
+                      </p>
+                    )}
+
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-medium text-accent">
+                      Read part {p.n} <ArrowGlyph direction="right" />
+                    </span>
+                  </Link>
+                </li>
+              );
+            }
+
+            // Upcoming roadmap part card (interactive Coming Soon dialog trigger)
+            const comingSoonPayload: ComingSoonPartPayload = {
+              n: p.n,
+              total: allParts.length,
+              seriesTitle: series.title,
+              seriesSlug: series.slug,
+              firstPublishedSlug: first.slug,
+              firstPublishedTitle: first.title,
+              wall: p.wall,
+              title: p.title,
+              excerpt: p.excerpt,
+              objective: p.objective,
+              keyConcepts: p.keyConcepts,
+              stat: p.stat,
+              boardLine: p.boardLine,
+            };
+
+            return (
+              <li key={p.slug} id={`part-${p.n}`}>
+                <ComingSoonPartTrigger
+                  part={comingSoonPayload}
+                  className="group flex h-full w-full flex-col rounded-2xl border border-line-2 bg-surface/80 p-5 text-left shadow-[var(--shadow-soft)] transition-colors hover:border-accent/60 hover:bg-surface sm:p-6"
+                >
+                  <div className="flex w-full items-center justify-between gap-3">
+                    <span className="flex items-center gap-2.5">
+                      <span className="flex size-9 items-center justify-center rounded-full border border-accent/50 font-display text-[1.15rem] text-accent">
+                        {p.n}
+                      </span>
+                      <span className="eyebrow text-fg-4">{p.wall}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/35 bg-accent/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+                      <Compass className="size-3" /> Coming Soon · Part {p.n}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 font-display text-[1.55rem] leading-tight text-fg transition-colors group-hover:text-accent">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-[13.5px] leading-relaxed text-fg-3">{p.excerpt}</p>
+
+                  {p.objective && (
+                    <div className="mt-4 w-full rounded-xl border border-line bg-bg-2/35 px-3.5 py-2.5 text-[12.5px] leading-relaxed text-fg-2">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-accent">Editorial Objective: </span>
+                      {p.objective}
+                    </div>
+                  )}
+
+                  {p.keyConcepts && p.keyConcepts.length > 0 && (
+                    <div className="mt-3 w-full">
+                      <p className="font-mono text-[10px] uppercase tracking-wider text-fg-4">Key Architectural Concepts</p>
+                      <div className="mt-1.5 flex flex-wrap gap-1.5">
+                        {p.keyConcepts.map((c) => (
+                          <span
+                            key={c}
+                            className="rounded-md border border-line-2 bg-bg px-2 py-0.5 font-mono text-[10.5px] text-fg-3"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-5 w-full rounded-xl border border-line bg-bg-2/40 px-4 py-3">
+                    <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                      {p.stat.before && (
+                        <>
+                          <span className="font-mono text-[12.5px] tabular-nums text-fg-4 line-through decoration-danger/60">
+                            {p.stat.before}
+                          </span>
+                          <span className="text-fg-4" aria-hidden="true">
+                            →
+                          </span>
+                        </>
+                      )}
+                      <span className="font-display text-[1.6rem] leading-none tabular-nums text-accent">{p.stat.value}</span>
+                    </p>
+                    <p className="mt-1.5 text-[12px] leading-snug text-fg-3">{p.stat.label}</p>
+                  </div>
+
+                  {p.connectionToNext && (
+                    <p className="mt-4 flex w-full items-start gap-2 border-t border-line pt-3 text-[12px] text-fg-3">
+                      <ArrowRight className="mt-0.5 size-3.5 shrink-0 text-accent" />
+                      <span>
+                        <strong className="text-fg-2">
+                          {p.n < allParts.length ? `Connection to Part ${p.n + 1}:` : "Series Capstone:"}
+                        </strong>{" "}
+                        {p.connectionToNext}
+                      </span>
+                    </p>
+                  )}
+
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-medium text-accent">
+                    Coming soon · Click for preview <ArrowGlyph direction="right" />
+                  </span>
+                </ComingSoonPartTrigger>
+              </li>
+            );
+          })}
         </ol>
       </section>
 
+      <ComingSoonSeriesModal />
+
       {/* The series for a board */}
-      <section className="mx-auto mt-6 max-w-3xl" aria-label="The series in six lines">
-        <BoardCard title="Six things to tell a board about digital transformation">
+      <section className="mx-auto mt-10 max-w-3xl" aria-label="The series for an executive board">
+        <BoardCard title={series.boardCardTitle ?? "Six things to tell a board about digital transformation"}>
           <ol>
-            {parts.map((p) => (
+            {allParts.map((p) => (
               <li key={p.slug}>
                 <p>
                   <strong>{p.wall}.</strong> {p.boardLine}
