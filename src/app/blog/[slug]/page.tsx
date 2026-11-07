@@ -190,8 +190,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     <div className="mt-0.5 text-[12px] text-fg-3">
                       {post.category === "ai-governance"
                         ? isAr
-                          ? "قائد تكنولوجيا المؤسسات ومصمم الأنظمة · أبحاث معمارية مستقلة"
-                          : "Enterprise Technology Leader & Systems Architect · Independent Architecture Research"
+                          ? "قائد تكنولوجيا المؤسسات · أبحاث معمارية مستقلة"
+                          : "Enterprise Technology Leader · Independent Architecture Research"
                         : isAr
                           ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية، KIB"
                           : "Executive Manager – Head of Digital Technology, KIB"}

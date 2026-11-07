@@ -32,8 +32,8 @@ export default function AuthorCard({
         <p className={cn("mt-2 text-[14.5px] leading-relaxed text-fg-3", isAr && "font-arabic")}>
           {independentProject
             ? isAr
-              ? "قائد تكنولوجيا المؤسسات ومصمم الأنظمة. تستكشف هذه السلسلة أنماطاً معمارية مرجعية لحوكمة الذكاء الاصطناعي المؤسسي والتنفيذ المستقل المنضبط، وهي نتاج أبحاث معمارية مستقلة."
-              : "Enterprise Technology Leader & Systems Architect. The reference architectures and governance patterns explored in this series represent independent systems research and architectural thought leadership."
+              ? "قائد تكنولوجيا المؤسسات. تستكشف هذه السلسلة أنماطاً معمارية مرجعية لحوكمة الذكاء الاصطناعي المؤسسي والتنفيذ المستقل المنضبط، وهي نتاج أبحاث معمارية مستقلة."
+              : "Enterprise Technology Leader. The reference architectures and governance patterns explored in this series represent independent research and architectural thought leadership."
             : isAr
               ? "مدير تنفيذي – رئيس التكنولوجيا الرقمية في البنك الدولي الكويتي (KIB). ساهم في تأسيس مصنعين رقميين مصرفيين من الصفر."
               : "Executive Manager – Head of Digital Technology at Kuwait International Bank (KIB). Helped build two banking digital factories from scratch."}
