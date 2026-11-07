@@ -2,6 +2,7 @@
 
 import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Clock, Compass, Sparkles, X } from "lucide-react";
 import { useEscape, useFocusTrap, useScrollLock, useWindowEvent } from "@/lib/hooks";
@@ -27,6 +28,16 @@ export interface ComingSoonPartPayload {
 
 export function openComingSoonPart(payload: ComingSoonPartPayload) {
   if (typeof window === "undefined") return;
+  try {
+    track("series_coming_soon_click", {
+      series: payload.seriesSlug,
+      part: payload.n,
+      wall: payload.wall,
+      title: payload.title,
+    });
+  } catch {
+    // Ignore analytics errors if blocked by client extensions
+  }
   window.dispatchEvent(new CustomEvent<ComingSoonPartPayload>(SERIES_COMING_SOON_EVENT, { detail: payload }));
 }
 
