@@ -213,7 +213,7 @@ export default function ComingSoonSeriesModal() {
             {/* Footer actions */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-bg-2/50 px-5 py-3.5 sm:px-6">
               <span className="font-mono text-[11px] text-fg-4">
-                Part 1 is live now · Parts 2–8 releasing progressively
+                Parts 1–2 are live now · Parts 3–8 releasing progressively
               </span>
               <div className="flex flex-wrap items-center gap-2.5">
                 {activePart.firstPublishedSlug && (
