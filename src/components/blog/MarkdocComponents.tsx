@@ -153,6 +153,34 @@ function YouTube({ url, caption }: { url: string; caption?: string }) {
   );
 }
 
+/* ---------------------------------------------------------------- Self-hosted video */
+
+function ArticleVideo({ src, poster, caption, label }: { src: string; poster?: string; caption?: string; label?: string }) {
+  if (!src) return null;
+  return (
+    <figure className="not-prose my-10">
+      <div className="relative w-full overflow-hidden rounded-xl border border-line-2 bg-black shadow-[var(--shadow-soft)]" style={{ aspectRatio: "16 / 9" }}>
+        <video
+          src={src}
+          poster={poster || undefined}
+          controls
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-label={caption || label || "Article video"}
+        />
+      </div>
+      {(caption || label) && (
+        <figcaption className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center font-sans text-[13px] text-fg-3">
+          {label && <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-accent">{label}</span>}
+          {label && caption && <span aria-hidden="true">·</span>}
+          {caption && <span>{caption}</span>}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
 /* ---------------------------------------------------------------- Pull quote */
 
 function PullQuote({ quote, attribution }: { quote: string; attribution?: string }) {
@@ -188,6 +216,7 @@ export function renderMarkdoc(renderable: RenderableTreeNode) {
       CodeBlock,
       Callout,
       YouTube,
+      ArticleVideo,
       PullQuote,
       SmartLink,
       TwoClocks,

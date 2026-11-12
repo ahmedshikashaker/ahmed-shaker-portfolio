@@ -112,6 +112,7 @@ const markdocConfig: Config = (() => {
       tags: {
         callout: "Callout",
         youtube: "YouTube",
+        video: "ArticleVideo",
         pullquote: "PullQuote",
         twoclocks: "TwoClocks",
         queuelab: "QueueLab",

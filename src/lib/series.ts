@@ -114,7 +114,7 @@ export const SERIES: Series[] = [
           "If embedding agent loops inside individual apps creates twenty unmonitored attack surfaces, how do we centralize control without building a monolith? That requires a universal, application-agnostic governance layer.",
       },
       {
-        slug: "the-generic-ai-manager-universal-governance-layer",
+        slug: "universal-governance-layer-for-enterprise-ai",
         wall: "Universal Layer",
         plannedTitle: "The Universal Governance Layer: Decoupling AI Orchestration from Business Applications",
         plannedExcerpt:

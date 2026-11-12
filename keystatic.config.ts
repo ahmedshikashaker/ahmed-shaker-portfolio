@@ -56,6 +56,16 @@ export const contentComponents = {
       caption: fields.text({ label: "Caption (optional)" }),
     },
   }),
+  video: block({
+    label: "Video (self-hosted MP4)",
+    description: "Embed an MP4 stored in /public/videos, with an optional poster image, label and caption.",
+    schema: {
+      src: fields.text({ label: "Video path (e.g. /videos/part-3.mp4)", validation: { length: { min: 1 } } }),
+      poster: fields.text({ label: "Poster image path (optional)" }),
+      label: fields.text({ label: "Small label (optional, e.g. 'Watch · 70 sec')" }),
+      caption: fields.text({ label: "Caption (optional)" }),
+    },
+  }),
   pullquote: block({
     label: "Pull quote",
     description: "A large, highlighted quote that stands out from the text.",
