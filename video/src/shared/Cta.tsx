@@ -1,12 +1,12 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { Eyebrow, Headline, SceneWrap, prog, rise, useLayout } from "../primitives";
+import { Eyebrow, Headline, SceneWrap, prog, rise, useLayout, useSceneFrame } from "../primitives";
 
 /** Closing call-to-action, shared by every part of the series. */
 export const makeCta = (part: number, title: string, subtitle: string) => {
   const Cta: React.FC<{ dur: number }> = ({ dur }) => {
-    const f = useCurrentFrame();
+    const f = useSceneFrame();
     const { portrait, pad } = useLayout();
     return (
       <SceneWrap dur={dur}>

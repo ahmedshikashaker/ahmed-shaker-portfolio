@@ -1,12 +1,12 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout } from "../primitives";
+import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout, useSceneFrame } from "../primitives";
 
 /* ------------------------------------------------------------------ 6. Drift containment */
 
 export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { fps } = useVideoConfig();
   const { portrait, width, pad } = useLayout();
   const event = prog(f, 40, 16);
@@ -187,7 +187,7 @@ export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
 const NODES = ["HRMS", "ERP", "CRM", "ITSM", "Payments", "Knowledge"];
 
 export const Hub: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const center: Pt = portrait ? { x: width / 2, y: 790 } : { x: 1390, y: 600 };
   const R = portrait ? 310 : 330;
@@ -345,7 +345,7 @@ export const Hub: React.FC<{ dur: number }> = ({ dur }) => {
 /* ------------------------------------------------------------------ 8. Call to action */
 
 export const Cta: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   return (
     <SceneWrap dur={dur}>

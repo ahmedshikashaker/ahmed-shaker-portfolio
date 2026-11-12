@@ -1,0 +1,128 @@
+{
+  "part1": {
+    "pilot": {
+      "hash": "071c475d5467",
+      "seconds": 8.32,
+      "chars": 106
+    },
+    "copy-paste": {
+      "hash": "70248a04bdd3",
+      "seconds": 9.44,
+      "chars": 123
+    },
+    "maturity": {
+      "hash": "07bca336dbc5",
+      "seconds": 10.24,
+      "chars": 139
+    },
+    "principle": {
+      "hash": "16b9a8f1a32e",
+      "seconds": 11.28,
+      "chars": 144
+    },
+    "nine-gates": {
+      "hash": "7489243e93fe",
+      "seconds": 12.72,
+      "chars": 151
+    },
+    "three-requests": {
+      "hash": "f99860908249",
+      "seconds": 11.2,
+      "chars": 138
+    },
+    "risk": {
+      "hash": "f5b548eb0d04",
+      "seconds": 7.36,
+      "chars": 85
+    },
+    "cta": {
+      "hash": "ace6bc65a1b1",
+      "seconds": 6.72,
+      "chars": 87
+    }
+  },
+  "part2": {
+    "ciso": {
+      "hash": "292e0fc64892",
+      "seconds": 10.72,
+      "chars": 138
+    },
+    "poisoned-csv": {
+      "hash": "b27092cab11f",
+      "seconds": 11.84,
+      "chars": 161
+    },
+    "prompts-advice": {
+      "hash": "8fe5740c63e4",
+      "seconds": 7.84,
+      "chars": 99
+    },
+    "four-failures": {
+      "hash": "a9c90cda6028",
+      "seconds": 10.64,
+      "chars": 133
+    },
+    "boundaries": {
+      "hash": "858a9ead252c",
+      "seconds": 6.4,
+      "chars": 89
+    },
+    "live-block": {
+      "hash": "06e61839489f",
+      "seconds": 12.16,
+      "chars": 151
+    },
+    "four-rules": {
+      "hash": "05dee2d122e4",
+      "seconds": 12.64,
+      "chars": 152
+    },
+    "cta": {
+      "hash": "9050dca17ae7",
+      "seconds": 6.72,
+      "chars": 87
+    }
+  },
+  "part3": {
+    "hook": {
+      "hash": "aa26069eec37",
+      "seconds": 6.88,
+      "chars": 89
+    },
+    "silos": {
+      "hash": "030a331849b4",
+      "seconds": 12.24,
+      "chars": 156
+    },
+    "thesis": {
+      "hash": "a8e25ef4eab6",
+      "seconds": 7.52,
+      "chars": 105
+    },
+    "normalize": {
+      "hash": "cef1af4caa3c",
+      "seconds": 17.44,
+      "chars": 212
+    },
+    "pipeline": {
+      "hash": "573cd67eba35",
+      "seconds": 12.4,
+      "chars": 165
+    },
+    "drift": {
+      "hash": "2e3c8ade82c5",
+      "seconds": 9.04,
+      "chars": 128
+    },
+    "hub": {
+      "hash": "6d5427554e79",
+      "seconds": 7.68,
+      "chars": 85
+    },
+    "cta": {
+      "hash": "7ff0d65f7478",
+      "seconds": 6.56,
+      "chars": 86
+    }
+  }
+}

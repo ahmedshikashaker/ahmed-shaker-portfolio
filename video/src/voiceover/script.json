@@ -1,0 +1,35 @@
+{
+  "voice": { "id": "onwK4e9ZLuTAKqWW03F9", "name": "Daniel - Steady Broadcaster", "model": "eleven_v4", "stability": 0.55, "similarity": 0.8 },
+  "parts": {
+    "part1": [
+      { "id": "pilot", "text": "Every enterprise has built this pilot. An AI that reads every policy in seconds… and acts on none of them." },
+      { "id": "copy-paste", "text": "So the employee closes the chat, logs into three portals, and does the work by hand. The human is still the copy-paste bus." },
+      { "id": "maturity", "text": "Enterprise AI moves through four stages. The real chasm is between an agent that acts with shared keys, and one that acts under governance." },
+      { "id": "principle", "text": "The rule is simple. The model proposes. Deterministic services decide. The model never holds a credential, and never grades its own permissions." },
+      { "id": "nine-gates", "text": "Between a sentence and a system of record, there are nine gates: identity, policy, approval, a signed one-time grant, and a tamper-evident audit trail." },
+      { "id": "three-requests", "text": "Same assistant, three requests. A leave request executes. A salary change is blocked by policy. A poisoned spreadsheet never gets a grant." },
+      { "id": "risk", "text": "And friction scales with blast radius. Not every action needs a human. Some need two." },
+      { "id": "cta", "text": "Part one of Governed Autonomy. Explore the interactive article at Ahmed Shaker dot com." }
+    ],
+    "part2": [
+      { "id": "ciso", "text": "Would you give your ERP keys to software that one sentence in a PDF can reprogram? No CISO would. Yet that's how most AI agents are wired." },
+      { "id": "poisoned-csv", "text": "Hide one instruction in row forty-two of a vendor spreadsheet, and a naive agent changes the bank details. No firewall was breached. It just read a poisoned row." },
+      { "id": "prompts-advice", "text": "System prompts are advice, not security boundaries. That's authorization in client-side JavaScript." },
+      { "id": "four-failures", "text": "And your API gateway approves four failures it can't see: prompt injection, the confused deputy, retry amplification, and tool drift." },
+      { "id": "boundaries", "text": "So assume the model will be tricked, and contain it anyway, behind five trust boundaries." },
+      { "id": "live-block", "text": "Run the same poisoned file through a governed pipeline. It's filtered, delimited, and denied by policy. Zero execution grants. Nothing reaches the ERP." },
+      { "id": "four-rules", "text": "Four rules before any agent gets write access: no ambient authority, no model-filled identity, no blind retries, and no dispatch without a signed grant." },
+      { "id": "cta", "text": "Part two of Governed Autonomy. The full interactive article is at ahmed shaker dot com." }
+    ],
+    "part3": [
+      { "id": "hook", "text": "Every department is building its own AI. Each with its own prompts, guardrails, and logs." },
+      { "id": "silos", "text": "Five assistants, five guardrail schemes, five audit formats, and not one shared kill switch. It's the integration mess of the two-thousands, all over again." },
+      { "id": "thesis", "text": "Governance should never live inside the application. Capabilities should be governed contracts, not code." },
+      { "id": "normalize", "text": "Whether a system speaks OpenAPI, MCP, or a native SDK, it becomes one canonical contract, with a risk tier, hidden identity fields, and a pinned hash. The model plans against the contract, never the raw endpoint." },
+      { "id": "pipeline", "text": "Nothing reaches production by default. A connector exposes a hundred and forty operations. All are quarantined. Only twelve make it through review and certification." },
+      { "id": "drift", "text": "And when a tool changes overnight, its hash no longer matches. The new version is quarantined, while the live one keeps serving." },
+      { "id": "hub", "text": "Govern once. Connect everything. One policy engine, one audit trail, one kill switch." },
+      { "id": "cta", "text": "Part three of Governed Autonomy. Read the interactive article at ahmed shaker dot com." }
+    ]
+  }
+}

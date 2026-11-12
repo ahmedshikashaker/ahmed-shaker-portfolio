@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout } from "../primitives";
+import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout, useSceneFrame } from "../primitives";
 import { GateState, GateTrack } from "../shared/GateTrack";
 
 const Header: React.FC<{ eyebrow: string; text: string; size: [number, number]; tone?: string; top?: [number, number] }> = ({
@@ -30,7 +30,7 @@ const ANSWER =
   "You have 14 days of annual leave left. Under Section 4.2 of the HR handbook, requests over 3 days need manager approval.";
 
 export const Pilot: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const chat = portrait ? { x: pad, y: 520, w: width - pad * 2 } : { x: width - pad - 780, y: 300, w: 780 };
   const typing = f >= 44 && f < 64;
@@ -130,7 +130,7 @@ const STEPS: [string, string][] = [
 ];
 
 export const CopyPaste: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const travel = interpolate(f, [120, 190], [0, 1], clamp);
@@ -227,7 +227,7 @@ const STAGES = [
 ];
 
 export const Maturity: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const chasm = prog(f, 140, 26);
@@ -326,7 +326,7 @@ const ZONES = [
 ];
 
 export const Principle: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const boxes = portrait
@@ -438,7 +438,7 @@ const G_START = 50;
 const G_STEP = 24;
 
 export const NineGates: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   const pos = (f - G_START) / G_STEP;
   const states: GateState[] = Array.from({ length: 9 }).map((_, i) => (pos >= i + 1 ? "pass" : pos >= i ? "active" : "idle"));
@@ -506,7 +506,7 @@ const REQUESTS = [
 ];
 
 export const ThreeRequests: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { fps } = useVideoConfig();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
@@ -605,7 +605,7 @@ const TIERS = [
 ];
 
 export const RiskTiers: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   return (

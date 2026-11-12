@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout } from "../primitives";
+import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, prog, rise, useLayout, useSceneFrame } from "../primitives";
 import { GateState, GateTrack } from "../shared/GateTrack";
 
 const Header: React.FC<{ eyebrow: string; text: string; size: [number, number]; tone?: string }> = ({ eyebrow, text, size, tone }) => {
@@ -21,7 +21,7 @@ const Header: React.FC<{ eyebrow: string; text: string; size: [number, number]; 
 /* ------------------------------------------------------------------ 1. The CISO question */
 
 export const CisoQuestion: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   return (
     <SceneWrap dur={dur}>
@@ -62,7 +62,7 @@ const ROWS = [
 ];
 
 export const PoisonedCsv: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const table = portrait ? { x: pad, y: 430, w: W, h: 330 } : { x: pad, y: 400, w: 820, h: 300 };
@@ -173,7 +173,7 @@ export const PoisonedCsv: React.FC<{ dur: number }> = ({ dur }) => {
 /* ------------------------------------------------------------------ 3. System prompts are advice */
 
 export const PromptsAreAdvice: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   return (
     <SceneWrap dur={dur}>
@@ -211,7 +211,7 @@ const FAILURES = [
 ];
 
 export const FourFailures: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   return (
@@ -285,7 +285,7 @@ const BOUNDARIES = [
 ];
 
 export const TrustBoundaries: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const rowH = portrait ? 134 : 104;
@@ -368,7 +368,7 @@ export const TrustBoundaries: React.FC<{ dur: number }> = ({ dur }) => {
 /* ------------------------------------------------------------------ 6. Live block */
 
 export const LiveBlock: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { fps } = useVideoConfig();
   const { portrait, pad } = useLayout();
   const step = (f - 46) / 26; // gate index position
@@ -433,7 +433,7 @@ const RULES: [string, string][] = [
 ];
 
 export const FourRules: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   return (

@@ -18,4 +18,5 @@ export const { duration: PART2_DURATION, Video: Part2Video } = buildSeriesVideo(
     },
   ],
   2,
+  "part2",
 );

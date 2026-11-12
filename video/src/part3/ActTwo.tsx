@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, pathD, prog, rise, useLayout } from "../primitives";
+import { DrawPath, Eyebrow, Headline, Particles, Pt, SceneWrap, card, clamp, pathD, prog, rise, useLayout, useSceneFrame } from "../primitives";
 
 /* ------------------------------------------------------------------ 4. Normalize: 3 protocols → 1 contract */
 
@@ -20,7 +20,7 @@ const ROWS: { k: string; v: string; note?: string; tone?: string; lock?: boolean
 ];
 
 export const Normalize: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
 
   // Geometry (absolute, full-frame coordinates)
@@ -204,7 +204,7 @@ const STAGE_START = 46;
 const STAGE_STEP = 42;
 
 export const Pipeline: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const raw = (f - STAGE_START) / STAGE_STEP;
   const active = Math.max(-1, Math.min(5, Math.floor(raw)));

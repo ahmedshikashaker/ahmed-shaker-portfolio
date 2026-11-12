@@ -20,6 +20,13 @@ export const useLayout = () => {
   return { portrait, width, height, pad: portrait ? 80 : 110 };
 };
 
+/**
+ * Scene clock: when a scene is stretched to fit its narration, its internal animations are
+ * slowed by the same factor so reveals stay in step with the voice. 1 = original timing.
+ */
+export const SceneClock = React.createContext(1);
+export const useSceneFrame = () => useCurrentFrame() / React.useContext(SceneClock);
+
 export type Pt = { x: number; y: number };
 
 export const cubic = (p0: Pt, p1: Pt, p2: Pt, p3: Pt, t: number): Pt => {
@@ -63,7 +70,7 @@ export const Eyebrow: React.FC<{ start: number; children: React.ReactNode; color
   color = C.accent,
   center,
 }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait } = useLayout();
   const p = prog(f, start, 18);
   return (
@@ -100,7 +107,7 @@ export const Headline: React.FC<{
   center?: boolean;
   lineHeight?: number;
 }> = ({ text, start, size, stagger = 3, center, lineHeight = 1.06 }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   let idx = 0;
   let emph = false;
   return (

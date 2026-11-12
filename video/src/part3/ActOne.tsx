@@ -1,12 +1,12 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { C, MONO, SANS, SERIF } from "../theme";
-import { DrawPath, Eyebrow, Headline, SceneWrap, card, clamp, prog, rise, useLayout } from "../primitives";
+import { DrawPath, Eyebrow, Headline, SceneWrap, card, clamp, prog, rise, useLayout, useSceneFrame } from "../primitives";
 
 /* ------------------------------------------------------------------ 1. Hook */
 
 export const Hook: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   const chips: [string, string, string, string][] = [
     ["HR", "Leave Assistant", "regex filter · chat logs", C.signal],
@@ -92,7 +92,7 @@ const CROSS: [number, number][] = [
 ];
 
 export const Silos: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, width, pad } = useLayout();
   const W = width - pad * 2;
   const H = portrait ? 560 : 400;
@@ -241,7 +241,7 @@ export const Silos: React.FC<{ dur: number }> = ({ dur }) => {
 /* ------------------------------------------------------------------ 3. Thesis */
 
 export const Thesis: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useSceneFrame();
   const { portrait, pad } = useLayout();
   const rule = prog(f, 62, 26);
   return (
