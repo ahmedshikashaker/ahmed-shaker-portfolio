@@ -124,5 +124,190 @@
       "seconds": 6.56,
       "chars": 86
     }
+  },
+  "part4": {
+    "loop": {
+      "hash": "a8b2b776bdef",
+      "seconds": 11.28,
+      "chars": 143
+    },
+    "failure": {
+      "hash": "00c6e2a9bc6e",
+      "seconds": 11.28,
+      "chars": 145
+    },
+    "two-engines": {
+      "hash": "2a80e7b280ac",
+      "seconds": 10.96,
+      "chars": 142
+    },
+    "bounded-graph": {
+      "hash": "fb5124d55568",
+      "seconds": 10.64,
+      "chars": 132
+    },
+    "typed-dag": {
+      "hash": "1930af259990",
+      "seconds": 10.56,
+      "chars": 145
+    },
+    "timeout": {
+      "hash": "39f768dfbb27",
+      "seconds": 10.32,
+      "chars": 139
+    },
+    "cta": {
+      "hash": "69e2571f82d6",
+      "seconds": 6.48,
+      "chars": 85
+    }
+  },
+  "part5": {
+    "perimeter": {
+      "hash": "97e03b79b0f2",
+      "seconds": 6.96,
+      "chars": 92
+    },
+    "deputy": {
+      "hash": "6adc995a09a3",
+      "seconds": 13.92,
+      "chars": 191
+    },
+    "intersection": {
+      "hash": "be3ea2febde9",
+      "seconds": 10,
+      "chars": 137
+    },
+    "seven-stages": {
+      "hash": "3df10fc0a1d6",
+      "seconds": 8.08,
+      "chars": 111
+    },
+    "pillars": {
+      "hash": "d904bf90337a",
+      "seconds": 10.48,
+      "chars": 138
+    },
+    "tamper": {
+      "hash": "76e97a4a5e7b",
+      "seconds": 10,
+      "chars": 136
+    },
+    "cta": {
+      "hash": "95716bfe180e",
+      "seconds": 6.88,
+      "chars": 88
+    }
+  },
+  "part6": {
+    "button": {
+      "hash": "3684da703b09",
+      "seconds": 5.84,
+      "chars": 89
+    },
+    "two-failures": {
+      "hash": "69af1efdb319",
+      "seconds": 10.88,
+      "chars": 159
+    },
+    "tiers": {
+      "hash": "23f7eb086ec4",
+      "seconds": 8.88,
+      "chars": 115
+    },
+    "escalation": {
+      "hash": "13a335545fcf",
+      "seconds": 11.04,
+      "chars": 133
+    },
+    "bindings": {
+      "hash": "6032863dbbff",
+      "seconds": 10.56,
+      "chars": 135
+    },
+    "four-eyes": {
+      "hash": "cc6448adc81b",
+      "seconds": 8.24,
+      "chars": 100
+    },
+    "cta": {
+      "hash": "65bc27aa9281",
+      "seconds": 6.56,
+      "chars": 84
+    }
+  },
+  "part7": {
+    "auditor": {
+      "hash": "32e78ee6e6d8",
+      "seconds": 8.88,
+      "chars": 118
+    },
+    "evidence": {
+      "hash": "92da5a9d2e19",
+      "seconds": 9.76,
+      "chars": 136
+    },
+    "logs": {
+      "hash": "d7a2a2cca50e",
+      "seconds": 6.24,
+      "chars": 80
+    },
+    "correlation": {
+      "hash": "26d52aeec94f",
+      "seconds": 8,
+      "chars": 109
+    },
+    "hash-chain": {
+      "hash": "f390054d6579",
+      "seconds": 8.96,
+      "chars": 127
+    },
+    "projection": {
+      "hash": "c7ba8928614c",
+      "seconds": 7.36,
+      "chars": 104
+    },
+    "cta": {
+      "hash": "ebb856b26493",
+      "seconds": 6.72,
+      "chars": 89
+    }
+  },
+  "part8": {
+    "question": {
+      "hash": "9949e30d254b",
+      "seconds": 8.08,
+      "chars": 103
+    },
+    "rings": {
+      "hash": "c50c74ea28da",
+      "seconds": 10.24,
+      "chars": 131
+    },
+    "gates": {
+      "hash": "66be58326de8",
+      "seconds": 7.6,
+      "chars": 108
+    },
+    "kill-switches": {
+      "hash": "356d0415bcbb",
+      "seconds": 12.08,
+      "chars": 159
+    },
+    "promotion": {
+      "hash": "66ab716172fb",
+      "seconds": 6.72,
+      "chars": 88
+    },
+    "thesis": {
+      "hash": "5a30426271af",
+      "seconds": 9.6,
+      "chars": 134
+    },
+    "cta": {
+      "hash": "1e4382671cd5",
+      "seconds": 7.52,
+      "chars": 97
+    }
   }
 }

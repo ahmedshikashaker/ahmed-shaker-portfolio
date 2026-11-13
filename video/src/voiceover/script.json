@@ -1,35 +1,263 @@
 {
-  "voice": { "id": "onwK4e9ZLuTAKqWW03F9", "name": "Daniel - Steady Broadcaster", "model": "eleven_v4", "stability": 0.55, "similarity": 0.8 },
+  "voice": {
+    "id": "onwK4e9ZLuTAKqWW03F9",
+    "name": "Daniel - Steady Broadcaster",
+    "model": "eleven_v4",
+    "stability": 0.55,
+    "similarity": 0.8
+  },
   "parts": {
     "part1": [
-      { "id": "pilot", "text": "Every enterprise has built this pilot. An AI that reads every policy in seconds… and acts on none of them." },
-      { "id": "copy-paste", "text": "So the employee closes the chat, logs into three portals, and does the work by hand. The human is still the copy-paste bus." },
-      { "id": "maturity", "text": "Enterprise AI moves through four stages. The real chasm is between an agent that acts with shared keys, and one that acts under governance." },
-      { "id": "principle", "text": "The rule is simple. The model proposes. Deterministic services decide. The model never holds a credential, and never grades its own permissions." },
-      { "id": "nine-gates", "text": "Between a sentence and a system of record, there are nine gates: identity, policy, approval, a signed one-time grant, and a tamper-evident audit trail." },
-      { "id": "three-requests", "text": "Same assistant, three requests. A leave request executes. A salary change is blocked by policy. A poisoned spreadsheet never gets a grant." },
-      { "id": "risk", "text": "And friction scales with blast radius. Not every action needs a human. Some need two." },
-      { "id": "cta", "text": "Part one of Governed Autonomy. Explore the interactive article at Ahmed Shaker dot com." }
+      {
+        "id": "pilot",
+        "text": "Every enterprise has built this pilot. An AI that reads every policy in seconds… and acts on none of them."
+      },
+      {
+        "id": "copy-paste",
+        "text": "So the employee closes the chat, logs into three portals, and does the work by hand. The human is still the copy-paste bus."
+      },
+      {
+        "id": "maturity",
+        "text": "Enterprise AI moves through four stages. The real chasm is between an agent that acts with shared keys, and one that acts under governance."
+      },
+      {
+        "id": "principle",
+        "text": "The rule is simple. The model proposes. Deterministic services decide. The model never holds a credential, and never grades its own permissions."
+      },
+      {
+        "id": "nine-gates",
+        "text": "Between a sentence and a system of record, there are nine gates: identity, policy, approval, a signed one-time grant, and a tamper-evident audit trail."
+      },
+      {
+        "id": "three-requests",
+        "text": "Same assistant, three requests. A leave request executes. A salary change is blocked by policy. A poisoned spreadsheet never gets a grant."
+      },
+      {
+        "id": "risk",
+        "text": "And friction scales with blast radius. Not every action needs a human. Some need two."
+      },
+      {
+        "id": "cta",
+        "text": "Part one of Governed Autonomy. Explore the interactive article at Ahmed Shaker dot com."
+      }
     ],
     "part2": [
-      { "id": "ciso", "text": "Would you give your ERP keys to software that one sentence in a PDF can reprogram? No CISO would. Yet that's how most AI agents are wired." },
-      { "id": "poisoned-csv", "text": "Hide one instruction in row forty-two of a vendor spreadsheet, and a naive agent changes the bank details. No firewall was breached. It just read a poisoned row." },
-      { "id": "prompts-advice", "text": "System prompts are advice, not security boundaries. That's authorization in client-side JavaScript." },
-      { "id": "four-failures", "text": "And your API gateway approves four failures it can't see: prompt injection, the confused deputy, retry amplification, and tool drift." },
-      { "id": "boundaries", "text": "So assume the model will be tricked, and contain it anyway, behind five trust boundaries." },
-      { "id": "live-block", "text": "Run the same poisoned file through a governed pipeline. It's filtered, delimited, and denied by policy. Zero execution grants. Nothing reaches the ERP." },
-      { "id": "four-rules", "text": "Four rules before any agent gets write access: no ambient authority, no model-filled identity, no blind retries, and no dispatch without a signed grant." },
-      { "id": "cta", "text": "Part two of Governed Autonomy. The full interactive article is at ahmed shaker dot com." }
+      {
+        "id": "ciso",
+        "text": "Would you give your ERP keys to software that one sentence in a PDF can reprogram? No CISO would. Yet that's how most AI agents are wired."
+      },
+      {
+        "id": "poisoned-csv",
+        "text": "Hide one instruction in row forty-two of a vendor spreadsheet, and a naive agent changes the bank details. No firewall was breached. It just read a poisoned row."
+      },
+      {
+        "id": "prompts-advice",
+        "text": "System prompts are advice, not security boundaries. That's authorization in client-side JavaScript."
+      },
+      {
+        "id": "four-failures",
+        "text": "And your API gateway approves four failures it can't see: prompt injection, the confused deputy, retry amplification, and tool drift."
+      },
+      {
+        "id": "boundaries",
+        "text": "So assume the model will be tricked, and contain it anyway, behind five trust boundaries."
+      },
+      {
+        "id": "live-block",
+        "text": "Run the same poisoned file through a governed pipeline. It's filtered, delimited, and denied by policy. Zero execution grants. Nothing reaches the ERP."
+      },
+      {
+        "id": "four-rules",
+        "text": "Four rules before any agent gets write access: no ambient authority, no model-filled identity, no blind retries, and no dispatch without a signed grant."
+      },
+      {
+        "id": "cta",
+        "text": "Part two of Governed Autonomy. The full interactive article is at ahmed shaker dot com."
+      }
     ],
     "part3": [
-      { "id": "hook", "text": "Every department is building its own AI. Each with its own prompts, guardrails, and logs." },
-      { "id": "silos", "text": "Five assistants, five guardrail schemes, five audit formats, and not one shared kill switch. It's the integration mess of the two-thousands, all over again." },
-      { "id": "thesis", "text": "Governance should never live inside the application. Capabilities should be governed contracts, not code." },
-      { "id": "normalize", "text": "Whether a system speaks OpenAPI, MCP, or a native SDK, it becomes one canonical contract, with a risk tier, hidden identity fields, and a pinned hash. The model plans against the contract, never the raw endpoint." },
-      { "id": "pipeline", "text": "Nothing reaches production by default. A connector exposes a hundred and forty operations. All are quarantined. Only twelve make it through review and certification." },
-      { "id": "drift", "text": "And when a tool changes overnight, its hash no longer matches. The new version is quarantined, while the live one keeps serving." },
-      { "id": "hub", "text": "Govern once. Connect everything. One policy engine, one audit trail, one kill switch." },
-      { "id": "cta", "text": "Part three of Governed Autonomy. Read the interactive article at ahmed shaker dot com." }
+      {
+        "id": "hook",
+        "text": "Every department is building its own AI. Each with its own prompts, guardrails, and logs."
+      },
+      {
+        "id": "silos",
+        "text": "Five assistants, five guardrail schemes, five audit formats, and not one shared kill switch. It's the integration mess of the two-thousands, all over again."
+      },
+      {
+        "id": "thesis",
+        "text": "Governance should never live inside the application. Capabilities should be governed contracts, not code."
+      },
+      {
+        "id": "normalize",
+        "text": "Whether a system speaks OpenAPI, MCP, or a native SDK, it becomes one canonical contract, with a risk tier, hidden identity fields, and a pinned hash. The model plans against the contract, never the raw endpoint."
+      },
+      {
+        "id": "pipeline",
+        "text": "Nothing reaches production by default. A connector exposes a hundred and forty operations. All are quarantined. Only twelve make it through review and certification."
+      },
+      {
+        "id": "drift",
+        "text": "And when a tool changes overnight, its hash no longer matches. The new version is quarantined, while the live one keeps serving."
+      },
+      {
+        "id": "hub",
+        "text": "Govern once. Connect everything. One policy engine, one audit trail, one kill switch."
+      },
+      {
+        "id": "cta",
+        "text": "Part three of Governed Autonomy. Read the interactive article at ahmed shaker dot com."
+      }
+    ],
+    "part4": [
+      {
+        "id": "loop",
+        "text": "In a demo, an AI agent is a simple loop. Call the model, call a tool, repeat. In a system of record, that loop is a disaster waiting to happen."
+      },
+      {
+        "id": "failure",
+        "text": "Step two waits four hours for approval. Step three times out after the payment was sent. A restart wipes the state, and a blind retry pays twice."
+      },
+      {
+        "id": "two-engines",
+        "text": "So split the work between two engines. A bounded planner owns the reasoning. A durable workflow engine owns execution, approvals, and retries."
+      },
+      {
+        "id": "bounded-graph",
+        "text": "The planner runs a fixed ten-stage graph, with hard caps: six nodes, three writes, one write at a time, and a single repair attempt."
+      },
+      {
+        "id": "typed-dag",
+        "text": "A request becomes a typed plan. Reads run in parallel. The write waits for its precondition, and checks the record has not changed underneath it."
+      },
+      {
+        "id": "timeout",
+        "text": "And if the network times out after dispatch, nothing retries blindly. The operation is quarantined, then reconciled by its idempotency key."
+      },
+      {
+        "id": "cta",
+        "text": "Part four of Governed Autonomy. Read the interactive article at Ahmed Shaker dot com."
+      }
+    ],
+    "part5": [
+      {
+        "id": "perimeter",
+        "text": "Most systems check permissions once, at login. For an AI agent, that is nowhere near enough."
+      },
+      {
+        "id": "deputy",
+        "text": "Between the prompt and the API call, it searches, plans, and may wait hours for approval. With a shared service token, it becomes a confused deputy, with more power than the person who asked."
+      },
+      {
+        "id": "intersection",
+        "text": "Its real authority is an intersection: the signed-in user, the assistant’s ceiling, live ownership of the record, and a single-use grant."
+      },
+      {
+        "id": "seven-stages",
+        "text": "So authorization runs continuously, across seven checkpoints, from the session to the millisecond of execution."
+      },
+      {
+        "id": "pillars",
+        "text": "The model never sees identity fields. Tools are filtered by policy before it ranks them. And retrieval runs on sixty-second signed scopes."
+      },
+      {
+        "id": "tamper",
+        "text": "Change four days to fourteen after approval, and the grant’s digest no longer matches. Dispatch stops before a single secret is fetched."
+      },
+      {
+        "id": "cta",
+        "text": "Part five of Governed Autonomy. The full interactive article is at Ahmed Shaker dot com."
+      }
+    ],
+    "part6": [
+      {
+        "id": "button",
+        "text": "When teams realise autonomous actions are risky, they add a confirm button to everything."
+      },
+      {
+        "id": "two-failures",
+        "text": "It fails twice. People approve twenty times a day without reading. And the person who typed the prompt is not the person who should authorize a payroll change."
+      },
+      {
+        "id": "tiers",
+        "text": "So friction should follow blast radius. Five risk tiers, from autonomous reads to actions the model may never take."
+      },
+      {
+        "id": "escalation",
+        "text": "Context escalates the tier: restricted data, more than ten records, or an irreversible change. The most restrictive rule always wins."
+      },
+      {
+        "id": "bindings",
+        "text": "An approval becomes a cryptographic commitment: a deterministic preview, a plan hash, a single-use nonce, and fresh multi-factor proof."
+      },
+      {
+        "id": "four-eyes",
+        "text": "For high-risk actions, the requester can never be the final approver. Two people. One exact payload."
+      },
+      {
+        "id": "cta",
+        "text": "Part six of Governed Autonomy. Read the interactive article at Ahmed Shaker dot com."
+      }
+    ],
+    "part7": [
+      {
+        "id": "auditor",
+        "text": "Six months after launch, internal audit asks one question. Who changed vendor record eighty-eight twenty-one, and why?"
+      },
+      {
+        "id": "evidence",
+        "text": "They want the prompt, the evidence, the policy version, the approval, the grant, and the receipt. And proof that none of it was altered."
+      },
+      {
+        "id": "logs",
+        "text": "Logs tell engineers a service is healthy. They do not prove who authorized what."
+      },
+      {
+        "id": "correlation",
+        "text": "So every run carries seventeen correlated identifiers, from the user’s turn to the external system’s receipt."
+      },
+      {
+        "id": "hash-chain",
+        "text": "Each event is hash-chained to the one before it. Change a single byte, and the chain breaks against a signed, immutable anchor."
+      },
+      {
+        "id": "projection",
+        "text": "And every audience sees a different projection. The model gets the minimum. The auditor gets the record."
+      },
+      {
+        "id": "cta",
+        "text": "Part seven of Governed Autonomy. The full interactive article is at Ahmed Shaker dot com."
+      }
+    ],
+    "part8": [
+      {
+        "id": "question",
+        "text": "Every board eventually asks two questions. How do we roll this out safely? And how fast can we stop it?"
+      },
+      {
+        "id": "rings",
+        "text": "Never jump from a pilot to high-risk writes. Adoption moves through five rings, from shadow mode to four-eyes regulated operations."
+      },
+      {
+        "id": "gates",
+        "text": "Every rollout ring is guarded by release gates, from contract certification to load and penetration testing."
+      },
+      {
+        "id": "kill-switches",
+        "text": "And four independent kill switches. Freeze all writes, hold high-risk actions, isolate one connector, or pause schedules, while knowledge answers keep running."
+      },
+      {
+        "id": "promotion",
+        "text": "Configuration ships as signed, versioned bundles, diffed and simulated before promotion."
+      },
+      {
+        "id": "thesis",
+        "text": "The future of enterprise AI is not more access. It is the right capabilities, within the right boundaries, under the right governance."
+      },
+      {
+        "id": "cta",
+        "text": "That completes Governed Autonomy. Explore all eight interactive articles at Ahmed Shaker dot com."
+      }
     ]
   }
 }
