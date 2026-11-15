@@ -30,6 +30,14 @@ export default async function Writing({ posts }: { posts: PostMeta[] }) {
     <Band id="writing" tone="mist" labelledBy="writing-title">
       <Wrap className="py-[clamp(5rem,9vw,8rem)]">
         <Heading id="writing-title" kicker={copy.eyebrow} title={<Emphasis text={copy.title} />} sub={copy.subtitle} />
+        <FadeUp className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <Link href="/blog" className="l-btn">
+            Read the blog
+          </Link>
+          <ChevronLink href="/blog/rss.xml" className="t-body">
+            RSS feed
+          </ChevronLink>
+        </FadeUp>
 
         {series.length > 0 && (
           <ul className="mt-14 grid gap-5 lg:mt-20 lg:grid-cols-2">
@@ -100,10 +108,7 @@ export default async function Writing({ posts }: { posts: PostMeta[] }) {
             </ul>
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
               <ChevronLink href="/blog" className="t-body">
-                Visit the blog
-              </ChevronLink>
-              <ChevronLink href="/blog/rss.xml" className="t-body">
-                RSS feed
+                All articles
               </ChevronLink>
             </div>
           </FadeUp>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Newsreader } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans_Arabic, Inter, Inter_Tight } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -12,23 +12,20 @@ import {
   PLATFORM_REGISTRY,
 } from "@/data/portfolioData";
 import { AppProviders } from "@/components/site/AppProviders";
-import { SiteCanvas } from "@/components/site/SiteCanvas";
 import { getAllPosts } from "@/lib/blog";
 import type { PaletteIndex } from "@/lib/site";
 import { THEME_COLORS, themeInitScript } from "@/lib/theme";
 
-// Display serif with an optical-size axis: sharper contrast at headline sizes, calmer at text sizes.
-const newsreader = Newsreader({
+// Display headings (bold statements, numbers) and text: the launch faces, site-wide.
+const interTight = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-newsreader",
+  variable: "--font-launch-display",
   display: "swap",
-  style: ["normal", "italic"],
-  axes: ["opsz"],
 });
 
-const plexSans = IBM_Plex_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-plex",
+  variable: "--font-launch-text",
   display: "swap",
 });
 
@@ -39,7 +36,7 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-// Same superfamily as the Latin UI face, so Arabic and English share one voice. Not preloaded:
+// Arabic posts. Not preloaded:
 // English pages pay no cost.
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -274,7 +271,7 @@ export default async function RootLayout({
       lang="en"
       data-theme="dark"
       suppressHydrationWarning
-      className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable} ${plexArabic.variable}`}
+      className={`${interTight.variable} ${inter.variable} ${plexMono.variable} ${plexArabic.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -289,7 +286,6 @@ export default async function RootLayout({
         <a href="#main" className="skip-link no-print">
           Skip to content
         </a>
-        <SiteCanvas />
         <AppProviders paletteIndex={paletteIndex}>{children}</AppProviders>
         <Analytics />
         <SpeedInsights />

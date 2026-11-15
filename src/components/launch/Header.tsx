@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/cn";
 import { emit, openDossier, PORTFOLIO_EVENTS, prefersReducedMotion, scrollToSection } from "@/lib/events";
 import { useActiveSection, useEscape, useFocusTrap, useMediaQuery, useScrollLock } from "@/lib/hooks";
@@ -10,11 +12,15 @@ import { CONTACT_ID, LEGACY_ANCHORS, SECTION_IDS, SECTIONS, TOP_SECTION_ID, type
 import { EASE } from "./motion";
 
 const BAR = 52;
+const NO_SECTIONS: SectionId[] = [];
+
+type Variant = "home" | "blog";
 
 /** The tone of the band under the bar, so the glass reads light over light bands and dark over dark ones. */
-function useToneUnderBar() {
+function useToneUnderBar(enabled: boolean) {
   const [tone, setTone] = useState<"light" | "dark">("light");
   useEffect(() => {
+    if (!enabled) return;
     let frame = 0;
     const read = () => {
       frame = 0;
@@ -38,14 +44,21 @@ function useToneUnderBar() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, []);
+  }, [enabled]);
   return tone;
 }
 
-/** The home page's bar: Apple-style glass, the five sections, search, CV and a Contact pill. */
-export default function Header() {
-  const active = useActiveSection(SECTION_IDS);
-  const tone = useToneUnderBar();
+/** Where a section item points: on the home page its anchor; elsewhere back to it, and Writing is the blog itself. */
+const sectionHref = (id: SectionId, isHome: boolean) => (isHome ? `#${id}` : id === "writing" ? "/blog" : `/#${id}`);
+
+/**
+ * The site's bar: Apple-style glass, the five sections, search, the blog, CV and a Contact pill. On the home page it
+ * takes the tone of the band under it; on the blog it follows the reader's light or dark theme and adds the toggle.
+ */
+export default function Header({ variant = "home" }: { variant?: Variant }) {
+  const isHome = variant === "home";
+  const active = useActiveSection(isHome ? SECTION_IDS : NO_SECTIONS);
+  const bandTone = useToneUnderBar(isHome);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shortcut, setShortcut] = useState("⌘K");
 
@@ -56,6 +69,7 @@ export default function Header() {
   // Links shared before the page was reorganised still land on the matching section. With reduced motion the
   // pinned scenes collapse into plain layouts after hydration, so a section link is scrolled to once more.
   useEffect(() => {
+    if (!isHome) return;
     let frame = 0;
     const redirect = (initial: boolean) => {
       const hash = window.location.hash.slice(1);
@@ -75,7 +89,7 @@ export default function Header() {
       cancelAnimationFrame(frame);
       window.removeEventListener("hashchange", onHashChange);
     };
-  }, []);
+  }, [isHome]);
 
   // The full-screen menu only exists below the bar's breakpoint; close it if the viewport grows past it.
   const wide = useMediaQuery("(min-width: 1024px)");
@@ -83,10 +97,18 @@ export default function Header() {
     if (wide) setMenuOpen(false);
   }, [wide]);
 
-  const go = useCallback((id: string) => {
-    setMenuOpen(false);
-    requestAnimationFrame(() => scrollToSection(id));
-  }, []);
+  const go = useCallback(
+    (id: string) => {
+      setMenuOpen(false);
+      if (isHome) requestAnimationFrame(() => scrollToSection(id));
+      else window.location.assign(`/#${id}`);
+    },
+    [isHome]
+  );
+
+  // Home: the band's tone, set explicitly. Blog: tone-auto reads the site theme from <html>.
+  const tone = isHome ? `tone-${bandTone}` : "tone-auto";
+  const quiet = "text-l-fg-2 transition-colors hover:bg-l-fg/[0.07] hover:text-l-fg";
 
   return (
     <>
@@ -94,72 +116,104 @@ export default function Header() {
         initial={{ y: -BAR }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-        data-theme={tone}
+        data-theme={isHome ? bandTone : undefined}
         className={cn(
-          `tone-${tone} launch fixed inset-x-0 top-0 z-50 h-[3.25rem] bg-transparent print:hidden`,
+          tone,
+          "launch fixed inset-x-0 top-0 z-50 h-[3.25rem] bg-transparent print:hidden",
           "before:absolute before:inset-0 before:-z-10 before:border-b before:border-l-line before:bg-[var(--l-glass)] before:backdrop-blur-xl before:backdrop-saturate-[1.8] before:transition-colors before:duration-500"
         )}
       >
         <div className="mx-auto flex h-full max-w-[76rem] items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
-          <a
-            href="#"
-            onClick={(event) => {
-              event.preventDefault();
-              scrollToSection(TOP_SECTION_ID);
-            }}
-            className="font-head text-[19px] font-semibold tracking-[-0.025em] text-l-fg transition-opacity hover:opacity-70"
-            aria-label="Ahmed Shaker, back to top"
-          >
-            Ahmed Shaker
-          </a>
+          {isHome ? (
+            <a
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(TOP_SECTION_ID);
+              }}
+              className="font-head text-[19px] font-semibold tracking-[-0.025em] text-l-fg transition-opacity hover:opacity-70"
+              aria-label="Ahmed Shaker, back to top"
+            >
+              Ahmed Shaker
+            </a>
+          ) : (
+            <Link href="/" className="font-head text-[19px] font-semibold tracking-[-0.025em] text-l-fg transition-opacity hover:opacity-70" aria-label="Ahmed Shaker, home">
+              Ahmed Shaker
+            </Link>
+          )}
 
           <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-1">
               {SECTIONS.map((link) => {
-                const current = active === link.id;
+                const current = isHome ? active === link.id : link.id === "writing";
+                const className = cn(
+                  "relative block rounded-full px-3 py-1.5 text-[13px] transition-colors duration-200",
+                  current ? "text-l-fg" : "text-l-fg-3 hover:text-l-fg"
+                );
+                const label = (
+                  <>
+                    {current && <motion.span layoutId="launch-nav" transition={{ type: "spring", stiffness: 380, damping: 34 }} className="absolute inset-0 rounded-full bg-l-fg/[0.07]" />}
+                    <span className="relative">{link.label}</span>
+                  </>
+                );
                 return (
                   <li key={link.id}>
-                    <a
-                      href={`#${link.id}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        go(link.id);
-                      }}
-                      aria-current={current ? "location" : undefined}
-                      className={cn(
-                        "relative block rounded-full px-3 py-1.5 text-[13px] transition-colors duration-200",
-                        current ? "text-l-fg" : "text-l-fg-3 hover:text-l-fg"
-                      )}
-                    >
-                      {current && <motion.span layoutId="launch-nav" transition={{ type: "spring", stiffness: 380, damping: 34 }} className="absolute inset-0 rounded-full bg-l-fg/[0.07]" />}
-                      <span className="relative">{link.label}</span>
-                    </a>
+                    {isHome ? (
+                      <a
+                        href={sectionHref(link.id, true)}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          go(link.id);
+                        }}
+                        aria-current={current ? "location" : undefined}
+                        className={className}
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <Link href={sectionHref(link.id, false)} aria-current={current ? "page" : undefined} className={className}>
+                        {label}
+                      </Link>
+                    )}
                   </li>
                 );
               })}
             </ul>
           </nav>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             <button
               type="button"
               onClick={() => emit(PORTFOLIO_EVENTS.openPalette)}
-              className="grid size-9 cursor-pointer place-items-center rounded-full text-l-fg-2 transition-colors hover:bg-l-fg/[0.07] hover:text-l-fg"
+              className={cn("grid size-9 cursor-pointer place-items-center rounded-full", quiet)}
               aria-label={`Search and jump to anything (${shortcut})`}
             >
               <Search className="size-[17px]" strokeWidth={2} />
             </button>
+            {isHome ? (
+              <Link href="/blog" className={cn("inline-flex h-9 items-center rounded-full px-3 text-[13px] font-medium", quiet)}>
+                Blog
+              </Link>
+            ) : (
+              <ThemeToggle className="text-l-fg-2 hover:bg-l-fg/[0.07] hover:text-l-fg" />
+            )}
             <button
               type="button"
               onClick={openDossier}
               aria-haspopup="dialog"
-              className="hidden h-9 cursor-pointer items-center rounded-full px-3 text-[13px] text-l-fg-2 transition-colors hover:bg-l-fg/[0.07] hover:text-l-fg sm:inline-flex"
+              className={cn("hidden h-9 cursor-pointer items-center rounded-full px-3 text-[13px] sm:inline-flex", quiet)}
             >
               CV
             </button>
-            <button type="button" onClick={() => go(CONTACT_ID)} className="l-btn l-btn-sm hidden h-8 px-3.5 text-[13px] lg:inline-flex">
-              Contact
-            </button>
+            {isHome ? (
+              <button type="button" onClick={() => go(CONTACT_ID)} className="l-btn l-btn-sm ml-1 hidden h-8 px-3.5 text-[13px] lg:inline-flex">
+                Contact
+              </button>
+            ) : (
+              <Link href={`/#${CONTACT_ID}`} className="l-btn l-btn-sm ml-1 hidden h-8 px-3.5 text-[13px] lg:inline-flex">
+                Contact
+              </Link>
+            )}
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
@@ -177,7 +231,7 @@ export default function Header() {
         </div>
       </motion.header>
 
-      <Menu open={menuOpen} tone={tone} active={active} onClose={() => setMenuOpen(false)} onNavigate={go} />
+      <Menu open={menuOpen} tone={tone} isHome={isHome} active={active} onClose={() => setMenuOpen(false)} onNavigate={go} />
     </>
   );
 }
@@ -185,12 +239,14 @@ export default function Header() {
 function Menu({
   open,
   tone,
+  isHome,
   active,
   onClose,
   onNavigate,
 }: {
   open: boolean;
-  tone: "light" | "dark";
+  tone: string;
+  isHome: boolean;
   active: string | null;
   onClose: () => void;
   onNavigate: (id: string) => void;
@@ -199,6 +255,7 @@ function Menu({
   useScrollLock(open);
   useFocusTrap(panelRef, open);
   useEscape(onClose, open);
+  const item = "block py-2 font-head text-[clamp(2rem,9vw,2.75rem)] font-bold leading-tight tracking-[-0.035em] transition-colors";
 
   return (
     <AnimatePresence>
@@ -210,12 +267,11 @@ function Menu({
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          data-theme={tone}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.25 } }}
           transition={{ duration: 0.3 }}
-          className={cn(`tone-${tone} launch fixed inset-0 z-[70] overflow-y-auto print:hidden lg:hidden`)}
+          className={cn(tone, "launch fixed inset-0 z-[70] overflow-y-auto print:hidden lg:hidden")}
         >
           <div className="mx-auto flex min-h-full max-w-[76rem] flex-col px-5 pb-10 sm:px-8">
             <div className="flex h-[3.25rem] items-center justify-between">
@@ -235,28 +291,49 @@ function Menu({
             </div>
             <nav aria-label="Sections" className="mt-8">
               <ul className="space-y-1">
-                {SECTIONS.map((link, i) => (
-                  <motion.li
-                    key={link.id}
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0, transition: { delay: 0.06 + i * 0.04, duration: 0.6, ease: EASE } }}
-                  >
-                    <a
-                      href={`#${link.id}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        onNavigate(link.id);
-                      }}
-                      aria-current={active === link.id ? "location" : undefined}
-                      className={cn(
-                        "block py-2 font-head text-[clamp(2rem,9vw,2.75rem)] font-bold leading-tight tracking-[-0.035em] transition-colors",
-                        active === link.id ? "text-l-accent" : "text-l-fg hover:text-l-fg-3"
-                      )}
+                {SECTIONS.map((link, i) => {
+                  const current = isHome ? active === link.id : link.id === "writing";
+                  return (
+                    <motion.li
+                      key={link.id}
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0, transition: { delay: 0.06 + i * 0.04, duration: 0.6, ease: EASE } }}
                     >
-                      {link.label}
-                    </a>
+                      {isHome ? (
+                        <a
+                          href={sectionHref(link.id, true)}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            onNavigate(link.id);
+                          }}
+                          aria-current={current ? "location" : undefined}
+                          className={cn(item, current ? "text-l-accent" : "text-l-fg hover:text-l-fg-3")}
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={sectionHref(link.id, false)}
+                          onClick={onClose}
+                          aria-current={current ? "page" : undefined}
+                          className={cn(item, current ? "text-l-accent" : "text-l-fg hover:text-l-fg-3")}
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </motion.li>
+                  );
+                })}
+                {isHome && (
+                  <motion.li
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: 0.06 + SECTIONS.length * 0.04, duration: 0.6, ease: EASE } }}
+                  >
+                    <Link href="/blog" onClick={onClose} className={cn(item, "text-l-fg hover:text-l-fg-3")}>
+                      Blog
+                    </Link>
                   </motion.li>
-                ))}
+                )}
               </ul>
             </nav>
             <motion.div
@@ -277,6 +354,7 @@ function Menu({
               >
                 Executive CV
               </button>
+              {!isHome && <ThemeToggle className="ms-auto bg-l-card text-l-fg-2 hover:bg-l-card-2 hover:text-l-fg" />}
             </motion.div>
           </div>
         </motion.div>

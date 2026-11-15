@@ -225,7 +225,7 @@ export default function CommandPalette({ index }: { index: PaletteIndex }) {
         id: "action-theme",
         group: "Actions",
         label: "Switch colour theme",
-        hint: "Ink (dark) ↔ Paper (light)",
+        hint: "Dark ↔ light",
         keywords: "dark light mode appearance",
         icon: (
           <span className={iconBox}>

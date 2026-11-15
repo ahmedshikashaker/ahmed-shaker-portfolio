@@ -95,7 +95,7 @@ export default function ExecutionJourneyLab({
       } else if (revokeBeforeGrant) {
         stoppedAtStage = 7;
         outcomeSummary =
-          "Blocked at Stage 7 (Execution-Time Reauthorization): although planning was allowed at Stage 2, the principal’s role or policy was revoked before execution. Zero grants issued.",
+          "Blocked at Stage 7 (Execution-Time Reauthorization): although planning was allowed at Stage 2, the principal’s role or policy was revoked before execution. Zero grants issued.";
         stages.grant = {
           status: "blocked",
           headline: "EXECUTION REAUTHORIZATION DENIED: Role/policy revoked after planning",

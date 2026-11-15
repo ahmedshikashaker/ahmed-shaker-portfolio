@@ -3,7 +3,6 @@ import { FaLinkedinIn, FaGithub } from "react-icons/fa6";
 import { Mail } from "lucide-react";
 import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
 import { ArrowGlyph, Button } from "@/components/ui/Button";
-import { CornerTicks } from "@/components/ui/SectionHeader";
 import { cn } from "@/lib/cn";
 
 export default function AuthorCard({
@@ -16,12 +15,11 @@ export default function AuthorCard({
   const isAr = language === "ar";
   return (
     <section
-      className="not-prose relative flex flex-col items-start gap-6 border border-line-2 bg-surface/50 p-6 sm:flex-row sm:p-8"
+      className="not-prose relative flex flex-col items-start gap-6 rounded-[24px] bg-surface p-6 sm:flex-row sm:p-8"
       dir={isAr ? "rtl" : "ltr"}
       aria-label={isAr ? "عن الكاتب" : "About the author"}
     >
-      <CornerTicks className="-inset-px" />
-      <div className="duotone relative size-20 shrink-0 overflow-hidden rounded-full border border-line-2">
+      <div className="relative size-20 shrink-0 overflow-hidden rounded-full">
         <Image src="/assets/profile/ahmed-shaker-portrait.jpg" alt="Ahmed Shaker" fill sizes="80px" className="object-cover object-[50%_24%]" />
       </div>
       <div className="min-w-0 flex-1">

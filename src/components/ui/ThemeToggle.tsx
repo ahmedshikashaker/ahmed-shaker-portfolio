@@ -16,7 +16,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   useWindowEvent<Theme>(PORTFOLIO_EVENTS.themeChange, (next) => setTheme(next));
 
   const label =
-    theme === null ? "Switch colour theme" : theme === "dark" ? "Switch to Paper (light) theme" : "Switch to Ink (dark) theme";
+    theme === null ? "Switch colour theme" : theme === "dark" ? "Switch to the light theme" : "Switch to the dark theme";
 
   return (
     <button

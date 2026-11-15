@@ -7,7 +7,6 @@ import Ecosystems from "@/components/launch/Ecosystems";
 import TrackRecord from "@/components/launch/TrackRecord";
 import Writing from "@/components/launch/Writing";
 import Contact from "@/components/launch/Contact";
-import { LAUNCH_FONT_CSS } from "@/components/launch/fonts";
 import BriefDrawer from "@/components/BriefDrawer";
 import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
 import {
@@ -24,8 +23,8 @@ export default async function HomePage() {
   const posts = await getAllPosts();
   return (
     <>
-      {/* The launch faces, and a page canvas that matches the bands at both ends of an overscroll. */}
-      <style>{`${LAUNCH_FONT_CSS}html{scroll-padding-top:3.25rem;background-color:#fff}`}</style>
+      {/* Anchors land just under the slim header, and an overscroll at the top matches the white opening band. */}
+      <style>{"html{scroll-padding-top:3.25rem;background-color:#fff}"}</style>
       <div className="no-print relative isolate">
         <Header />
         <main id="main" tabIndex={-1} className="outline-none">
