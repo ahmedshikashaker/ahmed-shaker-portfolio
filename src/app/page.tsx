@@ -1,15 +1,14 @@
 import React from "react";
-import SiteHeader from "@/components/site/SiteHeader";
-import HeroSection from "@/components/HeroSection";
-import ExecutiveImpactSection from "@/components/ExecutiveImpactSection";
-import DigitalFactoriesSection from "@/components/DigitalFactoriesSection";
-import SelectedProductsSection from "@/components/SelectedProductsSection";
-import ArchitectureStrategySection from "@/components/ArchitectureStrategySection";
-import ExecutiveCaseStudiesSection from "@/components/ExecutiveCaseStudiesSection";
-import ExperienceTimelineSection from "@/components/ExperienceTimelineSection";
-import LeadershipPhilosophySection from "@/components/LeadershipPhilosophySection";
-import LatestArticlesSection from "@/components/LatestArticlesSection";
-import ContactSection from "@/components/ContactSection";
+import Header from "@/components/launch/Header";
+import Hero from "@/components/launch/Hero";
+import Premise from "@/components/launch/Premise";
+import Factories from "@/components/launch/Factories";
+import Ecosystems from "@/components/launch/Ecosystems";
+import TrackRecord from "@/components/launch/TrackRecord";
+import Writing from "@/components/launch/Writing";
+import Contact from "@/components/launch/Contact";
+import { LAUNCH_FONT_CSS } from "@/components/launch/fonts";
+import BriefDrawer from "@/components/BriefDrawer";
 import ExecutiveDossierModal from "@/components/ExecutiveDossierModal";
 import {
   EXECUTIVE_PROFILE,
@@ -17,26 +16,31 @@ import {
 } from "@/data/portfolioData";
 import { getAllPosts } from "@/lib/blog";
 
+/**
+ * The home page as a product launch, in bands that alternate light and dark:
+ * Overview → Digital Factories → Ecosystems → Track Record → Writing, then contact.
+ */
 export default async function HomePage() {
-  const latestPosts = (await getAllPosts()).slice(0, 3);
-  const hasArticles = latestPosts.length > 0;
+  const posts = await getAllPosts();
   return (
     <>
-      <div className="no-print">
-        <SiteHeader variant="home" />
+      {/* The launch faces, and a page canvas that matches the bands at both ends of an overscroll. */}
+      <style>{`${LAUNCH_FONT_CSS}html{scroll-padding-top:3.25rem;background-color:#fff}`}</style>
+      <div className="no-print relative isolate">
+        <Header />
         <main id="main" tabIndex={-1} className="outline-none">
-          <HeroSection />
-          <ExecutiveImpactSection />
-          <DigitalFactoriesSection />
-          <SelectedProductsSection />
-          <ArchitectureStrategySection />
-          <ExecutiveCaseStudiesSection />
-          <ExperienceTimelineSection />
-          <LeadershipPhilosophySection />
-          <LatestArticlesSection posts={latestPosts} />
+          <div id="overview">
+            <Hero />
+            <Premise />
+          </div>
+          <Factories />
+          <Ecosystems />
+          <TrackRecord />
+          <Writing posts={posts} />
         </main>
-        <ContactSection index={hasArticles ? "09" : "08"} />
+        <Contact />
       </div>
+      <BriefDrawer />
       <ExecutiveDossierModal />
       {/* Server-rendered bilingual identity anchor for search engine crawlers */}
       <aside className="sr-only" aria-label="Executive SEO Summary">

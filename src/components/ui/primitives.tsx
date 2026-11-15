@@ -1,15 +1,7 @@
 "use client";
 
-import { useEffect, useState, type PointerEvent, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-
-/** Updates the --mx/--my CSS variables read by the `.spotlight` hover glow. */
-export function spotlightMove(event: PointerEvent<HTMLElement>) {
-  const target = event.currentTarget;
-  const rect = target.getBoundingClientRect();
-  target.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-  target.style.setProperty("--my", `${event.clientY - rect.top}px`);
-}
 
 export function Kbd({ children, className }: { children: ReactNode; className?: string }) {
   return (
@@ -73,7 +65,7 @@ export function KuwaitTime({ className }: { className?: string }) {
   );
 }
 
-/** Stacked-plates mark: the 5-layer reference architecture, reduced to a glyph. */
+/** Stacked-plates mark: the layered reference architecture, reduced to a glyph. */
 export function BrandMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 28 28" fill="none" aria-hidden="true" className={cn("size-7 text-accent", className)}>

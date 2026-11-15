@@ -7,13 +7,9 @@ export const EASE_IN_OUT: [number, number, number, number] = [0.65, 0, 0.35, 1];
 /** Critically damped spring (damping ratio ≈ 1) for interactive, interruptible motion. */
 export const SPRING: Transition = { type: "spring", stiffness: 380, damping: 38, mass: 0.9 };
 
-export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: EASE_OUT } },
-};
-
-export const swap: Variants = {
-  initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE_OUT } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.18, ease: EASE_IN_OUT } },
+/** Content swap inside a reader: the old content leaves faster than the new arrives. */
+export const crossfade: Variants = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT } },
+  exit: { opacity: 0, transition: { duration: 0.15, ease: EASE_IN_OUT } },
 };

@@ -3,7 +3,14 @@ import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Newsreader } from "
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { EXECUTIVE_CASE_STUDIES, EXECUTIVE_PROFILE, SELECTED_PRODUCTS } from "@/data/portfolioData";
+import {
+  ARCHIVE_PLATFORMS,
+  BRIEFS,
+  EXECUTIVE_CASE_STUDIES,
+  EXECUTIVE_PROFILE,
+  FLAGSHIP_PLATFORMS,
+  PLATFORM_REGISTRY,
+} from "@/data/portfolioData";
 import { AppProviders } from "@/components/site/AppProviders";
 import { SiteCanvas } from "@/components/site/SiteCanvas";
 import { getAllPosts } from "@/lib/blog";
@@ -147,8 +154,13 @@ export default async function RootLayout({
 }>) {
   const posts = await getAllPosts();
   const paletteIndex: PaletteIndex = {
-    products: SELECTED_PRODUCTS.map((p) => ({ id: p.id, name: p.name, institution: p.institution, iconPath: p.iconPath })),
-    cases: EXECUTIVE_CASE_STUDIES.map((c) => ({ id: c.id, title: c.title, category: c.category })),
+    platforms: [...FLAGSHIP_PLATFORMS, ...ARCHIVE_PLATFORMS].map((p) => ({ id: p.id, name: p.name, institution: p.institution, iconPath: p.iconPath })),
+    briefs: EXECUTIVE_CASE_STUDIES.map((c) => ({
+      id: c.id,
+      title: c.title,
+      category: c.category,
+      section: Object.values(BRIEFS).find((brief) => brief.id === c.id)?.section ?? "ecosystems",
+    })),
     posts: posts.slice(0, 12).map((p) => ({ slug: p.slug, title: p.title, language: p.language })),
     contact: { email: EXECUTIVE_PROFILE.contact.email, linkedin: EXECUTIVE_PROFILE.contact.linkedin },
   };
@@ -238,8 +250,8 @@ export default async function RootLayout({
         "@type": "ItemList",
         "@id": `${SITE_URL}/#platforms`,
         name: "Production Platforms Delivered & Directed by Ahmed Shaker",
-        numberOfItems: SELECTED_PRODUCTS.length,
-        itemListElement: SELECTED_PRODUCTS.map((p, idx) => ({
+        numberOfItems: PLATFORM_REGISTRY.length,
+        itemListElement: PLATFORM_REGISTRY.map((p, idx) => ({
           "@type": "ListItem",
           position: idx + 1,
           item: {

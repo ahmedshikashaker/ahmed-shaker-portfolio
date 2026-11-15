@@ -1,13 +1,14 @@
+import { TOP_SECTION_ID } from "./site";
+
 /**
- * Tiny window-event bus so distant parts of the page (nav, command palette, hero, footer)
- * can drive interactive sections without prop drilling.
+ * Tiny window-event bus so distant parts of the page (nav, command palette, section buttons)
+ * can drive the overlays and interactive sections without prop drilling.
  */
 export const PORTFOLIO_EVENTS = {
   openDossier: "as:open-dossier",
   openPalette: "as:open-palette",
-  selectProduct: "as:select-product",
-  selectFactory: "as:select-factory",
-  openCase: "as:open-case",
+  openBrief: "as:open-brief",
+  selectPlatform: "as:select-platform",
   themeChange: "as:theme-change",
 } as const;
 
@@ -20,7 +21,7 @@ export function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/** Smooth-scrolls to a section on this page, or navigates home to it from other pages. */
+/** Scrolls to a section on this page, or navigates home to it from other pages. */
 export function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) {
@@ -28,8 +29,8 @@ export function scrollToSection(id: string) {
     return;
   }
   el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
-  if (id !== "hero") window.history.replaceState(null, "", `#${id}`);
-  else window.history.replaceState(null, "", window.location.pathname + window.location.search);
+  const url = id === TOP_SECTION_ID ? window.location.pathname + window.location.search : `#${id}`;
+  window.history.replaceState(null, "", url);
 }
 
 export function openDossier() {
@@ -38,4 +39,8 @@ export function openDossier() {
     return;
   }
   emit(PORTFOLIO_EVENTS.openDossier);
+}
+
+export function openBrief(id: string) {
+  emit(PORTFOLIO_EVENTS.openBrief, id);
 }
