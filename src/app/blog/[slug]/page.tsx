@@ -351,7 +351,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </div>
               )}
 
-              <div className="mt-10 border border-line-2 bg-surface/50 p-6 sm:p-8 print:hidden">
+              <div className="mt-10 rounded-[24px] bg-surface p-6 sm:p-8 print:hidden">
                 <ShareBar url={post.url} title={post.title} excerpt={post.excerpt} language={post.language} variant="full" />
               </div>
 

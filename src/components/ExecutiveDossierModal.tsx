@@ -8,13 +8,7 @@ import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { PORTFOLIO_EVENTS } from "@/lib/events";
 import { useEscape, useFocusTrap, useScrollLock, useWindowEvent } from "@/lib/hooks";
 import { EASE_IN_OUT, EASE_OUT } from "@/lib/motion";
-import {
-  EXECUTIVE_PROFILE,
-  CAREER_TIMELINE,
-  DIGITAL_FACTORIES,
-  ARABIC_EXECUTIVE_BRIEF,
-} from "@/data/portfolioData";
-
+import { EXECUTIVE_PROFILE, FACTORIES, ARABIC_EXECUTIVE_BRIEF } from "@/data/portfolioData";
 
 const CV_CORE_SKILLS = [
   {
@@ -47,7 +41,8 @@ const CV_CORE_SKILLS = [
   },
 ];
 
-const CV_EXPERIENCE_PRINT = [
+/** One CV, two renderings: the on-screen dossier and the print-only A4 page share these entries. */
+const CV_EXPERIENCE = [
   {
     role: "Executive Manager – Head of Digital Technology",
     org: "Kuwait International Bank (KIB) · Kuwait",
@@ -64,8 +59,8 @@ const CV_EXPERIENCE_PRINT = [
     period: "Mar 2019 – Jun 2022",
     bullets: [
       "Core builder of Warba Bank’s “Al-Wateen” Digital Factory; built and managed the flagship Warba Bank mobile banking app from scratch — architecture, delivery, and ongoing support.",
-      "Created automated CI/CD pipelines in Jenkins and defined Git branching and release-management strategies for the mobile chapter.",
-      "Developed Fayez (fitness & loyalty) and Fayez Admin (Flutter Web), and delivered Hassala Kids, a digital savings app for children, end to end.",
+      "Instituted the mobile chapter’s release governance: automated build pipelines, a branching model, and release management.",
+      "Delivered Fayez (fitness & loyalty, with its admin portal) and Hassala Kids, a digital savings app for children, end to end.",
     ],
   },
   {
@@ -74,7 +69,7 @@ const CV_EXPERIENCE_PRINT = [
     period: "Jan 2020 – Jan 2021",
     bullets: [
       "Re-architected and migrated UBA Mobile Banking (United Bank for Africa) from Cordova to Flutter, improving performance and maintainability.",
-      "Added push notifications and a Personal Finance Management (PFM) feature; defined the app architecture and mentored the engineering team.",
+      "Defined the target app architecture, delivered Personal Finance Management (PFM), and mentored the in-house engineering team.",
     ],
   },
   {
@@ -133,21 +128,15 @@ export default function ExecutiveDossierModal() {
             {/* Editorial Header */}
             <div className="pb-3 border-b border-slate-300 flex items-start justify-between gap-6">
               <div>
-                <div
-                  className="font-editorial text-[36px] font-normal text-[#0f172a] leading-none tracking-tight"
-                  style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                >
+                <div className="font-editorial text-[34px] font-bold text-[#1d1d1f] leading-none tracking-[-0.03em]">
                   {EXECUTIVE_PROFILE.name}
                 </div>
                 <div className="mt-1.5 text-[15.5px] font-medium text-slate-700">
                   Executive Manager – Head of Digital Technology
                 </div>
-                <div className="mt-1 text-[12.5px] text-slate-500">
-                  Mobile (Android · iOS · Flutter) &bull; Backend (NestJS · Java) &bull; DevOps (Kubernetes · Argo CD · Jenkins)
-                </div>
 
                 {/* Contact & Verification Metadata */}
-                <div className="mt-3 font-tech text-[11px] text-slate-600 space-y-0.5 leading-relaxed">
+                <div className="mt-3 text-[11px] text-slate-600 space-y-0.5 leading-relaxed tabular-nums">
                   <div className="flex flex-wrap items-center gap-x-2">
                     <span>Kuwait City, Kuwait</span>
                     <span className="text-slate-300">/</span>
@@ -184,7 +173,7 @@ export default function ExecutiveDossierModal() {
               {/* Left Column: Core Skills, Platforms, Education, Languages */}
               <div className="pr-4 border-r border-slate-200 space-y-4">
                 <div>
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-2.5">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-2.5">
                     Core Skills
                   </h2>
                   <div className="space-y-2">
@@ -202,7 +191,7 @@ export default function ExecutiveDossierModal() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-200">
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-2">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-2">
                     Key Platforms (16)
                   </h2>
                   <div className="space-y-1.5 text-[11px] leading-[1.35]">
@@ -215,7 +204,7 @@ export default function ExecutiveDossierModal() {
                     <div>
                       <span className="font-bold text-[#0f172a]">Warba Factory: </span>
                       <span className="text-slate-600">
-                        Warba Mobile, Fayez, Fayez Admin, Hassala Kids
+                        Warba Mobile, Fayez, Hassala Kids
                       </span>
                     </div>
                     <div>
@@ -228,7 +217,7 @@ export default function ExecutiveDossierModal() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-200">
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-1.5">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-1.5">
                     Education
                   </h2>
                   <div className="text-[11.5px] font-bold text-[#0f172a] leading-snug">
@@ -237,13 +226,13 @@ export default function ExecutiveDossierModal() {
                   <div className="text-[11px] text-slate-600 mt-0.5 leading-snug">
                     Faculty of Computer and Information Sciences, Ain Shams University — Cairo, Egypt
                   </div>
-                  <div className="font-tech text-[10.5px] text-slate-400 mt-1">
+                  <div className="text-[10.5px] text-slate-500 mt-1 tabular-nums">
                     2012 – 2016
                   </div>
                 </div>
 
                 <div className="pt-2 border-t border-slate-200">
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-1.5">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-1.5">
                     Languages
                   </h2>
                   <div className="space-y-1 text-[11px]">
@@ -262,7 +251,7 @@ export default function ExecutiveDossierModal() {
               {/* Right Column: Profile & Experience */}
               <div className="space-y-3">
                 <div>
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-1.5">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-1.5">
                     Profile
                   </h2>
                   <p className="text-[12px] text-slate-700 leading-[1.48]">
@@ -271,20 +260,17 @@ export default function ExecutiveDossierModal() {
                 </div>
 
                 <div className="pt-1">
-                  <h2 className="font-tech text-[10.5px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-2.5">
+                  <h2 className="text-[11px] font-semibold text-[#0071e3] mb-2.5">
                     Experience
                   </h2>
                   <div className="space-y-2.5">
-                    {CV_EXPERIENCE_PRINT.map((exp, idx) => (
+                    {CV_EXPERIENCE.map((exp, idx) => (
                       <div key={idx} className="break-inside-avoid">
                         <div className="flex items-baseline justify-between gap-2">
-                          <h3
-                            className="text-[14px] font-bold text-[#0f172a]"
-                            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                          >
+                          <h3 className="font-editorial text-[14px] font-bold tracking-[-0.01em] text-[#1d1d1f]">
                             {exp.role}
                           </h3>
-                          <span className="font-tech text-[10.5px] text-slate-400 shrink-0">
+                          <span className="text-[10.5px] text-slate-500 shrink-0 tabular-nums">
                             {exp.period}
                           </span>
                         </div>
@@ -320,10 +306,7 @@ export default function ExecutiveDossierModal() {
                 <div className="mt-1 text-[14.5px] font-semibold text-slate-700">
                   مدير تنفيذي – رئيس التكنولوجيا الرقمية (Executive Manager – Head of Digital Technology)
                 </div>
-                <div className="mt-1 text-[12px] text-slate-500" dir="ltr">
-                  Mobile (Android · iOS · Flutter) &bull; Backend (NestJS · Java) &bull; DevOps (Kubernetes · Argo CD · Jenkins)
-                </div>
-                <div className="mt-2.5 font-tech text-[11px] text-slate-600 flex flex-wrap items-center gap-x-2" dir="ltr">
+                <div className="mt-2.5 text-[11px] text-slate-600 flex flex-wrap items-center gap-x-2 tabular-nums" dir="ltr">
                   <span>www.ahmed-shaker.com</span>
                   <span className="text-slate-300">/</span>
                   <span>{EXECUTIVE_PROFILE.contact.email}</span>
@@ -375,7 +358,7 @@ export default function ExecutiveDossierModal() {
                         <h3 className="text-[13.5px] font-bold text-[#0f172a]">
                           {item.role} — <span className="text-slate-600">{item.org}</span>
                         </h3>
-                        <span className="font-tech text-[11px] text-slate-500">
+                        <span className="text-[11px] text-slate-500 tabular-nums">
                           {item.period}
                         </span>
                       </div>
@@ -402,7 +385,7 @@ export default function ExecutiveDossierModal() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.25, delay: 0.05 } }}
               onClick={onClose}
-              className="absolute inset-0 bg-bg/75 backdrop-blur-md"
+              className="absolute inset-0 bg-black/45 backdrop-blur-md"
             />
 
             <motion.div
@@ -414,7 +397,7 @@ export default function ExecutiveDossierModal() {
               animate={{ x: "0%" }}
               exit={{ x: "100%", transition: { duration: 0.4, ease: EASE_IN_OUT } }}
               transition={{ type: "spring", stiffness: 240, damping: 34, mass: 0.9 }}
-              className="absolute inset-y-0 right-0 flex w-full max-w-[64rem] flex-col border-l border-line-2 bg-surface shadow-float"
+              className="absolute inset-y-0 right-0 flex w-full max-w-[64rem] flex-col overflow-hidden bg-bg shadow-[0_40px_120px_-30px_rgba(0,0,0,0.55)] sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
             >
               {/* Top bar */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 sm:px-8">
@@ -450,9 +433,9 @@ export default function ExecutiveDossierModal() {
                     onClick={onClose}
                     data-autofocus
                     aria-label="Close executive dossier"
-                    className="grid size-9 cursor-pointer place-items-center rounded-full border border-line-2 text-fg transition-colors hover:bg-surface-2"
+                    className="grid size-9 cursor-pointer place-items-center rounded-full bg-surface text-fg transition-colors hover:bg-surface-2"
                   >
-                    <X className="size-4" strokeWidth={1.75} />
+                    <X className="size-4" strokeWidth={2.2} />
                   </button>
                 </div>
               </div>
@@ -468,15 +451,12 @@ export default function ExecutiveDossierModal() {
                           <p className="mt-3 text-[15px] font-medium text-accent">
                             Executive Manager – Head of Digital Technology · Digital Banking Transformation &amp; Architecture
                           </p>
-                          <p className="eyebrow mt-2 text-[10px] leading-relaxed text-fg-4">
-                            Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                          </p>
                         </div>
                         <dl className="space-y-1 text-[12.5px] text-fg-3 md:text-right">
                           <dd>{EXECUTIVE_PROFILE.location}</dd>
                           <dd className="numeric">{EXECUTIVE_PROFILE.contact.phone}</dd>
                           <dd>{EXECUTIVE_PROFILE.contact.email}</dd>
-                          <dd className="font-mono text-accent">www.ahmed-shaker.com</dd>
+                          <dd className="text-accent">www.ahmed-shaker.com</dd>
                         </dl>
                       </header>
 
@@ -541,21 +521,21 @@ export default function ExecutiveDossierModal() {
                         <div className="space-y-10 lg:col-span-8">
                           <div>
                             <div className="eyebrow text-accent">Executive profile</div>
-                            <p className="mt-4 font-display text-[1.25rem] leading-[1.55] text-fg">
+                            <p className="mt-4 text-[1.125rem] font-medium leading-[1.6] tracking-[-0.012em] text-fg">
                               {EXECUTIVE_PROFILE.shortBio} Hands-on technical leader strong in architecture, team building, CI/CD automation, and microservices.
                             </p>
                           </div>
 
                           <div>
                             <div className="eyebrow text-accent">Key differentiator · Two digital factories built from scratch</div>
-                            <div className="mt-4 grid gap-px border border-line bg-line md:grid-cols-2">
-                              {DIGITAL_FACTORIES.map((df) => (
-                                <div key={df.id} className="bg-surface p-5">
-                                  <div className="eyebrow numeric text-[10px] text-fg-4">{df.period}</div>
+                            <div className="mt-4 grid gap-3 md:grid-cols-2">
+                              {FACTORIES.map((factory) => (
+                                <div key={factory.id} className="rounded-[20px] bg-surface p-5">
+                                  <div className="eyebrow numeric text-[10px] text-fg-4">{factory.period}</div>
                                   <div className="mt-2 text-[15px] font-medium text-fg">
-                                    {df.institution} — {df.role}
+                                    {factory.institution} — {factory.role}
                                   </div>
-                                  <p className="mt-2 text-[12.5px] leading-relaxed text-fg-3">{df.executiveSummary}</p>
+                                  <p className="mt-2 text-[12.5px] leading-relaxed text-fg-3">{factory.mandate}</p>
                                 </div>
                               ))}
                             </div>
@@ -564,21 +544,19 @@ export default function ExecutiveDossierModal() {
                           <div>
                             <div className="eyebrow text-accent">Career progression · 2016 – present</div>
                             <ol className="mt-4 border-t border-line">
-                              {CAREER_TIMELINE.map((role) => (
-                                <li key={role.id} className="border-b border-line py-5">
+                              {CV_EXPERIENCE.map((entry) => (
+                                <li key={entry.role} className="border-b border-line py-5">
                                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                                     <h4 className="font-display text-[1.2rem] text-fg">
-                                      {role.role} — <span className="text-accent">{role.organization}</span>
+                                      {entry.role} — <span className="text-accent">{entry.org}</span>
                                     </h4>
-                                    <span className="eyebrow numeric text-[10px] text-fg-4">
-                                      {role.period} · {role.location}
-                                    </span>
+                                    <span className="eyebrow numeric text-[10px] text-fg-4">{entry.period}</span>
                                   </div>
                                   <ul className="mt-3 space-y-1.5">
-                                    {role.achievements.map((ach, i) => (
-                                      <li key={i} className="flex gap-2.5 text-[13px] leading-relaxed text-fg-2">
+                                    {entry.bullets.map((bullet) => (
+                                      <li key={bullet} className="flex gap-2.5 text-[13px] leading-relaxed text-fg-2">
                                         <span aria-hidden="true" className="mt-[8px] size-1 shrink-0 rounded-full bg-accent" />
-                                        {ach.text}
+                                        {bullet}
                                       </li>
                                     ))}
                                   </ul>
@@ -595,9 +573,6 @@ export default function ExecutiveDossierModal() {
                         <div>
                           <h2 className="text-[clamp(2rem,3.6vw,2.75rem)] font-bold leading-tight text-fg">{ARABIC_EXECUTIVE_BRIEF.name}</h2>
                           <p className="mt-3 text-[15px] font-medium leading-relaxed text-accent">{ARABIC_EXECUTIVE_BRIEF.title}</p>
-                          <p className="eyebrow mt-2 text-[10px] leading-relaxed text-fg-4" dir="ltr">
-                            Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (Kubernetes · Argo CD · Jenkins)
-                          </p>
                         </div>
                         <dl className="space-y-1 text-[12.5px] text-fg-3">
                           <dd>{ARABIC_EXECUTIVE_BRIEF.location}</dd>
@@ -613,9 +588,9 @@ export default function ExecutiveDossierModal() {
                         <p className="mt-4 text-[16px] leading-[1.95] text-fg">{ARABIC_EXECUTIVE_BRIEF.summary}</p>
                       </div>
 
-                      <div className="grid gap-px border border-line bg-line md:grid-cols-3">
+                      <div className="grid gap-3 md:grid-cols-3">
                         {ARABIC_EXECUTIVE_BRIEF.highlights.map((item, idx) => (
-                          <div key={idx} className="bg-surface p-5">
+                          <div key={idx} className="rounded-[20px] bg-surface p-5">
                             <div className="text-[12.5px] font-semibold text-accent">{item.label}</div>
                             <p className="mt-2 text-[13.5px] leading-relaxed text-fg-2">{item.value}</p>
                           </div>

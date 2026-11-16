@@ -3,7 +3,7 @@ import { PORTFOLIO_EVENTS } from "./events";
 export type Theme = "dark" | "light";
 
 export const THEME_STORAGE_KEY = "as-theme";
-export const THEME_COLORS: Record<Theme, string> = { dark: "#0a0e17", light: "#f3efe6" };
+export const THEME_COLORS: Record<Theme, string> = { dark: "#000000", light: "#ffffff" };
 
 const SYSTEM_DARK = "(prefers-color-scheme: dark)";
 

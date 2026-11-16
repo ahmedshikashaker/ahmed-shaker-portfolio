@@ -20,14 +20,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, 
 import { Kbd } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/cn";
-import { emit, openDossier, PORTFOLIO_EVENTS, scrollToSection } from "@/lib/events";
+import { emit, openBrief, openDossier, PORTFOLIO_EVENTS, scrollToSection } from "@/lib/events";
 import { copyText, useEscape, useFocusTrap, useScrollLock, useWindowEvent } from "@/lib/hooks";
 import { EASE_OUT, SPRING } from "@/lib/motion";
-import { SECTIONS, type PaletteIndex } from "@/lib/site";
+import { CONTACT_ID, SECTIONS, type PaletteIndex } from "@/lib/site";
 import { applyTheme, readTheme } from "@/lib/theme";
 
-type Group = "Sections" | "Platforms" | "Case studies" | "Writing" | "Actions";
-const GROUP_ORDER: Group[] = ["Sections", "Platforms", "Case studies", "Writing", "Actions"];
+type Group = "Sections" | "Platforms" | "Briefs" | "Writing" | "Actions";
+const GROUP_ORDER: Group[] = ["Sections", "Platforms", "Briefs", "Writing", "Actions"];
 
 interface Command {
   id: string;
@@ -98,47 +98,55 @@ export default function CommandPalette({ index }: { index: PaletteIndex }) {
         group: "Sections",
         label: section.label,
         hint: section.hint,
-        icon: (
-          <span className={cn(iconBox, "font-mono text-[10.5px] text-accent")}>
-            {section.index || <Hash className="size-3.5" />}
-          </span>
-        ),
+        icon: <span className={cn(iconBox, "font-mono text-[10.5px] text-accent")}>{section.index}</span>,
         perform: () => goSection(section.id),
       });
     }
+    list.push({
+      id: `section-${CONTACT_ID}`,
+      group: "Sections",
+      label: "Contact",
+      hint: "Initiate an executive conversation",
+      icon: (
+        <span className={cn(iconBox, "text-accent")}>
+          <Hash className="size-3.5" />
+        </span>
+      ),
+      perform: () => goSection(CONTACT_ID),
+    });
 
-    for (const product of index.products) {
+    for (const platform of index.platforms) {
       list.push({
-        id: `product-${product.id}`,
+        id: `platform-${platform.id}`,
         group: "Platforms",
-        label: product.name,
-        hint: product.institution,
+        label: platform.name,
+        hint: platform.institution,
         keywords: "app platform product",
-        icon: product.iconPath ? (
+        icon: platform.iconPath ? (
           <span className="relative block size-8 shrink-0 overflow-hidden rounded-lg border border-line">
-            <Image src={product.iconPath} alt="" fill sizes="32px" className="object-cover" />
+            <Image src={platform.iconPath} alt="" fill sizes="32px" className="object-cover" />
           </span>
         ) : (
-          <span className={cn(iconBox, "font-mono text-[9px] uppercase text-accent")}>{product.name.slice(0, 2)}</span>
+          <span className={cn(iconBox, "font-mono text-[9px] uppercase text-accent")}>{platform.name.slice(0, 2)}</span>
         ),
         perform: () =>
-          isHome ? emit(PORTFOLIO_EVENTS.selectProduct, product.id) : router.push(`/?product=${product.id}#products`),
+          isHome ? emit(PORTFOLIO_EVENTS.selectPlatform, platform.id) : router.push(`/?platform=${platform.id}#ecosystems`),
       });
     }
 
-    for (const study of index.cases) {
+    for (const brief of index.briefs) {
       list.push({
-        id: `case-${study.id}`,
-        group: "Case studies",
-        label: study.title,
-        hint: study.category,
-        keywords: "briefing case study",
+        id: `brief-${brief.id}`,
+        group: "Briefs",
+        label: brief.title,
+        hint: brief.category,
+        keywords: "briefing brief case study",
         icon: (
           <span className={iconBox}>
             <BookOpen className="size-3.5" strokeWidth={1.75} />
           </span>
         ),
-        perform: () => (isHome ? emit(PORTFOLIO_EVENTS.openCase, study.id) : router.push(`/?case=${study.id}#case-studies`)),
+        perform: () => (isHome ? openBrief(brief.id) : router.push(`/?brief=${brief.id}#${brief.section}`)),
       });
     }
 
@@ -217,7 +225,7 @@ export default function CommandPalette({ index }: { index: PaletteIndex }) {
         id: "action-theme",
         group: "Actions",
         label: "Switch colour theme",
-        hint: "Ink (dark) ↔ Paper (light)",
+        hint: "Dark ↔ light",
         keywords: "dark light mode appearance",
         icon: (
           <span className={iconBox}>
@@ -330,7 +338,7 @@ export default function CommandPalette({ index }: { index: PaletteIndex }) {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={onInputKeyDown}
-                placeholder="Jump to a section, platform, case study…"
+                placeholder="Jump to a section, platform, brief…"
                 aria-label="Search the portfolio"
                 role="combobox"
                 aria-expanded="true"

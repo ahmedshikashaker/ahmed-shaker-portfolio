@@ -8,6 +8,7 @@ import { PART5_DURATION, Part5Video } from "./part5/Part5Video";
 import { PART6_DURATION, Part6Video } from "./part6/Part6Video";
 import { PART7_DURATION, Part7Video } from "./part7/Part7Video";
 import { PART8_DURATION, Part8Video } from "./part8/Part8Video";
+import { HOME_SHOWREEL_DURATION, HomeShowreel } from "./home/HomeShowreel";
 
 const VIDEOS = [
   { id: "Part1", component: Part1Video, duration: PART1_DURATION },
@@ -30,5 +31,8 @@ export const RemotionRoot: React.FC = () => (
         <Composition id={`${v.id}-Article`} component={v.component} durationInFrames={v.duration} fps={30} width={1920} height={1080} />
       </React.Fragment>
     ))}
+    {/* Homepage launch film (video/src/home): silent, 16:9 for desktop and 4:5 for phones. Render with scripts/home-render.mjs. */}
+    <Composition id="Home-Showreel" component={HomeShowreel} durationInFrames={HOME_SHOWREEL_DURATION} fps={30} width={1920} height={1080} />
+    <Composition id="Home-Showreel-Portrait" component={HomeShowreel} durationInFrames={HOME_SHOWREEL_DURATION} fps={30} width={1080} height={1350} />
   </>
 );

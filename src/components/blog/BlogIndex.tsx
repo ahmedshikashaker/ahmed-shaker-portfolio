@@ -254,9 +254,9 @@ function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group grid overflow-hidden border border-line-2 bg-surface/50 transition-colors duration-500 hover:border-line-3 lg:grid-cols-12"
+      className="group grid overflow-hidden rounded-[28px] bg-surface transition-shadow duration-500 hover:shadow-[var(--shadow-float)] lg:grid-cols-12"
     >
-      <div className="relative min-h-[260px] overflow-hidden border-b border-line lg:col-span-7 lg:min-h-[380px] lg:border-b-0 lg:border-r">
+      <div className="relative min-h-[260px] overflow-hidden lg:col-span-7 lg:min-h-[380px]">
         {post.coverImage ? (
           <Image
             src={post.coverImage}

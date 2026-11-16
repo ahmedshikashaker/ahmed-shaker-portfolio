@@ -226,7 +226,7 @@ export default function AuditChainExplorer() {
           <div className="mt-3 rounded-lg border border-line bg-surface p-3.5 font-mono text-[11.5px] text-fg-2">
             {audience === "llm" && (
               <div>
-                <span className="text-signal">// Minimal projection returned to the reasoning runtime:</span>
+                <span className="text-signal">{"// Minimal projection returned to the reasoning runtime:"}</span>
                 <pre className="mt-1 overflow-x-auto text-fg">
                   {`{ "operationId": "op_31", "status": "succeeded", "leaveRequestId": "LR-8821", "remainingDays": 14, "redactedFields": ["nationalId", "salaryBand", "approverEmail"] }`}
                 </pre>
@@ -234,7 +234,7 @@ export default function AuditChainExplorer() {
             )}
             {audience === "user" && (
               <div>
-                <span className="text-accent">// Rich receipt rendered in the authenticated employee's UI card:</span>
+                <span className="text-accent">{"// Rich receipt rendered in the authenticated employee's UI card:"}</span>
                 <pre className="mt-1 overflow-x-auto text-fg">
                   {`{ "leaveRequestId": "LR-8821", "dates": "2026-11-08 → 2026-11-11 (4 days)", "approver": "Line Manager (mgr-0210)", "remainingDays": 14, "externalReceipt": "HRMS-99201" }`}
                 </pre>
@@ -242,7 +242,7 @@ export default function AuditChainExplorer() {
             )}
             {audience === "auditor" && (
               <div>
-                <span className="text-amber-500">// Tamper-evident record in the audit ledger (PII tokenized, hashes pinned):</span>
+                <span className="text-amber-500">{"// Tamper-evident record in the audit ledger (PII tokenized, hashes pinned):"}</span>
                 <pre className="mt-1 overflow-x-auto text-fg">
                   {`{ "auditEventId": "evt_1045", "traceId": "4bf92f3577b34da6a3ce929d0e0e4736", "grantId": "grt_55", "resolvedInputHash": "sha256:4b21e8...77d1", "resultHash": "sha256:88c01a...19e2", "canaryLeakCheck": "PASS" }`}
                 </pre>

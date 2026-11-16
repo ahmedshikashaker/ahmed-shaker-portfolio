@@ -1,137 +1,16 @@
-export type AttributionLevel =
-  | "Executive Ownership & Direction"
-  | "Hands-On Architecture & Delivery"
-  | "Chapter Leadership & CI/CD Governance"
-  | "Cross-Functional Factory Delivery";
+/**
+ * Homepage content for ahmed-shaker.com: every visible word on the home page lives here.
+ *
+ * Copy budgets (checked when the page is edited):
+ *   section subtitle ≤ 18 words · blueprint bullet ≤ 12 · platform outcome ≤ 18 · ledger mandate ≤ 22.
+ * Long-form reasoning belongs on /blog or in a brief (see EXECUTIVE_CASE_STUDIES), never in a section.
+ */
 
-export interface ExecutiveMetric {
-  id: string;
-  value: string;
-  label: string;
-  sublabel: string;
-  verificationNote: string;
-}
-
-export interface DigitalFactoryPillar {
-  title: string;
-  subtitle: string;
-  description: string;
-  outcomes: string[];
-}
-
-export interface DigitalFactoryCaseStudy {
-  id: "kib" | "warba";
-  institution: string;
-  factoryName: string;
-  role: string;
-  period: string;
-  location: string;
-  accentColor: "emerald" | "amber";
-  badgeText: string;
-  executiveSummary: string;
-  strategicContext: string;
-  architecturalMandate: string;
-  myDirectContribution: string[];
-  organizationScope: string;
-  technologyFoundation: {
-    mobileAndWeb: string[];
-    backendAndData: string[];
-    devopsAndGovernance: string[];
-  };
-  pillars: DigitalFactoryPillar[];
-  keyProductsDelivered: {
-    name: string;
-    category: string;
-    summary: string;
-  }[];
-}
-
-export type ProductFactoryGroup =
-  | "KIB Digital Factory"
-  | "Warba Al-Wateen Factory"
-  | "ITG Solutions Ecosystem"
-  | "Global Banking & FinTech";
-
-export interface BankingProduct {
-  id: string;
-  name: string;
-  institution:
-    | "Kuwait International Bank (KIB)"
-    | "Warba Bank"
-    | "United Bank for Africa (Cit Global)"
-    | "ITG Solutions (Integrated Technology Group)"
-    | "Advicenode";
-  factoryTag: ProductFactoryGroup;
-  category: string;
-  tagline: string;
-  iconPath?: string;
-  screenshots?: string[];
-  platforms: ("Android" | "iOS" | "Flutter" | "Web" | "Microservices" | "BaaS API")[];
-  attributionBadge: AttributionLevel;
-  purposeAndExperience: string;
-  problemAddressed: string;
-  architectureAndTech: string[];
-  myRoleAndContribution: string;
-  organizationalDistinction: string;
-  verifiableImpact: string;
-  appStoreUrl?: string;
-  playStoreUrl?: string;
-  secondaryPlayStoreUrl?: string;
-  websiteUrl?: string;
-  websiteLabel?: string;
-  featured: boolean;
-}
-
-export interface CareerMilestone {
-  id: string;
-  role: string;
-  organization: string;
-  organizationTag: string;
-  location: string;
-  period: string;
-  durationHighlight: string;
-  isDigitalFactoryRole: boolean;
-  executiveHeadline: string;
-  strategicScope: string;
-  achievements: {
-    category:
-      | "Strategy & Leadership"
-      | "Architecture & Engineering"
-      | "Product Delivery"
-      | "DevOps & Governance";
-    text: string;
-  }[];
-  technologies: string[];
-}
-
-export interface ArchitectureLayer {
-  id: string;
-  layerNumber: string;
-  name: string;
-  executiveThesis: string;
-  description: string;
-  technologies: string[];
-  designPrinciples: string[];
-  bankingUseCase: string;
-}
-
-export interface LeadershipPrinciple {
-  id: string;
-  number: string;
-  title: string;
-  subtitle: string;
-  narrative: string;
-  evidenceFromCareer: string;
-  keyPractices: string[];
-}
+/* ------------------------------------------------------------------ Identity */
 
 export const EXECUTIVE_PROFILE = {
   name: "Ahmed Shaker",
   title: "Head of Digital Technology",
-  positioningHeadline:
-    "Architecting Digital Factories & Production-Grade Banking Ecosystems from the Ground Up.",
-  positioningSubheadline:
-    "Senior Technology Executive and Digital Transformation Leader with 10+ years engineering and scaling regulated banking and enterprise platforms across Mobile, Backend Microservices, and Cloud-Native DevOps. Instrumental in establishing two pioneering banking Digital Factories in Kuwait—at Kuwait International Bank (KIB) and Warba Bank.",
   shortBio:
     "Digital transformation leader with 10+ years building and scaling banking and enterprise platforms across mobile, backend, and DevOps. Instrumental in establishing the digital factories at Kuwait International Bank and Warba Bank, delivering core mobile banking, wealth, real estate, remittance, BNPL, and loyalty products from the ground up.",
   location: "Kuwait City, Kuwait",
@@ -141,17 +20,8 @@ export const EXECUTIVE_PROFILE = {
     phone: "+965 9441 8109",
     phoneClean: "+96594418109",
     linkedin: "https://www.linkedin.com/in/ahmed-shaker-492413a2/",
-    linkedinDisplay: "linkedin.com/in/ahmed-shaker",
     github: "https://github.com/ahmedmshaker",
-    githubDisplay: "github.com/ahmedmshaker",
     stackoverflow: "https://stackoverflow.com/users/3972906",
-    stackoverflowDisplay: "stackoverflow.com/users/3972906",
-    kibAppStoreDeveloper:
-      "https://apps.apple.com/kw/developer/kuwait-international-bank/id409763762",
-    kibPlayStoreDeveloper:
-      "https://play.google.com/store/apps/developer?id=Kuwait+International+Bank+K.S.C",
-    itgPlayStoreDeveloper:
-      "https://play.google.com/store/apps/developer?id=Integrated+Technology+Group",
   },
   education: {
     degree: "B.Sc. in Computer Science & Information Technology",
@@ -159,510 +29,359 @@ export const EXECUTIVE_PROFILE = {
     location: "Cairo, Egypt",
     period: "2012 – 2016",
   },
-  languages: [
-    { language: "Arabic", proficiency: "Native / Bilingual Proficiency" },
-    { language: "English", proficiency: "Professional Working Proficiency" },
+};
+
+/* ------------------------------------------------------------------ Section headers */
+
+export interface SectionCopy {
+  eyebrow: string;
+  /** *Asterisks* mark the emphasised words. */
+  title: string;
+  /** One sentence, 18 words at most. */
+  subtitle: string;
+}
+
+export const SECTION_COPY = {
+  factories: {
+    eyebrow: "Digital Factories",
+    title: "Two regulated banks, two factories *built from zero.*",
+    subtitle:
+      "Warba Bank’s Al-Wateen, then KIB: the same operating blueprint, scaled from one chapter to eight product lines.",
+  },
+  blueprint: {
+    eyebrow: "Operating blueprint",
+    title: "How the factory *runs.*",
+    subtitle: "Select a node to see the rule it enforces.",
+  },
+  ecosystems: {
+    eyebrow: "Ecosystems",
+    title: "Eight flagship platforms, *one architecture.*",
+    subtitle: "Regulated retail, corporate, PropTech, wealth, BNPL and BaaS products, in production on shared rails.",
+  },
+  stack: {
+    eyebrow: "Reference architecture",
+    title: "Fast edge, *steady core.*",
+    subtitle: "Four layers let product squads move fast while the regulated core changes deliberately.",
+  },
+  trackRecord: {
+    eyebrow: "Track Record",
+    title: "Ten years, *five mandates.*",
+    subtitle: "From platform engineer in Cairo to executive ownership of a bank’s digital technology function.",
+  },
+  writing: {
+    eyebrow: "Writing",
+    title: "The reasoning, *in long form.*",
+    subtitle: "Two essay series and standalone articles on digital transformation and governed AI, published on the blog.",
+  },
+  contact: {
+    eyebrow: "Contact",
+    title: "Initiate an *executive conversation.*",
+    subtitle:
+      "Open to boards, CEOs and executive-search partners on technology mandates, Digital Factories and banking transformation.",
+  },
+} satisfies Record<string, SectionCopy>;
+
+/* ------------------------------------------------------------------ 01 Overview */
+
+export const OVERVIEW = {
+  role: "Executive Manager – Head of Digital Technology",
+  institution: "Kuwait International Bank (KIB)",
+  /** *Asterisks* mark the emphasised words. */
+  positioning: "Regulated-banking *Digital Factory* architect.",
+  /** The opening statement, one line per row. */
+  headline: ["*Digital Factory*", "architect."],
+  lede: "Executive Manager – Head of Digital Technology at Kuwait International Bank.",
+  /** Two sentences at most. */
+  thesis: [
+    "I build regulated banking Digital Factories from zero and ship multi-line revenue ecosystems through them.",
+    "The bank keeps sovereign ownership of its core digital IP, with no vendor lock-in.",
   ],
 };
 
-export const EXECUTIVE_METRICS: ExecutiveMetric[] = [
-  {
-    id: "years",
-    value: "10+ Yrs",
-    label: "Banking & Enterprise Technology Leadership",
-    sublabel: "2016 – Present · Full-lifecycle platforms across Kuwait, Jordan, Egypt & Africa",
-    verificationNote: "Verified from career history (Oct 2016 – Present)",
-  },
+export interface ProofMetric {
+  id: string;
+  value: string;
+  label: string;
+  detail: string;
+}
+
+export const PROOF_METRICS: ProofMetric[] = [
   {
     id: "factories",
-    value: "02",
-    label: "Banking Digital Factories Built from Scratch",
-    sublabel: "Kuwait International Bank (KIB) & Warba Bank (“Al-Wateen”)",
-    verificationNote: "Foundational strategic, architectural & engineering leadership",
+    value: "2",
+    label: "Regulated banking Digital Factories built from zero",
+    detail: "Warba Al-Wateen & KIB",
   },
   {
-    id: "products-shipped",
+    id: "lines",
+    value: "8+",
+    label: "Concurrent retail, corporate, PropTech, wealth & BNPL lines",
+    detail: "KIB Digital Factory",
+  },
+  {
+    id: "platforms",
     value: "16+",
-    label: "Flagship Banking & Enterprise Platforms",
-    sublabel: "KIB (8 lines), Warba Bank (3), UBA Africa, ITG Solutions (EduWave, MedX, Great Tafsirs, Al-Zakah) & Advicenode",
-    verificationNote: "Publicly verifiable on Apple App Store & Google Play Store",
+    label: "Production banking, BaaS & enterprise platforms delivered",
+    detail: "Live on the App Store & Google Play",
   },
   {
-    id: "domains",
-    value: "3 Pillars",
-    label: "End-to-End Engineering Ownership",
-    sublabel: "Mobile (Android · iOS · Flutter) • Backend (NestJS · Java) • DevOps (K8s · Argo CD)",
-    verificationNote: "Unified architecture standards, CI/CD pipelines & release governance",
+    id: "lock-in",
+    value: "0",
+    label: "Core digital IP vendor lock-in",
+    detail: "Architecture, pipelines & code owned in-house",
   },
 ];
 
-export const DIGITAL_FACTORIES: DigitalFactoryCaseStudy[] = [
-  {
-    id: "kib",
-    institution: "Kuwait International Bank (KIB)",
-    factoryName: "KIB Digital Factory & Multi-Platform Ecosystem",
-    role: "Head of Digital Technology",
-    period: "Jun 2022 – Present",
-    location: "Kuwait City, Kuwait",
-    accentColor: "emerald",
-    badgeText: "Factory 02 · Enterprise-Scale Multi-Product Command",
-    executiveSummary:
-      "Established and scaled KIB’s internal Digital Factory from the ground up, transitioning the bank into a multi-platform digital powerhouse capable of building, shipping, and governing retail, corporate, wealth, real estate, marketplace, and embedded-finance (BaaS) products in-house.",
-    strategicContext:
-      "To compete at the forefront of Islamic digital banking in the GCC, KIB needed more than isolated app releases—it required an institutionalized Digital Factory with unified technical governance, multi-year technology roadmaps, reusable microservice foundations, and synchronized cross-platform squads.",
-    architecturalMandate:
-      "Own the bank's digital technology function across Mobile (Native Android, Native iOS, Flutter), Web, and Backend Microservices (NestJS, Java EE, Kafka, RabbitMQ), while instituting enterprise release governance and Kubernetes/Argo CD delivery pipelines.",
-    myDirectContribution: [
-      "Defined the Digital Factory’s multi-year technology roadmap, target technology stacks, and enterprise architectural standards from scratch.",
-      "Lead the bank's digital technology function, holding executive ownership of mobile, web, and backend delivery across both retail and corporate banking lines.",
-      "Direct cross-platform engineering squads delivering 8 flagship ecosystems: KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, Remittance (WAGE), BuyNow by KIB, Backoffice portals, and BIN Sponsorship (BaaS).",
-      "Established strict engineering practices (SOLID, Domain-Driven Design, TDD, OWASP security patterns) and release governance across native (Kotlin/Swift) and Flutter codebases.",
-      "Aligned cloud-native DevOps capabilities using Kubernetes, Argo CD, Jenkins, and event-driven microservices to support high-velocity, audit-compliant banking releases.",
-    ],
-    organizationScope:
-      "Products are delivered by specialized cross-functional engineering squads (Android, iOS, Flutter, Web, Backend, QA, DevOps) operating under my architectural standards, release governance, and executive technology leadership.",
-    technologyFoundation: {
-      mobileAndWeb: [
-        "Android Native (Kotlin, Hilt, Dagger)",
-        "iOS Native (Swift)",
-        "Flutter (Cross-Platform Mobile & Web)",
-        "TypeScript / Modern Web Portals",
-      ],
-      backendAndData: [
-        "NestJS & Node.js Microservices",
-        "Java EE Enterprise Services",
-        "Apache Kafka & RabbitMQ Event Streaming",
-        "REST & SOAP Core Banking Integrations",
-        "MongoDB & Relational Databases",
-      ],
-      devopsAndGovernance: [
-        "Kubernetes Container Orchestration",
-        "Argo CD GitOps Continuous Delivery",
-        "Jenkins CI/CD Automation",
-        "OWASP Security & Release Governance",
-        "Domain-Driven Design (DDD) & TDD",
-      ],
-    },
-    pillars: [
-      {
-        title: "01. Strategic Roadmap & Stack Standardization",
-        subtitle: "Executive Technology Direction",
-        description:
-          "Selected and standardized a hybrid client strategy (Native Kotlin/Swift where deep OS integration is paramount, and Flutter for rapid cross-platform mobile and web delivery) backed by NestJS and Java microservices.",
-        outcomes: [
-          "Eliminated fragmented vendor silos across retail and corporate channels",
-          "Enabled shared architectural patterns across 8+ distinct product lines",
-        ],
-      },
-      {
-        title: "02. Multi-Vertical Product Factory Scaling",
-        subtitle: "Simultaneous Delivery Across 8 Banking Verticals",
-        description:
-          "Structured engineering teams to deliver parallel roadmaps spanning core retail banking, corporate treasury approvals, PropTech (Aqari), WealthTech (Invest), BNPL (BuyNow), and Financial Inclusion (WAGE).",
-        outcomes: [
-          "Published a comprehensive suite of verified production apps on App Store & Google Play",
-          "Expanded beyond traditional banking into non-bank customer acquisition (BuyNow & Aqari)",
-        ],
-      },
-      {
-        title: "03. Embedded Finance & BIN Sponsorship Infrastructure",
-        subtitle: "Banking-as-a-Service (BaaS) Enablement",
-        description:
-          "Guided the digital technology delivery supporting KIB’s BIN Sponsorship and BaaS platform—enabling external fintechs and exchange partners to issue custom multi-currency digital payment cards.",
-        outcomes: [
-          "Supported KIB's milestone as the first bank in Kuwait to achieve Visa Ready for Fintech Enablement certification",
-          "Extended core banking capabilities into programmable partner ecosystems",
-        ],
-      },
-      {
-        title: "04. Enterprise Governance & GitOps Automation",
-        subtitle: "Zero-Compromise Reliability & Security",
-        description:
-          "Instituted rigorous code quality gates, OWASP compliance, Git branching discipline, and automated deployment pipelines via Jenkins, Kubernetes, and Argo CD.",
-        outcomes: [
-          "Predictable, auditable release cadences across Android, iOS, and Web",
-          "Resilient microservice topologies utilizing Kafka and RabbitMQ",
-        ],
-      },
-    ],
-    keyProductsDelivered: [
-      {
-        name: "KIB Mobile (Retail)",
-        category: "Core Retail Banking",
-        summary: "Next-gen retail banking app with WAMD instant payments, accounts, cards & financing.",
-      },
-      {
-        name: "KIB Corporate",
-        category: "Commercial Banking",
-        summary: "Executive corporate banking suite with multi-tier transaction approvals and cash visibility.",
-      },
-      {
-        name: "KIB Aqari",
-        category: "PropTech & Real Estate",
-        summary: "Automated rent collection, property management, and QR-verified real estate appraisals.",
-      },
-      {
-        name: "KIB Invest",
-        category: "Shariah WealthTech",
-        summary: "100% digital investment onboarding (PACI/e-signature) and Shariah fund portfolio management.",
-      },
-      {
-        name: "BuyNow by KIB",
-        category: "BNPL & Marketplace",
-        summary: "Kuwait's first bank-led digital marketplace offering 0% profit Islamic financing.",
-      },
-      {
-        name: "Remittance & WAGE by KIB",
-        category: "Financial Inclusion",
-        summary: "Accessible digital account opening, salary management, and international remittance.",
-      },
-      {
-        name: "BIN Sponsorship & BaaS",
-        category: "Embedded Finance",
-        summary: "Card-as-a-Service & BIN sponsorship infrastructure for fintech and exchange partners.",
-      },
-      {
-        name: "Backoffice Suite",
-        category: "Internal Operations",
-        summary: "Unified administrative portals and operational engines governing digital channels.",
-      },
-    ],
-  },
+/* ------------------------------------------------------------------ The home page as a film */
+
+export const STORY = {
+  /** The opening narration: one sentence per screen, 12 words at most. *Asterisks* mark the accent words. */
+  premise: [
+    "Banks in the region relied on vendors for their digital channels.",
+    "Slow releases. Inconsistent apps. *Someone else’s IP.*",
+    "The alternative is a *Digital Factory* the bank owns.",
+    "I have helped build two. *From zero.*",
+  ],
+  /** The horizontal engineering chapters every squad draws on (from the blueprint's chapter rule). */
+  chapters: ["Android", "iOS", "Flutter", "Web", "Backend", "DevOps"],
+  /** One line under the archive's title in the platform gallery. */
+  archiveLine: "From remittance and loyalty to national EdTech, healthcare and advisory automation.",
+};
+
+/** The platform that pictures each factory business line; null for internal tools with no public app. */
+export const LINE_PLATFORM: Record<string, string | null> = {
+  "Retail mobile banking": "warba-mobile",
+  "Lifestyle & loyalty · Fayez": "warba-fayez",
+  "Youth savings · Hassala Kids": "warba-hassala-kids",
+  Retail: "kib-mobile",
+  Corporate: "kib-corporate",
+  "PropTech · Aqari": "kib-aqari",
+  "Wealth · Invest": "kib-invest",
+  "BNPL · BuyNow": "kib-buynow",
+  "Remittance · WAGE": "kib-remittance-wage",
+  "BaaS · BIN Sponsorship": "kib-bin-sponsorship",
+  Backoffice: null,
+};
+
+/* ------------------------------------------------------------------ 02 Digital Factories */
+
+export interface FactoryProof {
+  id: "warba" | "kib";
+  numeral: "I" | "II";
+  institution: string;
+  factoryName: string;
+  role: string;
+  period: string;
+  location: string;
+  mandate: string;
+  linesUnlocked: string[];
+}
+
+/** Chronological: Factory I (Warba Bank) → Factory II (KIB). */
+export const FACTORIES: FactoryProof[] = [
   {
     id: "warba",
+    numeral: "I",
     institution: "Warba Bank",
-    factoryName: "“Al-Wateen” Digital Factory — Foundational Mobile & Product Engineering",
+    factoryName: "Al-Wateen Digital Factory",
     role: "Android Chapter Lead",
     period: "Mar 2019 – Jun 2022",
     location: "Kuwait City, Kuwait",
-    accentColor: "amber",
-    badgeText: "Factory 01 · Pioneering Islamic Banking Digital Factory",
-    executiveSummary:
-      "Served as one of the core builders who established Warba Bank’s pioneering “Al-Wateen” Digital Factory from scratch—architecting and building the flagship Warba Bank mobile app from the ground up, establishing CI/CD and release engineering for the mobile chapter, and delivering innovative lifestyle and youth banking products.",
-    strategicContext:
-      "Warba Bank set out to establish Kuwait’s first internal Islamic banking Digital Factory ('Al-Wateen') to break away from slow traditional banking release cycles and pioneer youth, lifestyle, and gamified financial products.",
-    architecturalMandate:
-      "Build and manage the flagship Warba Bank mobile application from scratch, lead the Android Engineering Chapter, automate CI/CD pipelines in Jenkins, establish Git branching and release governance, and expand into cross-platform Flutter mobile & web products.",
-    myDirectContribution: [
-      "Architected, built, and managed the flagship Warba Bank mobile banking application from scratch—owning its technical foundation, feature delivery, and production support.",
-      "Established the Mobile Chapter’s engineering backbone: created automated CI/CD pipelines in Jenkins and defined Git branching and release-management strategies.",
-      "Developed Fayez (Warba Bank's gamified fitness, step-tracking, sports prediction, and loyalty rewards app) and built Fayez Admin using Flutter Web.",
-      "Delivered Hassala Kids end-to-end—a dedicated digital savings and financial literacy application designed for children.",
-      "Instituted clean architecture, dependency injection (Dagger/Hilt), and modular Kotlin/Java practices across the chapter.",
-    ],
-    organizationScope:
-      "Combined direct hands-on greenfield architecture and development with Chapter Leadership—mentoring mobile engineers, governing pull requests and releases, and collaborating across Al-Wateen Digital Factory squads.",
-    technologyFoundation: {
-      mobileAndWeb: [
-        "Android Native (Kotlin & Java)",
-        "Flutter Mobile & Flutter Web",
-        "Dagger & Hilt Dependency Injection",
-        "Apple Health / Google Fit Integrations (Fayez)",
-      ],
-      backendAndData: [
-        "REST & SOAP Banking APIs",
-        "JSON & XML (SAX, DOM) Processing",
-        "Secure Local Storage & Biometric Auth",
-      ],
-      devopsAndGovernance: [
-        "Jenkins CI/CD Pipelines",
-        "Git Flow & Release-Management Governance",
-        "SOLID Principles & Clean Architecture",
-        "Automated Build & Distribution Workflows",
-      ],
-    },
-    pillars: [
-      {
-        title: "01. Greenfield Core Mobile Banking Architecture",
-        subtitle: "Built from Scratch to Production Scale",
-        description:
-          "Designed and engineered the Warba Bank mobile application from a blank slate, creating a modular, maintainable architecture capable of supporting rapid feature expansion across retail accounts, cards, financing, and Pocket loyalty.",
-        outcomes: [
-          "Successfully launched and scaled Warba Bank's primary digital customer touchpoint",
-          "Sustained high stability through disciplined architectural boundaries and ongoing support",
-        ],
-      },
-      {
-        title: "02. Mobile Chapter CI/CD & Release Engineering",
-        subtitle: "From Manual Builds to Automated Pipelines",
-        description:
-          "Built Jenkins CI/CD pipelines from the ground up and codified Git branching and release-management strategies for the mobile engineering chapter.",
-        outcomes: [
-          "Standardized how every mobile engineer branched, reviewed, tested, and shipped code",
-          "Eliminated release bottlenecks across concurrent digital factory squads",
-        ],
-      },
-      {
-        title: "03. Gamified Lifestyle & Loyalty Ecosystem (Fayez)",
-        subtitle: "Beyond Traditional Banking Transactions",
-        description:
-          "Developed the Fayez mobile app and Fayez Admin (Flutter Web), turning daily health habits (walking/running steps) and sports predictions into redeemable cash prizes and Warba loyalty points.",
-        outcomes: [
-          "Pioneered early Flutter Web adoption in production for banking administration",
-          "Created a high-engagement daily lifestyle touchpoint for both customers and non-customers",
-        ],
-      },
-      {
-        title: "04. End-to-End Youth Financial Literacy (Hassala Kids)",
-        subtitle: "Full-Lifecycle Product Delivery",
-        description:
-          "Owned the end-to-end delivery of Hassala Kids, translating the traditional savings 'money box' into an engaging digital savings experience for children and families.",
-        outcomes: [
-          "Delivered complete product lifecycle from architecture to store release",
-          "Strengthened Warba Bank's family and youth banking proposition",
-        ],
-      },
-    ],
-    keyProductsDelivered: [
-      {
-        name: "Warba Bank Mobile App",
-        category: "Flagship Retail Banking",
-        summary: "Core retail banking app built and managed from scratch—architecture, delivery & support.",
-      },
-      {
-        name: "Fayez & Fayez Admin",
-        category: "Lifestyle, Fitness & Loyalty + Flutter Web",
-        summary: "Gamified fitness & challenges app integrated with loyalty rewards, plus Flutter Web admin portal.",
-      },
-      {
-        name: "Hassala Kids",
-        category: "Youth Digital Savings",
-        summary: "End-to-end digital savings ('money box') application teaching financial literacy to children.",
-      },
-      {
-        name: "Mobile Chapter CI/CD Spine",
-        category: "DevOps & Release Governance",
-        summary: "Jenkins automation pipelines, Git branching models, and chapter-wide engineering standards.",
-      },
+    mandate: "Build the flagship mobile bank in-house and institute the mobile chapter’s release governance.",
+    linesUnlocked: ["Retail mobile banking", "Lifestyle & loyalty · Fayez", "Youth savings · Hassala Kids"],
+  },
+  {
+    id: "kib",
+    numeral: "II",
+    institution: "Kuwait International Bank (KIB)",
+    factoryName: "KIB Digital Factory",
+    role: "Executive Manager – Head of Digital Technology",
+    period: "Jun 2022 – Present",
+    location: "Kuwait City, Kuwait",
+    mandate:
+      "Own the bank’s digital technology function across mobile, web and backend, under one release-governance model.",
+    linesUnlocked: [
+      "Retail",
+      "Corporate",
+      "PropTech · Aqari",
+      "Wealth · Invest",
+      "BNPL · BuyNow",
+      "Remittance · WAGE",
+      "BaaS · BIN Sponsorship",
+      "Backoffice",
     ],
   },
 ];
 
-export const SELECTED_PRODUCTS: BankingProduct[] = [
-  // === KIB DIGITAL FACTORY ===
+export interface BlueprintNode {
+  id: string;
+  code: string;
+  title: string;
+  /** The single architectural rule this node enforces. */
+  rule: string;
+  /** Three bullets at most, 12 words each at most. */
+  bullets: string[];
+}
+
+export const FACTORY_BLUEPRINT: BlueprintNode[] = [
+  {
+    id: "mandate",
+    code: "01",
+    title: "Boardroom Mandate & BaaS Revenue",
+    rule: "Technology investment is justified by new revenue lines and customer segments, not by digitised forms.",
+    bullets: [
+      "BuyNow and Aqari acquire customers who hold no KIB account.",
+      "BIN Sponsorship turns the banking licence into partner card-issuing rails.",
+      "First bank in Kuwait certified Visa Ready for Fintech Enablement.",
+    ],
+  },
+  {
+    id: "squads",
+    code: "02",
+    title: "Autonomous Vertical Squads",
+    rule: "Each product line owns its roadmap and ships on its own cadence, inside shared architectural standards.",
+    bullets: [
+      "Dedicated product, design, mobile, web and backend engineers per squad.",
+      "Eight verticals in parallel: retail, corporate, Aqari, Invest, BuyNow, WAGE, BaaS, backoffice.",
+      "Core intellectual property stays in-house, with zero vendor lock-in.",
+    ],
+  },
+  {
+    id: "chapters",
+    code: "03",
+    title: "Horizontal Engineering Chapters",
+    rule: "Chapters own how software is built; squads own what gets built.",
+    bullets: [
+      "Android, iOS, Flutter, web, backend and DevOps chapters set the standards.",
+      "Chapter leads enforce code quality, SOLID architecture and shared libraries.",
+      "One hiring bar and one review gate across every squad.",
+    ],
+  },
+  {
+    id: "governance",
+    code: "04",
+    title: "Automated Release & Risk Governance",
+    rule: "Compliance runs in the pipeline, so every release is auditable by default.",
+    bullets: [
+      "OWASP mobile and API checks verified on every pull request.",
+      "Declarative GitOps promotion through Kubernetes and Argo CD.",
+      "Automated build, test and signing for iOS, Android and microservices.",
+    ],
+  },
+];
+
+/* ------------------------------------------------------------------ 03 Ecosystems */
+
+export interface PlatformRecord {
+  id: string;
+  /** Canonical public name, as listed on the stores and in the page's structured data. */
+  name: string;
+  category: string;
+  tagline: string;
+  platforms: string[];
+  screenshots?: string[];
+  iconPath?: string;
+  /** Public store or site listing, where one exists. */
+  listing?: { store: string; href: string };
+}
+
+/**
+ * Every public listing, one entry per store app. Feeds the JSON-LD ItemList in app/layout.tsx and
+ * supplies icons and store links to the cards below. EduWave's three editions are separate store
+ * apps here but count as one platform on the page (8 flagships + 8 earlier platforms = 16).
+ */
+export const PLATFORM_REGISTRY: PlatformRecord[] = [
   {
     id: "kib-mobile",
     name: "KIB Mobile (KIB Retail)",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Core Retail Mobile Banking",
     tagline:
       "Reimagined flagship retail banking experience for everyday accounts, WAMD instant payments, cards, and Islamic financing.",
-    iconPath: "/assets/apps/icons/kib-mobile.jpg",
+    platforms: ["Android", "iOS", "Flutter", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-mobile-1.jpg",
       "/assets/apps/screenshots/kib-mobile-2.jpg",
     ],
-    platforms: ["Android", "iOS", "Flutter", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Serves as KIB’s primary retail digital banking flagship, empowering individual customers to manage accounts, execute local and international transfers (including WAMD instant peer-to-peer payments), manage credit/prepaid cards, settle financing installments, and track deposits effortlessly.",
-    problemAddressed:
-      "Replaced fragmented legacy banking workflows with a unified, intuitive digital experience that minimizes branch visits and supports real-time payment rails and personalized self-service.",
-    architectureAndTech: [
-      "Cross-platform & Native Mobile Architecture",
-      "NestJS & Java EE Backend Microservices",
-      "Apache Kafka & RabbitMQ Event Processing",
-      "Kubernetes & Argo CD GitOps Deployment",
-      "OWASP Mobile Security & Biometric Authentication",
-    ],
-    myRoleAndContribution:
-      "As Head of Digital Technology, I own the end-to-end mobile, web, and backend delivery function, define the enterprise architecture standards and release governance, and direct the cross-platform engineering teams building and evolving KIB Retail.",
-    organizationalDistinction:
-      "Delivered by KIB Digital Factory cross-functional engineering squads under my executive technology direction, architectural standards, and release governance.",
-    verifiableImpact:
-      "Live flagship retail banking application serving KIB’s retail customer base across Kuwait on the Apple App Store and Google Play Store.",
-    appStoreUrl: "https://apps.apple.com/kw/app/kib-mobile/id409840829",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=eu.eleader.mobilebanking.kib",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-mobile.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/kib-mobile/id409840829" },
   },
   {
     id: "kib-corporate",
     name: "KIB Corporate",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Commercial & Corporate Treasury Banking",
     tagline:
       "Enterprise-grade mobile and web corporate banking with multi-tier approval workflows and real-time commercial liquidity control.",
-    iconPath: "/assets/apps/icons/kib-corporate.jpg",
+    platforms: ["Android", "iOS", "Web", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-corporate-1.png",
       "/assets/apps/screenshots/kib-corporate-2.png",
     ],
-    platforms: ["Android", "iOS", "Web", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Provides corporate executives, CFOs, and business owners with secure mobile and web command over commercial accounts, bulk and single transaction approvals, corporate credit cards, and beneficiary management.",
-    problemAddressed:
-      "Corporate decision-makers historically depended on desktop-only portals to authorize time-sensitive payroll, trade, and treasury transactions. KIB Corporate brings full maker-checker approval governance and granular cash visibility to mobile and web.",
-    architectureAndTech: [
-      "Multi-Tier Role-Based Access Control (RBAC)",
-      "Maker-Checker Approval Workflow Engine",
-      "Android, iOS & Responsive Web Delivery",
-      "REST/SOAP Core Corporate Banking Integration",
-      "High-Assurance Security & Audit Logging",
-    ],
-    myRoleAndContribution:
-      "Direct the cross-platform mobile, web, and backend engineering squads delivering KIB Corporate; establish architectural patterns for secure corporate authorization flows and release governance.",
-    organizationalDistinction:
-      "Built and maintained by KIB's corporate digital squads operating within the Digital Factory governance framework I lead.",
-    verifiableImpact:
-      "Publicly available on iOS App Store, Google Play Store, and KIB Corporate Web, modernizing commercial banking operations for KIB business clients.",
-    appStoreUrl: "https://apps.apple.com/kw/app/kib-corporate/id6456405889",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kib.corporate",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-corporate.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/kib-corporate/id6456405889" },
   },
   {
     id: "kib-aqari",
     name: "KIB Aqari",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "PropTech & Real Estate Platform",
     tagline:
       "Kuwait’s one-stop digital real estate ecosystem for automated rent collection, property management, and QR-verified official appraisals.",
-    iconPath: "/assets/apps/icons/kib-aqari.jpg",
+    platforms: ["Android", "iOS", "Web", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-aqari-1.jpg",
       "/assets/apps/screenshots/kib-aqari-2.jpg",
     ],
-    platforms: ["Android", "iOS", "Web", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Digitizes KIB’s deep heritage in real estate advisory and property management—allowing property owners and investors to automate monthly rent collection, track delinquent payments, request certified property appraisals, and verify appraisal authenticity via QR code.",
-    problemAddressed:
-      "Real estate management and official property valuation in Kuwait traditionally involved manual rent tracking and paper-based appraisal certificates. KIB Aqari unifies property operations and certified bank valuations in a single digital platform.",
-    architectureAndTech: [
-      "Automated Payment Link & Rent Scheduling Engine",
-      "QR-Code Cryptographic Appraisal Verification",
-      "Cross-Platform Mobile & Web Portals",
-      "Microservices Backend (NestJS / Java)",
-    ],
-    myRoleAndContribution:
-      "Own the technology delivery and architectural governance for KIB Aqari across mobile, web, and backend teams as Head of Digital Technology.",
-    organizationalDistinction:
-      "Engineered by KIB Digital Factory squads in collaboration with KIB's Real Estate Department under my technical leadership.",
-    verifiableImpact:
-      "Established a differentiated PropTech vertical for KIB on the App Store and Google Play Store, serving both property investors and appraisal clients.",
-    appStoreUrl: "https://apps.apple.com/kw/app/kib-aqari/id6447563934",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kib.aqari",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-aqari.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/kib-aqari/id6447563934" },
   },
   {
     id: "kib-invest",
     name: "KIB Invest",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Shariah-Compliant WealthTech",
     tagline:
       "100% digital investment onboarding and Shariah-compliant fund portfolio management.",
-    iconPath: "/assets/apps/icons/kib-invest.jpg",
+    platforms: ["Android", "iOS", "Flutter", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-invest-1.jpg",
       "/assets/apps/screenshots/kib-invest-2.jpg",
     ],
-    platforms: ["Android", "iOS", "Flutter", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Enables retail and affluent investors to open investment accounts completely digitally (integrating PACI Kuwait Mobile ID verification and digital signatures), subscribe to and redeem Shariah-compliant money market and equity funds, and monitor NAV trends in real time.",
-    problemAddressed:
-      "Democratized access to Shariah-compliant wealth management by eliminating paper-heavy brokerage onboarding and in-person branch visits, allowing funding from KIB or any local bank account.",
-    architectureAndTech: [
-      "PACI Digital Identity & E-Signature Onboarding",
-      "Real-Time Portfolio & NAV Analytics",
-      "Cross-Platform Mobile Architecture",
-      "Secure Wealth Management API Integration",
-    ],
-    myRoleAndContribution:
-      "Direct the engineering teams delivering KIB Invest across Android, iOS, and backend integration layers, ensuring security, regulatory compliance, and architectural consistency.",
-    organizationalDistinction:
-      "Delivered through the KIB Digital Factory in partnership with Al Dawli Invest (KIB Invest) under my digital technology leadership.",
-    verifiableImpact:
-      "Launched as a standalone digital wealth companion on the Apple App Store and Google Play Store (com.kib.invest).",
-    appStoreUrl: "https://apps.apple.com/kw/app/kib-invest/id6745544920",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kib.invest",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-invest.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/kib-invest/id6745544920" },
   },
   {
     id: "kib-buynow",
     name: "BuyNow by KIB",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Bank-Led Marketplace & 0% Profit Financing",
     tagline:
       "Kuwait’s first bank-led digital marketplace and postpay financing platform—accessible without salary transfer.",
-    iconPath: "/assets/apps/icons/kib-buynow.jpg",
+    platforms: ["Android", "iOS", "Web", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-buynow-1.jpg",
       "/assets/apps/screenshots/kib-buynow-2.jpg",
     ],
-    platforms: ["Android", "iOS", "Web", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Combines an e-commerce partner marketplace with instant, Shariah-compliant 0% profit consumer financing across medical, education, electronics, automotive, and home categories—open to both KIB and non-KIB customers without requiring a salary transfer.",
-    problemAddressed:
-      "Traditional consumer financing required lengthy paperwork and salary transfers. BuyNow by KIB embeds digital Islamic financing directly into merchant discovery and checkout.",
-    architectureAndTech: [
-      "Digital Credit Decisioning & Onboarding Workflows",
-      "Multi-Merchant Marketplace & Order Orchestration",
-      "Cross-Platform Mobile & Partner Portals",
-      "Event-Driven Microservices (NestJS, Kafka/RabbitMQ)",
-    ],
-    myRoleAndContribution:
-      "Lead the digital engineering teams responsible for BuyNow by KIB across mobile, web, and backend services, overseeing architecture, scalability, and release governance.",
-    organizationalDistinction:
-      "Built by KIB Digital Factory engineering squads as a flagship embedded-financing initiative under my technology leadership.",
-    verifiableImpact:
-      "Recognized as Kuwait's first bank-led digital marketplace platform, live on the App Store and Google Play (com.kib.postpay).",
-    appStoreUrl: "https://apps.apple.com/kw/app/buynow-by-kib/id6472891180",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.kib.postpay",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-buynow.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/buynow-by-kib/id6472891180" },
   },
   {
     id: "kib-remittance-wage",
     name: "KIB Remittance & WAGE by KIB",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Remittance & Financial Inclusion",
     tagline:
       "Streamlined digital account onboarding, wage management, and cross-border remittance.",
-    iconPath: "/assets/apps/icons/kib-wage.jpg",
+    platforms: ["Android", "iOS", "Flutter", "Microservices"],
     screenshots: [
       "/assets/apps/screenshots/kib-wage-1.jpg",
       "/assets/apps/screenshots/kib-wage-2.jpg",
     ],
-    platforms: ["Android", "iOS", "Flutter", "Microservices"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Provides accessible mobile banking, fast digital onboarding, everyday account management, and international remittance services tailored for underserved segments and wage earners.",
-    problemAddressed:
-      "Eliminates physical queues at branches and exchange houses by delivering multilingual, lightweight mobile onboarding and fast cross-border transfer capabilities.",
-    architectureAndTech: [
-      "Flutter Cross-Platform Mobile Architecture",
-      "International Remittance Rail Integrations",
-      "Digital KYC & Identity Verification",
-      "Microservices Backend & CI/CD Delivery",
-    ],
-    myRoleAndContribution:
-      "Direct the cross-platform and backend engineering teams delivering KIB’s Remittance and WAGE digital products under unified factory governance.",
-    organizationalDistinction:
-      "Delivered by KIB Digital Factory squads under my direction as Head of Digital Technology.",
-    verifiableImpact:
-      "Live on the Apple App Store and Google Play (com.kib.kiblite.kib_lite), expanding KIB's digital footprint into inclusive banking and remittance.",
-    appStoreUrl: "https://apps.apple.com/kw/app/wage-by-kib/id6608959158",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.kib.kiblite.kib_lite",
-    featured: false,
+    iconPath: "/assets/apps/icons/kib-wage.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/wage-by-kib/id6608959158" },
   },
   {
     id: "kib-bin-sponsorship",
     name: "KIB BIN Sponsorship & Multi-Tenant BaaS (Al Muzaini Travel)",
-    institution: "Kuwait International Bank (KIB)",
-    factoryTag: "KIB Digital Factory",
     category: "Banking-as-a-Service (BaaS) & Multi-Tenant Card Issuing",
     tagline:
       "Multi-tenant Visa-Ready BIN Sponsorship platform powering white-label multi-currency prepaid card apps (such as Al Muzaini Travel) and enterprise Backoffice portals.",
-    iconPath: "/assets/apps/icons/kib-muzaini.png",
+    platforms: ["BaaS API", "Microservices", "Android", "iOS", "Web"],
     screenshots: [
       "/assets/apps/screenshots/kib-muzaini-1.png",
       "/assets/apps/screenshots/kib-muzaini-2.png",
@@ -670,966 +389,450 @@ export const SELECTED_PRODUCTS: BankingProduct[] = [
       "/assets/apps/screenshots/kib-muzaini-4.png",
       "/assets/apps/screenshots/kib-muzaini-5.png",
     ],
-    platforms: ["BaaS API", "Microservices", "Android", "iOS", "Web"],
-    attributionBadge: "Executive Ownership & Direction",
-    purposeAndExperience:
-      "Enables external fintechs and major exchange institutions—most notably Al Muzaini Exchange ('Muzaini Travel')—to launch full-featured mobile applications with seamless biometric onboarding, instant virtual & physical Visa prepaid card issuance, multi-currency wallets (KWD, USD, EUR, BHD, GBP, CAD, INR, JOD, etc.), live FX rate tracking, instant currency conversion, Click to Pay, and full card controls, backed by KIB’s banking license and Backoffice portals.",
-    problemAddressed:
-      "Exchange houses and fintechs in Kuwait needed regulated, multi-tenant card-issuing, FX wallet management, and settlement infrastructure without building a core bank from scratch, while KIB operations needed unified backoffice governance across all partner tenants.",
-    architectureAndTech: [
-      "Multi-Tenant BaaS & White-Label Mobile Architecture",
-      "NestJS & Java EE Microservices + Kafka / RabbitMQ",
-      "Instant Virtual Visa Card Issuance & Click to Pay",
-      "Multi-Currency Wallet & Real-Time FX Conversion Engine",
-      "Kubernetes & Argo CD Cloud-Native Infrastructure",
-    ],
-    myRoleAndContribution:
-      "Own the digital technology delivery for KIB's BIN Sponsorship multi-tenant applications (including the Al Muzaini Travel tenant) and Backoffice platforms, defining microservice architecture standards, API security (OWASP), and release governance.",
-    organizationalDistinction:
-      "Delivered by KIB’s Digital Factory backend, web, and mobile engineering teams in alignment with Visa payment scheme and Central Bank of Kuwait regulatory standards.",
-    verifiableImpact:
-      "Powered KIB's milestone as the first bank in Kuwait to earn Visa Ready for Fintech Enablement certification and launched production multi-currency card tenants such as Al Muzaini Travel.",
-    featured: true,
+    iconPath: "/assets/apps/icons/kib-muzaini.png",
   },
-
-  // === WARBA BANK AL-WATEEN FACTORY ===
   {
     id: "warba-mobile",
     name: "Warba Bank Mobile Banking",
-    institution: "Warba Bank",
-    factoryTag: "Warba Al-Wateen Factory",
     category: "Flagship Retail Mobile Banking",
     tagline:
       "Architected, built, and managed Warba Bank’s core mobile banking app from scratch within the Al-Wateen Digital Factory.",
-    iconPath: "/assets/apps/icons/warba-mobile.jpg",
+    platforms: ["Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/warba-mobile-1.jpg",
       "/assets/apps/screenshots/warba-mobile-2.jpg",
     ],
-    platforms: ["Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Warba Bank’s primary retail mobile application providing personalized account dashboards, digital onboarding, financing, Al Sunbula draws, Hassala saving goals, transfer services, and Pocket loyalty management.",
-    problemAddressed:
-      "Warba Bank needed to transition to an in-house engineered, modular mobile banking platform built for rapid iteration inside its newly formed Al-Wateen Digital Factory.",
-    architectureAndTech: [
-      "Android Native (Kotlin & Java)",
-      "Dagger & Hilt Dependency Injection",
-      "SOLID & Clean Modular Architecture",
-      "Jenkins CI/CD Automation & Git Release Governance",
-    ],
-    myRoleAndContribution:
-      "Built and managed the Warba Bank mobile banking app from scratch—personally leading its Android architecture, engineering delivery, ongoing production support, Jenkins CI/CD pipelines, and Git branching/release strategies as Android Chapter Lead.",
-    organizationalDistinction:
-      "Direct hands-on architecture, code authorship, and chapter leadership for the Android platform, working alongside iOS, backend, and design peers in Warba Bank's Al-Wateen Digital Factory.",
-    verifiableImpact:
-      "Served as the foundational mobile banking platform for Warba Bank’s retail customer base during a pivotal 3+ year period of digital growth.",
-    appStoreUrl: "https://apps.apple.com/kw/app/warba-bank/id925349051",
-    featured: true,
+    iconPath: "/assets/apps/icons/warba-mobile.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/warba-bank/id925349051" },
   },
   {
     id: "warba-fayez",
     name: "Fayez & Fayez Admin",
-    institution: "Warba Bank",
-    factoryTag: "Warba Al-Wateen Factory",
     category: "Gamified Fitness, Loyalty & Flutter Web Admin",
     tagline:
       "Gamified lifestyle, step-tracking, and sports prediction ecosystem with a custom Flutter Web administration suite.",
-    iconPath: "/assets/apps/icons/warba-fayez.jpg",
+    platforms: ["Android", "iOS", "Flutter", "Web"],
     screenshots: [
       "/assets/apps/screenshots/warba-fayez-1.png",
       "/assets/apps/screenshots/warba-fayez-2.png",
     ],
-    platforms: ["Android", "iOS", "Flutter", "Web"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "A free-to-join lifestyle and loyalty application ('Everyone is a Winner') where users walk, run, track daily steps via health APIs, and predict sports and quiz challenges to win cash prizes and Warba Bank loyalty points, paired with Fayez Admin for campaign management.",
-    problemAddressed:
-      "Created a high-frequency non-transactional engagement channel that connected everyday health and sports enthusiasm directly to Warba Bank's loyalty and account ecosystem.",
-    architectureAndTech: [
-      "Mobile App Development (Android / Flutter)",
-      "Fayez Admin Built with Flutter Web",
-      "Health & Step-Tracking Sensor Integrations",
-      "Jenkins CI/CD & Automated Release Workflows",
-    ],
-    myRoleAndContribution:
-      "Personally developed the Fayez mobile application and engineered the Fayez Admin portal using Flutter Web.",
-    organizationalDistinction:
-      "Directly developed by me within Warba Bank’s Al-Wateen Digital Factory.",
-    verifiableImpact:
-      "Published on the App Store and Google Play Store as one of Kuwait’s most distinctive bank-backed lifestyle and loyalty applications.",
-    appStoreUrl: "https://apps.apple.com/kw/app/fayez/id1292165363",
-    featured: true,
+    iconPath: "/assets/apps/icons/warba-fayez.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/fayez/id1292165363" },
   },
   {
     id: "warba-hassala-kids",
     name: "Hassala Kids",
-    institution: "Warba Bank",
-    factoryTag: "Warba Al-Wateen Factory",
     category: "Youth Digital Savings & Financial Literacy",
     tagline:
       "End-to-end digital savings application designed to cultivate financial literacy for children and families.",
     platforms: ["Android", "Flutter"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Digitizes the traditional 'Hassala' (savings money box) for children, enabling young savers and parents to set savings goals, track allowances, and build lifelong financial habits inside a child-friendly banking experience.",
-    problemAddressed:
-      "Bridged the gap in youth banking by transforming passive children's savings accounts into an interactive, goal-oriented digital experience.",
-    architectureAndTech: [
-      "End-to-End Mobile Application Architecture",
-      "Child-Centric Gamified UI & Parental Controls",
-      "Clean Architecture & Automated CI/CD",
-    ],
-    myRoleAndContribution:
-      "Delivered Hassala Kids end-to-end—owning architecture, development, and release delivery within Warba Bank.",
-    organizationalDistinction:
-      "End-to-end engineering delivery led directly by me at Warba Bank.",
-    verifiableImpact:
-      "Expanded Warba Bank’s youth and family digital banking proposition out of the Al-Wateen Digital Factory.",
-    featured: false,
   },
-
-  // === ITG SOLUTIONS ECOSYSTEM ===
   {
     id: "itg-eduwave-k12",
     name: "EduWave K-12 (All Roles & Editions)",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "National & Enterprise K-12 e-Learning Platform",
     tagline:
       "Restructured and redeveloped the flagship EduWave K-12 mobile platform serving students, parents, and teachers across large-scale educational deployments.",
-    iconPath: "/assets/apps/icons/itg-eduwave-k12.jpg",
+    platforms: ["Android", "Flutter", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-eduwave-k12-1.jpg",
       "/assets/apps/screenshots/itg-eduwave-k12-2.png",
     ],
-    platforms: ["Android", "Flutter", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Comprehensive mobile Learning Management System (LMS) and Student Information System (SIS) enabling K-12 students, parents, and educators to track assignments, grades, attendance, timetables, e-learning resources, and school communications in real time.",
-    problemAddressed:
-      "Modernized the legacy K-12 mobile client by completely restructuring the codebase, redesigning the UX across student, teacher, and parent roles, and optimizing data synchronization for massive national school deployments.",
-    architectureAndTech: [
-      "Modular Kotlin & Java Architecture",
-      "Flutter Cross-Platform Components",
-      "REST & SOAP Enterprise LMS Integrations",
-      "High-Speed XML (SAX, DOM) & JSON Data Parsing",
-    ],
-    myRoleAndContribution:
-      "As Senior Mobile Developer and Acting Android Lead at ITG Solutions, I restructured and redeveloped EduWave K-12 and all associated EduWave editions—dramatically improving runtime performance, redesigning the UX, and leading the Android and Flutter teams.",
-    organizationalDistinction:
-      "Direct architectural restructuring, hands-on development, and team leadership across the Android and Flutter engineering teams at ITG Solutions.",
-    verifiableImpact:
-      "Published on Google Play (com.itgsolutions.eduwave) and Apple App Store (ID 838521887), serving ministries of education and K-12 school networks.",
-    appStoreUrl: "https://apps.apple.com/us/app/eduwave-k-12/id838521887",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.itgsolutions.eduwave",
-    featured: true,
+    iconPath: "/assets/apps/icons/itg-eduwave-k12.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/eduwave-k-12/id838521887" },
   },
   {
     id: "itg-eduwave-he",
     name: "EduWave Higher-ED",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "University & Higher Education Management Platform",
     tagline:
       "Restructured and redeveloped the EduWave Higher Education mobile application for university students, faculty, and academic administration.",
-    iconPath: "/assets/apps/icons/itg-eduwave-he.jpg",
+    platforms: ["Android", "Flutter", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-eduwave-he-1.png",
       "/assets/apps/screenshots/itg-eduwave-he-2.jpg",
     ],
-    platforms: ["Android", "Flutter", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Delivers tailored higher-education digital services including university course registration, academic transcripts, lecture schedules, coursework submission, and faculty-student collaboration.",
-    problemAddressed:
-      "Re-engineered the Higher Education mobile codebase to share high-performance, reusable architectural modules with the wider EduWave family while delivering a modernized UX tailored to university workflows.",
-    architectureAndTech: [
-      "Shared Multi-Edition EduWave Core Architecture",
-      "Reusable Kotlin & Java Modules",
-      "Enterprise SIS & LMS Backend Integration",
-      "Redesigned University Student & Faculty UX",
-    ],
-    myRoleAndContribution:
-      "Led the architectural restructuring, performance optimization, and UX redevelopment of EduWave Higher-ED while leading the Android and Flutter teams at ITG Solutions.",
-    organizationalDistinction:
-      "Hands-on architecture and engineering leadership at ITG Solutions.",
-    verifiableImpact:
-      "Published on Google Play (com.itgsolutions.eduwave_he) and Apple App Store (ID 1467754037).",
-    appStoreUrl: "https://apps.apple.com/us/app/eduwave-higher-ed/id1467754037",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.itgsolutions.eduwave_he",
-    featured: true,
+    iconPath: "/assets/apps/icons/itg-eduwave-he.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/eduwave-higher-ed/id1467754037" },
   },
   {
     id: "itg-eduwave-ams",
     name: "EduWave AMS (Assessment Management System)",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "Digital Examination & Assessment Platform",
     tagline:
       "Specialized mobile assessment, outcomes tracking, and academic evaluation edition within the EduWave ecosystem.",
-    iconPath: "/assets/apps/icons/itg-eduwave-ams.jpg",
+    platforms: ["Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-eduwave-ams-1.png",
       "/assets/apps/screenshots/itg-eduwave-ams-2.png",
     ],
-    platforms: ["Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Provides educators, academic coordinators, and learners with mobile access to continuous assessment workflows, rubric evaluations, learning outcomes analytics, and examination progress.",
-    problemAddressed:
-      "Extended the restructured EduWave mobile architecture to support specialized academic assessment and evaluation workflows with high reliability.",
-    architectureAndTech: [
-      "Modular EduWave Mobile Framework (Kotlin / Java)",
-      "Assessment & Rubric Data Synchronization",
-      "Secure Role-Based Access & Offline Resilience",
-    ],
-    myRoleAndContribution:
-      "Built and maintained the mobile architecture and shared component foundation powering EduWave AMS alongside the K-12 and Higher-ED editions.",
-    organizationalDistinction:
-      "Delivered as part of the comprehensive EduWave mobile suite overhaul at ITG Solutions.",
-    verifiableImpact:
-      "Published on Google Play (com.itgsolutions.eduwave.ams) and Apple App Store (ID 1459509452).",
-    appStoreUrl: "https://apps.apple.com/us/app/eduwave-ams/id1459509452",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.itgsolutions.eduwave.ams",
-    featured: false,
+    iconPath: "/assets/apps/icons/itg-eduwave-ams.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/eduwave-ams/id1459509452" },
   },
   {
     id: "itg-medxjordan",
     name: "MedXJordan",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "National Medical Tourism & Healthcare Platform",
     tagline:
       "Single-point digital healthcare and medical tourism ecosystem connecting international patients with Jordan’s hospitals, physicians, and medical providers.",
-    iconPath: "/assets/apps/icons/itg-medxjordan.jpg",
+    platforms: ["Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-medxjordan-1.png",
       "/assets/apps/screenshots/itg-medxjordan-2.png",
     ],
-    platforms: ["Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Facilitates B2C, B2B, and B2G medical tourism workflows—allowing international patients and institutional buyers to discover accredited hospitals and specialists in Jordan, book appointments, coordinate treatment plans, and manage medical travel.",
-    problemAddressed:
-      "Replaced fragmented medical tourism inquiries with a unified national digital healthcare gateway, requiring a complete architectural restructuring and UX overhaul to ensure reliability for patients and medical providers.",
-    architectureAndTech: [
-      "Clean Native Android Architecture (Kotlin / Java)",
-      "Healthcare Directory & Appointment Booking Engine",
-      "Multi-Role B2B / B2C / B2G Communication Flows",
-      "UX Redesign & Performance Optimization",
-    ],
-    myRoleAndContribution:
-      "Restructured and redeveloped the MedXJordan mobile application at ITG Solutions—redesigning the user experience, eliminating performance bottlenecks, and establishing a maintainable, reusable Kotlin/Java codebase.",
-    organizationalDistinction:
-      "Hands-on mobile re-architecture and UX redevelopment led as Senior Mobile Developer & Acting Android Lead at ITG Solutions.",
-    verifiableImpact:
-      "Live on Google Play (com.itgsolutions.MedicalServices.JMT) and the Apple App Store as Jordan’s flagship medical tourism mobile platform.",
-    appStoreUrl: "https://apps.apple.com/us/app/medxjordan/id1293654588",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.itgsolutions.MedicalServices.JMT",
-    featured: true,
+    iconPath: "/assets/apps/icons/itg-medxjordan.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/medxjordan/id1293654588" },
   },
   {
     id: "itg-great-tafsirs",
     name: "Great Tafsirs (التفاسير العظيمة)",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "Islamic Scholarly Reference & Audio Library",
     tagline:
       "Comprehensive Holy Qur'an commentary (Tafsir), recitation, and Islamic scholarly reference platform.",
-    iconPath: "/assets/apps/icons/itg-great-tafsirs.jpg",
+    platforms: ["Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-great-tafsirs-1.png",
       "/assets/apps/screenshots/itg-great-tafsirs-2.png",
     ],
-    platforms: ["Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Developed at ITG Solutions in partnership with The Prince Ghazi Trust for Quranic Thought (Altafsir.com), providing access to dozens of classical and contemporary Qur'anic commentaries across eight Islamic schools of jurisprudence, alongside comparative verse study, translations, Reasons of Revelation, and audio recitations.",
-    problemAddressed:
-      "Delivering massive, deeply indexed Arabic and multilingual textual corpora and audio recitations on mobile devices required efficient XML/JSON parsing, responsive typography rendering, and offline-capable local storage.",
-    architectureAndTech: [
-      "High-Performance XML (SAX, DOM) & JSON Text Parsing",
-      "Relational Local Indexing & Search Optimization",
-      "Audio Recitation Streaming & Offline Caching",
-      "Reusable Kotlin & Java UI Components",
-    ],
-    myRoleAndContribution:
-      "Engineered and maintained the Android mobile application at ITG Solutions, optimizing large-scale text/commentary rendering, audio playback stability, and architectural modularity.",
-    organizationalDistinction:
-      "Developed within ITG Solutions' mobile engineering division under my technical leadership.",
-    verifiableImpact:
-      "Published globally on Google Play (com.itgsolutions.greattafsirs) and the Apple App Store as a premier mobile gateway to Altafsir.com.",
-    appStoreUrl:
-      "https://apps.apple.com/us/app/great-tafsirs-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1-%D8%A7%D9%84%D8%B9%D8%B8%D9%8A%D9%85%D8%A9/id720856179",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.itgsolutions.greattafsirs&hl=en",
-    featured: true,
+    iconPath: "/assets/apps/icons/itg-great-tafsirs.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/great-tafsirs-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1-%D8%A7%D9%84%D8%B9%D8%B8%D9%8A%D9%85%D8%A9/id720856179" },
   },
   {
     id: "itg-alzakah",
     name: "Al-Zakah & Waqfiyat Khair Al-Urdun (وقفية خير الأردن)",
-    institution: "ITG Solutions (Integrated Technology Group)",
-    factoryTag: "ITG Solutions Ecosystem",
     category: "Islamic Social Finance & Zakat Calculation",
     tagline:
       "Digital Zakat calculation, endowment (Waqf) management, and charitable distribution application.",
-    iconPath: "/assets/apps/icons/itg-alzakah.jpg",
+    platforms: ["Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/itg-alzakah-1.png",
       "/assets/apps/screenshots/itg-alzakah-2.png",
     ],
-    platforms: ["Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Enables individuals and institutions to accurately calculate Al-Zakah obligations across gold, silver, cash, trade assets, and investments according to Shariah rulings, while supporting transparent digital endowment (Waqf) contributions and charitable programs.",
-    problemAddressed:
-      "Simplified complex multi-asset Shariah Zakat calculations into an intuitive guided mobile calculator paired with verified charitable endowment channels.",
-    architectureAndTech: [
-      "Precision Rule-Based Zakat Calculation Engine",
-      "Native Android Architecture (Kotlin & Java)",
-      "Bilingual Arabic-First UX & Accessibility",
-      "Secure Donation & Endowment Integration",
-    ],
-    myRoleAndContribution:
-      "Built the Al-Zakah mobile application at ITG Solutions, implementing the Zakat calculation workflows, modular mobile architecture, and responsive Arabic user interface.",
-    organizationalDistinction:
-      "Engineered during my tenure leading Android and Flutter mobile initiatives at ITG Solutions.",
-    verifiableImpact:
-      "Early precursor to my subsequent career specializing in Shariah-compliant Islamic digital banking platforms in Kuwait.",
-    appStoreUrl:
-      "https://apps.apple.com/us/app/%D9%88%D9%82%D9%81%D9%8A%D8%A9-%D8%AE%D9%8A%D8%B1-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86/id1244506618",
-    featured: false,
+    iconPath: "/assets/apps/icons/itg-alzakah.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/us/app/%D9%88%D9%82%D9%81%D9%8A%D8%A9-%D8%AE%D9%8A%D8%B1-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86/id1244506618" },
   },
-
-  // === GLOBAL BANKING & FINTECH ===
   {
     id: "uba-mobile-banking",
     name: "UBA Mobile Banking (Cordova-to-Flutter Modernization)",
-    institution: "United Bank for Africa (Cit Global)",
-    factoryTag: "Global Banking & FinTech",
     category: "Cross-Platform Banking Modernization",
     tagline:
       "Architectural migration of United Bank for Africa's mobile banking platform from legacy Cordova to high-performance Flutter.",
-    iconPath: "/assets/apps/icons/uba-mobile.jpg",
+    platforms: ["Flutter", "Android", "iOS"],
     screenshots: [
       "/assets/apps/screenshots/uba-mobile-1.jpg",
       "/assets/apps/screenshots/uba-mobile-2.jpg",
       "/assets/apps/screenshots/uba-mobile-3.jpg",
       "/assets/apps/screenshots/uba-mobile-4.jpg",
     ],
-    platforms: ["Flutter", "Android", "iOS"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "Modernized the mobile banking experience for United Bank for Africa (UBA)—delivering Personal and SME/Business account management, bulk payments & payroll approvals, family/child digital accounts, international trade (PTA/BTA), lifestyle services, push notification orchestration, and a dedicated Personal Finance Management (PFM) module.",
-    problemAddressed:
-      "The legacy Apache Cordova hybrid wrapper suffered from performance bottlenecks and maintenance friction. Re-architecting in Flutter unified the codebase while dramatically improving speed and developer velocity.",
-    architectureAndTech: [
-      "Legacy Cordova to Flutter Re-Architecture",
-      "Personal Finance Management (PFM) Engine",
-      "Push Notification Infrastructure",
-      "Clean Modular Flutter Architecture & Team Mentorship",
-    ],
-    myRoleAndContribution:
-      "As Mobile Consultant at Cit Global, I defined the new Flutter application architecture, led the migration from Cordova, built the Push Notifications and Personal Finance Management (PFM) features, and mentored the engineering team.",
-    organizationalDistinction:
-      "Direct architectural authorship, hands-on feature engineering, and technical mentorship.",
-    verifiableImpact:
-      "Live on Google Play (com.uba.vericash) and the Apple App Store, significantly improving runtime performance, UX responsiveness, and long-term codebase maintainability for pan-African mobile banking.",
-    appStoreUrl: "https://apps.apple.com/kw/app/uba-mobile-banking/id1000669926",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.uba.vericash&hl=en",
-    featured: true,
+    iconPath: "/assets/apps/icons/uba-mobile.jpg",
+    listing: { store: "App Store", href: "https://apps.apple.com/kw/app/uba-mobile-banking/id1000669926" },
   },
   {
     id: "advicenode-platform",
     name: "Advicenode — AI Robo-Advisor & Virtual Assistant Platform Generator",
-    institution: "Advicenode",
-    factoryTag: "Global Banking & FinTech",
     category: "AI Advisory Automation & Dynamic App Builder",
     tagline:
       "Engineered a dynamic advisory automation platform capable of generating AI virtual assistants, decision-support bots, and domain-specific robo-advisor applications in under 24 hours.",
-    iconPath: "/assets/apps/icons/advicenode.png",
     platforms: ["Android", "Web", "Microservices"],
-    attributionBadge: "Hands-On Architecture & Delivery",
-    purposeAndExperience:
-      "An AI-powered advisory automation platform engineered to dynamically generate tailored robo-advisor applications, web/mobile virtual assistants, and interactive decision-support workflows across industries—including financial robo-advisory, business consulting automation, and vertical advisors such as SuggestCar (the first automated car advisor built on Advicenode)—complete with seamless third-party web service integrations.",
-    problemAddressed:
-      "Enterprises, financial/consulting advisors, and startups needed intelligent robo-advisors and interactive web/mobile virtual assistants that could guide users through complex decisions without spending months building custom applications from scratch. Advicenode abstracted advisory decision trees, conversational flows, and third-party API integrations into a dynamic engine capable of generating production robo-advisors in less than 24 hours.",
-    architectureAndTech: [
-      "Dynamic Robo-Advisor & Virtual Assistant Generation Engine",
-      "Automated Decision-Tree & Advisory Workflow Interpreter",
-      "Java, Android & Responsive Web Client Generation",
-      "Third-Party Web Service & REST/JSON Integration Connectors",
-    ],
-    myRoleAndContribution:
-      "As Software Engineer at Advicenode (Oct 2016 – Oct 2017), I engineered the core platform engine that dynamically generated robo-advisor and virtual assistant applications across Web and Android from configurable domain models and decision trees.",
-    organizationalDistinction:
-      "Hands-on core platform software engineering—building the dynamic application generator that powered Advicenode's automated advisory products (including SuggestCar and virtual assistant integrations).",
-    verifiableImpact:
-      "Enabled rapid, repeatable generation of AI virtual assistants and automated robo-advisors across web and mobile, documented on the official Advicenode blog (tumblr.advicenode.com).",
-    websiteUrl: "https://tumblr.advicenode.com/",
-    websiteLabel: "Advicenode Official Blog",
-    featured: true,
+    iconPath: "/assets/apps/icons/advicenode.png",
+    listing: { store: "Advicenode Official Blog", href: "https://tumblr.advicenode.com/" },
   },
 ];
 
-export const CAREER_TIMELINE: CareerMilestone[] = [
-  {
-    id: "kib-head-of-digital-tech",
-    role: "Head of Digital Technology",
-    organization: "Kuwait International Bank (KIB)",
-    organizationTag: "Islamic Retail, Corporate & BaaS Banking",
-    location: "Kuwait City, Kuwait",
-    period: "Jun 2022 – Present",
-    durationHighlight: "Executive Technology Leadership · Digital Factory II",
-    isDigitalFactoryRole: true,
-    executiveHeadline:
-      "Leading KIB’s Digital Technology function and Digital Factory—owning mobile, web, and backend delivery across 8+ retail, corporate, real estate, wealth, and embedded finance product lines.",
-    strategicScope:
-      "Full executive and architectural ownership of KIB's digital channels, engineering practices, technology stack evolution, and release governance across native (Android/iOS), Flutter, Web, and backend microservices.",
-    achievements: [
-      {
-        category: "Strategy & Leadership",
-        text: "Co-architected and established KIB's Digital Factory from the ground up, defining multi-year technology roadmaps, organizational squad structures, and engineering hiring/capability standards.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Direct cross-platform engineering teams delivering KIB Retail, KIB Aqari, KIB Corporate, KIB Invest, Remittance (WAGE), BuyNow by KIB, Backoffice portals, and BIN Sponsorship across Android, iOS, and Web.",
-      },
-      {
-        category: "Architecture & Engineering",
-        text: "Define enterprise architecture standards, Domain-Driven Design (DDD) boundaries, and OWASP security practices across native (Kotlin/Swift), Flutter, and backend microservices (NestJS, Java EE, Kafka, RabbitMQ).",
-      },
-      {
-        category: "DevOps & Governance",
-        text: "Establish end-to-end release governance and GitOps continuous delivery leveraging Kubernetes, Argo CD, and Jenkins across all digital banking squads.",
-      },
-    ],
-    technologies: [
-      "Kotlin",
-      "Swift",
-      "Flutter",
-      "TypeScript",
-      "NestJS",
-      "Java EE",
-      "Kafka",
-      "RabbitMQ",
-      "MongoDB",
-      "Kubernetes",
-      "Argo CD",
-      "Jenkins",
-      "DDD",
-      "OWASP",
-    ],
-  },
-  {
-    id: "warba-chapter-lead",
-    role: "Android Chapter Lead",
-    organization: "Warba Bank",
-    organizationTag: "Pioneering “Al-Wateen” Digital Factory",
-    location: "Kuwait City, Kuwait",
-    period: "Mar 2019 – Jun 2022",
-    durationHighlight: "3 Yrs 4 Mos · Digital Factory I",
-    isDigitalFactoryRole: true,
-    executiveHeadline:
-      "Foundational engineering leader in Warba Bank’s “Al-Wateen” Digital Factory—building the core mobile banking app from scratch, automating CI/CD, and shipping flagship lifestyle and youth apps.",
-    strategicScope:
-      "Combined hands-on greenfield architecture of Warba Bank's core retail app with chapter leadership, CI/CD pipeline creation, Git release governance, and end-to-end cross-platform product delivery.",
-    achievements: [
-      {
-        category: "Architecture & Engineering",
-        text: "Built and managed the flagship Warba Bank mobile banking application from scratch—owning its modular architecture, feature delivery, and ongoing production support.",
-      },
-      {
-        category: "DevOps & Governance",
-        text: "Created automated CI/CD pipelines in Jenkins and codified Git branching and release-management strategies for the entire mobile chapter.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Developed Fayez (gamified fitness, challenges & loyalty rewards app) and engineered Fayez Admin using Flutter Web.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Delivered Hassala Kids end-to-end—a specialized digital savings application designed for children.",
-      },
-    ],
-    technologies: [
-      "Kotlin",
-      "Java",
-      "Android Native",
-      "Flutter",
-      "Flutter Web",
-      "Dagger",
-      "Hilt",
-      "Jenkins CI/CD",
-      "SOLID",
-      "Git Governance",
-    ],
-  },
-  {
-    id: "cit-global-consultant",
-    role: "Mobile Consultant — Android & Flutter",
-    organization: "Cit Global",
-    organizationTag: "International Banking Modernization · Part-time",
-    location: "Cairo, Egypt (Remote / Part-time)",
-    period: "Jan 2020 – Jan 2021",
-    durationHighlight: "1 Yr · Legacy-to-Flutter Banking Transformation",
-    isDigitalFactoryRole: false,
-    executiveHeadline:
-      "Spearheaded the architectural migration of United Bank for Africa (UBA) Mobile Banking from legacy Cordova to Flutter while mentoring the engineering team.",
-    strategicScope:
-      "Advisory and hands-on principal architecture role focused on cross-platform modernization, performance optimization, and capability transfer.",
-    achievements: [
-      {
-        category: "Architecture & Engineering",
-        text: "Re-architected and migrated the UBA Mobile Banking application from Apache Cordova to Flutter, significantly improving runtime performance and codebase maintainability.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Engineered push notification infrastructure and a comprehensive Personal Finance Management (PFM) feature.",
-      },
-      {
-        category: "Strategy & Leadership",
-        text: "Defined the target Flutter application architecture, coding standards, and mentored the internal mobile engineering team.",
-      },
-    ],
-    technologies: [
-      "Flutter",
-      "Dart",
-      "Android Native",
-      "Clean Architecture",
-      "Push Notifications",
-      "PFM Analytics",
-    ],
-  },
-  {
-    id: "itg-solutions-lead",
-    role: "Senior Mobile Developer · Acting Android Lead",
-    organization: "ITG Solutions (Integrated Technology Group)",
-    organizationTag: "National EdTech, Medical Tourism & Islamic Platforms",
-    location: "Amman / Cairo",
-    period: "Nov 2017 – Mar 2019",
-    durationHighlight: "1 Yr 5 Mos · Multi-Team Mobile Leadership",
-    isDigitalFactoryRole: false,
-    executiveHeadline:
-      "Led the Android and Flutter teams while restructuring and delivering all editions of EduWave (Higher-ED, K-12, AMS), MedXJordan, Great Tafsirs, and the Al-Zakah mobile application.",
-    strategicScope:
-      "Technical leadership across Android and Flutter engineering teams, owning architectural restructuring, UX modernization, and reusable module libraries across education, healthcare, and Islamic scholarly platforms.",
-    achievements: [
-      {
-        category: "Product Delivery",
-        text: "Restructured and redeveloped the complete EduWave mobile ecosystem (EduWave Higher Education, EduWave K-12, EduWave AMS) and the MedXJordan national medical tourism platform—elevating app performance and redesigning the UX.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Built and maintained Great Tafsirs (التفاسير العظيمة — comprehensive Holy Qur'an commentary & audio library) and the Al-Zakah / Waqfiyat Khair Al-Urdun Islamic Zakat calculation & endowment application.",
-      },
-      {
-        category: "Strategy & Leadership",
-        text: "Led both the Android and Flutter engineering teams, establishing code review practices, architectural standards, and mentoring developers.",
-      },
-      {
-        category: "Architecture & Engineering",
-        text: "Architected high-performance, reusable Kotlin and Java frameworks with optimized XML (SAX, DOM) and JSON parsing shared across ITG's enterprise product suite.",
-      },
-    ],
-    technologies: [
-      "Kotlin",
-      "Java",
-      "Flutter",
-      "Android SDK",
-      "REST & SOAP",
-      "XML (SAX, DOM)",
-      "UX Redesign",
-    ],
-  },
-  {
-    id: "advicenode-engineer",
-    role: "Software Engineer",
-    organization: "Advicenode",
-    organizationTag: "AI Robo-Advisor & Virtual Assistant Platform Generator",
-    location: "Cairo, Egypt",
-    period: "Oct 2016 – Oct 2017",
-    durationHighlight: "1 Yr · Dynamic Advisory Automation Platform",
-    isDigitalFactoryRole: false,
-    executiveHeadline:
-      "Engineered the core Advicenode platform—an AI-powered advisory automation engine that dynamically generated robo-advisor applications, web/mobile virtual assistants, and automated decision-support bots.",
-    strategicScope:
-      "Foundational platform engineering role designing a dynamic application generator capable of turning configurable decision trees, advisory workflows, and third-party web service integrations into production robo-advisors and virtual assistants in under 24 hours.",
-    achievements: [
-      {
-        category: "Architecture & Engineering",
-        text: "Architected and built the Advicenode dynamic application generator, enabling businesses, developers, and startups to build and deploy tailored robo-advisor and virtual assistant applications across Web and Android without writing custom client code from scratch.",
-      },
-      {
-        category: "Product Delivery",
-        text: "Powered vertical automated advisory products launched on Advicenode—including SuggestCar (the first automated car advisor) alongside financial, consulting, and business decision-support virtual assistants.",
-      },
-      {
-        category: "Architecture & Engineering",
-        text: "Engineered third-party web service integration connectors and responsive UI generation pipelines (Java, Android, JavaScript, REST/JSON) that bound backend advisory rules to interactive client workflows.",
-      },
-    ],
-    technologies: [
-      "Java",
-      "Android",
-      "JavaScript",
-      "Dynamic App Generation",
-      "AI Virtual Assistants",
-      "Robo-Advisor Engine",
-      "REST & Web Integrations",
-    ],
-  },
+export type FlagshipGroup = "core" | "beyond" | "regional";
+
+export const FLAGSHIP_FILTERS: { value: "all" | FlagshipGroup; label: string }[] = [
+  { value: "all", label: "All flagships" },
+  { value: "core", label: "Core banking" },
+  { value: "beyond", label: "Beyond banking & BaaS" },
+  { value: "regional", label: "Regional scale" },
 ];
 
-export const ARCHITECTURE_LAYERS: ArchitectureLayer[] = [
-  {
-    id: "layer-client",
-    layerNumber: "LAYER 01",
-    name: "Multi-Channel Client Experience & Design Systems",
-    executiveThesis:
-      "Strategic selection between Native (Kotlin/Swift) and Cross-Platform (Flutter Mobile & Web) based on product lifecycle, regulatory integration, and time-to-market—governed by a single architectural standard.",
-    description:
-      "In a multi-product Digital Factory delivering 8+ concurrent applications, client architecture cannot be ad-hoc. We enforce strict modular separation, dependency injection (Hilt/Dagger), reactive state management, and shared UI primitives across Android, iOS, and Web.",
-    technologies: [
-      "Android Native (Kotlin)",
-      "iOS Native (Swift)",
-      "Flutter (Mobile & Web)",
-      "Dart",
-      "TypeScript / JavaScript",
-      "Hilt & Dagger DI",
-    ],
-    designPrinciples: [
-      "Feature-modularized multi-repo & monorepo boundaries",
-      "Unified design tokens across Retail, Corporate, and Vertical apps",
-      "Strict offline-resilience & optimistic UI patterns",
-    ],
-    bankingUseCase:
-      "Powers KIB Retail, KIB Corporate, KIB Aqari, KIB Invest, BuyNow, WAGE, Warba Bank Mobile, and Fayez Admin (Flutter Web).",
-  },
-  {
-    id: "layer-security",
-    layerNumber: "LAYER 02",
-    name: "Security Perimeter, Identity & Release Governance",
-    executiveThesis:
-      "In regulated Islamic and commercial banking, security and compliance are architectural invariants—embedded into every commit rather than bolted on before release.",
-    description:
-      "Every mobile and web client integrates defense-in-depth protections aligned with OWASP standards, national digital identity onboarding (PACI Mobile ID & digital signatures), biometric cryptographic binding, and auditable maker-checker corporate authorization.",
-    technologies: [
-      "OWASP Mobile & API Top 10",
-      "PACI & E-Signature Integration",
-      "Biometric KeyStore / Keychain",
-      "Release Governance Gates",
-      "Maker-Checker RBAC",
-    ],
-    designPrinciples: [
-      "Zero-trust API communication & payload integrity",
-      "Automated static analysis & security linting in CI",
-      "Segregated environments with formal release promotion",
-    ],
-    bankingUseCase:
-      "Enables 100% branchless digital onboarding in KIB Invest and multi-signatory corporate treasury approvals in KIB Corporate.",
-  },
-  {
-    id: "layer-microservices",
-    layerNumber: "LAYER 03",
-    name: "Domain-Driven Microservices & Event-Driven Mesh",
-    executiveThesis:
-      "Decoupling high-velocity digital channels from legacy core banking monoliths through Domain-Driven Design (DDD), NestJS/Java microservices, and asynchronous event streaming.",
-    description:
-      "Digital banking ecosystems require high availability even when downstream core systems undergo maintenance. By modeling bounded contexts (Accounts, Payments, Real Estate, BNPL, BaaS Cards) with NestJS and Java EE connected via Kafka and RabbitMQ, squads deploy independently without cascading failures.",
-    technologies: [
-      "NestJS (Node.js / TypeScript)",
-      "Java EE",
-      "Apache Kafka",
-      "RabbitMQ",
-      "REST & SOAP Adapters",
-      "Domain-Driven Design (DDD)",
-      "SOLID & TDD",
-    ],
-    designPrinciples: [
-      "Bounded context isolation per banking vertical",
-      "Event-driven choreography via Kafka & RabbitMQ",
-      "Anti-corruption layers (ACL) wrapping legacy SOAP/XML cores",
-    ],
-    bankingUseCase:
-      "Orchestrates real-time WAMD payments, BIN Sponsorship card issuance for fintech partners, and BuyNow 0%-profit financing workflows.",
-  },
-  {
-    id: "layer-data",
-    layerNumber: "LAYER 04",
-    name: "Polyglot Persistence & High-Throughput Data Formats",
-    executiveThesis:
-      "Pairing the ACID guarantees of relational databases for financial ledgers with the schema agility of MongoDB for digital product catalogs, real estate listings, and customer journeys.",
-    description:
-      "Modern banking super-apps and marketplaces handle diverse workloads—from strict double-entry transaction audit trails to dynamic merchant catalogs (BuyNow), property appraisal records (Aqari), and legacy XML (SAX/DOM) core banking messages.",
-    technologies: [
-      "Relational Databases (SQL)",
-      "MongoDB (Document Store)",
-      "JSON Schemas",
-      "XML (SAX & DOM Parsers)",
-      "C++ Native Modules",
-    ],
-    designPrinciples: [
-      "Polyglot persistence matched to domain access patterns",
-      "High-performance streaming XML/JSON parsing for core integration",
-      "Strict data ownership per microservice domain",
-    ],
-    bankingUseCase:
-      "Supports property appraisal records in KIB Aqari, merchant catalogs in BuyNow by KIB, Great Tafsirs corpora, and core banking ledger synchronization.",
-  },
-  {
-    id: "layer-devops",
-    layerNumber: "LAYER 05",
-    name: "Cloud-Native DevOps, Kubernetes & GitOps Delivery Spine",
-    executiveThesis:
-      "A Digital Factory is only as fast as its path to production. Automated CI/CD pipelines and declarative GitOps turn engineering strategy into repeatable daily execution.",
-    description:
-      "From pioneering Jenkins mobile CI/CD pipelines and Git branching governance at Warba Bank to scaling Kubernetes and Argo CD GitOps workflows at KIB, delivery automation ensures every squad ships tested, reproducible artifacts.",
-    technologies: [
-      "Kubernetes (K8s)",
-      "Argo CD (GitOps)",
-      "Jenkins CI/CD",
-      "GitLab & Bitbucket",
-      "Jira & Confluence",
-      "Automated Testing (TDD)",
-    ],
-    designPrinciples: [
-      "Declarative GitOps cluster state via Argo CD",
-      "Standardized Git branching & release-train governance",
-      "Automated build, test, and signing pipelines for iOS, Android & Microservices",
-    ],
-    bankingUseCase:
-      "Governs continuous integration and release orchestration across 8+ concurrent product lines at KIB and the mobile chapter at Warba Bank.",
-  },
-];
-
-export const LEADERSHIP_PRINCIPLES: LeadershipPrinciple[] = [
-  {
-    id: "factory-builder",
-    number: "01",
-    title: "Institutionalizing Digital Factories from Zero",
-    subtitle: "From Outsourcing Dependency to In-House Engineering Sovereignty",
-    narrative:
-      "Many financial institutions struggle because they treat digital transformation as a series of vendor procurement projects. My methodology centers on building permanent internal engineering capability: defining the technology roadmap, hiring and structuring cross-platform chapters, codifying architectural standards, and establishing the CI/CD spine before scaling squad headcount.",
-    evidenceFromCareer:
-      "Proven twice in the Kuwaiti banking sector—first as a founding pillar of Warba Bank’s 'Al-Wateen' Digital Factory, and subsequently as Head of Digital Technology establishing and scaling KIB’s Digital Factory across 8+ product verticals.",
-    keyPractices: [
-      "Multi-year technology roadmap & stack definition",
-      "In-house engineering capability & chapter establishment",
-      "Reusable platform foundations across Retail, Corporate & BaaS",
-    ],
-  },
-  {
-    id: "architectural-pragmatism",
-    number: "02",
-    title: "Pragmatic Polyglot Architecture",
-    subtitle: "Uniting Native Excellence, Flutter Velocity & Microservice Resilience",
-    narrative:
-      "Technology dogmatism slows organizations down. As an executive who has written production code across Kotlin, Swift, Dart/Flutter, NestJS/TypeScript, Java EE, and C++, I evaluate stacks through the lens of business durability, security, and team velocity—combining Native mobile where appropriate with Flutter across mobile and web, backed by event-driven microservices.",
-    evidenceFromCareer:
-      "Successfully governed mixed Native (Android/iOS) and Flutter codebases at KIB and Warba Bank, pioneered Flutter Web for Fayez Admin, migrated UBA Mobile Banking from legacy Cordova to Flutter, and led Android & Flutter teams at ITG Solutions.",
-    keyPractices: [
-      "SOLID, Domain-Driven Design (DDD) & Clean Architecture",
-      "Asynchronous event choreography with Kafka & RabbitMQ",
-      "Seamless legacy modernization without business disruption",
-    ],
-  },
-  {
-    id: "release-governance",
-    number: "03",
-    title: "Release Governance as a Competitive Advantage",
-    subtitle: "Shipping Faster in Regulated Banking Through Automation",
-    narrative:
-      "In banking, speed without governance creates operational risk, while governance without automation creates paralysis. By embedding OWASP security standards, Test-Driven Development (TDD), disciplined Git branching strategies, Jenkins CI/CD, and Argo CD / Kubernetes GitOps directly into the engineering workflow, compliance becomes automatic.",
-    evidenceFromCareer:
-      "Created the mobile chapter's Jenkins CI/CD pipelines and Git release-management strategy at Warba Bank, and scaled enterprise release governance across mobile, web, and backend microservices at KIB.",
-    keyPractices: [
-      "Automated Jenkins CI/CD & Argo CD GitOps pipelines",
-      "Strict Git branching, peer review & release train governance",
-      "OWASP security-by-design & TDD quality gates",
-    ],
-  },
-  {
-    id: "business-product-alignment",
-    number: "04",
-    title: "Translating Boardroom Strategy into New Revenue Ecosystems",
-    subtitle: "Expanding the Bank Beyond Traditional Accounts",
-    narrative:
-      "Modern digital banking leadership requires thinking like a product strategist and commercial architect. Technology must not merely digitize existing forms—it must unlock entirely new customer segments, non-bank acquisition funnels, and B2B partnership models.",
-    evidenceFromCareer:
-      "Directed the technical delivery of Kuwait's first bank-led 0%-profit marketplace (BuyNow by KIB), PropTech ecosystem (KIB Aqari), digital Shariah wealth manager (KIB Invest), Visa-Ready BIN Sponsorship BaaS platform, gamified loyalty ecosystem (Fayez), and dynamic robo-advisor generator (Advicenode).",
-    keyPractices: [
-      "Embedded finance & BIN Sponsorship (BaaS / CaaS) enablement",
-      "Vertical ecosystem expansion (PropTech, WealthTech, BNPL, Youth)",
-      "Direct alignment between technical KPIs and institutional growth",
-    ],
-  },
-];
-
-export const SKILL_MATRIX = [
-  {
-    category: "Executive & Architectural Leadership",
-    items: [
-      "Digital Factory Establishment & Scaling",
-      "Multi-Year Technology Roadmaps",
-      "Enterprise & Solution Architecture",
-      "Domain-Driven Design (DDD)",
-      "Release Governance & Compliance",
-      "Cross-Functional Squad & Chapter Leadership",
-      "Banking-as-a-Service (BaaS) & BIN Sponsorship",
-      "Legacy Platform Re-Architecture",
-    ],
-  },
-  {
-    category: "Mobile & Web Engineering",
-    items: [
-      "Android Native (Kotlin, Java)",
-      "iOS Native (Swift)",
-      "Flutter (iOS, Android & Web)",
-      "Dart",
-      "TypeScript / JavaScript",
-      "Hilt & Dagger Dependency Injection",
-      "Modular Design Systems",
-      "C++ Native Interop",
-    ],
-  },
-  {
-    category: "Backend, Messaging & Data",
-    items: [
-      "NestJS & Node.js",
-      "Java EE",
-      "Microservices Architecture",
-      "Apache Kafka",
-      "RabbitMQ",
-      "REST & SOAP Integrations",
-      "MongoDB & Relational Databases",
-      "JSON & XML (SAX, DOM)",
-    ],
-  },
-  {
-    category: "DevOps, Cloud & Engineering Practices",
-    items: [
-      "Kubernetes (K8s)",
-      "Argo CD (GitOps)",
-      "Jenkins CI/CD Automation",
-      "OWASP Security Standards",
-      "SOLID & Design Patterns",
-      "Test-Driven Development (TDD)",
-      "Git, GitLab & Bitbucket Governance",
-      "Agile Delivery (Jira, Confluence)",
-    ],
-  },
-];
-
-export interface FactoryTopologyNode {
+export interface PlatformCard {
+  /** Id of the PLATFORM_REGISTRY entry that supplies the icon and store link. */
   id: string;
-  stageCode: string;
-  title: string;
-  subtitle: string;
-  architecturalRole: string;
-  kibImplementation: string;
-  warbaImplementation: string;
-  keyStandards: string[];
-  stackBadges: string[];
+  name: string;
+  institution: string;
+  domain: string;
+  /** One sentence, 18 words at most. */
+  outcome: string;
+  iconPath?: string;
+  listing?: { store: string; href: string };
+  /** Delivery surfaces (Android, iOS, Web…) and official store screenshots, from the registry. */
+  platforms: string[];
+  screenshots: string[];
 }
 
-export const DIGITAL_FACTORY_TOPOLOGY: FactoryTopologyNode[] = [
+export interface FlagshipPlatform extends PlatformCard {
+  groups: FlagshipGroup[];
+  /** One word set huge behind the platform's poster. */
+  mark: string;
+  /** Double-width tile in the unfiltered bento layout. */
+  wide?: boolean;
+}
+
+type RegistryFields = "iconPath" | "listing" | "platforms" | "screenshots";
+
+function card<T extends Omit<PlatformCard, RegistryFields>>(entry: T): T & Pick<PlatformCard, RegistryFields> {
+  const record = PLATFORM_REGISTRY.find((platform) => platform.id === entry.id);
+  return {
+    ...entry,
+    iconPath: record?.iconPath,
+    listing: record?.listing,
+    platforms: record?.platforms ?? [],
+    screenshots: record?.screenshots ?? [],
+  };
+}
+
+export const FLAGSHIP_PLATFORMS: FlagshipPlatform[] = [
+  card({
+    id: "kib-mobile",
+    mark: "Retail",
+    name: "KIB Mobile",
+    institution: "KIB",
+    domain: "Retail banking super-app",
+    outcome: "KIB’s flagship retail app: accounts, WAMD instant payments, cards and Islamic financing in one channel.",
+    groups: ["core"],
+    wide: true,
+  }),
+  card({
+    id: "kib-corporate",
+    mark: "Corporate",
+    name: "KIB Corporate",
+    institution: "KIB",
+    domain: "Corporate & treasury banking",
+    outcome: "Maker-checker approvals and real-time liquidity control for corporate treasuries, on mobile and web.",
+    groups: ["core"],
+  }),
+  card({
+    id: "kib-aqari",
+    mark: "Aqari",
+    name: "KIB Aqari",
+    institution: "KIB",
+    domain: "PropTech & real estate",
+    outcome: "Automated rent collection, property management and QR-verified bank appraisals in one real-estate platform.",
+    groups: ["beyond"],
+  }),
+  card({
+    id: "kib-invest",
+    mark: "Invest",
+    name: "KIB Invest",
+    institution: "KIB",
+    domain: "Shariah WealthTech",
+    outcome:
+      "Fully digital investment onboarding with PACI Mobile ID and e-signature, plus Shariah-compliant fund management.",
+    groups: ["beyond"],
+  }),
+  card({
+    id: "kib-buynow",
+    mark: "BuyNow",
+    name: "BuyNow by KIB",
+    institution: "KIB",
+    domain: "BNPL & merchant marketplace",
+    outcome: "Kuwait’s first bank-led marketplace with 0% profit Islamic financing, open without a salary transfer.",
+    groups: ["beyond"],
+  }),
+  card({
+    id: "kib-bin-sponsorship",
+    mark: "BaaS",
+    name: "BIN Sponsorship · Al Muzaini Travel",
+    institution: "KIB",
+    domain: "BaaS & partner card issuing",
+    outcome:
+      "Multi-tenant card-issuing rails that let partners such as Al Muzaini launch multi-currency Visa prepaid cards.",
+    groups: ["beyond"],
+    wide: true,
+  }),
+  card({
+    id: "warba-mobile",
+    mark: "Warba",
+    name: "Warba Bank Mobile",
+    institution: "Warba Bank",
+    domain: "Al-Wateen flagship retail banking",
+    outcome: "Warba’s core retail app, architected and built in-house from a blank slate inside Al-Wateen.",
+    groups: ["core", "regional"],
+    wide: true,
+  }),
+  card({
+    id: "uba-mobile-banking",
+    mark: "UBA",
+    name: "UBA Mobile Banking",
+    institution: "UBA · Cit Global",
+    domain: "Pan-African retail banking",
+    outcome: "Pan-African mobile banking re-architected from Cordova to Flutter for performance and maintainability.",
+    groups: ["core", "regional"],
+    wide: true,
+  }),
+];
+
+/** Earlier enterprise and national platforms, collapsed by default on the page. */
+export const ARCHIVE_PLATFORMS: PlatformCard[] = [
+  card({
+    id: "kib-remittance-wage",
+    name: "WAGE by KIB",
+    institution: "KIB",
+    domain: "Remittance & financial inclusion",
+    outcome: "Digital onboarding, wage accounts and cross-border remittance for underserved segments.",
+  }),
+  card({
+    id: "warba-fayez",
+    name: "Fayez",
+    institution: "Warba Bank",
+    domain: "Lifestyle & loyalty",
+    outcome: "Gamified fitness and prediction rewards, run from a Flutter Web admin portal.",
+  }),
+  card({
+    id: "warba-hassala-kids",
+    name: "Hassala Kids",
+    institution: "Warba Bank",
+    domain: "Youth savings",
+    outcome: "A digital money box that teaches children to save toward goals.",
+  }),
+  card({
+    id: "itg-eduwave-k12",
+    name: "EduWave · K-12, Higher-ED & AMS",
+    institution: "ITG Solutions",
+    domain: "National EdTech",
+    outcome: "Three learning-platform editions restructured on one shared mobile core.",
+  }),
+  card({
+    id: "itg-medxjordan",
+    name: "MedXJordan",
+    institution: "ITG Solutions",
+    domain: "Medical tourism",
+    outcome: "Jordan’s medical-tourism gateway, re-architected for patients and providers.",
+  }),
+  card({
+    id: "itg-great-tafsirs",
+    name: "Great Tafsirs",
+    institution: "ITG Solutions",
+    domain: "Islamic scholarly reference",
+    outcome: "Qur’anic commentary and recitation library with offline indexing.",
+  }),
+  card({
+    id: "itg-alzakah",
+    name: "Al-Zakah",
+    institution: "ITG Solutions",
+    domain: "Islamic social finance",
+    outcome: "Rule-based Zakat calculation with endowment contributions.",
+  }),
+  card({
+    id: "advicenode-platform",
+    name: "Advicenode",
+    institution: "Advicenode",
+    domain: "Advisory automation",
+    outcome: "An engine that generated robo-advisor apps from decision trees in under 24 hours.",
+  }),
+];
+
+export interface StackLayer {
+  id: string;
+  code: string;
+  name: string;
+  /** Short label for the diagram's rail and plates. */
+  short: string;
+  /** One sentence: the mechanism this layer provides. */
+  mechanism: string;
+  tags: string[];
+}
+
+/** Top of the stack changes fastest; the bottom changes deliberately. */
+export const ARCHITECTURE_STACK: StackLayer[] = [
   {
-    id: "squad-chapter-matrix",
-    stageCode: "STAGE 01",
-    title: "Squads & Engineering Chapters",
-    subtitle: "Organizational Topology & Capability Governance",
-    architecturalRole:
-      "Decouples vertical product delivery (Retail, Corporate, Real Estate, Wealth, BaaS) from horizontal technical excellence (Android, iOS, Flutter, Web, Backend, DevOps).",
-    kibImplementation:
-      "Structured multi-disciplinary squads across 8+ concurrent product verticals (Retail, Corporate, Aqari, Invest, BuyNow, WAGE, BaaS, Backoffice) under unified Digital Technology governance.",
-    warbaImplementation:
-      "Co-built the foundational Al-Wateen Digital Factory model and led the Android Engineering Chapter—codifying hiring bars, peer review gates, and chapter-wide engineering standards.",
-    keyStandards: [
-      "Autonomous vertical squads with dedicated Product, Design, Mobile, Web & Backend engineers",
-      "Horizontal Chapter Leads enforcing code quality, SOLID architecture & shared libraries",
-      "Zero external vendor lock-in for core intellectual property",
-    ],
-    stackBadges: ["Squad Topology", "Chapter Governance", "In-House IP", "Agile / Jira"],
+    id: "experience",
+    code: "01",
+    name: "Multi-Channel Experience & Design Systems",
+    short: "Experience",
+    mechanism: "Unified design tokens and resilient client apps across every customer channel.",
+    tags: ["Native iOS", "Native Android", "Flutter", "Web"],
   },
   {
-    id: "multi-channel-clients",
-    stageCode: "STAGE 02",
-    title: "Multi-Channel Client Tier & Design System",
-    subtitle: "Native (Kotlin/Swift), Flutter & Responsive Web",
-    architecturalRole:
-      "Delivers consistent, 60fps customer experiences across mobile and web using modular multi-repo/monorepo boundaries, dependency injection, and shared design tokens.",
-    kibImplementation:
-      "Governs Native Android (Kotlin), Native iOS (Swift), Flutter (KIB Invest, WAGE), and React/TypeScript Web portals with shared biometric & security SDKs.",
-    warbaImplementation:
-      "Architected Warba Bank Mobile from scratch in Kotlin/Java with Dagger & Hilt DI, and pioneered Flutter Web for the Fayez Admin campaign management suite.",
-    keyStandards: [
-      "Clean Architecture & strict separation of UI, Domain, and Data layers",
-      "Biometric cryptographic binding & hardware-backed keystore storage",
-      "Bilingual RTL/LTR Arabic & English accessibility compliance",
-    ],
-    stackBadges: ["Kotlin", "Swift", "Flutter", "TypeScript", "Hilt / Dagger"],
+    id: "domain",
+    code: "02",
+    name: "Domain & Event Choreography",
+    short: "Domain & events",
+    mechanism: "DDD-bounded microservices and asynchronous event streaming, so squads deploy independently.",
+    tags: ["Java", "NestJS", "Kafka", "RabbitMQ"],
   },
   {
-    id: "api-gateway-bff",
-    stageCode: "STAGE 03",
-    title: "API Gateway & Domain BFF Microservices",
-    subtitle: "Domain-Driven Design & Event-Driven Choreography",
-    architecturalRole:
-      "Shields mobile and web channels from monolithic core banking constraints by exposing tailored Backend-for-Frontend (BFF) APIs and asynchronous event streams.",
-    kibImplementation:
-      "Engineered domain-isolated NestJS (TypeScript) and Java EE microservices orchestrated via Apache Kafka and RabbitMQ across Retail, Corporate, Aqari, and BIN Sponsorship.",
-    warbaImplementation:
-      "Integrated modular mobile channels with REST/JSON domain services and real-time loyalty, savings (Hassala), and gamification (Fayez) backend engines.",
-    keyStandards: [
-      "Domain-Driven Design (DDD) bounded contexts per banking line of business",
-      "Asynchronous event streaming via Kafka & RabbitMQ for high-throughput resiliency",
-      "Anti-Corruption Layers (ACL) wrapping legacy SOAP/XML core banking interfaces",
-    ],
-    stackBadges: ["NestJS", "Java EE", "Apache Kafka", "RabbitMQ", "DDD"],
+    id: "platform",
+    code: "03",
+    name: "Cloud-Native Platform & GitOps Governance",
+    short: "Platform & GitOps",
+    mechanism: "Automated CI/CD, policy-as-code and zero-downtime orchestration on one delivery spine.",
+    tags: ["Kubernetes", "Argo CD", "DevSecOps Gates"],
   },
   {
-    id: "gitops-secdevops",
-    stageCode: "STAGE 04",
-    title: "GitOps, Kubernetes & SecDevOps Spine",
-    subtitle: "Declarative Infrastructure & Automated Release Trains",
-    architecturalRole:
-      "Transforms compliance and security from manual pre-release bottlenecks into automated CI/CD quality gates and zero-downtime declarative deployments.",
-    kibImplementation:
-      "Scaled containerized workloads on Kubernetes (K8s) with declarative Argo CD GitOps pipelines, automated OWASP security gates, and formal release promotion governance.",
-    warbaImplementation:
-      "Built the mobile chapter's Jenkins CI/CD automation pipelines from scratch and authored the Git branching, signing, and release-train governance strategy.",
-    keyStandards: [
-      "Declarative cluster state synchronization with Kubernetes & Argo CD",
-      "Automated build, unit testing (TDD), static analysis & artifact signing via Jenkins",
-      "OWASP Mobile & API Top-10 security verification embedded in every pull request",
-    ],
-    stackBadges: ["Kubernetes", "Argo CD", "Jenkins CI/CD", "OWASP", "GitOps"],
-  },
-  {
-    id: "sovereign-banking-rails",
-    stageCode: "STAGE 05",
-    title: "Core Banking & National Sovereign Rails",
-    subtitle: "Regulated Settlement, Identity & Payment Ecosystems",
-    architecturalRole:
-      "Connects high-velocity digital experiences to regulated banking ledgers, national biometric identity providers, payment switches, and international card networks.",
-    kibImplementation:
-      "Integrated PACI Kuwait Mobile ID eKYC & digital signatures, WAMD instant payments, KNET, Visa Ready BIN Sponsorship rails, and certified QR property appraisals.",
-    warbaImplementation:
-      "Connected retail banking, Al Sunbula draws, Pocket loyalty, and youth savings directly into core Islamic banking ledgers and national payment switches.",
-    keyStandards: [
-      "100% branchless digital onboarding with PACI Mobile ID & cryptographic e-signatures",
-      "Visa-Ready BIN Sponsorship & multi-currency settlement infrastructure",
-      "Central Bank of Kuwait (CBK) regulatory & Shariah auditability compliance",
-    ],
-    stackBadges: ["PACI Mobile ID", "Visa Ready BaaS", "KNET / WAMD", "Core Banking"],
+    id: "core",
+    code: "04",
+    name: "Regulated Core & BaaS Boundary",
+    short: "Core & BaaS",
+    mechanism: "Anti-corruption decoupling protects core banking ledgers while exposing partner and BaaS rails.",
+    tags: ["Core Isolation", "BIN Sponsorship", "Open APIs"],
   },
 ];
+
+/* ------------------------------------------------------------------ 04 Track Record */
+
+export interface LedgerRow {
+  id: string;
+  period: string;
+  institution: string;
+  location: string;
+  title: string;
+  /** One sentence, 22 words at most. */
+  mandate: string;
+}
+
+export const TRACK_RECORD: LedgerRow[] = [
+  {
+    id: "kib",
+    period: "Jun 2022 – Present",
+    institution: "Kuwait International Bank (KIB)",
+    location: "Kuwait City, Kuwait",
+    title: "Executive Manager – Head of Digital Technology",
+    mandate:
+      "Leads KIB’s digital technology function and Digital Factory, owning mobile, web and backend delivery across eight-plus retail, corporate and BaaS lines.",
+  },
+  {
+    id: "warba",
+    period: "Mar 2019 – Jun 2022",
+    institution: "Warba Bank",
+    location: "Kuwait City, Kuwait",
+    title: "Android Chapter Lead",
+    mandate:
+      "Built Warba’s flagship mobile bank from scratch and instituted the mobile chapter’s release governance inside the Al-Wateen Digital Factory.",
+  },
+  {
+    id: "cit-global",
+    period: "Jan 2020 – Jan 2021",
+    institution: "Cit Global · United Bank for Africa (UBA)",
+    location: "Cairo, Egypt · Remote, part-time",
+    title: "Mobile Consultant — Android & Flutter",
+    mandate:
+      "Defined the Flutter target architecture and led UBA Mobile Banking’s migration off Cordova while mentoring the in-house team.",
+  },
+  {
+    id: "itg",
+    period: "Nov 2017 – Mar 2019",
+    institution: "ITG Solutions",
+    location: "Amman / Cairo",
+    title: "Senior Mobile Developer · Acting Android Lead",
+    mandate:
+      "Led the Android and Flutter teams restructuring national-scale EduWave, MedXJordan and Islamic-content platforms on shared, reusable mobile frameworks.",
+  },
+  {
+    id: "advicenode",
+    period: "Oct 2016 – Oct 2017",
+    institution: "Advicenode",
+    location: "Cairo, Egypt",
+    title: "Software Engineer",
+    mandate:
+      "Engineered the core engine that generated robo-advisor and virtual-assistant applications from configurable decision trees in under 24 hours.",
+  },
+];
+
+/* ------------------------------------------------------------------ Briefs (slide-over reader) */
 
 export interface ExecutiveCaseStudy {
   id: string;
@@ -1651,6 +854,14 @@ export interface ExecutiveCaseStudy {
   technologies: string[];
 }
 
+/** Where each brief is opened from on the home page. */
+export const BRIEFS = {
+  factory: { id: "case-digital-factories", section: "factories", label: "Read 4-min factory brief" },
+  ecosystem: { id: "case-multi-vertical-ecosystem", section: "ecosystems", label: "Ecosystem architecture brief · 4 min" },
+  platform: { id: "case-schema-driven-platforms", section: "ecosystems", label: "Platform engineering brief · 3 min" },
+} as const;
+
+/** Long-form case studies, read in the slide-over drawer rather than in the page flow. */
 export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
   {
     id: "case-digital-factories",
@@ -1821,12 +1032,14 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
   },
 ];
 
+/* ------------------------------------------------------------------ Arabic executive brief (CV dossier, SEO summary) */
+
 export const ARABIC_EXECUTIVE_BRIEF = {
   name: "أحمد شاكر",
   title: "رئيس التكنولوجيا الرقمية (Head of Digital Technology) · مهندس ومؤسس المصانع الرقمية المصرفية",
   location: "مدينة الكويت، دولة الكويت",
   summary:
-    "قائد تنفيذي في قطاع التكنولوجيا المالية والتحول الرقمي المصرفي بخبرة تتجاوز 10 سنوات في بناء وقيادة المنظومات الهندسية والمصانع الرقمية (Digital Factories) من الصفر. ساهم بشكل رئيسي في تأسيس مصنعين رقميين في القطاع المصرفي الكويتي: مصنع «الوتين» الرقمي في بنك وربة، والمصنع الرقمي في البنك الدولي الكويتي (KIB)، مع قيادة فرق الهندسة عبر تطبيقات الهواتف الذكية (Android, iOS, Flutter)، وتطبيقات الويب، والخدمات المصغرة (Microservices)، والبنية السحابية (Kubernetes & Argo CD).",
+    "قائد تنفيذي في التحول الرقمي المصرفي بخبرة تتجاوز 10 سنوات في بناء المصانع الرقمية (Digital Factories) للبنوك الخاضعة للرقابة من الصفر. أسهم بدور رئيسي في تأسيس مصنعين رقميين في القطاع المصرفي الكويتي: مصنع «الوتين» الرقمي في بنك وربة، والمصنع الرقمي في البنك الدولي الكويتي (KIB)، ويقود اليوم هندسة قنوات الهواتف والويب والخدمات الخلفية، مع احتفاظ البنك بملكية أصوله الرقمية الأساسية دون ارتهان لأي مورّد.",
   highlights: [
     {
       label: "تأسيس المصانع الرقمية (Digital Factories)",
@@ -1841,37 +1054,37 @@ export const ARABIC_EXECUTIVE_BRIEF = {
       value: "أكثر من 16 منصة وتطبيقاً إنتاجياً في قطاعات البنوك، التكنولوجيا المالية (Advicenode)، التعليم (EduWave)، والصحة (MedXJordan)",
     },
   ],
+  /** One sentence per role, mirroring TRACK_RECORD. */
   careerSummary: [
     {
-      role: "رئيس التكنولوجيا الرقمية (Head of Digital Technology)",
+      role: "مدير تنفيذي – رئيس التكنولوجيا الرقمية",
       org: "البنك الدولي الكويتي (KIB)",
       period: "يونيو 2022 – حتى الآن",
-      desc: "تأسيس وقيادة المصنع الرقمي في KIB، ووضع خارطة الطريق التكنولوجية ومعايير المعمارية المؤسسية والحوكمة لإطلاق وتشغيل تطبيقات KIB Mobile و KIB Corporate و KIB Aqari و KIB Invest و BuyNow و WAGE ومنصة رعاية BIN والأنظمة الداخلية.",
+      desc: "قيادة وظيفة التكنولوجيا الرقمية والمصنع الرقمي في البنك، بمسؤولية كاملة عن قنوات الهواتف والويب والخدمات الخلفية عبر أكثر من ثمانية خطوط أعمال للأفراد والشركات والخدمات المصرفية كخدمة (BaaS).",
     },
     {
       role: "قائد فصل هندسة أندرويد (Android Chapter Lead)",
-      org: "بنك وربة (Warba Bank) — مصنع الوتين الرقمي",
+      org: "بنك وربة — مصنع «الوتين» الرقمي",
       period: "مارس 2019 – يونيو 2022",
-      desc: "أحد المؤسسين الرئيسيين لمصنع «الوتين» الرقمي في بنك وربة؛ بناء وإدارة تطبيق بنك وربة الأساسي من الصفر، وتأسيس خطوط التكامل المستمر (Jenkins CI/CD) وحوكمة الإطلاق، وتطوير تطبيق «فايز» ولوحة تحكم فايز (Flutter Web) وتطبيق «حصالة كيدز».",
+      desc: "بناء تطبيق بنك وربة الرئيسي من الصفر، وإرساء حوكمة الإصدارات لفريق تطبيقات الهواتف ضمن مصنع «الوتين» الرقمي.",
     },
     {
       role: "مستشار تطبيقات الهواتف الذكية (Android & Flutter)",
       org: "Cit Global — بنك أفريقيا المتحد (UBA)",
       period: "يناير 2020 – يناير 2021",
-      desc: "قيادة إعادة هيكلة وتحويل تطبيق الخدمات المصرفية لبنك UBA من منصة Cordova التقليدية إلى معمارية Flutter الحديثة مع بناء نظام الإدارة المالية الشخصية (PFM) والإشعارات الفورية.",
+      desc: "تحديد المعمارية المستهدفة على Flutter وقيادة انتقال تطبيق UBA المصرفي من Cordova، مع تأهيل الفريق الهندسي الداخلي.",
     },
     {
       role: "مطور أول تطبيقات الهواتف وقائد فريق أندرويد بالإنابة",
       org: "مجموعة التكنولوجيا المتكاملة (ITG Solutions)",
       period: "نوفمبر 2017 – مارس 2019",
-      desc: "قيادة فرق Android و Flutter وإعادة هيكلة وتطوير منظومة EduWave التعليمية بجميع إصداراتها (K-12، التعليم العالي Higher-ED، ونظام التقييم AMS)، ومنصة السياحة العلاجية الوطنية MedXJordan، وتطبيق «التفاسير العظيمة» (Great Tafsirs)، وتطبيق حساب الزكاة ووقفية خير الأردن.",
+      desc: "قيادة فريقَي Android و Flutter في إعادة هيكلة منصات وطنية، منها EduWave و MedXJordan ومنصات المحتوى الإسلامي، على أطر برمجية مشتركة قابلة لإعادة الاستخدام.",
     },
     {
       role: "مهندس برمجيات (Software Engineer)",
-      org: "Advicenode — منصة المستشار الآلي والمساعدات الذكية (Robo-Advisor & AI Virtual Assistants)",
+      org: "Advicenode",
       period: "أكتوبر 2016 – أكتوبر 2017",
-      desc: "هندسة وتطوير المحرك الأساسي لمنصة Advicenode القائم على التوليد الديناميكي للتطبيقات (Dynamic App Generator) لبناء تطبيقات المستشار الآلي (Robo-Advisors) والمساعدات الافتراضية الذكية عبر الويب وأندرويد (مثل منصة SuggestCar للاستشارات الآلية للسيارات وربط الخدمات السحابية).",
+      desc: "هندسة المحرك الأساسي الذي يولّد تطبيقات المستشار الآلي والمساعدات الافتراضية من أشجار قرار قابلة للتهيئة في أقل من 24 ساعة.",
     },
   ],
 };
-

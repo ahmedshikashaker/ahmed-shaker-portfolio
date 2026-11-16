@@ -1,48 +1,30 @@
 import Link from "next/link";
-import { ArrowGlyph, Button } from "@/components/ui/Button";
-import { BrandMark } from "@/components/ui/primitives";
+import { ChevronLink } from "@/components/launch/primitives";
 
 export default function NotFound() {
   return (
-    <main id="main" className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="blueprint-grid pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,#000_20%,transparent_75%)]"
-      />
-      <header className="shell flex h-20 items-center">
-        <Link href="/" className="group flex items-center gap-2.5">
-          <BrandMark />
-          <span className="font-display text-[17px] text-fg transition-colors group-hover:text-accent">Ahmed Shaker</span>
+    <main id="main" className="tone-auto launch flex min-h-[100dvh] flex-col">
+      <header className="mx-auto flex h-[3.25rem] w-full max-w-[76rem] items-center px-5 sm:px-8 lg:px-10">
+        <Link href="/" className="font-head text-[19px] font-semibold tracking-[-0.025em] text-l-fg transition-opacity hover:opacity-70">
+          Ahmed Shaker
         </Link>
       </header>
-      <div className="shell flex flex-1 flex-col justify-center pb-24 pt-10">
-        <div className="eyebrow flex items-center gap-3 text-fg-3">
-          <span className="text-accent">Error 404</span>
-          <span aria-hidden="true" className="h-px w-8 bg-line-3" />
-          <span>Off the blueprint</span>
-        </div>
-        <div
-          aria-hidden="true"
-          className="mt-8 select-none font-display text-[clamp(6rem,24vw,19rem)] leading-[0.95] tracking-[-0.05em] text-transparent [-webkit-text-stroke:1.5px_var(--c-accent-deep)]"
-        >
-          404
-        </div>
-        <h1 className="mt-8 max-w-2xl font-display text-display-3 text-fg">
-          This page isn’t on the <em className="text-accent">blueprint.</em>
+      <div className="mx-auto flex w-full max-w-[76rem] flex-1 flex-col justify-center px-5 pb-24 pt-10 sm:px-8 lg:px-10">
+        <p className="t-kicker text-l-fg-3">Error 404</p>
+        <h1 className="t-display mt-3 max-w-[12ch] text-l-fg">
+          This page <span className="text-l-accent">isn’t here.</span>
         </h1>
-        <p className="mt-4 max-w-lg text-lede text-fg-3">
-          The link may be outdated, or the page has moved. These are the best places to continue.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Button href="/" icon={<ArrowGlyph />}>
+        <p className="t-lede mt-6 max-w-[34ch] text-l-fg-3">The link may be outdated, or the page has moved. These are the best places to continue.</p>
+        <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <Link href="/" className="l-btn">
             Back to the portfolio
-          </Button>
-          <Button href="/blog" variant="secondary">
-            Read the writing
-          </Button>
-          <Button href="/#contact" variant="ghost">
+          </Link>
+          <ChevronLink href="/blog" className="text-[17px]">
+            Read the blog
+          </ChevronLink>
+          <ChevronLink href="/#contact" className="text-[17px]">
             Contact Ahmed
-          </Button>
+          </ChevronLink>
         </div>
       </div>
     </main>

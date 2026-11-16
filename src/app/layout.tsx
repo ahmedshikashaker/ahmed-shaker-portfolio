@@ -1,27 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Newsreader } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans_Arabic, Inter, Inter_Tight } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { EXECUTIVE_CASE_STUDIES, EXECUTIVE_PROFILE, SELECTED_PRODUCTS } from "@/data/portfolioData";
+import {
+  ARCHIVE_PLATFORMS,
+  BRIEFS,
+  EXECUTIVE_CASE_STUDIES,
+  EXECUTIVE_PROFILE,
+  FLAGSHIP_PLATFORMS,
+  PLATFORM_REGISTRY,
+} from "@/data/portfolioData";
 import { AppProviders } from "@/components/site/AppProviders";
-import { SiteCanvas } from "@/components/site/SiteCanvas";
 import { getAllPosts } from "@/lib/blog";
 import type { PaletteIndex } from "@/lib/site";
 import { THEME_COLORS, themeInitScript } from "@/lib/theme";
 
-// Display serif with an optical-size axis: sharper contrast at headline sizes, calmer at text sizes.
-const newsreader = Newsreader({
+// Display headings (bold statements, numbers) and text: the launch faces, site-wide.
+const interTight = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-newsreader",
+  variable: "--font-launch-display",
   display: "swap",
-  style: ["normal", "italic"],
-  axes: ["opsz"],
 });
 
-const plexSans = IBM_Plex_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-plex",
+  variable: "--font-launch-text",
   display: "swap",
 });
 
@@ -32,7 +36,7 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-// Same superfamily as the Latin UI face, so Arabic and English share one voice. Not preloaded:
+// Arabic posts. Not preloaded:
 // English pages pay no cost.
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
@@ -147,8 +151,13 @@ export default async function RootLayout({
 }>) {
   const posts = await getAllPosts();
   const paletteIndex: PaletteIndex = {
-    products: SELECTED_PRODUCTS.map((p) => ({ id: p.id, name: p.name, institution: p.institution, iconPath: p.iconPath })),
-    cases: EXECUTIVE_CASE_STUDIES.map((c) => ({ id: c.id, title: c.title, category: c.category })),
+    platforms: [...FLAGSHIP_PLATFORMS, ...ARCHIVE_PLATFORMS].map((p) => ({ id: p.id, name: p.name, institution: p.institution, iconPath: p.iconPath })),
+    briefs: EXECUTIVE_CASE_STUDIES.map((c) => ({
+      id: c.id,
+      title: c.title,
+      category: c.category,
+      section: Object.values(BRIEFS).find((brief) => brief.id === c.id)?.section ?? "ecosystems",
+    })),
     posts: posts.slice(0, 12).map((p) => ({ slug: p.slug, title: p.title, language: p.language })),
     contact: { email: EXECUTIVE_PROFILE.contact.email, linkedin: EXECUTIVE_PROFILE.contact.linkedin },
   };
@@ -238,8 +247,8 @@ export default async function RootLayout({
         "@type": "ItemList",
         "@id": `${SITE_URL}/#platforms`,
         name: "Production Platforms Delivered & Directed by Ahmed Shaker",
-        numberOfItems: SELECTED_PRODUCTS.length,
-        itemListElement: SELECTED_PRODUCTS.map((p, idx) => ({
+        numberOfItems: PLATFORM_REGISTRY.length,
+        itemListElement: PLATFORM_REGISTRY.map((p, idx) => ({
           "@type": "ListItem",
           position: idx + 1,
           item: {
@@ -262,7 +271,7 @@ export default async function RootLayout({
       lang="en"
       data-theme="dark"
       suppressHydrationWarning
-      className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable} ${plexArabic.variable}`}
+      className={`${interTight.variable} ${inter.variable} ${plexMono.variable} ${plexArabic.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -277,7 +286,6 @@ export default async function RootLayout({
         <a href="#main" className="skip-link no-print">
           Skip to content
         </a>
-        <SiteCanvas />
         <AppProviders paletteIndex={paletteIndex}>{children}</AppProviders>
         <Analytics />
         <SpeedInsights />

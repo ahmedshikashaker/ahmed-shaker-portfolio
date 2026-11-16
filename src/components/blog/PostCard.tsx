@@ -13,12 +13,12 @@ function seed(slug: string) {
   return (hash % 1000) / 1000;
 }
 
-/** Blueprint-style cover used when an article has no cover image. */
+/** Generated cover used when an article has no cover image: three layered plates and the category. */
 export function GeneratedCover({ post, large = false }: { post: PostMeta; large?: boolean }) {
   const s = seed(post.slug);
   const isAr = post.language === "ar";
   return (
-    <div className="blueprint-grid absolute inset-0 overflow-hidden bg-surface-2">
+    <div className="absolute inset-0 overflow-hidden bg-surface-2">
       <svg aria-hidden="true" viewBox="0 0 400 210" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
         {[0, 1, 2].map((i) => {
           const cx = 250 + s * 90 - i * 6;
@@ -55,9 +55,9 @@ export default function PostCard({ post, priority = false }: { post: PostMeta; p
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col overflow-hidden border border-line-2 bg-surface/50 transition-[border-color,background-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-line-3 hover:bg-surface"
+      className="group flex h-full flex-col overflow-hidden rounded-[24px] bg-surface transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[var(--shadow-float)]"
     >
-      <div className="relative w-full overflow-hidden border-b border-line" style={{ aspectRatio: "1.9 / 1" }}>
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: "1.9 / 1" }}>
         {post.coverImage ? (
           <Image
             src={post.coverImage}
