@@ -150,9 +150,9 @@ function LineupPhone({ entry, progress, reduce }: { entry: (typeof LINEUP)[numbe
           rotateY={turn}
           screen={
             front ? (
-              <ListingScreen icon={app.iconPath} name={app.name} maker={`${app.institution} · ${app.domain}`} shots={app.screenshots} priority />
+              <ListingScreen icon={app.iconPath} name={app.name} maker={`${app.institution} · ${app.domain}`} shots={app.screenshots} />
             ) : (
-              app.iconPath && <SplashScreen icon={app.iconPath} name={app.name} priority />
+              app.iconPath && <SplashScreen icon={app.iconPath} name={app.name} />
             )
           }
         />
