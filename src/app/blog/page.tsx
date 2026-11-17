@@ -6,7 +6,7 @@ import SeriesBanner from "@/components/blog/SeriesBanner";
 export const metadata: Metadata = {
   title: "Blog — Digital Banking, Architecture & Engineering Leadership",
   description:
-    "Articles by Ahmed Shaker (أحمد شاكر), Executive Manager – Head of Digital Technology at KIB, on digital banking, building digital factories, software architecture, mobile, DevOps, and engineering leadership.",
+    "Articles by Ahmed Shaker (أحمد شاكر) on digital banking, building digital factories, software architecture, AI governance and engineering leadership.",
   alternates: {
     canonical: `${SITE_URL}/blog`,
     types: { "application/rss+xml": `${SITE_URL}/blog/rss.xml` },
@@ -14,8 +14,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: `${SITE_URL}/blog`,
+    siteName: "Ahmed Shaker",
     title: "Ahmed Shaker — Blog",
-    description: "Insights on digital banking, architecture, and engineering leadership.",
+    description: "Digital banking, digital factories, software architecture, AI governance and engineering leadership.",
+    images: [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt: "Ahmed Shaker — Blog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ahmed Shaker — Blog",
+    description: "Digital banking, digital factories, software architecture, AI governance and engineering leadership.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
 };
 
@@ -40,7 +48,7 @@ export default async function BlogPage() {
   };
 
   return (
-    <main className="shell pt-32 sm:pt-40">
+    <div className="shell pt-32 sm:pt-40">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="grid gap-8 border-b border-line pb-12 lg:grid-cols-12 lg:items-end lg:gap-x-12">
         <div className="lg:col-span-8">
@@ -60,6 +68,6 @@ export default async function BlogPage() {
       </header>
       <SeriesBanner />
       <BlogIndex posts={posts} />
-    </main>
+    </div>
   );
 }

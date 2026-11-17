@@ -24,12 +24,17 @@ export async function generateMetadata({ params }: { params: Promise<{ series: s
   const data = await getSeriesWithPosts(slug);
   if (!data) return {};
   const { series, allParts } = data;
+  // Search results cut titles near 60 characters, so the page title is the series name alone;
+  // share cards have room for the part count.
   const title = `${series.title}: a series in ${allParts.length} parts`;
   const image = `${SITE_URL}/og/series/${series.slug}`;
   return {
-    title,
+    title: series.title,
     description: series.description,
-    alternates: { canonical: seriesUrl(series.slug) },
+    alternates: {
+      canonical: seriesUrl(series.slug),
+      types: { "application/rss+xml": [{ url: `${SITE_URL}/blog/rss.xml`, title: "Ahmed Shaker — Blog" }] },
+    },
     openGraph: {
       type: "website",
       url: seriesUrl(series.slug),
@@ -91,7 +96,7 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
   };
 
   return (
-    <main className="shell pt-32 sm:pt-40">
+    <div className="shell pt-32 sm:pt-40">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
@@ -419,6 +424,6 @@ export default async function SeriesPage({ params }: { params: Promise<{ series:
           All articles
         </Link>
       </section>
-    </main>
+    </div>
   );
 }

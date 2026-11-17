@@ -4,10 +4,13 @@ import { SERIES, seriesUrl } from "@/lib/series";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = (await getAllPosts()).filter((p) => !p.draft && !p.canonicalUrl);
+  // The home page lists the latest articles, so it changes when they do. A build-time date would
+  // claim a change on every deploy, and Google learns to ignore lastmod values that always move.
+  const latestPostDate = posts.map((p) => p.updatedDate ?? p.publishedDate).sort().at(-1);
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
+      lastModified: latestPostDate ? new Date(latestPostDate) : new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },

@@ -32,18 +32,36 @@ function shareImage(post: { slug: string; coverImage: string | null }) {
   return post.coverImage ? `${SITE_URL}${post.coverImage}` : `${SITE_URL}/og/blog/${post.slug}`;
 }
 
+/** The root layout's title template adds " | Ahmed Shaker", so a seoTitle that already ends with it would say it twice. */
+function pageTitle(post: { seoTitle: string; title: string }) {
+  return (post.seoTitle || post.title).replace(/\s*[|·–—-]\s*Ahmed Shaker\s*$/i, "").trim();
+}
+
+const absoluteUrl = (path: string) => (/^https?:\/\//.test(path) ? path : `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`);
+
+/** "Watch · 1:21 · sound on" → "PT1M21S", for VideoObject.duration. */
+function isoDuration(label?: string) {
+  const m = label?.match(/\b(?:(\d+):)?(\d{1,2}):(\d{2})\b/);
+  if (!m) return undefined;
+  const [h, min, s] = [Number(m[1] ?? 0), Number(m[2]), Number(m[3])];
+  return `PT${h ? `${h}H` : ""}${min ? `${min}M` : ""}${s}S`;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return {};
-  const title = post.seoTitle || post.title;
+  const title = pageTitle(post);
   const image = shareImage(post);
   return {
     title,
     description: post.excerpt,
     keywords: [...post.tags, post.categoryLabel, "Ahmed Shaker"],
     authors: [{ name: "Ahmed Shaker", url: SITE_URL }],
-    alternates: { canonical: post.canonicalUrl || post.url },
+    alternates: {
+      canonical: post.canonicalUrl || post.url,
+      types: { "application/rss+xml": [{ url: `${SITE_URL}/blog/rss.xml`, title: "Ahmed Shaker — Blog" }] },
+    },
     openGraph: {
       type: "article",
       url: post.url,
@@ -96,15 +114,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     keywords: post.tags.join(", "),
     url: post.url,
     mainEntityOfPage: { "@type": "WebPage", "@id": post.url },
-    author: {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#person`,
-      name: "Ahmed Shaker",
-      url: SITE_URL,
-      jobTitle: "Executive Manager – Head of Digital Technology",
-    },
+    // Job title and profiles live on the one Person node (#person, in the root layout), so posts
+    // published as independent research don't carry the employer title.
+    author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: "Ahmed Shaker", url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#person` },
     isPartOf: { "@id": `${SITE_URL}/blog#blog` },
+    ...(post.videos.length > 0 && {
+      video: post.videos.map((v) => ({
+        "@type": "VideoObject",
+        name: v.caption || post.title,
+        description: v.caption || post.excerpt,
+        thumbnailUrl: [v.poster ? absoluteUrl(v.poster) : shareImage(post)],
+        uploadDate: post.publishedDate,
+        contentUrl: absoluteUrl(v.src),
+        duration: isoDuration(v.label),
+        inLanguage: post.language,
+      })),
+    }),
   };
 
   const breadcrumbLd = {

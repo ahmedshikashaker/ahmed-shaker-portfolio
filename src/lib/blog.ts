@@ -44,9 +44,18 @@ export interface PostMeta {
   url: string;
 }
 
+export interface PostVideo {
+  src: string;
+  poster?: string;
+  caption?: string;
+  label?: string;
+}
+
 export interface Post extends PostMeta {
   renderable: RenderableTreeNode;
   toc: TocItem[];
+  /** Every {% video %} in the body, for VideoObject structured data. */
+  videos: PostVideo[];
 }
 
 export function categoryLabel(value: string): string {
@@ -88,6 +97,18 @@ function documentText(node: Node): string {
     }
   }
   return parts.join(" ");
+}
+
+function extractVideos(node: Node): PostVideo[] {
+  const videos: PostVideo[] = [];
+  const str = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : undefined);
+  for (const child of node.walk()) {
+    if (child.type === "tag" && child.tag === "video") {
+      const src = str(child.attributes.src);
+      if (src) videos.push({ src, poster: str(child.attributes.poster), caption: str(child.attributes.caption), label: str(child.attributes.label) });
+    }
+  }
+  return videos;
 }
 
 function extractToc(node: Node): TocItem[] {
@@ -256,7 +277,7 @@ export const getPost = cache(async (slug: string): Promise<Post | null> => {
     console.warn(`[blog] Markdoc validation issues in "${slug}":`, errors.map((e) => e.error.message));
   }
   const renderable = Markdoc.transform(node, markdocConfig);
-  return { ...meta, renderable, toc: extractToc(node) };
+  return { ...meta, renderable, toc: extractToc(node), videos: extractVideos(node) };
 });
 
 /** Posts sharing tags/category with the given post, best matches first. */

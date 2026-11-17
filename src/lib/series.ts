@@ -61,7 +61,7 @@ export const SERIES: Series[] = [
     tagline:
       "Eight architectural essays on how enterprises give AI the authority to act—without surrendering identity, policy, risk boundaries, or non-repudiation.",
     description:
-      "A flagship technical thought-leadership series on enterprise AI governance: separating probabilistic LLM reasoning from deterministic execution authority via canonical capability contracts, continuous authorization, cryptographic execution grants, and tamper-evident audit trails.",
+      "Eight essays on enterprise AI governance: keeping LLM reasoning apart from execution authority with capability contracts, runtime checks and audit trails.",
     centralThesis:
       "The future of enterprise AI is not about giving AI more access. It is about giving AI the right capabilities, within the right boundaries, under the right governance.",
     boardCardTitle: "Eight architectural laws before granting AI execution authority",
@@ -263,7 +263,7 @@ export const SERIES: Series[] = [
     title: "Digital Transformation, From the Inside",
     tagline: "Six essays on what actually slows a bank down, and what a board can do about it.",
     description:
-      "A six-part series on digital transformation in banking, told through one small change and the five walls it meets on its way to customers: the boundary, approvals, measurement, incentives and the core, then the first year that ties them together.",
+      "A six-part series on digital transformation in banking: one small change, the five walls it meets on its way to customers, and what a board can do about them.",
     boardCardTitle: "Six things to tell a board about digital transformation",
     parts: [
       {

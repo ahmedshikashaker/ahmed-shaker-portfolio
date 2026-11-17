@@ -56,10 +56,12 @@ export function ComingSoonPartTrigger({
     <button
       type="button"
       onClick={() => openComingSoonPart(part)}
-      aria-label={ariaLabel ?? `${part.title} — Coming Soon`}
+      // Named by its visible text (so voice-control users can say what they see), plus a status note.
+      aria-label={ariaLabel}
       className={className}
     >
       {children}
+      {!ariaLabel && <span className="sr-only"> (coming soon)</span>}
     </button>
   );
 }

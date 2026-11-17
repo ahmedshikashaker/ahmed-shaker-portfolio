@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUp, Copy } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import { EXECUTIVE_PROFILE, SECTION_COPY } from "@/data/portfolioData";
+import { ARABIC_EXECUTIVE_BRIEF, EXECUTIVE_PROFILE, SECTION_COPY } from "@/data/portfolioData";
 import { KuwaitTime } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/cn";
@@ -128,7 +128,11 @@ export default function Contact() {
 
         <div className="mt-24 flex flex-col gap-6 border-t border-l-line py-8 text-[13px] text-l-fg-3 lg:mt-32 lg:flex-row lg:items-center lg:justify-between">
           <span>
-            © {new Date().getFullYear()} {EXECUTIVE_PROFILE.name} · Executive Manager, Head of Digital Technology, KIB
+            © {new Date().getFullYear()} {EXECUTIVE_PROFILE.name} ·{" "}
+            <span lang="ar" dir="rtl" className="font-arabic">
+              {ARABIC_EXECUTIVE_BRIEF.name}
+            </span>{" "}
+            · Executive Manager, Head of Digital Technology, KIB
           </span>
           <nav aria-label="Footer">
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">

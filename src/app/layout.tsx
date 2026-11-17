@@ -9,7 +9,6 @@ import {
   EXECUTIVE_CASE_STUDIES,
   EXECUTIVE_PROFILE,
   FLAGSHIP_PLATFORMS,
-  PLATFORM_REGISTRY,
 } from "@/data/portfolioData";
 import { AppProviders } from "@/components/site/AppProviders";
 import { getAllPosts } from "@/lib/blog";
@@ -64,43 +63,16 @@ export const metadata: Metadata = {
       "Ahmed Shaker | Head of Digital Technology at KIB & Digital Factory Architect",
     template: "%s | Ahmed Shaker",
   },
+  // Search results show about 155 characters of a description.
   description:
-    "Official portfolio of Ahmed Shaker (أحمد شاكر), Head of Digital Technology at Kuwait International Bank (KIB) and former Android Chapter Lead at Warba Bank. Key builder of two banking Digital Factories from scratch and 16+ enterprise platforms across Mobile, Backend Microservices, and Cloud-Native DevOps.",
+    "Ahmed Shaker (أحمد شاكر), Head of Digital Technology at Kuwait International Bank (KIB). Key builder of two banking digital factories and 16+ platforms.",
   applicationName: "Ahmed Shaker Portfolio",
+  // No canonical here: every page sets its own, and an inherited one would point stray pages at the home page.
   alternates: {
-    canonical: SITE_URL,
     types: {
       "application/rss+xml": [{ url: `${SITE_URL}/blog/rss.xml`, title: "Ahmed Shaker — Blog" }],
     },
   },
-  keywords: [
-    "Ahmed Shaker",
-    "Ahmed Mahmoud Nady Shaker",
-    "أحمد شاكر",
-    "Ahmed Shaker KIB",
-    "Ahmed Shaker Kuwait",
-    "Ahmed Shaker Warba Bank",
-    "Head of Digital Technology",
-    "Kuwait International Bank",
-    "KIB Digital Factory",
-    "Warba Bank",
-    "Al-Wateen Digital Factory",
-    "Digital Banking Executive",
-    "Digital Transformation Leader",
-    "Banking Technology Architect",
-    "KIB Mobile",
-    "KIB Corporate",
-    "KIB Aqari",
-    "KIB Invest",
-    "BuyNow by KIB",
-    "WAGE by KIB",
-    "Al Muzaini BIN Sponsorship",
-    "UBA Mobile Banking",
-    "EduWave",
-    "MedXJordan",
-    "Great Tafsirs",
-    "Advicenode",
-  ],
   authors: [
     { name: "Ahmed Shaker", url: SITE_URL },
     { name: "Ahmed Shaker", url: EXECUTIVE_PROFILE.contact.linkedin },
@@ -120,7 +92,7 @@ export const metadata: Metadata = {
       "Ahmed Shaker — Head of Digital Technology at KIB & Digital Factory Architect",
     description:
       "Official executive portfolio of Ahmed Shaker (أحمد شاكر). 10+ years building and scaling regulated banking Digital Factories and 16+ platforms at KIB, Warba Bank, UBA, Advicenode, and ITG.",
-    siteName: "Ahmed Shaker (www.ahmed-shaker.com)",
+    siteName: "Ahmed Shaker",
   },
   twitter: {
     card: "summary_large_image",
@@ -129,14 +101,10 @@ export const metadata: Metadata = {
     description:
       "Architecting Digital Factories & production-grade banking ecosystems at Kuwait International Bank (KIB) and Warba Bank.",
   },
+  // Indexing is the default, so only the preview allowances are stated. An explicit "index, follow"
+  // here was inherited by the 404 page, which then carried both "noindex" and "index, follow".
   robots: {
-    index: true,
-    follow: true,
-    nocache: false,
     googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -162,21 +130,11 @@ export default async function RootLayout({
     contact: { email: EXECUTIVE_PROFILE.contact.email, linkedin: EXECUTIVE_PROFILE.contact.linkedin },
   };
 
+  // Site-wide entities only: the Person every post's author points to, and the WebSite.
+  // The ProfilePage and the platform list describe the home page, so they live there.
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "ProfilePage",
-        "@id": `${SITE_URL}/#profilepage`,
-        url: SITE_URL,
-        name: "Ahmed Shaker — Head of Digital Technology & Banking Digital Factory Architect",
-        description:
-          "Official executive technology portfolio of Ahmed Shaker (أحمد شاكر), Head of Digital Technology at Kuwait International Bank (KIB) and former Android Chapter Lead at Warba Bank.",
-        inLanguage: ["en", "ar"],
-        mainEntity: {
-          "@id": `${SITE_URL}/#person`,
-        },
-      },
       {
         "@type": "Person",
         "@id": `${SITE_URL}/#person`,
@@ -242,26 +200,6 @@ export default async function RootLayout({
         publisher: {
           "@id": `${SITE_URL}/#person`,
         },
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${SITE_URL}/#platforms`,
-        name: "Production Platforms Delivered & Directed by Ahmed Shaker",
-        numberOfItems: PLATFORM_REGISTRY.length,
-        itemListElement: PLATFORM_REGISTRY.map((p, idx) => ({
-          "@type": "ListItem",
-          position: idx + 1,
-          item: {
-            "@type": "SoftwareApplication",
-            name: p.name,
-            applicationCategory: p.category,
-            operatingSystem: p.platforms.join(", "),
-            description: p.tagline,
-            author: {
-              "@id": `${SITE_URL}/#person`,
-            },
-          },
-        })),
       },
     ],
   };

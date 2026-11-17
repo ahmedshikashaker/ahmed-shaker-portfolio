@@ -457,9 +457,10 @@ export default function ExecutionJourneyLab({
                     </span>
                   </div>
 
-                  <h4 className="mt-3 font-display text-[1.35rem] leading-snug text-fg">
+                  {/* h3 under the article's h2 (an h4 skipped a level); the inline size wins over the prose h3 rule. */}
+                  <h3 className="mt-3 font-display leading-snug text-fg" style={{ fontSize: "1.35rem" }}>
                     Stage {activeStageSpec.index}: {activeStageSpec.title}
-                  </h4>
+                  </h3>
 
                   <p
                     className={`mt-2 text-[13.5px] font-semibold leading-snug ${

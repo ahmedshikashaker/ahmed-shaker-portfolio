@@ -286,14 +286,14 @@ export function StatusBar({ tone = "light" }: { tone?: "light" | "dark" }) {
   );
 }
 
-/** The app opening: its icon centred on a black screen, with its name. */
-export function SplashScreen({ icon, name, caption }: { icon: string; name: string; caption?: string }) {
+/** The app opening: its icon centred on a black screen, with its name. `priority` preloads the icon (hero phones). */
+export function SplashScreen({ icon, name, caption, priority = false }: { icon: string; name: string; caption?: string; priority?: boolean }) {
   return (
     <span className="absolute inset-0 block bg-black">
       <StatusBar />
       <span className="absolute inset-x-0 flex flex-col items-center text-center text-white" style={{ top: "33%" }}>
         <span className="relative block overflow-hidden" style={{ width: u(0.34), height: u(0.34), borderRadius: u(0.078), boxShadow: `0 ${u(0.03)} ${u(0.08)} rgba(0,0,0,0.35)` }}>
-          <Image src={icon} alt="" fill sizes="(min-width: 1024px) 110px, 70px" className="object-cover" />
+          <Image src={icon} alt="" fill priority={priority} sizes="(min-width: 1024px) 110px, 70px" className="object-cover" />
         </span>
         <span className="font-head font-semibold tracking-[-0.02em]" style={{ marginTop: u(0.07), fontSize: u(0.075) }}>
           {name}
@@ -308,8 +308,12 @@ export function SplashScreen({ icon, name, caption }: { icon: string; name: stri
   );
 }
 
-/** A store page for one of the apps: icon, name, maker and two of its store screenshots. */
-export function ListingScreen({ icon, name, maker, shots }: { icon?: string; name: string; maker: string; shots: string[] }) {
+/**
+ * A store page for one of the apps: icon, name, maker and two of its store screenshots.
+ * `priority` preloads the screenshots: set it where the listing is the first thing on screen (the hero),
+ * since one of them is the page's largest paint and lazy loading held it back by about 2 s.
+ */
+export function ListingScreen({ icon, name, maker, shots, priority = false }: { icon?: string; name: string; maker: string; shots: string[]; priority?: boolean }) {
   return (
     <span className="absolute inset-0 block bg-white text-[#1d1d1f]">
       <StatusBar tone="dark" />
@@ -338,7 +342,7 @@ export function ListingScreen({ icon, name, maker, shots }: { icon?: string; nam
       <span className="absolute flex" style={{ top: u(0.56), left: u(0.07), right: u(-0.3), gap: u(0.035) }}>
         {shots.slice(0, 3).map((shot) => (
           <span key={shot} className="relative block shrink-0 overflow-hidden bg-[#f5f5f7]" style={{ width: u(0.47), height: u(0.94), borderRadius: u(0.04), boxShadow: "0 0 0 0.5px rgba(0,0,0,0.1)" }}>
-            <Image src={shot} alt="" fill sizes="(min-width: 1024px) 140px, 90px" className="object-cover object-top" />
+            <Image src={shot} alt="" fill priority={priority} sizes="(min-width: 1024px) 140px, 90px" className="object-cover object-top" />
           </span>
         ))}
       </span>

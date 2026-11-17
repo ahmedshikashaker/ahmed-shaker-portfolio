@@ -7,9 +7,9 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
       <div className="print:hidden">
         <Header variant="blog" />
       </div>
-      <div id="main" tabIndex={-1} className="flex-1 outline-none">
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
         {children}
-      </div>
+      </main>
       <footer className="mt-28 border-t border-line print:hidden">
         <div className="shell flex flex-col gap-6 py-10 text-[13px] text-fg-3 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="group">
