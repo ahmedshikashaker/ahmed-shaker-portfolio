@@ -95,7 +95,7 @@ export const Normalize: React.FC<{ dur: number }> = ({ dur }) => {
                   fontFamily: MONO,
                   fontSize: portrait ? 16.5 : 21,
                   color: s.color,
-                  background: "rgba(10, 14, 23, 0.7)",
+                  background: "#ffffff",
                   border: `1px solid ${C.line}`,
                   borderRadius: 10,
                   padding: portrait ? "8px 10px" : "8px 14px",
@@ -120,7 +120,6 @@ export const Normalize: React.FC<{ dur: number }> = ({ dur }) => {
             opacity: cP,
             transform: `scale(${0.94 + 0.06 * cP})`,
             padding: portrait ? "30px 34px" : "34px 40px",
-            boxShadow: `0 0 ${90 * cP}px -20px rgba(216, 187, 132, 0.45), 0 30px 80px -34px rgba(0,0,0,0.75)`,
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -129,7 +128,7 @@ export const Normalize: React.FC<{ dur: number }> = ({ dur }) => {
             </div>
             <div style={{ fontFamily: MONO, fontSize: 16, color: C.fg4, letterSpacing: "0.1em" }}>IMMUTABLE · VERSIONED</div>
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 50 : 52, color: C.fg, marginTop: 14, letterSpacing: "-0.01em" }}>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 46 : 48, color: C.fg, marginTop: 14, letterSpacing: "-0.03em" }}>
             leave.request.create<span style={{ color: C.accent }}>@v5</span>
           </div>
           <div style={{ height: 1, background: C.line2, margin: portrait ? "18px 0 8px" : "20px 0 10px" }} />
@@ -224,9 +223,9 @@ export const Pipeline: React.FC<{ dur: number }> = ({ dur }) => {
     if (active === 2) return { c: C.danger, glow: 0, o: 1 };
     const reviewed = i % 8 === 3 && i < 144; // 18 of 140
     const certified = reviewed && i % 24 !== 3; // 12 of the 18
-    if (active === 3) return { c: reviewed ? C.accent : "rgba(240,144,127,0.35)", glow: reviewed ? 12 : 0, o: 1 };
-    if (active === 4) return { c: certified ? C.accent2 : reviewed ? "rgba(216,187,132,0.3)" : "rgba(240,144,127,0.18)", glow: certified ? 14 : 0, o: 1 };
-    return { c: certified ? C.signal : "rgba(232,224,207,0.08)", glow: certified ? 18 : 0, o: 1 };
+    if (active === 3) return { c: reviewed ? C.accent : "rgba(215, 0, 21, 0.3)", glow: 0, o: 1 };
+    if (active === 4) return { c: certified ? C.accent2 : reviewed ? "rgba(0, 113, 227, 0.3)" : "rgba(215, 0, 21, 0.16)", glow: 0, o: 1 };
+    return { c: certified ? C.signal : "rgba(0, 0, 0, 0.08)", glow: 0, o: 1 };
   };
 
   const track = portrait
@@ -269,15 +268,14 @@ export const Pipeline: React.FC<{ dur: number }> = ({ dur }) => {
                       width: 44,
                       height: 44,
                       borderRadius: 99,
-                      border: `2px solid ${on ? tone : C.line3}`,
+                       border: `2px solid ${on ? tone : C.line3}`,
                       background: cur ? tone : C.bg2,
-                      color: cur ? C.bg : on ? tone : C.fg4,
+                      color: cur ? "#ffffff" : on ? tone : C.fg4,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       fontFamily: MONO,
                       fontSize: 19,
-                      boxShadow: cur ? `0 0 28px ${tone}` : "none",
                     }}
                   >
                     {i + 1}
@@ -310,13 +308,12 @@ export const Pipeline: React.FC<{ dur: number }> = ({ dur }) => {
                       borderRadius: 99,
                       border: `2px solid ${on ? tone : C.line3}`,
                       background: cur ? tone : C.bg2,
-                      color: cur ? C.bg : on ? tone : C.fg4,
+                      color: cur ? "#ffffff" : on ? tone : C.fg4,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       fontFamily: MONO,
                       fontSize: 19,
-                      boxShadow: cur ? `0 0 30px ${tone}` : "none",
                     }}
                   >
                     {i + 1}
@@ -365,9 +362,10 @@ export const Pipeline: React.FC<{ dur: number }> = ({ dur }) => {
           <div
             style={{
               fontFamily: SERIF,
+              fontWeight: 700,
               fontSize: portrait ? 190 : 200,
               lineHeight: 0.9,
-              letterSpacing: "-0.04em",
+              letterSpacing: "-0.055em",
               color: active === 5 ? C.signal : active === 2 ? C.danger : C.fg,
             }}
           >

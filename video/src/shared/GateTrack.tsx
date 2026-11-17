@@ -56,13 +56,12 @@ export const GateTrack: React.FC<{
                   borderRadius: 99,
                   border: `2px solid ${t}`,
                   background: filled ? t : C.bg2,
-                  color: filled ? C.bg : s === "idle" ? C.fg4 : t,
+                  color: filled ? "#ffffff" : s === "idle" ? C.fg4 : t,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: MONO,
                   fontSize: 19,
-                  boxShadow: filled ? `0 0 28px ${t}` : "none",
                 }}
               >
                 {i + 1}
@@ -95,13 +94,12 @@ export const GateTrack: React.FC<{
                 borderRadius: 99,
                 border: `2px solid ${t}`,
                 background: filled ? t : C.bg2,
-                color: filled ? C.bg : s === "idle" ? C.fg4 : t,
+                color: filled ? "#ffffff" : s === "idle" ? C.fg4 : t,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontFamily: MONO,
                 fontSize: 19,
-                boxShadow: filled ? `0 0 30px ${t}` : "none",
               }}
             >
               {i + 1}

@@ -68,7 +68,7 @@ const Stopwatch: React.FC<{ p: number; size: number }> = ({ p, size }) => {
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
       <rect x={cx - size * 0.07} y={size * 0.06} width={size * 0.14} height={size * 0.08} rx={4} fill={C.fg3} />
       <rect x={cx - size * 0.025} y={size * 0.13} width={size * 0.05} height={size * 0.07} fill={C.fg3} />
-      <circle cx={cx} cy={cy} r={r} fill="rgba(10,14,23,0.6)" stroke={C.line3} strokeWidth={4} />
+      <circle cx={cx} cy={cy} r={r} fill={C.surface2} stroke={C.line3} strokeWidth={4} />
       <circle
         cx={cx}
         cy={cy}
@@ -129,14 +129,13 @@ export const BoardQuestion: React.FC<{ dur: number }> = ({ dur }) => {
 
         <div
           style={{
-            ...card(pop > 0.5 ? "rgba(240,144,127,0.5)" : C.line2),
+            ...card(pop > 0.5 ? "rgba(215, 0, 21, 0.45)" : C.line),
             ...inner,
             ...rise(p2, 22),
             left: c2.x,
             top: c2.y,
             width: c2.w,
             height: c2.h,
-            boxShadow: `0 30px 80px -34px rgba(0,0,0,0.75), 0 0 ${50 * pop}px -18px rgba(240,144,127,0.55)`,
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -145,7 +144,7 @@ export const BoardQuestion: React.FC<{ dur: number }> = ({ dur }) => {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <div style={{ textAlign: "right", opacity: interpolate(pop, [0, 0.4], [0, 1], clamp), transform: `scale(${0.8 + 0.2 * pop})`, transformOrigin: "right center" }}>
-                <div style={{ fontFamily: SERIF, fontSize: portrait ? 64 : 68, lineHeight: 1, color: C.signal, whiteSpace: "nowrap" }}>{"< 1 s"}</div>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.04em", fontSize: portrait ? 64 : 68, lineHeight: 1, color: C.signal, whiteSpace: "nowrap" }}>{"< 1 s"}</div>
                 <div style={{ fontFamily: MONO, fontSize: 14, letterSpacing: "0.14em", color: C.fg3, marginTop: 8 }}>SUB-SECOND STOP</div>
               </div>
               <Stopwatch p={sweep} size={portrait ? 128 : 136} />
@@ -192,7 +191,7 @@ export const RolloutRings: React.FC<{ dur: number }> = ({ dur }) => {
         border: `1.5px solid ${col}`,
         borderRadius: 999,
         padding: "10px 22px",
-        background: "rgba(10,14,23,0.7)",
+        background: C.surface,
         whiteSpace: "nowrap",
       }}
     >
@@ -213,7 +212,7 @@ export const RolloutRings: React.FC<{ dur: number }> = ({ dur }) => {
               <path d={`M ${(portrait ? 150 : 180) - 16} 3 L ${portrait ? 150 : 180} 12 L ${(portrait ? 150 : 180) - 16} 21`} fill="none" stroke={C.danger} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {pill("R3 WRITES", C.danger)}
-            <div style={{ position: "absolute", left: -8, top: "50%", height: 4, marginTop: -2, width: `calc(${strike * 100}% + 16px)`, background: C.danger, borderRadius: 4, boxShadow: "0 0 14px rgba(240,144,127,0.6)" }} />
+            <div style={{ position: "absolute", left: -8, top: "50%", height: 4, marginTop: -2, width: `calc(${strike * 100}% + 16px)`, background: C.danger, borderRadius: 4 }} />
           </div>
           <span
             style={{
@@ -285,9 +284,9 @@ export const RolloutRings: React.FC<{ dur: number }> = ({ dur }) => {
                 gap: portrait ? 20 : 24,
                 padding: portrait ? "0 22px" : "0 26px",
                 borderRadius: 16,
-                border: `1.5px solid ${C.line2}`,
+                border: `1.5px solid ${C.line}`,
                 borderLeft: `4px solid ${RING_COLORS[i]}`,
-                background: "linear-gradient(90deg, rgba(24,33,54,0.92), rgba(15,21,37,0.85))",
+                background: C.surface,
               }}
             >
               <span style={{ fontFamily: MONO, fontSize: portrait ? 17 : 18, letterSpacing: "0.14em", color: C.fg4, width: portrait ? 84 : 92, flex: "none" }}>RING {i}</span>
@@ -351,7 +350,7 @@ export const ReleaseGates: React.FC<{ dur: number }> = ({ dur }) => {
           const fp = prog(f, flipT(i), 14);
           const isPassed = fp >= 0.5;
           const hl = HIGHLIGHTS[i];
-          const accentBorder = isPassed ? (hl ? C.accent : "rgba(125,211,191,0.45)") : C.line2;
+          const accentBorder = isPassed ? (hl ? C.accent : "rgba(36, 138, 61, 0.4)") : C.line;
           return (
             <div
               key={i}
@@ -374,12 +373,7 @@ export const ReleaseGates: React.FC<{ dur: number }> = ({ dur }) => {
                   flexDirection: "column",
                   justifyContent: "space-between",
                   transform: `scaleX(${Math.max(0.04, Math.abs(Math.cos(Math.PI * fp)))})`,
-                  background: isPassed
-                    ? hl
-                      ? "linear-gradient(180deg, rgba(216,187,132,0.16), rgba(15,21,37,0.94))"
-                      : "linear-gradient(180deg, rgba(125,211,191,0.10), rgba(15,21,37,0.94))"
-                    : card().background,
-                  boxShadow: isPassed && hl ? "0 0 40px -14px rgba(216,187,132,0.6)" : card().boxShadow,
+                  background: C.surface,
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -392,7 +386,7 @@ export const ReleaseGates: React.FC<{ dur: number }> = ({ dur }) => {
                       height: 38,
                       borderRadius: 99,
                       border: `2px solid ${isPassed ? C.signal : C.line3}`,
-                      background: isPassed ? "rgba(125,211,191,0.18)" : "transparent",
+                      background: isPassed ? "rgba(36, 138, 61, 0.12)" : "transparent",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -423,7 +417,7 @@ export const ReleaseGates: React.FC<{ dur: number }> = ({ dur }) => {
             ...rise(prog(f, 90, 18), 14),
           }}
         >
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 72 : 76, lineHeight: 1, color: passed === 12 ? C.signal : C.fg }}>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.04em", fontSize: portrait ? 72 : 76, lineHeight: 1, color: passed === 12 ? C.signal : C.fg }}>
             {passed}
             <span style={{ color: C.fg4 }}> / 12</span>
           </span>
@@ -466,8 +460,7 @@ const Toggle: React.FC<{ on: number; scale?: number }> = ({ on, scale = 1 }) => 
         borderRadius: 99,
         position: "relative",
         border: `2px solid ${on > 0.5 ? C.danger : C.line3}`,
-        background: `rgba(240,144,127,${0.22 * on})`,
-        boxShadow: on > 0.5 ? `0 0 ${26 * on}px -6px rgba(240,144,127,0.7)` : "none",
+        background: `rgba(215, 0, 21, ${0.14 * on})`,
       }}
     >
       <div
@@ -559,7 +552,7 @@ export const KillSwitches: React.FC<{ dur: number }> = ({ dur }) => {
               return (
                 <div key={c.t} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", opacity: 1 - 0.45 * off }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                    <span style={{ width: 12, height: 12, borderRadius: 99, background: off > 0.5 ? C.fg4 : C.signal, boxShadow: off > 0.5 ? "none" : `0 0 12px ${C.signal}` }} />
+                    <span style={{ width: 12, height: 12, borderRadius: 99, background: off > 0.5 ? C.fg4 : C.signal }} />
                     <span style={{ fontFamily: SANS, fontSize: portrait ? 25 : 27, color: off > 0.5 ? C.fg3 : C.fg, textDecoration: off > 0.5 ? "line-through" : "none", textDecorationColor: C.fg4 }}>{c.t}</span>
                   </div>
                   <span
@@ -568,7 +561,7 @@ export const KillSwitches: React.FC<{ dur: number }> = ({ dur }) => {
                       fontSize: portrait ? 14 : 15,
                       letterSpacing: "0.12em",
                       color: off > 0.5 ? C.danger : C.signal,
-                      border: `1px solid ${off > 0.5 ? "rgba(240,144,127,0.5)" : "rgba(125,211,191,0.45)"}`,
+                      border: `1px solid ${off > 0.5 ? "rgba(215, 0, 21, 0.45)" : "rgba(36, 138, 61, 0.4)"}`,
                       borderRadius: 8,
                       padding: "4px 10px",
                     }}
@@ -582,18 +575,17 @@ export const KillSwitches: React.FC<{ dur: number }> = ({ dur }) => {
               style={{
                 marginTop: portrait ? 6 : 12,
                 borderRadius: 16,
-                border: `1.5px solid rgba(125,211,191,${0.45 + 0.4 * liveEmph})`,
-                background: `rgba(125,211,191,${0.06 + 0.06 * liveEmph})`,
+                border: `1.5px solid rgba(36, 138, 61, ${0.4 + 0.35 * liveEmph})`,
+                background: `rgba(36, 138, 61, ${0.05 + 0.05 * liveEmph})`,
                 padding: portrait ? "14px 20px" : "20px 24px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                boxShadow: `0 0 ${(20 + 30 * pulse) * liveEmph}px -10px rgba(125,211,191,0.8)`,
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <span style={{ width: 14, height: 14, borderRadius: 99, background: C.signal, boxShadow: `0 0 ${10 + 10 * pulse}px ${C.signal}` }} />
-                <span style={{ fontFamily: SERIF, fontSize: portrait ? 32 : 34, color: C.fg }}>R0 knowledge answers</span>
+                <span style={{ width: 14, height: 14, borderRadius: 99, background: C.signal }} />
+                <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.025em", fontSize: portrait ? 30 : 32, color: C.fg }}>R0 knowledge answers</span>
               </div>
               <span style={{ fontFamily: MONO, fontSize: portrait ? 17 : 18, fontWeight: 500, letterSpacing: "0.16em", color: C.signal }}>LIVE</span>
             </div>
@@ -683,7 +675,7 @@ export const BundlePromotion: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={s.t}
               style={{
-                ...card(lit ? (isFinal ? "rgba(125,211,191,0.6)" : "rgba(216,187,132,0.55)") : C.line2),
+                ...card(lit ? (isFinal ? "rgba(36, 138, 61, 0.5)" : "rgba(0, 113, 227, 0.45)") : C.line),
                 ...rise(prog(f, 18 + i * 7, 16), 16),
                 position: "absolute",
                 left: b.x,
@@ -696,7 +688,6 @@ export const BundlePromotion: React.FC<{ dur: number }> = ({ dur }) => {
                 alignItems: portrait ? "center" : "flex-start",
                 justifyContent: portrait ? "flex-start" : "space-between",
                 gap: portrait ? 26 : 0,
-                boxShadow: isFinal && lit ? `0 0 ${60 * final}px -16px rgba(125,211,191,0.7)` : card().boxShadow,
               }}
             >
               <div
@@ -706,7 +697,7 @@ export const BundlePromotion: React.FC<{ dur: number }> = ({ dur }) => {
                   flex: "none",
                   borderRadius: 99,
                   border: `2px solid ${lit ? tone : C.line3}`,
-                  background: lit ? `rgba(${isFinal ? "125,211,191" : "216,187,132"},${0.18 * litP})` : "transparent",
+                  background: lit ? `rgba(${isFinal ? "36, 138, 61" : "0, 113, 227"}, ${0.12 * litP})` : "transparent",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -749,7 +740,7 @@ export const Thesis: React.FC<{ dur: number }> = ({ dur }) => {
         </Eyebrow>
         <div style={{ marginTop: 30, fontFamily: SANS, fontSize: portrait ? 32 : 34, color: C.fg3, ...rise(prog(f, 14, 18)) }}>The future of enterprise AI is</div>
         <div style={{ position: "relative", display: "inline-block", marginTop: 10, ...rise(prog(f, 76, 18)) }}>
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 78 : 88, letterSpacing: "-0.02em", color: strike < 0.5 ? C.fg : C.fg3 }}>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 78 : 88, letterSpacing: "-0.035em", color: strike < 0.5 ? C.fg : C.fg3 }}>
             not more access.
           </span>
           <div
@@ -761,7 +752,6 @@ export const Thesis: React.FC<{ dur: number }> = ({ dur }) => {
               width: `calc(${strike * 100}% + 20px)`,
               background: C.danger,
               borderRadius: 6,
-              boxShadow: "0 0 18px rgba(240,144,127,0.6)",
             }}
           />
         </div>
@@ -796,7 +786,6 @@ export const Thesis: React.FC<{ dur: number }> = ({ dur }) => {
                   height: 14,
                   borderRadius: 99,
                   background: on > 0.5 ? C.accent : C.line3,
-                  boxShadow: on > 0.5 ? `0 0 ${last ? 22 : 12}px rgba(216,187,132,0.7)` : "none",
                 }}
               />
               <span style={{ fontFamily: MONO, fontSize: portrait ? 14 : 15, letterSpacing: "0.08em", textTransform: "uppercase", color: on > 0.5 ? C.fg2 : C.fg4, whiteSpace: "nowrap" }}>

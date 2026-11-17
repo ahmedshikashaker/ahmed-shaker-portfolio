@@ -10,8 +10,8 @@ const tint = (hex: string, a: number) => {
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
 };
 
-const R1C = "#aac7a1"; // signal → accent
-const R3C = "#e4a581"; // accent → danger
+const R1C = "#008060"; // signal → accent
+const R3C = "#d96500"; // accent → danger
 
 const TIERS = [
   { id: "R0", name: "Conversational", short: "Autonomous", gate: "autonomous · no footprint", color: C.signal },
@@ -65,12 +65,12 @@ const Avatar: React.FC<{ cx: number; cy: number; r: number; initials: string; co
       height: r * 2,
       borderRadius: 999,
       border: `2.5px solid ${color}`,
-      background: `radial-gradient(circle at 50% 35%, ${tint(color, 0.28)}, rgba(15,21,37,0.95) 72%)`,
-      boxShadow: `0 0 ${40 * p}px -6px ${tint(color, 0.55)}`,
+      background: tint(color, 0.12),
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontFamily: SERIF,
+      fontWeight: 700,
       fontSize: r * 0.78,
       color,
       opacity: p * (1 - dim),
@@ -104,7 +104,7 @@ export const ConfirmEverything: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={a}
               style={{
-                ...card(last ? "rgba(240,144,127,0.45)" : C.line3),
+                ...card(last ? "rgba(215, 0, 21, 0.45)" : C.line2),
                 position: "absolute",
                 left: m.x + i * m.dx,
                 top: m.y + i * m.dy,
@@ -122,7 +122,7 @@ export const ConfirmEverything: React.FC<{ dur: number }> = ({ dur }) => {
               <div style={{ fontFamily: MONO, fontSize: portrait ? 16 : 15, letterSpacing: "0.14em", textTransform: "uppercase", color: last ? C.danger : C.fg4 }}>
                 action · {a}
               </div>
-              <div style={{ fontFamily: SERIF, fontSize: portrait ? 40 : 38, color: C.fg, lineHeight: 1 }}>Are you sure?</div>
+              <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 38 : 36, color: C.fg, lineHeight: 1 }}>Are you sure?</div>
               <div style={{ display: "flex", justifyContent: "flex-end", gap: 14 }}>
                 <span style={{ fontFamily: SANS, fontSize: 19, color: C.fg3, padding: "9px 20px", borderRadius: 10, border: `1px solid ${C.line2}` }}>Cancel</span>
                 <span style={{ fontFamily: SANS, fontWeight: 600, fontSize: 19, color: C.bg, padding: "9px 24px", borderRadius: 10, background: C.accent }}>Confirm</span>
@@ -179,11 +179,12 @@ export const TwoFailures: React.FC<{ dur: number }> = ({ dur }) => {
           height: 84,
           borderRadius: 99,
           border: `2.5px solid ${color}`,
-          background: `radial-gradient(circle at 50% 35%, ${tint(color, 0.28)}, rgba(15,21,37,0.95) 72%)`,
+          background: tint(color, 0.12),
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontFamily: SERIF,
+          fontWeight: 700,
           fontSize: 40,
           color,
         }}
@@ -219,12 +220,12 @@ export const TwoFailures: React.FC<{ dur: number }> = ({ dur }) => {
           {cardTitle("01", "Approval fatigue")}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
             <div>
-              <div style={{ fontFamily: SERIF, fontSize: portrait ? 150 : 170, lineHeight: 0.9, color: count >= 20 ? C.danger : C.fg, fontVariantNumeric: "tabular-nums" }}>{count}</div>
+              <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.05em", fontSize: portrait ? 150 : 170, lineHeight: 0.9, color: count >= 20 ? C.danger : C.fg, fontVariantNumeric: "tabular-nums" }}>{count}</div>
               <div style={{ fontFamily: MONO, fontSize: portrait ? 19 : 20, letterSpacing: "0.12em", textTransform: "uppercase", color: C.fg3, marginTop: 10 }}>approvals today</div>
             </div>
             <div style={{ position: "relative", ...rise(prog(f, 42, 16), 14) }}>
-              <div style={{ ...card(C.line3), width: portrait ? 340 : 320, padding: "22px 24px", display: "flex", flexDirection: "column", gap: 18 }}>
-                <div style={{ fontFamily: SERIF, fontSize: 30, color: C.fg }}>Are you sure?</div>
+              <div style={{ ...card(C.line2), background: "#ffffff", width: portrait ? 340 : 320, padding: "22px 24px", display: "flex", flexDirection: "column", gap: 18 }}>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.025em", fontSize: 28, color: C.fg }}>Are you sure?</div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <span
                     style={{
@@ -235,7 +236,6 @@ export const TwoFailures: React.FC<{ dur: number }> = ({ dur }) => {
                       padding: "9px 24px",
                       borderRadius: 10,
                       background: pressing ? C.accent2 : C.accent,
-                      boxShadow: pressing ? "0 0 26px rgba(216,187,132,0.8)" : "none",
                     }}
                   >
                     Confirm
@@ -253,7 +253,7 @@ export const TwoFailures: React.FC<{ dur: number }> = ({ dur }) => {
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", ...rise(prog(f, 120, 18), 12) }}>
-            <span style={{ fontFamily: MONO, fontSize: 17, letterSpacing: "0.08em", color: C.danger, padding: "7px 14px", borderRadius: 999, border: "1px solid rgba(240,144,127,0.45)" }}>
+            <span style={{ fontFamily: MONO, fontSize: 17, letterSpacing: "0.08em", color: C.danger, padding: "7px 14px", borderRadius: 999, border: "1px solid rgba(215, 0, 21, 0.4)" }}>
               the cookie-banner effect
             </span>
             <span style={{ fontFamily: SANS, fontSize: portrait ? 21 : 22, color: C.fg3 }}>clicked by habit, never read</span>
@@ -293,8 +293,8 @@ export const TwoFailures: React.FC<{ dur: number }> = ({ dur }) => {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: portrait ? 30 : 10 }}>
             {person("R", C.blue, "Requester", "typed the prompt", prog(f, 160, 16))}
             <div style={{ width: 120, height: 100, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", opacity: prog(f, 176, 14) }}>
-              <span style={{ position: "absolute", fontFamily: SERIF, fontSize: 84, color: C.fg3, opacity: 1 - neq }}>=?</span>
-              <span style={{ position: "absolute", fontFamily: SERIF, fontSize: 104, color: C.danger, opacity: neq, transform: `scale(${0.6 + 0.4 * neq})`, textShadow: "0 0 30px rgba(240,144,127,0.6)" }}>≠</span>
+              <span style={{ position: "absolute", fontFamily: SERIF, fontWeight: 700, fontSize: 84, color: C.fg3, opacity: 1 - neq }}>=?</span>
+              <span style={{ position: "absolute", fontFamily: SERIF, fontWeight: 700, fontSize: 104, color: C.danger, opacity: neq, transform: `scale(${0.6 + 0.4 * neq})` }}>≠</span>
             </div>
             {person("A", C.signal, "Approver", "holds the authority", prog(f, 188, 16))}
           </div>
@@ -400,8 +400,8 @@ export const BlastRadius: React.FC<{ dur: number }> = ({ dur }) => {
                 gap: portrait ? 22 : 26,
                 padding: portrait ? "0 22px" : "0 28px",
                 borderRadius: 16,
-                border: `1.5px solid ${tint(t.color, 0.32)}`,
-                background: `linear-gradient(90deg, ${tint(t.color, 0.1)}, rgba(17,24,42,0.9) 45%)`,
+                border: `1.5px solid ${tint(t.color, 0.25)}`,
+                background: C.surface,
               }}
             >
               <div
@@ -490,14 +490,14 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
         >
           <div>
             <div style={{ fontFamily: MONO, fontSize: portrait ? 16 : 17, letterSpacing: "0.14em", color: C.fg4 }}>PROPOSED ACTION</div>
-            <div style={{ fontFamily: SERIF, fontSize: portrait ? 36 : 40, color: C.fg, marginTop: 8 }}>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 34 : 38, color: C.fg, marginTop: 8 }}>
               Base tier <span style={{ fontFamily: MONO, fontSize: portrait ? 30 : 34, color: R1C }}>R1</span>
             </div>
             <div style={{ fontFamily: MONO, fontSize: portrait ? 15 : 16, color: C.fg3, marginTop: 6 }}>from its certified contract</div>
           </div>
           <div style={{ textAlign: "right" }}>
             <div style={{ fontFamily: MONO, fontSize: portrait ? 16 : 17, letterSpacing: "0.14em", color: C.fg4 }}>EFFECTIVE</div>
-            <div style={{ fontFamily: MONO, fontWeight: 500, fontSize: portrait ? 62 : 68, lineHeight: 1, color: cur.color, marginTop: 6, textShadow: `0 0 30px ${tint(cur.color, 0.5)}` }}>{cur.id}</div>
+            <div style={{ fontFamily: MONO, fontWeight: 500, fontSize: portrait ? 62 : 68, lineHeight: 1, color: cur.color, marginTop: 6 }}>{cur.id}</div>
           </div>
         </div>
 
@@ -517,9 +517,8 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
                 width: L.trig.w,
                 height: L.trig.h,
                 borderRadius: 18,
-                border: `1.5px solid ${lit > 0.5 ? tint(col, 0.6) : C.line2}`,
-                background: lit > 0.02 ? `linear-gradient(90deg, ${tint(col, 0.14 * lit)}, rgba(17,24,42,0.9) 60%)` : "rgba(17,24,42,0.7)",
-                boxShadow: lit > 0.5 ? `0 0 ${36 * lit}px -12px ${tint(col, 0.7)}` : "none",
+                border: `1.5px solid ${lit > 0.5 ? tint(col, 0.5) : C.line}`,
+                background: C.surface,
                 padding: portrait ? "0 24px" : "0 30px",
                 display: "flex",
                 alignItems: "center",
@@ -534,7 +533,6 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
                   borderRadius: 99,
                   background: lit > 0.5 ? col : "transparent",
                   border: `2px solid ${lit > 0.5 ? col : C.line3}`,
-                  boxShadow: lit > 0.5 ? `0 0 16px ${col}` : "none",
                 }}
               />
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -576,8 +574,8 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
                   width: L.lad.w,
                   height: L.lad.h,
                   borderRadius: 14,
-                  border: `1px solid ${C.line2}`,
-                  background: "rgba(17,24,42,0.6)",
+                  border: `1px solid ${C.line}`,
+                  background: C.surface,
                   display: "flex",
                   alignItems: "center",
                   gap: portrait ? 16 : 22,
@@ -599,7 +597,6 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
               height: L.lad.h + 12,
               borderRadius: 18,
               border: `2.5px solid ${cur.color}`,
-              boxShadow: `0 0 36px -6px ${tint(cur.color, 0.7)}, inset 0 0 24px -10px ${tint(cur.color, 0.6)}`,
               opacity: prog(f, 40, 16),
             }}
           />
@@ -608,7 +605,7 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
         {/* rule badge */}
         <div
           style={{
-            ...card(tint(C.accent, 0.55)),
+            ...card(tint(C.accent, 0.45)),
             position: "absolute",
             left: L.badge.x,
             top: L.badge.y,
@@ -623,8 +620,8 @@ export const Escalation: React.FC<{ dur: number }> = ({ dur }) => {
             transform: `scale(${0.92 + 0.08 * badgeS})`,
           }}
         >
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 44 : 42, color: C.fg }}>
-            Most-restrictive <span style={{ fontStyle: "italic", color: C.accent }}>wins.</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 42 : 40, color: C.fg }}>
+            Most-restrictive <span style={{ color: C.accent }}>wins.</span>
           </span>
           <span style={{ fontFamily: MONO, fontSize: portrait ? 22 : 24, color: C.fg2 }}>
             max(<span style={{ color: R1C }}>R1</span>, <span style={{ color: C.accent }}>R2</span>, <span style={{ color: C.accent }}>R2</span>,{" "}
@@ -677,7 +674,7 @@ export const Bindings: React.FC<{ dur: number }> = ({ dur }) => {
 
         <div
           style={{
-            ...card(lock > 0.5 ? "rgba(125,211,191,0.55)" : C.line2),
+            ...card(lock > 0.5 ? "rgba(36, 138, 61, 0.45)" : C.line),
             ...rise(prog(f, 30, 20), 18),
             position: "absolute",
             left: cardBox.x,
@@ -685,7 +682,6 @@ export const Bindings: React.FC<{ dur: number }> = ({ dur }) => {
             width: cardBox.w,
             height: cardBox.h,
             padding: portrait ? "26px 34px" : "28px 40px",
-            boxShadow: lock > 0.5 ? `0 0 ${70 * lock}px -20px rgba(125,211,191,0.6)` : card().boxShadow,
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 18, borderBottom: `1px solid ${C.line2}` }}>
@@ -698,7 +694,7 @@ export const Bindings: React.FC<{ dur: number }> = ({ dur }) => {
                 padding: "6px 14px",
                 borderRadius: 999,
                 color: lock > 0.5 ? C.signal : C.fg4,
-                border: `1px solid ${lock > 0.5 ? "rgba(125,211,191,0.6)" : C.line3}`,
+                border: `1px solid ${lock > 0.5 ? "rgba(36, 138, 61, 0.5)" : C.line3}`,
                 transform: `scale(${1 + 0.12 * Math.sin(Math.PI * Math.min(1, lock))})`,
               }}
             >
@@ -730,10 +726,10 @@ export const Bindings: React.FC<{ dur: number }> = ({ dur }) => {
         {portrait ? (
           <div style={{ position: "absolute", left: pad, right: pad, top: 1064, display: "flex", alignItems: "center", justifyContent: "center", gap: 46, opacity: prog(f, 60, 20) }}>
             <Padlock lock={lock} size={118} />
-            <div style={{ fontFamily: SERIF, fontSize: 52, lineHeight: 1.08, color: C.fg, ...rise(prog(f, 288, 18), 12) }}>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: 52, lineHeight: 1.08, color: C.fg, ...rise(prog(f, 288, 18), 12) }}>
               Bound to one
               <br />
-              <span style={{ fontStyle: "italic", color: C.signal }}>exact payload.</span>
+              <span style={{ color: C.signal }}>exact payload.</span>
             </div>
           </div>
         ) : (
@@ -753,10 +749,10 @@ export const Bindings: React.FC<{ dur: number }> = ({ dur }) => {
             }}
           >
             <Padlock lock={lock} size={170} />
-            <div style={{ fontFamily: SERIF, fontSize: 56, lineHeight: 1.08, color: C.fg, textAlign: "center", ...rise(prog(f, 288, 18), 12) }}>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: 56, lineHeight: 1.08, color: C.fg, textAlign: "center", ...rise(prog(f, 288, 18), 12) }}>
               Bound to one
               <br />
-              <span style={{ fontStyle: "italic", color: C.signal }}>exact payload.</span>
+              <span style={{ color: C.signal }}>exact payload.</span>
             </div>
           </div>
         )}
@@ -886,7 +882,7 @@ export const FourEyes: React.FC<{ dur: number }> = ({ dur }) => {
             <span style={{ fontFamily: MONO, fontSize: portrait ? 15 : 16, letterSpacing: "0.14em", color: C.fg4 }}>PAYLOAD</span>
             <span style={{ fontFamily: MONO, fontWeight: 500, fontSize: portrait ? 18 : 20, color: C.bg, background: R3C, padding: "3px 12px", borderRadius: 8 }}>R3</span>
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 34 : 40, color: C.fg, lineHeight: 1.05 }}>Compensation adjustment</div>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 32 : 38, color: C.fg, lineHeight: 1.05 }}>Compensation adjustment</div>
           <div style={{ fontFamily: MONO, fontSize: portrait ? 16 : 18, color: C.fg3 }}>
             <span style={{ color: C.accent }}>planHash</span> sha256:4be1…a07c
           </div>
@@ -902,8 +898,7 @@ export const FourEyes: React.FC<{ dur: number }> = ({ dur }) => {
             height: G.btn.h,
             borderRadius: 14,
             border: `2px solid ${okS > 0.5 ? C.signal : C.line3}`,
-            background: okS > 0.5 ? "rgba(125,211,191,0.14)" : "rgba(17,24,42,0.92)",
-            boxShadow: okS > 0.5 ? `0 0 ${40 * okS}px -10px rgba(125,211,191,0.7)` : "none",
+            background: okS > 0.5 ? "rgba(36, 138, 61, 0.10)" : C.surface,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -918,13 +913,13 @@ export const FourEyes: React.FC<{ dur: number }> = ({ dur }) => {
         </div>
 
         <div style={{ position: "absolute", left: 0, right: 0, top: G.chipY, display: "flex", justifyContent: "center", ...rise(prog(f, 148, 16), 12) }}>
-          <span style={{ fontFamily: MONO, fontSize: portrait ? 19 : 20, color: C.danger, padding: "9px 18px", borderRadius: 999, border: "1.5px solid rgba(240,144,127,0.5)", background: "rgba(240,144,127,0.07)" }}>
+          <span style={{ fontFamily: MONO, fontSize: portrait ? 19 : 20, color: C.danger, padding: "9px 18px", borderRadius: 999, border: "1.5px solid rgba(215, 0, 21, 0.45)", background: "rgba(215, 0, 21, 0.06)" }}>
             requesterMayFinalApprove: false
           </span>
         </div>
 
-        <div style={{ position: "absolute", left: pad, right: pad, top: G.finalY, textAlign: "center", fontFamily: SERIF, fontSize: portrait ? 60 : 62, color: C.fg, ...rise(prog(f, 200, 20), 14) }}>
-          Two people. <span style={{ fontStyle: "italic", color: C.accent }}>One exact payload.</span>
+        <div style={{ position: "absolute", left: pad, right: pad, top: G.finalY, textAlign: "center", fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.035em", fontSize: portrait ? 58 : 60, color: C.fg, ...rise(prog(f, 200, 20), 14) }}>
+          Two people. <span style={{ color: C.accent }}>One exact payload.</span>
         </div>
       </AbsoluteFill>
     </SceneWrap>

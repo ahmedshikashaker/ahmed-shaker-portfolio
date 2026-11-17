@@ -50,14 +50,14 @@ export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
             gap: 16,
             padding: "14px 22px",
             borderRadius: 999,
-            border: `1.5px solid rgba(240,144,127,${0.35 + 0.4 * pulse})`,
-            background: "rgba(240, 144, 127, 0.08)",
+            border: `1.5px solid rgba(215, 0, 21, ${0.35 + 0.35 * pulse})`,
+            background: "rgba(215, 0, 21, 0.06)",
             fontFamily: MONO,
             fontSize: portrait ? 20 : 22,
             color: C.fg2,
           }}
         >
-          <span style={{ width: 12, height: 12, borderRadius: 99, background: C.danger, boxShadow: `0 0 ${10 + 14 * pulse}px ${C.danger}` }} />
+          <span style={{ width: 12, height: 12, borderRadius: 99, background: C.danger }} />
           <span style={{ color: C.fg4 }}>02:14</span>
           <span style={{ color: C.danger }}>MCP</span>
           notifications/tools/list_changed
@@ -85,14 +85,14 @@ export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
                 letterSpacing: "0.12em",
                 padding: "6px 12px",
                 borderRadius: 999,
-                background: `rgba(125, 211, 191, ${0.12 + 0.1 * live})`,
+                background: `rgba(36, 138, 61, ${0.10 + 0.08 * live})`,
                 color: C.signal,
               }}
             >
               {live > 0.5 ? "UNCHANGED · STILL SERVING" : "SERVING"}
             </span>
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 42 : 46, color: C.fg, marginTop: 12 }}>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 40 : 44, color: C.fg, marginTop: 12 }}>
             create_leave<span style={{ color: C.signal }}>@v5</span>
           </div>
           {line("params  start_date, end_date, type")}
@@ -119,14 +119,14 @@ export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
           }}
         >
           <div style={{ fontFamily: MONO, fontSize: 17, letterSpacing: "0.18em", color: C.danger }}>UPSTREAM CANDIDATE</div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 42 : 46, color: C.fg, marginTop: 12 }}>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 40 : 44, color: C.fg, marginTop: 12 }}>
             create_leave<span style={{ color: C.danger }}>@draft-6</span>
           </div>
           {line("params  start_date, end_date, type")}
           <div style={{ opacity: prog(f, 118, 14) }}>
             {line(
               <>
-                <span style={{ background: "rgba(240,144,127,0.16)", padding: "2px 6px", borderRadius: 6 }}>+ forward_to: string</span>
+                <span style={{ background: "rgba(215, 0, 21, 0.12)", padding: "2px 6px", borderRadius: 6 }}>+ forward_to: string</span>
                 <span style={{ color: C.fg4 }}>  ← new, undeclared</span>
               </>,
               C.danger,
@@ -155,7 +155,7 @@ export const Drift: React.FC<{ dur: number }> = ({ dur }) => {
               fontWeight: 500,
               fontSize: portrait ? 22 : 24,
               letterSpacing: "0.14em",
-              background: "rgba(10, 14, 23, 0.85)",
+              background: "rgba(255, 255, 255, 0.96)",
             }}
           >
             QUARANTINED · R4
@@ -225,9 +225,9 @@ export const Hub: React.FC<{ dur: number }> = ({ dur }) => {
             <div style={{ marginTop: 56, display: "flex", flexDirection: "column", gap: 22 }}>
               {bullets.map(([a, b], i) => (
                 <div key={b} style={{ ...rise(prog(f, 90 + i * 12, 18), 14), display: "flex", alignItems: "center", gap: 18 }}>
-                  <span style={{ width: 12, height: 12, borderRadius: 3, background: C.signal, boxShadow: `0 0 16px ${C.signal}` }} />
+                  <span style={{ width: 12, height: 12, borderRadius: 3, background: C.signal }} />
                   <span style={{ fontFamily: SANS, fontSize: 36, color: C.fg }}>
-                    <span style={{ color: C.accent }}>{a}</span> {b}
+                    <span style={{ color: C.accent, fontWeight: 600 }}>{a}</span> {b}
                   </span>
                 </div>
               ))}
@@ -278,8 +278,7 @@ export const Hub: React.FC<{ dur: number }> = ({ dur }) => {
             height: coreR * 2,
             borderRadius: 999,
             border: `2px solid ${C.accent}`,
-            background: "radial-gradient(circle at 50% 35%, rgba(216,187,132,0.22), rgba(17,24,42,0.96) 70%)",
-            boxShadow: `0 0 ${110 * coreP}px -10px rgba(216, 187, 132, 0.55)`,
+            background: C.surface,
             opacity: coreP,
             transform: `scale(${0.85 + 0.15 * coreP})`,
             display: "flex",
@@ -289,10 +288,10 @@ export const Hub: React.FC<{ dur: number }> = ({ dur }) => {
             textAlign: "center",
           }}
         >
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 36 : 38, color: C.fg, lineHeight: 1.05 }}>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 34 : 36, color: C.fg, lineHeight: 1.05 }}>
             Governance
             <br />
-            <span style={{ fontStyle: "italic", color: C.accent }}>Control Plane</span>
+            <span style={{ color: C.accent }}>Control Plane</span>
           </div>
           <div style={{ fontFamily: MONO, fontSize: 14, color: C.fg3, letterSpacing: "0.12em", marginTop: 10 }}>POLICY · RISK · AUDIT</div>
         </div>
@@ -379,7 +378,6 @@ export const Cta: React.FC<{ dur: number }> = ({ dur }) => {
                 height: 14,
                 borderRadius: 99,
                 background: i < 3 ? C.accent : C.line3,
-                boxShadow: i === 2 ? `0 0 20px ${C.accent}` : "none",
               }}
             />
           ))}
@@ -394,30 +392,30 @@ export const Cta: React.FC<{ dur: number }> = ({ dur }) => {
             padding: portrait ? "22px 38px" : "22px 42px",
             borderRadius: 999,
             background: C.accent,
-            color: C.bg,
+            color: "#ffffff",
             fontFamily: SANS,
-            fontWeight: 600,
+            fontWeight: 500,
             fontSize: portrait ? 32 : 32,
-            boxShadow: "0 20px 60px -20px rgba(216,187,132,0.7)",
+            letterSpacing: "-0.01em",
             ...rise(prog(f, 80, 20)),
           }}
         >
           Read the interactive article →
         </div>
-        <div style={{ marginTop: 22, fontFamily: MONO, fontSize: portrait ? 26 : 26, color: C.fg2, letterSpacing: "0.04em", ...rise(prog(f, 92, 20)) }}>
+        <div style={{ marginTop: 22, fontFamily: SANS, fontWeight: 500, fontSize: portrait ? 25 : 25, color: C.fg3, letterSpacing: "-0.01em", ...rise(prog(f, 92, 20)) }}>
           ahmed-shaker.com/blog
         </div>
 
         <div style={{ marginTop: portrait ? 70 : 56, display: "flex", alignItems: "center", gap: 20, ...rise(prog(f, 106, 20)) }}>
-          <div style={{ width: 84, height: 84, borderRadius: 99, overflow: "hidden", border: `2px solid ${C.accent}` }}>
+          <div style={{ width: 84, height: 84, borderRadius: 99, overflow: "hidden", border: `1.5px solid ${C.line2}` }}>
             <Img
               src={staticFile("ahmed-shaker-portrait.jpg")}
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 24%", filter: "grayscale(0.25)" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 24%" }}
             />
           </div>
           <div style={{ textAlign: "left" }}>
-            <div style={{ fontFamily: SERIF, fontSize: 36, color: C.fg }}>Ahmed Shaker</div>
-            <div style={{ fontFamily: MONO, fontSize: 17, color: C.fg3, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 4 }}>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: "-0.025em", color: C.fg }}>Ahmed Shaker</div>
+            <div style={{ fontFamily: SANS, fontWeight: 500, fontSize: 19, color: C.fg3, marginTop: 4 }}>
               Enterprise Technology Leader
             </div>
           </div>

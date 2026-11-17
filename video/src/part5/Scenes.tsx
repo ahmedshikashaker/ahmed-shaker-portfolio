@@ -118,15 +118,15 @@ export const Perimeter: React.FC<{ dur: number }> = ({ dur }) => {
 
           {/* checked entrance stub */}
           <g opacity={stubP}>
-            <rect x={x0} y={roadY - half} width={gateX - x0} height={half * 2} fill="rgba(125,211,191,0.07)" />
-            <line x1={x0} y1={roadY - half} x2={gateX} y2={roadY - half} stroke="rgba(125,211,191,0.5)" strokeWidth={2} />
-            <line x1={x0} y1={roadY + half} x2={gateX} y2={roadY + half} stroke="rgba(125,211,191,0.5)" strokeWidth={2} />
+            <rect x={x0} y={roadY - half} width={gateX - x0} height={half * 2} fill="rgba(36, 138, 61, 0.08)" />
+            <line x1={x0} y1={roadY - half} x2={gateX} y2={roadY - half} stroke="rgba(36, 138, 61, 0.45)" strokeWidth={2} />
+            <line x1={x0} y1={roadY + half} x2={gateX} y2={roadY + half} stroke="rgba(36, 138, 61, 0.45)" strokeWidth={2} />
           </g>
 
           {/* the long unguarded road */}
           <g mask="url(#p5fade)">
             <g clipPath="url(#p5road)">
-              <rect x={gateX} y={roadY - half} width={len} height={half * 2} fill="rgba(240,144,127,0.045)" />
+              <rect x={gateX} y={roadY - half} width={len} height={half * 2} fill="rgba(215, 0, 21, 0.05)" />
               <line x1={gateX} y1={roadY - half} x2={x1} y2={roadY - half} stroke={C.line3} strokeWidth={2} />
               <line x1={gateX} y1={roadY + half} x2={x1} y2={roadY + half} stroke={C.line3} strokeWidth={2} />
               <line x1={gateX + 30} y1={roadY} x2={x1} y2={roadY} stroke={C.fg4} strokeWidth={2.5} strokeDasharray="22 20" opacity={0.55} />
@@ -143,7 +143,7 @@ export const Perimeter: React.FC<{ dur: number }> = ({ dur }) => {
           {/* the single gate */}
           <g opacity={gateP}>
             <rect x={gateX - 7} y={roadY - half - 46 + (1 - gateP) * 20} width={14} height={half * 2 + 92} rx={7} fill={C.signal} />
-            <rect x={gateX - 40} y={roadY - half - 46} width={80} height={half * 2 + 92} rx={18} fill="rgba(125,211,191,0.10)" />
+            <rect x={gateX - 40} y={roadY - half - 46} width={80} height={half * 2 + 92} rx={18} fill="rgba(36, 138, 61, 0.10)" />
           </g>
 
           <Particles pts={roadPts} frame={f} start={124} color={C.danger} count={2} period={84} r={7} />
@@ -152,7 +152,7 @@ export const Perimeter: React.FC<{ dur: number }> = ({ dur }) => {
         {/* gate label */}
         <div
           style={{
-            ...card("rgba(125,211,191,0.45)"),
+            ...card("rgba(36, 138, 61, 0.4)"),
             ...rise(prog(f, 40, 18), 16),
             position: "absolute",
             left: pad,
@@ -371,7 +371,7 @@ export const Deputy: React.FC<{ dur: number }> = ({ dur }) => {
                   letterSpacing: "0.08em",
                   color: C.danger,
                   border: `1.5px solid ${C.danger}`,
-                  background: "rgba(240,144,127,0.12)",
+                  background: "rgba(215, 0, 21, 0.08)",
                   borderRadius: 99,
                   padding: "6px 16px",
                   whiteSpace: "nowrap",
@@ -446,7 +446,7 @@ export const Deputy: React.FC<{ dur: number }> = ({ dur }) => {
                   width: barW,
                   height: barH,
                   borderRadius: 12,
-                  background: "rgba(232,224,207,0.05)",
+                  background: C.surface,
                   border: `1px solid ${C.line2}`,
                   overflow: "hidden",
                   opacity: prog(f, isAgent ? 296 : 278, 14),
@@ -457,8 +457,7 @@ export const Deputy: React.FC<{ dur: number }> = ({ dur }) => {
                     width: `${frac * p * 100}%`,
                     height: "100%",
                     borderRadius: 12,
-                    background: isAgent ? "linear-gradient(90deg, rgba(240,144,127,0.55), rgba(240,144,127,0.9))" : `linear-gradient(90deg, rgba(143,180,255,0.45), ${col})`,
-                    boxShadow: isAgent ? `0 0 ${30 * p}px rgba(240,144,127,0.5)` : undefined,
+                    background: col,
                   }}
                 />
                 {isAgent && (
@@ -581,11 +580,10 @@ export const Intersection: React.FC<{ dur: number }> = ({ dur }) => {
             );
           })}
           {/* the intersection itself */}
-          <circle cx={cx} cy={cy} r={95} fill={C.accent} opacity={0.55 * glow * pulse} filter="url(#p5glow)" />
           <g clipPath="url(#p5set0)">
             <g clipPath="url(#p5set1)">
               <g clipPath="url(#p5set2)">
-                <circle cx={circles[3].x} cy={circles[3].y} r={r} fill={C.accent} opacity={0.92 * glow} />
+                <circle cx={circles[3].x} cy={circles[3].y} r={r} fill={C.accent} opacity={0.95 * glow} />
               </g>
             </g>
           </g>
@@ -652,8 +650,8 @@ export const Intersection: React.FC<{ dur: number }> = ({ dur }) => {
           }}
         >
           {!portrait && <div style={{ width: 60, height: 3, background: C.accent, marginBottom: 30 }} />}
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 44 : 56, lineHeight: 1.12, color: C.fg, textAlign: portrait ? "center" : "left" }}>
-            An agent never owns {!portrait && <br />}permissions <span style={{ color: C.accent, fontStyle: "italic" }}>of its own.</span>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.035em", fontSize: portrait ? 44 : 56, lineHeight: 1.08, color: C.fg, textAlign: portrait ? "center" : "left" }}>
+            An agent never owns {!portrait && <br />}permissions <span style={{ color: C.accent }}>of its own.</span>
           </div>
           {!portrait && (
             <div style={{ marginTop: 34, fontFamily: MONO, fontSize: 21, color: C.fg3, lineHeight: 1.6 }}>
@@ -717,9 +715,8 @@ export const SevenStages: React.FC<{ dur: number }> = ({ dur }) => {
                     height: 60,
                     flex: "none",
                     borderRadius: 99,
-                    background: p > 0.01 ? `rgba(125,211,191,${0.18 * p})` : C.bg2,
+                    background: p > 0.01 ? `rgba(36, 138, 61, ${0.12 * p})` : C.bg2,
                     border: `2px solid ${p > 0.5 ? C.signal : C.line3}`,
-                    boxShadow: active ? `0 0 28px rgba(125,211,191,0.6)` : undefined,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -756,7 +753,6 @@ export const SevenStages: React.FC<{ dur: number }> = ({ dur }) => {
         </svg>
         {STAGES.map((s, i) => {
           const p = lit(i);
-          const active = i === current && f < t0 + 7 * step + 10;
           return (
             <React.Fragment key={s}>
               <div
@@ -768,9 +764,8 @@ export const SevenStages: React.FC<{ dur: number }> = ({ dur }) => {
                   height: 64,
                   borderRadius: 99,
                   backgroundColor: C.bg2,
-                  backgroundImage: `linear-gradient(rgba(125,211,191,${0.2 * p}), rgba(125,211,191,${0.2 * p}))`,
+                  backgroundImage: `linear-gradient(rgba(36, 138, 61, ${0.12 * p}), rgba(36, 138, 61, ${0.12 * p}))`,
                   border: `2px solid ${p > 0.5 ? C.signal : C.line3}`,
-                  boxShadow: active ? `0 0 30px rgba(125,211,191,0.6)` : undefined,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -784,7 +779,7 @@ export const SevenStages: React.FC<{ dur: number }> = ({ dur }) => {
               </div>
               <div
                 style={{
-                  ...card(p > 0.5 ? "rgba(125,211,191,0.4)" : C.line2),
+                  ...card(p > 0.5 ? "rgba(36, 138, 61, 0.4)" : C.line),
                   ...rise(prog(f, 36 + i * 4, 16), 12),
                   position: "absolute",
                   left: nx(i) - colW / 2 + 9,
@@ -884,7 +879,7 @@ const SchemaView: React.FC<{ t: number }> = ({ t }) => {
   ];
   let h = 0;
   return (
-    <div style={{ fontFamily: MONO, fontSize: fs, lineHeight: 1.5, color: C.fg2, background: "rgba(10,14,23,0.6)", border: `1px solid ${C.line}`, borderRadius: 12, padding: "12px 20px", width: "100%" }}>
+    <div style={{ fontFamily: MONO, fontSize: fs, lineHeight: 1.5, color: C.fg2, background: "#ffffff", border: `1px solid ${C.line}`, borderRadius: 12, padding: "12px 20px", width: "100%" }}>
       {lines.map((l, idx) => {
         if (l.raw) return <div key={idx}>{l.raw}</div>;
         const s = l.hidden ? prog(f, t + 24 + h++ * 8, 14) : 0;
@@ -895,7 +890,7 @@ const SchemaView: React.FC<{ t: number }> = ({ t }) => {
               {l.hidden && <span style={{ position: "absolute", left: 0, top: "52%", height: 2.5, width: `${s * 100}%`, background: C.danger }} />}
             </span>
             {l.hidden && (
-              <span style={{ fontSize: fs - 5, letterSpacing: "0.1em", color: C.danger, border: `1px solid rgba(240,144,127,0.5)`, borderRadius: 6, padding: "1px 7px", opacity: s, whiteSpace: "nowrap" }}>
+              <span style={{ fontSize: fs - 5, letterSpacing: "0.1em", color: C.danger, border: `1px solid rgba(215, 0, 21, 0.45)`, borderRadius: 6, padding: "1px 7px", opacity: s, whiteSpace: "nowrap" }}>
                 HIDDEN
               </span>
             )}
@@ -912,9 +907,9 @@ const Funnel: React.FC<{ t: number }> = ({ t }) => {
   const f = useSceneFrame();
   const { portrait } = useLayout();
   const tiers = [
-    { label: "10,000+ capabilities", w: 100, color: C.fg4, bg: "rgba(232,224,207,0.05)" },
-    { label: "policy allow-set", w: 76, color: C.accent, bg: "rgba(216,187,132,0.12)" },
-    { label: "semantic ranking", w: 54, color: C.signal, bg: "rgba(125,211,191,0.14)" },
+    { label: "10,000+ capabilities", w: 100, color: C.fg4, bg: "#ffffff" },
+    { label: "policy allow-set", w: 76, color: C.accent, bg: "rgba(0, 113, 227, 0.08)" },
+    { label: "semantic ranking", w: 54, color: C.signal, bg: "rgba(36, 138, 61, 0.08)" },
   ];
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: portrait ? 10 : 14 }}>
@@ -978,7 +973,7 @@ const ScopeToken: React.FC<{ t: number }> = ({ t }) => {
           />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", opacity: draw }}>
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 46 : 56, color: C.fg, lineHeight: 1 }}>{Math.ceil(remaining)}</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.04em", fontSize: portrait ? 46 : 56, color: C.fg, lineHeight: 1 }}>{Math.ceil(remaining)}</span>
           <span style={{ fontFamily: MONO, fontSize: 15, letterSpacing: "0.14em", color: C.fg4, marginTop: 4 }}>SECONDS</span>
         </div>
       </div>
@@ -1062,7 +1057,7 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
         {/* grant card */}
         <div
           style={{
-            ...card(settled ? "rgba(240,144,127,0.55)" : C.line2),
+            ...card(settled ? "rgba(215, 0, 21, 0.5)" : C.line),
             ...rise(prog(f, 18, 20), 18),
             position: "absolute",
             left: cardBox.x,
@@ -1093,8 +1088,8 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
                   padding: "0 10px",
                   borderRadius: 10,
                   color: tampered ? C.danger : C.fg,
-                  background: tampered ? `rgba(240,144,127,${0.16 * flip})` : "transparent",
-                  border: `2px solid ${tampered ? `rgba(240,144,127,${0.8 * flip})` : "transparent"}`,
+                  background: tampered ? `rgba(215, 0, 21, ${0.10 * flip})` : "transparent",
+                  border: `2px solid ${tampered ? `rgba(215, 0, 21, ${0.75 * flip})` : "transparent"}`,
                   transform: `scale(${tampered ? 0.7 + 0.3 * flip : 1})`,
                 }}
               >
@@ -1115,7 +1110,7 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
                 <span style={{ fontFamily: MONO, fontSize: fs, color: settled ? C.danger : C.fg2 }}>{dispatchDigest}</span>
               </div>
             </div>
-            <span style={{ fontFamily: SERIF, fontSize: portrait ? 72 : 84, lineHeight: 0.8, color: C.danger, opacity: mismatch, transform: `scale(${0.6 + 0.4 * mismatch})` }}>≠</span>
+            <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 72 : 84, lineHeight: 0.8, color: C.danger, opacity: mismatch, transform: `scale(${0.6 + 0.4 * mismatch})` }}>≠</span>
           </div>
 
           {/* stamp */}
@@ -1134,8 +1129,7 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
               border: `4px solid ${C.danger}`,
               borderRadius: 12,
               padding: portrait ? "10px 18px" : "12px 26px",
-              background: "rgba(10,14,23,0.7)",
-              boxShadow: `0 0 ${40 * blocked}px -6px rgba(240,144,127,0.6)`,
+              background: "rgba(255, 255, 255, 0.96)",
               opacity: interpolate(stampS, [0, 0.25], [0, 1], clamp),
               transform: `rotate(-7deg) scale(${1.6 - 0.6 * stampS})`,
             }}
@@ -1175,7 +1169,7 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
 
         <div
           style={{
-            ...card(blocked > 0.5 ? "rgba(240,144,127,0.5)" : C.line2),
+            ...card(blocked > 0.5 ? "rgba(215, 0, 21, 0.45)" : C.line),
             ...rise(prog(f, 44, 18), 16),
             position: "absolute",
             left: dispatchBox.x,
@@ -1189,7 +1183,7 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
           }}
         >
           <div style={{ fontFamily: MONO, fontSize: 16, letterSpacing: "0.14em", color: C.fg4 }}>DURABLE WORKER</div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 40 : 44, color: C.fg }}>Dispatch</div>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 38 : 42, color: C.fg }}>Dispatch</div>
           <div style={{ position: "relative", height: 26 }}>
             <span style={{ position: "absolute", left: 0, fontFamily: MONO, fontSize: portrait ? 17 : 19, color: C.fg3, opacity: 1 - blocked, whiteSpace: "nowrap" }}>verifying grant digest…</span>
             <span style={{ position: "absolute", left: 0, fontFamily: MONO, fontSize: portrait ? 17 : 19, color: C.danger, opacity: blocked, whiteSpace: "nowrap" }}>stopped · digest mismatch</span>
@@ -1222,6 +1216,8 @@ export const Tamper: React.FC<{ dur: number }> = ({ dur }) => {
             <span
               style={{
                 fontFamily: SERIF,
+                fontWeight: 700,
+                letterSpacing: "-0.05em",
                 fontSize: portrait ? 120 : 140,
                 lineHeight: 0.85,
                 color: C.signal,

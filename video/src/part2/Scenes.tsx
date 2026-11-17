@@ -41,7 +41,7 @@ export const CisoQuestion: React.FC<{ dur: number }> = ({ dur }) => {
           />
         </div>
         <div style={{ marginTop: 50, display: "flex", flexDirection: portrait ? "column" : "row", gap: portrait ? 10 : 22, alignItems: portrait ? "flex-start" : "baseline" }}>
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 60 : 62, color: C.signal, ...rise(prog(f, 104, 18)) }}>No CISO would.</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.035em", fontSize: portrait ? 58 : 60, color: C.signal, ...rise(prog(f, 104, 18)) }}>No CISO would.</span>
           <span style={{ fontFamily: SANS, fontSize: portrait ? 34 : 36, color: C.fg3, ...rise(prog(f, 124, 18)) }}>
             Yet most AI agents are wired <span style={{ color: C.danger }}>exactly this way.</span>
           </span>
@@ -123,7 +123,7 @@ export const PoisonedCsv: React.FC<{ dur: number }> = ({ dur }) => {
                   fontFamily: MONO,
                   fontSize: portrait ? 18 : 18,
                   color: bad ? C.danger : C.fg2,
-                  background: bad ? `rgba(240,144,127,${0.06 + 0.14 * hit})` : "transparent",
+                  background: bad ? `rgba(215, 0, 21, ${0.06 + 0.12 * hit})` : "transparent",
                   opacity: prog(f, 40 + i * 6, 12),
                 }}
               >
@@ -135,9 +135,9 @@ export const PoisonedCsv: React.FC<{ dur: number }> = ({ dur }) => {
           })}
         </div>
 
-        <div style={{ ...card("rgba(240,144,127,0.5)"), ...rise(prog(f, 70, 18), 18), position: "absolute", left: agent.x, top: agent.y, width: agent.w, height: agent.h, padding: 24, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div style={{ ...card("rgba(215, 0, 21, 0.45)"), ...rise(prog(f, 70, 18), 18), position: "absolute", left: agent.x, top: agent.y, width: agent.w, height: agent.h, padding: 24, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <div style={{ fontFamily: MONO, fontSize: 15, letterSpacing: "0.14em", color: C.fg4 }}>NAÏVE AI AGENT</div>
-          <div style={{ fontFamily: SERIF, fontSize: 36, color: C.fg }}>Tool-calling loop</div>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: 34, color: C.fg }}>Tool-calling loop</div>
           <div style={{ fontFamily: MONO, fontSize: 16, color: C.danger }}>holds API keys</div>
         </div>
 
@@ -154,7 +154,6 @@ export const PoisonedCsv: React.FC<{ dur: number }> = ({ dur }) => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            boxShadow: breach > 0.5 ? `0 0 ${60 * breach}px -10px rgba(240,144,127,0.7)` : undefined,
           }}
         >
           <div style={{ fontFamily: MONO, fontSize: 15, letterSpacing: "0.14em", color: C.fg4 }}>ERP · FINANCE</div>
@@ -255,7 +254,7 @@ export const FourFailures: React.FC<{ dur: number }> = ({ dur }) => {
                   fontFamily: MONO,
                   fontSize: portrait ? 17 : 19,
                   color: C.danger,
-                  background: "rgba(10,14,23,0.7)",
+                  background: "#ffffff",
                   border: `1px solid ${C.line}`,
                   borderRadius: 10,
                   padding: "8px 14px",
@@ -315,8 +314,8 @@ export const TrustBoundaries: React.FC<{ dur: number }> = ({ dur }) => {
                 alignItems: "center",
                 gap: portrait ? 24 : 34,
                 borderRadius: 18,
-                border: `1.5px solid ${lock > 0.5 ? "rgba(125,211,191,0.45)" : C.line2}`,
-                background: "linear-gradient(90deg, rgba(125,211,191,0.07), rgba(17,24,42,0.9) 40%)",
+                border: `1.5px solid ${lock > 0.5 ? "rgba(36, 138, 61, 0.4)" : C.line}`,
+                background: C.surface,
                 padding: portrait ? "0 26px" : "0 34px",
               }}
             >
@@ -332,8 +331,8 @@ export const TrustBoundaries: React.FC<{ dur: number }> = ({ dur }) => {
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: SERIF,
-                  fontSize: 36,
-                  boxShadow: `0 0 ${24 * lock}px rgba(125,211,191,0.5)`,
+                  fontWeight: 700,
+                  fontSize: 34,
                 }}
               >
                 {b.id}
@@ -411,7 +410,7 @@ export const LiveBlock: React.FC<{ dur: number }> = ({ dur }) => {
             transform: `translateY(${(1 - counter) * 20}px)`,
           }}
         >
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 150 : 160, lineHeight: 0.9, color: C.signal }}>0</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.05em", fontSize: portrait ? 150 : 160, lineHeight: 0.9, color: C.signal }}>0</span>
           <span style={{ fontFamily: SANS, fontSize: portrait ? 34 : 38, color: C.fg2 }}>
             execution grants minted.
             <br />
@@ -450,7 +449,7 @@ export const FourRules: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={t}
               style={{
-                ...card(check > 0.5 ? "rgba(125,211,191,0.45)" : C.line2),
+                ...card(check > 0.5 ? "rgba(36, 138, 61, 0.4)" : C.line),
                 ...rise(p, 18),
                 position: "absolute",
                 left: box.x,
@@ -470,7 +469,7 @@ export const FourRules: React.FC<{ dur: number }> = ({ dur }) => {
                   flex: "none",
                   borderRadius: 99,
                   border: `2px solid ${C.signal}`,
-                  background: `rgba(125,211,191,${0.25 * check})`,
+                  background: `rgba(36, 138, 61, ${0.12 * check})`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

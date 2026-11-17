@@ -159,7 +159,7 @@ function ArticleVideo({ src, poster, caption, label }: { src: string; poster?: s
   if (!src) return null;
   return (
     <figure className="not-prose my-10">
-      <div className="relative w-full overflow-hidden rounded-xl border border-line-2 bg-black shadow-[var(--shadow-soft)]" style={{ aspectRatio: "16 / 9" }}>
+      <div className="relative w-full overflow-hidden rounded-xl border border-line-2 bg-surface shadow-[var(--shadow-soft)]" style={{ aspectRatio: "16 / 9" }}>
         <video
           src={src}
           poster={poster || undefined}

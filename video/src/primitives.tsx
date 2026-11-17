@@ -1,8 +1,8 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, MONO, SERIF } from "./theme";
+import { C, SANS, SERIF } from "./theme";
 
-export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
+export const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 /** 0 → 1 progress between `start` and `start + dur`, eased. */
@@ -57,11 +57,11 @@ export const SceneWrap: React.FC<{ dur: number; children: React.ReactNode }> = (
   );
 };
 
-export const card = (border: string = C.line2): React.CSSProperties => ({
-  background: "linear-gradient(180deg, rgba(24, 33, 54, 0.94), rgba(15, 21, 37, 0.94))",
+export const card = (border: string = C.line): React.CSSProperties => ({
+  background: C.surface,
   border: `1.5px solid ${border}`,
-  borderRadius: 22,
-  boxShadow: "0 30px 80px -34px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.04)",
+  borderRadius: 24,
+  boxShadow: "none",
 });
 
 export const Eyebrow: React.FC<{ start: number; children: React.ReactNode; color?: string; center?: boolean }> = ({
@@ -79,25 +79,22 @@ export const Eyebrow: React.FC<{ start: number; children: React.ReactNode; color
         display: "flex",
         alignItems: "center",
         justifyContent: center ? "center" : "flex-start",
-        gap: 16,
-        fontFamily: MONO,
-        fontSize: portrait ? 22 : 21,
-        fontWeight: 500,
-        letterSpacing: "0.2em",
-        textTransform: "uppercase",
+        fontFamily: SANS,
+        fontSize: portrait ? 24 : 23,
+        fontWeight: 600,
+        letterSpacing: "-0.014em",
         color,
         ...rise(p, 14),
       }}
     >
-      <span style={{ width: 46 * p, height: 2, background: color, display: "inline-block" }} />
       {children}
     </div>
   );
 };
 
 /**
- * Word-by-word serif headline. Wrap words in *asterisks* for the gold italic emphasis,
- * use \n for line breaks.
+ * Word-by-word display headline (Inter Tight 700). Wrap words in *asterisks* for the solid
+ * Apple-blue accent emphasis (no italics), use \n for line breaks.
  */
 export const Headline: React.FC<{
   text: string;
@@ -106,7 +103,7 @@ export const Headline: React.FC<{
   stagger?: number;
   center?: boolean;
   lineHeight?: number;
-}> = ({ text, start, size, stagger = 3, center, lineHeight = 1.06 }) => {
+}> = ({ text, start, size, stagger = 3, center, lineHeight = 1.04 }) => {
   const f = useSceneFrame();
   let idx = 0;
   let emph = false;
@@ -114,9 +111,10 @@ export const Headline: React.FC<{
     <div
       style={{
         fontFamily: SERIF,
+        fontWeight: 700,
         fontSize: size,
         lineHeight,
-        letterSpacing: "-0.025em",
+        letterSpacing: "-0.038em",
         color: C.fg,
         textAlign: center ? "center" : "left",
       }}
@@ -146,8 +144,7 @@ export const Headline: React.FC<{
                   marginRight: "0.24em",
                   opacity: p,
                   transform: `translateY(${(1 - p) * 0.38}em)`,
-                  filter: p < 0.999 ? `blur(${(1 - p) * 8}px)` : undefined,
-                  fontStyle: thisEm ? "italic" : "normal",
+                  filter: p < 0.999 ? `blur(${(1 - p) * 6}px)` : undefined,
                   color: thisEm ? C.accent : C.fg,
                 }}
               >
@@ -182,7 +179,7 @@ export const DrawPath: React.FC<{
   />
 );
 
-/** Small glowing dots travelling along a bezier path (signal flow). */
+/** Small dots travelling along a bezier path (signal flow). */
 export const Particles: React.FC<{
   pts: [Pt, Pt, Pt, Pt];
   frame: number;
@@ -205,7 +202,7 @@ export const Particles: React.FC<{
         const o = Math.min(1, edge) * fadeIn;
         return (
           <g key={k} opacity={o}>
-            <circle cx={pt.x} cy={pt.y} r={r * 2.6} fill={color} opacity={0.18} />
+            <circle cx={pt.x} cy={pt.y} r={r * 2.2} fill={color} opacity={0.14} />
             <circle cx={pt.x} cy={pt.y} r={r} fill={color} />
           </g>
         );
@@ -214,36 +211,8 @@ export const Particles: React.FC<{
   );
 };
 
-/** Persistent atmospheric background: drafting grid + slow-drifting gold/teal glows. */
-export const Background: React.FC = () => {
-  const f = useCurrentFrame();
-  const dx = Math.sin(f / 110) * 6;
-  const dy = Math.cos(f / 140) * 5;
-  return (
-    <AbsoluteFill style={{ background: C.bg }}>
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(60% 50% at ${16 + dx}% ${10 + dy}%, rgba(216, 187, 132, 0.17), transparent 70%)`,
-        }}
-      />
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(55% 55% at ${86 - dx}% ${92 - dy}%, rgba(125, 211, 191, 0.11), transparent 70%)`,
-        }}
-      />
-      <AbsoluteFill
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(232, 224, 207, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232, 224, 207, 0.04) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(75% 70% at 50% 45%, black 30%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(75% 70% at 50% 45%, black 30%, transparent 100%)",
-        }}
-      />
-      <AbsoluteFill style={{ background: "radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%)" }} />
-    </AbsoluteFill>
-  );
-};
+/** Flat white canvas matching the website's Apple launch aesthetic (no grids, glows, or grain). */
+export const Background: React.FC = () => <AbsoluteFill style={{ background: C.bg }} />;
 
 /** Brand chrome visible across the whole video: series label, site, and a progress rail. */
 export const Chrome: React.FC<{ total: number; ticks: number[]; part: number; of: number }> = ({ total, ticks, part, of }) => {
@@ -262,16 +231,16 @@ export const Chrome: React.FC<{ total: number; ticks: number[]; part: number; of
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          fontFamily: MONO,
-          fontSize: portrait ? 19 : 18,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
+          fontFamily: SANS,
+          fontSize: portrait ? 20 : 19,
+          fontWeight: 600,
+          letterSpacing: "-0.01em",
         }}
       >
-        <span style={{ color: C.accent }}>
-          Governed Autonomy <span style={{ color: C.fg4 }}>· Part {part} of {of}</span>
+        <span style={{ color: C.fg }}>
+          Governed Autonomy <span style={{ color: C.fg4, fontWeight: 500 }}>· Part {part} of {of}</span>
         </span>
-        <span style={{ color: C.fg3, letterSpacing: "0.08em", textTransform: "none" }}>ahmed-shaker.com</span>
+        <span style={{ color: C.fg3, fontWeight: 500 }}>ahmed-shaker.com</span>
       </div>
       <div style={{ position: "absolute", left: pad, bottom: portrait ? 56 : 44, width: railW, height: 3, background: C.line2, borderRadius: 3 }}>
         <div style={{ width: `${(f / total) * 100}%`, height: "100%", background: C.accent, borderRadius: 3 }} />

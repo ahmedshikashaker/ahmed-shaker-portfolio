@@ -92,7 +92,7 @@ export const Loop: React.FC<{ dur: number }> = ({ dur }) => {
             width: r * 3.2,
             height: r * 3.2,
             borderRadius: 999,
-            background: "radial-gradient(circle, rgba(240,144,127,0.22), transparent 62%)",
+            background: "transparent",
             opacity: doom,
           }}
         />
@@ -142,7 +142,6 @@ export const Loop: React.FC<{ dur: number }> = ({ dur }) => {
                 alignItems: "center",
                 gap: 14,
                 whiteSpace: "nowrap",
-                boxShadow: near ? `0 0 34px -6px ${ringColor}` : card().boxShadow,
               }}
             >
               <span style={{ fontFamily: MONO, fontSize: 17, color: near ? ringColor : C.fg4 }}>0{i + 1}</span>
@@ -161,7 +160,7 @@ export const Loop: React.FC<{ dur: number }> = ({ dur }) => {
             fontFamily: MONO,
             fontSize: portrait ? 23 : 25,
             color: C.fg2,
-            background: "rgba(10,14,23,0.75)",
+            background: C.surface,
             border: `1px solid ${C.line2}`,
             borderRadius: 12,
             padding: "12px 20px",
@@ -181,11 +180,13 @@ export const Loop: React.FC<{ dur: number }> = ({ dur }) => {
               borderRadius: 16,
               padding: portrait ? "18px 30px" : "22px 36px",
               fontFamily: SERIF,
-              fontSize: portrait ? 50 : 64,
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              fontSize: portrait ? 50 : 60,
               lineHeight: 1.04,
               color: C.danger,
               whiteSpace: "pre-line",
-              background: "rgba(240,144,127,0.07)",
+              background: "rgba(215, 0, 21, 0.06)",
               opacity: interpolate(stamp, [0, 0.3], [0, 1], clamp),
               transform: `rotate(-2.5deg) scale(${1.3 - 0.3 * stamp})`,
               transformOrigin: portrait ? "50% 50%" : "0% 50%",
@@ -260,7 +261,7 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={s.n}
               style={{
-                ...card(i === 2 && fail > 0.5 ? "rgba(240,144,127,0.6)" : C.line2),
+                ...card(i === 2 && fail > 0.5 ? "rgba(215, 0, 21, 0.5)" : C.line),
                 ...rise(prog(f, s.at, 18), 18),
                 position: "absolute",
                 left: b.x,
@@ -320,7 +321,7 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
               </div>
             ))}
             <div style={{ position: "absolute", left: 0, top: 30, opacity: prog(f, 226, 14) }}>
-              <div style={{ fontFamily: SERIF, fontSize: portrait ? 50 : 56, color: C.danger, lineHeight: 1 }}>state lost</div>
+              <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 50 : 56, color: C.danger, lineHeight: 1 }}>state lost</div>
               <div style={{ fontFamily: MONO, fontSize: portrait ? 18 : 20, color: C.fg4, marginTop: 12 }}>did step 3 run? nobody knows</div>
             </div>
           </div>
@@ -328,7 +329,7 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
             style={{
               position: "absolute",
               inset: 0,
-              background: "rgba(240,144,127,0.28)",
+              background: "rgba(215, 0, 21, 0.16)",
               opacity: flash,
               display: "flex",
               alignItems: "center",
@@ -344,7 +345,7 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
         {/* blind retry counter */}
         <div
           style={{
-            ...card(paid === 2 ? "rgba(240,144,127,0.6)" : C.line2),
+            ...card(paid === 2 ? "rgba(215, 0, 21, 0.5)" : C.line),
             ...rise(prog(f, 176, 18), 18),
             position: "absolute",
             left: counter.x,
@@ -355,7 +356,6 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            boxShadow: paid === 2 ? `0 0 ${70 * retry}px -14px rgba(240,144,127,0.75)` : card().boxShadow,
           }}
         >
           <div style={label(C.fg4, portrait ? 14 : 15)}>Payments executed</div>
@@ -363,6 +363,8 @@ export const Failure: React.FC<{ dur: number }> = ({ dur }) => {
             <span
               style={{
                 fontFamily: SERIF,
+                fontWeight: 700,
+                letterSpacing: "-0.05em",
                 fontSize: portrait ? 132 : 140,
                 lineHeight: 0.9,
                 color: paid === 2 ? C.danger : C.fg2,
@@ -484,7 +486,7 @@ export const TwoEngines: React.FC<{ dur: number }> = ({ dur }) => {
               }}
             >
               <div style={label(e.color, portrait ? 16 : 17)}>{e.tag}</div>
-              <div style={{ fontFamily: SERIF, fontSize: portrait ? 50 : 54, color: C.fg, marginTop: 10, lineHeight: 1.05 }}>{e.title}</div>
+              <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 48 : 50, color: C.fg, marginTop: 10, lineHeight: 1.05 }}>{e.title}</div>
               <div style={{ ...label(C.fg4, 14), marginTop: portrait ? 20 : 34 }}>owns</div>
               <div
                 style={{
@@ -610,8 +612,7 @@ export const BoundedGraph: React.FC<{ dur: number }> = ({ dur }) => {
                 height: g.h,
                 borderRadius: 14,
                 border: `1.5px solid ${t}`,
-                background: state === "idle" ? "rgba(17,24,42,0.7)" : `linear-gradient(90deg, ${t}1f, rgba(17,24,42,0.9) 70%)`,
-                boxShadow: state === "active" ? `0 0 30px -6px ${C.accent}` : "none",
+                background: state === "idle" ? C.surface : `${t}12`,
                 display: "flex",
                 flexDirection: portrait ? "row" : "column",
                 alignItems: portrait ? "center" : "flex-start",
@@ -635,7 +636,7 @@ export const BoundedGraph: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={c.l}
               style={{
-                ...card("rgba(216,187,132,0.4)"),
+                ...card("rgba(0, 113, 227, 0.35)"),
                 ...rise(p, 18),
                 position: "absolute",
                 left: g.x,
@@ -648,7 +649,7 @@ export const BoundedGraph: React.FC<{ dur: number }> = ({ dur }) => {
                 gap: portrait ? 20 : 24,
               }}
             >
-              <span style={{ fontFamily: SERIF, fontSize: portrait ? 64 : 72, color: C.accent, lineHeight: 1, flex: "none", minWidth: portrait ? 92 : 100 }}>{c.v}</span>
+              <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.04em", fontSize: portrait ? 60 : 68, color: C.accent, lineHeight: 1, flex: "none", minWidth: portrait ? 92 : 100 }}>{c.v}</span>
               <div>
                 <div style={{ fontFamily: SANS, fontSize: portrait ? 25 : 27, fontWeight: 500, color: C.fg, lineHeight: 1.15 }}>{c.l}</div>
                 <div style={{ display: "flex", gap: 6, marginTop: 14 }}>
@@ -687,8 +688,8 @@ export const BoundedGraph: React.FC<{ dur: number }> = ({ dur }) => {
               gap: 16,
               padding: "14px 28px",
               borderRadius: 999,
-              border: `1.5px solid rgba(240,144,127,0.5)`,
-              background: "rgba(240,144,127,0.07)",
+              border: `1.5px solid rgba(215, 0, 21, 0.45)`,
+              background: "rgba(215, 0, 21, 0.06)",
               fontFamily: MONO,
               fontSize: portrait ? 22 : 24,
               color: C.fg2,
@@ -781,7 +782,7 @@ export const TypedDag: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={r.name}
               style={{
-                ...card(run >= 1 ? "rgba(125,211,191,0.45)" : C.line2),
+                ...card(run >= 1 ? "rgba(36, 138, 61, 0.4)" : C.line),
                 ...rise(prog(f, 80 + i * 4, 18), 18),
                 position: "absolute",
                 left: g.x,
@@ -812,7 +813,7 @@ export const TypedDag: React.FC<{ dur: number }> = ({ dur }) => {
 
         <div
           style={{
-            ...card(ver > 0.5 ? "rgba(125,211,191,0.55)" : "rgba(216,187,132,0.5)"),
+            ...card(ver > 0.5 ? "rgba(36, 138, 61, 0.5)" : "rgba(0, 113, 227, 0.45)"),
             ...rise(prog(f, 140, 20), 18),
             position: "absolute",
             left: write.x,
@@ -848,9 +849,8 @@ export const TypedDag: React.FC<{ dur: number }> = ({ dur }) => {
             gap: 12,
             padding: "12px 20px",
             borderRadius: 12,
-            background: "rgba(10,14,23,0.92)",
+            background: "#ffffff",
             border: `1.5px solid ${pre > 0.5 ? C.signal : C.accent}`,
-            boxShadow: pre > 0.5 ? `0 0 ${30 * pre}px -6px ${C.signal}` : "none",
             fontFamily: MONO,
             fontSize: portrait ? 20 : 20,
             color: pre > 0.5 ? C.signal : C.fg2,
@@ -864,7 +864,7 @@ export const TypedDag: React.FC<{ dur: number }> = ({ dur }) => {
         {/* optimistic concurrency */}
         <div
           style={{
-            ...card(ver > 0.5 ? "rgba(125,211,191,0.45)" : C.line2),
+            ...card(ver > 0.5 ? "rgba(36, 138, 61, 0.4)" : C.line),
             ...rise(prog(f, 220, 18), 18),
             position: "absolute",
             left: etag.x,
@@ -952,7 +952,7 @@ export const Timeout: React.FC<{ dur: number }> = ({ dur }) => {
             width: x1 - x0,
             top: laneY - 80,
             height: 160,
-            background: "radial-gradient(50% 50% at 60% 50%, rgba(240,144,127,0.35), transparent 70%)",
+            background: "transparent",
             opacity: flash,
           }}
         />
@@ -1040,8 +1040,8 @@ export const Timeout: React.FC<{ dur: number }> = ({ dur }) => {
         </div>
 
         {[
-          { box: worker, tag: "Durable worker", title: "Dispatch write", mono: false, at: 12, tone: C.line2 },
-          { box: target, tag: "System of record", title: "POST /payments", mono: true, at: 18, tone: reconciled ? "rgba(125,211,191,0.55)" : C.line2 },
+          { box: worker, tag: "Durable worker", title: "Dispatch write", mono: false, at: 12, tone: C.line },
+          { box: target, tag: "System of record", title: "POST /payments", mono: true, at: 18, tone: reconciled ? "rgba(36, 138, 61, 0.5)" : C.line },
         ].map((n) => (
           <div
             key={n.tag}
@@ -1130,7 +1130,7 @@ export const Timeout: React.FC<{ dur: number }> = ({ dur }) => {
         {/* automatic retries: 0 */}
         <div
           style={{
-            ...card("rgba(125,211,191,0.4)"),
+            ...card("rgba(36, 138, 61, 0.4)"),
             ...rise(prog(f, 126, 18), 18),
             position: "absolute",
             left: retryBox.x,
@@ -1146,6 +1146,8 @@ export const Timeout: React.FC<{ dur: number }> = ({ dur }) => {
           <span
             style={{
               fontFamily: SERIF,
+              fontWeight: 700,
+              letterSpacing: "-0.05em",
               fontSize: portrait ? 120 : 136,
               lineHeight: 1,
               color: C.signal,
@@ -1176,8 +1178,8 @@ export const Timeout: React.FC<{ dur: number }> = ({ dur }) => {
           }}
         >
           <Check p={prog(f, 282, 14)} size={portrait ? 46 : 52} />
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 64 : 70, color: C.fg, letterSpacing: "-0.02em" }}>
-            Executed <span style={{ fontStyle: "italic", color: C.signal }}>exactly once.</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 64 : 70, color: C.fg, letterSpacing: "-0.035em" }}>
+            Executed <span style={{ color: C.signal }}>exactly once.</span>
           </span>
         </div>
       </AbsoluteFill>

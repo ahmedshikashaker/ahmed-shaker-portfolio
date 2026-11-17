@@ -43,7 +43,7 @@ export const Hook: React.FC<{ dur: number }> = ({ dur }) => {
                   borderLeft: `3px solid ${color}`,
                 }}
               >
-                <span style={{ width: 13, height: 13, borderRadius: 99, background: color, boxShadow: `0 0 22px ${color}` }} />
+                <span style={{ width: 13, height: 13, borderRadius: 99, background: color }} />
                 <div>
                   <div style={{ fontFamily: MONO, fontSize: 17, letterSpacing: "0.18em", textTransform: "uppercase", color: C.fg4 }}>
                     {dept}
@@ -151,7 +151,7 @@ export const Silos: React.FC<{ dur: number }> = ({ dur }) => {
               <div
                 key={a.name}
                 style={{
-                  ...card(`rgba(240, 144, 127, ${0.18 + flicker * 0.5})`),
+                  ...card(`rgba(215, 0, 21, ${0.18 + flicker * 0.45})`),
                   ...rise(p, 18),
                   position: "absolute",
                   left: cx(i) - agentW / 2,
@@ -195,8 +195,8 @@ export const Silos: React.FC<{ dur: number }> = ({ dur }) => {
                   width: agentW,
                   height: appH,
                   borderRadius: 14,
-                  border: `1.5px solid ${C.line3}`,
-                  background: "rgba(12, 17, 27, 0.9)",
+                  border: `1.5px solid ${C.line2}`,
+                  background: C.surface,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -221,11 +221,11 @@ export const Silos: React.FC<{ dur: number }> = ({ dur }) => {
                 style={{
                   flex: 1,
                   ...rise(p, 18),
-                  borderTop: `2px solid ${i === 2 ? C.danger : C.line3}`,
+                  borderTop: `2px solid ${i === 2 ? C.danger : C.line2}`,
                   paddingTop: 16,
                 }}
               >
-                <div style={{ fontFamily: SERIF, fontSize: portrait ? 96 : 92, lineHeight: 1, color }}>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.05em", fontSize: portrait ? 96 : 92, lineHeight: 1, color }}>
                   {Math.round(n * p)}
                 </div>
                 <div style={{ fontFamily: SANS, fontSize: portrait ? 24 : 25, color: C.fg3, marginTop: 8, lineHeight: 1.25 }}>{label}</div>

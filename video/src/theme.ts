@@ -1,34 +1,36 @@
-import { loadFont as loadSerif } from "@remotion/google-fonts/Newsreader";
-import { loadFont as loadSans } from "@remotion/google-fonts/IBMPlexSans";
+import { loadFont as loadDisplay } from "@remotion/google-fonts/InterTight";
+import { loadFont as loadSans } from "@remotion/google-fonts/Inter";
 import { loadFont as loadMono } from "@remotion/google-fonts/IBMPlexMono";
 
-/** Same palette as the website's dark theme (src/app/globals.css). */
+/**
+ * Same Apple-style launch palette & type system as the current website's light theme
+ * (src/app/globals.css [data-theme="light"] and video/src/home/theme.ts).
+ */
 export const C = {
-  bg: "#0a0e17",
-  bg2: "#0c111b",
-  surface: "#11182a",
-  surface2: "#161f33",
-  surface3: "#1c273e",
-  line: "rgba(232, 224, 207, 0.08)",
-  line2: "rgba(232, 224, 207, 0.14)",
-  line3: "rgba(232, 224, 207, 0.26)",
-  fg: "#f2ede3",
-  fg2: "#c9c8c3",
-  fg3: "#969aa5",
-  fg4: "#7d8290",
-  accent: "#d8bb84",
-  accent2: "#ebd3a6",
-  accentDeep: "#9c7f4a",
-  signal: "#7dd3bf",
-  danger: "#f0907f",
-  blue: "#8fb4ff",
+  bg: "#ffffff",
+  bg2: "#f5f5f7",
+  surface: "#f5f5f7",
+  surface2: "#e8e8ed",
+  surface3: "#d9d9de",
+  line: "rgba(0, 0, 0, 0.08)",
+  line2: "rgba(0, 0, 0, 0.13)",
+  line3: "rgba(0, 0, 0, 0.24)",
+  fg: "#1d1d1f",
+  fg2: "#424245",
+  fg3: "#6e6e73",
+  fg4: "#86868b",
+  accent: "#0071e3",
+  accent2: "#0058b0",
+  accentDeep: "#66a3f0",
+  signal: "#248a3d",
+  danger: "#d70015",
+  blue: "#5856d6",
 };
 
-const serif = loadSerif("normal", { weights: ["400", "500"], subsets: ["latin"] });
-loadSerif("italic", { weights: ["400", "500"], subsets: ["latin"] });
+const display = loadDisplay("normal", { weights: ["600", "700"], subsets: ["latin"] });
 const sans = loadSans("normal", { weights: ["400", "500", "600"], subsets: ["latin"] });
 const mono = loadMono("normal", { weights: ["400", "500"], subsets: ["latin"] });
 
-export const SERIF = serif.fontFamily;
+export const SERIF = display.fontFamily;
 export const SANS = sans.fontFamily;
 export const MONO = mono.fontFamily;

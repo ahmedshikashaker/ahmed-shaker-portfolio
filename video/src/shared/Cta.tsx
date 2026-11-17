@@ -1,6 +1,6 @@
 import React from "react";
-import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
-import { C, MONO, SANS, SERIF } from "../theme";
+import { AbsoluteFill, Img, staticFile } from "remotion";
+import { C, SANS, SERIF } from "../theme";
 import { Eyebrow, Headline, SceneWrap, prog, rise, useLayout, useSceneFrame } from "../primitives";
 
 /** Closing call-to-action, shared by every part of the series. */
@@ -14,17 +14,18 @@ export const makeCta = (part: number, title: string, subtitle: string) => {
           <Eyebrow start={4} center>
             The full interactive essay
           </Eyebrow>
-          <div style={{ marginTop: 30 }}>
+          <div style={{ marginTop: 26 }}>
             <Headline start={12} center size={portrait ? 112 : 124} lineHeight={1.0} text={title} />
           </div>
           <div
             style={{
-              marginTop: 30,
+              marginTop: 28,
               fontFamily: SANS,
               fontSize: portrait ? 34 : 36,
-              color: C.fg2,
+              color: C.fg3,
               maxWidth: portrait ? 860 : 1240,
-              lineHeight: 1.3,
+              lineHeight: 1.35,
+              letterSpacing: "-0.012em",
               ...rise(prog(f, 50, 20)),
             }}
           >
@@ -40,7 +41,6 @@ export const makeCta = (part: number, title: string, subtitle: string) => {
                   height: 14,
                   borderRadius: 99,
                   background: i < part ? C.accent : C.line3,
-                  boxShadow: i === part - 1 ? `0 0 20px ${C.accent}` : "none",
                 }}
               />
             ))}
@@ -55,30 +55,30 @@ export const makeCta = (part: number, title: string, subtitle: string) => {
               padding: portrait ? "22px 38px" : "22px 42px",
               borderRadius: 999,
               background: C.accent,
-              color: C.bg,
+              color: "#ffffff",
               fontFamily: SANS,
-              fontWeight: 600,
+              fontWeight: 500,
               fontSize: 32,
-              boxShadow: "0 20px 60px -20px rgba(216,187,132,0.7)",
+              letterSpacing: "-0.01em",
               ...rise(prog(f, 80, 20)),
             }}
           >
             Read the interactive article →
           </div>
-          <div style={{ marginTop: 22, fontFamily: MONO, fontSize: 26, color: C.fg2, letterSpacing: "0.04em", ...rise(prog(f, 92, 20)) }}>
+          <div style={{ marginTop: 22, fontFamily: SANS, fontWeight: 500, fontSize: 25, color: C.fg3, letterSpacing: "-0.01em", ...rise(prog(f, 92, 20)) }}>
             ahmed-shaker.com/blog
           </div>
 
           <div style={{ marginTop: portrait ? 70 : 56, display: "flex", alignItems: "center", gap: 20, ...rise(prog(f, 106, 20)) }}>
-            <div style={{ width: 84, height: 84, borderRadius: 99, overflow: "hidden", border: `2px solid ${C.accent}` }}>
+            <div style={{ width: 84, height: 84, borderRadius: 99, overflow: "hidden", border: `1.5px solid ${C.line2}` }}>
               <Img
                 src={staticFile("ahmed-shaker-portrait.jpg")}
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 24%", filter: "grayscale(0.25)" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 24%" }}
               />
             </div>
             <div style={{ textAlign: "left" }}>
-              <div style={{ fontFamily: SERIF, fontSize: 36, color: C.fg }}>Ahmed Shaker</div>
-              <div style={{ fontFamily: MONO, fontSize: 17, color: C.fg3, letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 4 }}>
+              <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: "-0.025em", color: C.fg }}>Ahmed Shaker</div>
+              <div style={{ fontFamily: SANS, fontWeight: 500, fontSize: 19, color: C.fg3, marginTop: 4 }}>
                 Enterprise Technology Leader
               </div>
             </div>

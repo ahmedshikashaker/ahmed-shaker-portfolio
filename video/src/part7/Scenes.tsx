@@ -27,7 +27,7 @@ const Check: React.FC<{ p: number; size?: number; color?: string }> = ({ p, size
       flex: "none",
       borderRadius: 99,
       border: `2px solid ${color}`,
-      background: `rgba(125,211,191,${0.22 * p})`,
+      background: `rgba(36, 138, 61, ${0.12 * p})`,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -47,7 +47,7 @@ const Cross: React.FC<{ p: number; size?: number }> = ({ p, size = 40 }) => (
       flex: "none",
       borderRadius: 99,
       border: `2px solid ${C.danger}`,
-      background: `rgba(240,144,127,${0.22 * p})`,
+      background: `rgba(215, 0, 21, ${0.12 * p})`,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -168,9 +168,10 @@ export const AuditorQuestion: React.FC<{ dur: number }> = ({ dur }) => {
             style={{
               marginTop: 14,
               fontFamily: SERIF,
-              fontSize: portrait ? 68 : 66,
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              fontSize: portrait ? 64 : 62,
+              lineHeight: 1.08,
+              letterSpacing: "-0.035em",
               color: C.fg,
               whiteSpace: "pre-wrap",
               opacity: prog(f, 110, 10),
@@ -228,7 +229,7 @@ export const EvidenceRequest: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={t}
               style={{
-                ...card(chk > 0.5 ? "rgba(125,211,191,0.4)" : C.line2),
+                ...card(chk > 0.5 ? "rgba(36, 138, 61, 0.35)" : C.line),
                 ...rise(prog(f, t0 - 6, 16), 16),
                 position: "absolute",
                 left: box.x,
@@ -250,7 +251,7 @@ export const EvidenceRequest: React.FC<{ dur: number }> = ({ dur }) => {
                   fontFamily: MONO,
                   fontSize: portrait ? 18 : 18,
                   color: C.signal,
-                  background: "rgba(10,14,23,0.7)",
+                  background: "#ffffff",
                   border: `1px solid ${C.line2}`,
                   borderRadius: 10,
                   padding: "6px 12px",
@@ -277,8 +278,6 @@ export const EvidenceRequest: React.FC<{ dur: number }> = ({ dur }) => {
             gap: 28,
             opacity: interpolate(proof, [0, 0.3], [0, 1], clamp),
             transform: `translateY(${(1 - proof) * 22}px) scale(${0.97 + 0.03 * proof})`,
-            background: "linear-gradient(90deg, rgba(216,187,132,0.16), rgba(17,24,42,0.94) 55%)",
-            boxShadow: `0 0 ${70 * proof}px -18px rgba(216,187,132,0.6)`,
           }}
         >
           <div
@@ -299,8 +298,8 @@ export const EvidenceRequest: React.FC<{ dur: number }> = ({ dur }) => {
             <Label color={C.accent} size={15}>
               Requirement 07
             </Label>
-            <div style={{ fontFamily: SERIF, fontSize: portrait ? 44 : 48, color: C.fg, marginTop: 4, letterSpacing: "-0.015em" }}>
-              Proof <span style={{ fontStyle: "italic", color: C.accent }}>none of it</span> was altered.
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 42 : 46, color: C.fg, marginTop: 4, letterSpacing: "-0.03em" }}>
+              Proof <span style={{ color: C.accent }}>none of it</span> was altered.
             </div>
           </div>
         </div>
@@ -374,8 +373,8 @@ export const LogsAreNotProof: React.FC<{ dur: number }> = ({ dur }) => {
               <span style={{ fontFamily: SANS, fontWeight: 600, fontSize: 24, color: C.signal }}>Yes</span>
             </div>
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 44 : 48, color: C.fg, marginTop: portrait ? 8 : 14, letterSpacing: "-0.015em" }}>
-            Is the service <span style={{ fontStyle: "italic", color: C.blue }}>healthy?</span>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 42 : 46, color: C.fg, marginTop: portrait ? 8 : 14, letterSpacing: "-0.03em" }}>
+            Is the service <span style={{ color: C.blue }}>healthy?</span>
           </div>
           <svg width={sparkW} height={sparkH} style={{ marginTop: portrait ? 14 : 24, overflow: "visible", flex: "none" }}>
             <line x1={0} y1={sparkH} x2={sparkW} y2={sparkH} stroke={C.line2} strokeWidth={1.5} />
@@ -408,7 +407,7 @@ export const LogsAreNotProof: React.FC<{ dur: number }> = ({ dur }) => {
         {/* Non-repudiation */}
         <div
           style={{
-            ...card(stamp > 0.4 ? "rgba(240,144,127,0.5)" : C.line2),
+            ...card(stamp > 0.4 ? "rgba(215, 0, 21, 0.45)" : C.line),
             ...rise(prog(f, 100, 20), 20),
             position: "absolute",
             left: right.x,
@@ -423,8 +422,8 @@ export const LogsAreNotProof: React.FC<{ dur: number }> = ({ dur }) => {
           <Label color={C.accent} size={16}>
             Non-repudiation
           </Label>
-          <div style={{ fontFamily: SERIF, fontSize: portrait ? 44 : 48, color: C.fg, marginTop: portrait ? 8 : 14, letterSpacing: "-0.015em" }}>
-            Who authorized <span style={{ fontStyle: "italic", color: C.accent }}>what?</span>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: portrait ? 42 : 46, color: C.fg, marginTop: portrait ? 8 : 14, letterSpacing: "-0.03em" }}>
+            Who authorized <span style={{ color: C.accent }}>what?</span>
           </div>
           <div style={{ marginTop: portrait ? 18 : 30, display: "flex", flexDirection: "column", gap: portrait ? 10 : 16 }}>
             {fields.map(([k], i) => (
@@ -456,16 +455,16 @@ export const LogsAreNotProof: React.FC<{ dur: number }> = ({ dur }) => {
             width: portrait ? 300 : 310,
             textAlign: "center",
             fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: portrait ? 50 : 54,
+            fontWeight: 700,
+            letterSpacing: "-0.03em",
+            fontSize: portrait ? 48 : 50,
             color: C.danger,
             border: `3px solid ${C.danger}`,
             borderRadius: 14,
-            padding: "4px 0 8px",
-            background: "rgba(10,14,23,0.85)",
+            padding: "6px 0 8px",
+            background: "rgba(255, 255, 255, 0.96)",
             opacity: interpolate(stamp, [0, 0.25], [0, 1], clamp),
             transform: `rotate(-6deg) scale(${1.5 - 0.5 * stamp})`,
-            boxShadow: `0 0 ${50 * stamp}px -14px rgba(240,144,127,0.7)`,
           }}
         >
           logs ≠ proof
@@ -509,17 +508,16 @@ export const Correlation: React.FC<{ dur: number }> = ({ dur }) => {
           height: portrait ? 50 : 54,
           padding: portrait ? "0 16px" : "0 18px",
           borderRadius: 12,
-          border: `1.5px solid ${on > 0.5 ? (end ? C.accent : "rgba(125,211,191,0.5)") : C.line2}`,
-          background: on > 0.5 ? (end ? "rgba(216,187,132,0.12)" : "rgba(125,211,191,0.07)") : "rgba(17,24,42,0.7)",
+          border: `1.5px solid ${on > 0.5 ? (end ? C.accent : "rgba(36, 138, 61, 0.45)") : C.line}`,
+          background: on > 0.5 ? (end ? "rgba(0, 113, 227, 0.08)" : "rgba(36, 138, 61, 0.06)") : C.surface,
           fontFamily: MONO,
           fontSize: portrait ? 19 : 21,
           color: interpolate(on, [0, 1], [0, 1]) > 0.5 ? C.fg : C.fg4,
           opacity: 0.4 + 0.6 * on,
           whiteSpace: "nowrap",
-          boxShadow: end && on > 0.5 ? `0 0 30px -8px rgba(216,187,132,0.6)` : undefined,
         }}
       >
-        <span style={{ width: 9, height: 9, borderRadius: 99, flex: "none", background: on > 0.5 ? tone : C.line3, boxShadow: on > 0.5 ? `0 0 12px ${tone}` : undefined }} />
+        <span style={{ width: 9, height: 9, borderRadius: 99, flex: "none", background: on > 0.5 ? tone : C.line3 }} />
         {id}
       </div>
     );
@@ -527,7 +525,7 @@ export const Correlation: React.FC<{ dur: number }> = ({ dur }) => {
 
   const counter = (
     <div style={{ display: "flex", alignItems: "baseline", gap: 18, ...rise(prog(f, 30, 16), 12) }}>
-      <span style={{ fontFamily: SERIF, fontSize: portrait ? 120 : 150, lineHeight: 0.9, color: C.accent, fontVariantNumeric: "tabular-nums", minWidth: portrait ? 130 : 160, textAlign: "right" }}>
+      <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.05em", fontSize: portrait ? 120 : 150, lineHeight: 0.9, color: C.accent, fontVariantNumeric: "tabular-nums", minWidth: portrait ? 130 : 160, textAlign: "right" }}>
         {lit}
       </span>
       <span style={{ fontFamily: MONO, fontSize: portrait ? 18 : 19, letterSpacing: "0.14em", textTransform: "uppercase", color: C.fg3, lineHeight: 1.5 }}>
@@ -653,9 +651,9 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
             ...(portrait ? { left: pad, top: 392 } : { right: pad, top: 268 }),
             fontFamily: MONO,
             fontSize: portrait ? 20 : 22,
-            color: C.accent2,
-            background: "rgba(10,14,23,0.75)",
-            border: `1.5px solid rgba(216,187,132,0.4)`,
+            color: C.accent,
+            background: C.surface,
+            border: `1.5px solid ${C.line2}`,
             borderRadius: 12,
             padding: "10px 18px",
             whiteSpace: "nowrap",
@@ -712,7 +710,7 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
           const bad = broken(i);
           const isT = i === 2;
           const prevBad = i === 3 && bad;
-          const border = isT && tamper > 0.5 ? C.danger : bad ? "rgba(240,144,127,0.55)" : ok > 0.5 ? "rgba(125,211,191,0.35)" : C.line2;
+          const border = isT && tamper > 0.5 ? C.danger : bad ? "rgba(215, 0, 21, 0.45)" : ok > 0.5 ? "rgba(36, 138, 61, 0.35)" : C.line;
           const byteRow = (
             <div style={{ display: "flex", gap: portrait ? 6 : 8, fontFamily: MONO, fontSize: portrait ? 18 : 19 }}>
               {e.bytes.map((by, bi) => {
@@ -723,8 +721,8 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
                     style={{
                       padding: "2px 6px",
                       borderRadius: 6,
-                      color: flip && tamper > 0.5 ? C.bg : C.fg3,
-                      background: flip ? `rgba(240,144,127,${tamper})` : "rgba(255,255,255,0.03)",
+                      color: flip && tamper > 0.5 ? "#ffffff" : C.fg3,
+                      background: flip && tamper > 0.5 ? C.danger : C.surface2,
                       transform: flip ? `scale(${1 + 0.25 * Math.sin(Math.PI * tamper)})` : undefined,
                       display: "inline-block",
                     }}
@@ -761,7 +759,6 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
                 alignItems: portrait ? "center" : "stretch",
                 justifyContent: portrait ? "flex-start" : "space-between",
                 gap: portrait ? 26 : 0,
-                boxShadow: isT && tamper > 0.5 ? `0 0 ${50 * tamper}px -12px rgba(240,144,127,0.7)` : undefined,
               }}
             >
               {portrait ? (
@@ -814,7 +811,7 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
         {/* anchor */}
         <div
           style={{
-            ...card(mismatch > 0.4 ? C.danger : "rgba(216,187,132,0.45)"),
+            ...card(mismatch > 0.4 ? C.danger : C.line2),
             ...rise(prog(f, 112, 18), 16),
             position: "absolute",
             left: anchor.x,
@@ -825,7 +822,6 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
             display: "flex",
             alignItems: "center",
             gap: portrait ? 22 : 34,
-            boxShadow: mismatch > 0.4 ? `0 0 ${60 * mismatch}px -16px rgba(240,144,127,0.7)` : undefined,
           }}
         >
           <div style={{ width: 60, height: 60, flex: "none", borderRadius: 16, border: `2px solid ${C.accent}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -835,7 +831,7 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
             <Label color={C.accent} size={15}>
               Signed WORM anchor
             </Label>
-            <div style={{ fontFamily: SANS, fontSize: portrait ? 24 : 26, color: C.fg, marginTop: 4 }}>Partition sealed · Ed25519 signature</div>
+            <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: portrait ? 24 : 26, color: C.fg, marginTop: 4 }}>Partition sealed · Ed25519 signature</div>
             <div style={{ fontFamily: MONO, fontSize: portrait ? 16 : 18, color: C.fg3, marginTop: 6, whiteSpace: "nowrap" }}>
               expected 9c41…e2a7 <span style={{ color: C.fg4 }}>·</span> computed{" "}
               <span style={{ color: mismatch > 0.4 ? C.danger : C.fg3 }}>{mismatch > 0.4 ? "51d7…0b3c" : "9c41…e2a7"}</span>
@@ -856,7 +852,7 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
                 lineHeight: 1.25,
                 opacity: interpolate(mismatch, [0, 0.3], [0, 1], clamp),
                 transform: `rotate(-3deg) scale(${1.4 - 0.4 * mismatch})`,
-                background: "rgba(240,144,127,0.08)",
+                background: "rgba(215, 0, 21, 0.06)",
               }}
             >
               Mismatch
@@ -879,7 +875,7 @@ export const HashChain: React.FC<{ dur: number }> = ({ dur }) => {
 type Field = { k: string; v: React.ReactNode };
 
 const Redacted: React.FC<{ w: number }> = ({ w }) => (
-  <span style={{ display: "inline-block", width: w, height: "0.8em", verticalAlign: "-0.05em", borderRadius: 4, background: "rgba(232,224,207,0.22)" }} />
+  <span style={{ display: "inline-block", width: w, height: "0.8em", verticalAlign: "-0.05em", borderRadius: 4, background: "rgba(0, 0, 0, 0.16)" }} />
 );
 
 const AUDIENCES: { name: string; tag: string; tone: string; at: number; fields: Field[] }[] = [
@@ -988,7 +984,7 @@ export const Projection: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={a.name}
               style={{
-                ...card(vault && seal > 0.4 ? "rgba(125,211,191,0.55)" : C.line2),
+                ...card(vault && seal > 0.4 ? "rgba(36, 138, 61, 0.45)" : C.line),
                 ...rise(prog(f, a.at, 18), 18),
                 position: "absolute",
                 left: c.x,
@@ -999,7 +995,6 @@ export const Projection: React.FC<{ dur: number }> = ({ dur }) => {
                 display: "flex",
                 flexDirection: "column",
                 borderTop: `3px solid ${a.tone}`,
-                boxShadow: vault && seal > 0.4 ? `0 0 ${60 * seal}px -18px rgba(125,211,191,0.6)` : undefined,
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>

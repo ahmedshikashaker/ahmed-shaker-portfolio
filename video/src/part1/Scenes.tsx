@@ -52,7 +52,7 @@ export const Pilot: React.FC<{ dur: number }> = ({ dur }) => {
 
         <div style={{ ...card(), ...rise(prog(f, 14, 20), 24), position: "absolute", left: chat.x, top: chat.y, width: chat.w, padding: 30 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, fontFamily: MONO, fontSize: 17, letterSpacing: "0.14em", color: C.fg4 }}>
-            <span style={{ width: 10, height: 10, borderRadius: 99, background: C.signal, boxShadow: `0 0 12px ${C.signal}` }} />
+            <span style={{ width: 10, height: 10, borderRadius: 99, background: C.signal }} />
             ENTERPRISE ASSISTANT
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 22 }}>
@@ -60,8 +60,8 @@ export const Pilot: React.FC<{ dur: number }> = ({ dur }) => {
               style={{
                 ...rise(prog(f, 22, 16), 14),
                 maxWidth: "82%",
-                background: "rgba(216, 187, 132, 0.14)",
-                border: `1px solid rgba(216, 187, 132, 0.35)`,
+                background: "rgba(0, 113, 227, 0.10)",
+                border: `1px solid rgba(0, 113, 227, 0.28)`,
                 borderRadius: "22px 22px 6px 22px",
                 padding: "18px 22px",
                 fontFamily: SANS,
@@ -179,7 +179,7 @@ export const CopyPaste: React.FC<{ dur: number }> = ({ dur }) => {
                 <div
                   key={t}
                   style={{
-                    ...card(travel * 4 >= i - 0.2 && f > 120 ? "rgba(240,144,127,0.55)" : C.line2),
+                    ...card(travel * 4 >= i - 0.2 && f > 120 ? "rgba(215, 0, 21, 0.5)" : C.line2),
                     ...rise(prog(f, 36 + i * 14, 16), 16),
                     position: "absolute",
                     left: i * (w + 26),
@@ -246,7 +246,7 @@ export const Maturity: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={s.name}
               style={{
-                ...card(last ? `rgba(125,211,191,${0.25 + 0.6 * glow})` : i === 2 ? "rgba(240,144,127,0.4)" : C.line2),
+                ...card(last ? `rgba(36, 138, 61, ${0.25 + 0.6 * glow})` : i === 2 ? "rgba(215, 0, 21, 0.45)" : C.line2),
                 ...rise(p, 20),
                 position: "absolute",
                 left: box.x,
@@ -257,7 +257,6 @@ export const Maturity: React.FC<{ dur: number }> = ({ dur }) => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                boxShadow: last ? `0 0 ${80 * glow}px -16px rgba(125,211,191,0.6)` : undefined,
               }}
             >
               <div
@@ -286,7 +285,7 @@ export const Maturity: React.FC<{ dur: number }> = ({ dur }) => {
                 </span>
               </div>
               <div>
-                <div style={{ fontFamily: SERIF, fontSize: portrait ? 40 : 38, color: last ? C.accent : C.fg, lineHeight: 1.05 }}>{s.name}</div>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 38 : 36, color: last ? C.accent : C.fg, lineHeight: 1.05 }}>{s.name}</div>
                 <div style={{ fontFamily: SANS, fontSize: portrait ? 22 : 21, color: C.fg3, marginTop: 8 }}>{s.cap}</div>
               </div>
             </div>
@@ -395,12 +394,11 @@ export const Principle: React.FC<{ dur: number }> = ({ dur }) => {
                 flexDirection: "column",
                 justifyContent: "space-between",
                 borderTop: `3px solid ${z.tone}`,
-                boxShadow: i === 1 ? "0 0 70px -20px rgba(216,187,132,0.45)" : undefined,
               }}
             >
               <div style={{ fontFamily: MONO, fontSize: 16, letterSpacing: "0.16em", textTransform: "uppercase", color: z.tone }}>{z.tag}</div>
               <div>
-                <div style={{ fontFamily: SERIF, fontSize: portrait ? 42 : 40, color: C.fg, lineHeight: 1.05 }}>{z.title}</div>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.03em", fontSize: portrait ? 40 : 38, color: C.fg, lineHeight: 1.05 }}>{z.title}</div>
                 <div style={{ fontFamily: SANS, fontSize: 22, color: C.fg3, marginTop: 8 }}>{z.items}</div>
               </div>
               <div style={{ opacity: prog(f, 160 + i * 10, 16) }}>
@@ -458,8 +456,8 @@ export const NineGates: React.FC<{ dur: number }> = ({ dur }) => {
             alignItems: "center",
             padding: "12px 20px",
             borderRadius: 999,
-            border: `1px solid ${C.line3}`,
-            background: "rgba(17,24,42,0.9)",
+            border: `1px solid ${C.line2}`,
+            background: C.surface,
             fontFamily: SANS,
             fontSize: portrait ? 23 : 24,
             color: C.fg,
@@ -482,8 +480,8 @@ export const NineGates: React.FC<{ dur: number }> = ({ dur }) => {
             flexWrap: "wrap",
           }}
         >
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 58 : 60, color: C.signal }}>Executed once.</span>
-          <span style={{ fontFamily: SERIF, fontSize: portrait ? 58 : 60, color: C.fg, fontStyle: "italic" }}>Fully traceable.</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.035em", fontSize: portrait ? 58 : 60, color: C.signal }}>Executed once.</span>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, letterSpacing: "-0.035em", fontSize: portrait ? 58 : 60, color: C.accent }}>Fully traceable.</span>
         </div>
       </AbsoluteFill>
     </SceneWrap>
@@ -522,7 +520,7 @@ export const ThreeRequests: React.FC<{ dur: number }> = ({ dur }) => {
             <div
               key={r.q}
               style={{
-                ...card(f > t0 + 40 ? (r.tone === C.signal ? "rgba(125,211,191,0.45)" : "rgba(240,144,127,0.45)") : C.line2),
+                ...card(f > t0 + 40 ? (r.tone === C.signal ? "rgba(36, 138, 61, 0.45)" : "rgba(215, 0, 21, 0.45)") : C.line2),
                 ...rise(prog(f, t0, 18), 18),
                 position: "absolute",
                 left: pad,
@@ -579,7 +577,7 @@ export const ThreeRequests: React.FC<{ dur: number }> = ({ dur }) => {
                     fontWeight: 500,
                     fontSize: portrait ? 22 : 24,
                     letterSpacing: "0.16em",
-                    background: "rgba(10,14,23,0.85)",
+                    background: "rgba(255, 255, 255, 0.96)",
                   }}
                 >
                   {r.out}
@@ -598,9 +596,9 @@ export const ThreeRequests: React.FC<{ dur: number }> = ({ dur }) => {
 
 const TIERS = [
   { id: "R0", name: "Conversational", rule: "no footprint · autonomous", tone: C.signal },
-  { id: "R1", name: "Governed read", rule: "policy-checked · autonomous", tone: "#a9d9b9" },
-  { id: "R2", name: "Reversible write", rule: "user confirms the exact payload", tone: C.accent2 },
-  { id: "R3", name: "Sensitive / financial", rule: "four-eyes + step-up MFA", tone: C.accent },
+  { id: "R1", name: "Governed read", rule: "policy-checked · autonomous", tone: "#008060" },
+  { id: "R2", name: "Reversible write", rule: "user confirms the exact payload", tone: C.accent },
+  { id: "R3", name: "Sensitive / financial", rule: "four-eyes + step-up MFA", tone: "#d96500" },
   { id: "R4", name: "Prohibited", rule: "never model-executed", tone: C.danger },
 ];
 
@@ -645,7 +643,7 @@ export const RiskTiers: React.FC<{ dur: number }> = ({ dur }) => {
           const h = 150 + i * 60;
           return (
             <div key={t.id} style={{ ...rise(p, 16), position: "absolute", left: pad + i * (colW + 26), top: 920 - h, width: colW, height: h }}>
-              <div style={{ position: "absolute", inset: 0, borderRadius: 16, background: `linear-gradient(180deg, ${t.tone}33, ${t.tone}10)`, border: `1.5px solid ${t.tone}` }} />
+              <div style={{ position: "absolute", inset: 0, borderRadius: 16, background: `${t.tone}14`, border: `1.5px solid ${t.tone}` }} />
               <div style={{ position: "absolute", left: 22, top: 18, fontFamily: MONO, fontWeight: 500, fontSize: 30, color: t.tone }}>{t.id}</div>
               <div style={{ position: "absolute", left: 22, right: 18, bottom: 20 }}>
                 <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 25, color: C.fg }}>{t.name}</div>
@@ -662,8 +660,9 @@ export const RiskTiers: React.FC<{ dur: number }> = ({ dur }) => {
             top: portrait ? 1100 : 400,
             textAlign: portrait ? "left" : "right",
             fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: portrait ? 50 : 50,
+            fontWeight: 700,
+            letterSpacing: "-0.03em",
+            fontSize: portrait ? 48 : 48,
             whiteSpace: "pre-line",
             color: C.accent,
             ...rise(prog(f, 120, 20)),
