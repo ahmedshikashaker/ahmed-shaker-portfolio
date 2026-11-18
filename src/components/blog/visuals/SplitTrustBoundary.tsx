@@ -70,9 +70,9 @@ export default function SplitTrustBoundary({
                 </span>
                 <Server className="size-4 text-signal" strokeWidth={1.75} />
               </div>
-              <h4 className="mt-3 font-display text-[1.2rem] text-fg">
+              <h3 className="mt-3 font-display text-[1.2rem] text-fg">
                 Governance Control Plane &amp; PEP
-              </h4>
+              </h3>
               <p className="mt-1 text-[12.5px] leading-snug text-fg-3">
                 Owns identity context, capability catalog, policy enforcement, proposals, approvals, and authoritative relational state.
               </p>
@@ -110,9 +110,9 @@ export default function SplitTrustBoundary({
                 </span>
                 <Terminal className="size-4 text-amber-500" strokeWidth={1.75} />
               </div>
-              <h4 className="mt-3 font-display text-[1.2rem] text-fg">
+              <h3 className="mt-3 font-display text-[1.2rem] text-fg">
                 Reasoning &amp; Scoped Retrieval
-              </h4>
+              </h3>
               <p className="mt-1 text-[12.5px] leading-snug text-fg-3">
                 Interprets intent, queries brokered evidence, and proposes bounded plan DAGs. Holds zero connector secrets and has no direct route to business APIs.
               </p>
@@ -150,9 +150,9 @@ export default function SplitTrustBoundary({
                 </span>
                 <KeyRound className="size-4 text-accent" strokeWidth={1.75} />
               </div>
-              <h4 className="mt-3 font-display text-[1.2rem] text-fg">
+              <h3 className="mt-3 font-display text-[1.2rem] text-fg">
                 Durable Workers &amp; Secret Vault
-              </h4>
+              </h3>
               <p className="mt-1 text-[12.5px] leading-snug text-fg-3">
                 Executes deterministic workflows, verifies single-attempt Signed Execution Grants, resolves short-lived credentials, and enforces egress allowlists.
               </p>

@@ -4,7 +4,7 @@ import BlogIndex from "@/components/blog/BlogIndex";
 import SeriesBanner from "@/components/blog/SeriesBanner";
 
 export const metadata: Metadata = {
-  title: "Blog — Digital Banking, Architecture & Engineering Leadership",
+  title: "Blog — Digital Banking, Architecture & AI Governance",
   description:
     "Articles by Ahmed Shaker (أحمد شاكر) on digital banking, building digital factories, software architecture, AI governance and engineering leadership.",
   alternates: {
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: `${SITE_URL}/blog`,
+    locale: "en_US",
     siteName: "Ahmed Shaker",
     title: "Ahmed Shaker — Blog",
     description: "Digital banking, digital factories, software architecture, AI governance and engineering leadership.",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ahmed Shaker — Blog",
     description: "Digital banking, digital factories, software architecture, AI governance and engineering leadership.",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt: "Ahmed Shaker — Blog" }],
   },
 };
 
@@ -32,19 +33,38 @@ export default async function BlogPage() {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "@id": `${SITE_URL}/blog#blog`,
-    url: `${SITE_URL}/blog`,
-    name: "Ahmed Shaker — Blog",
-    inLanguage: ["en", "ar"],
-    author: { "@id": `${SITE_URL}/#person` },
-    blogPost: posts.slice(0, 20).map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      url: p.url,
-      datePublished: p.publishedDate,
-      inLanguage: p.language,
-    })),
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${SITE_URL}/blog#blog`,
+        url: `${SITE_URL}/blog`,
+        name: "Ahmed Shaker — Blog",
+        description:
+          "Articles by Ahmed Shaker on digital banking, building digital factories, software architecture, AI governance and engineering leadership.",
+        inLanguage: ["en", "ar"],
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        author: { "@id": `${SITE_URL}/#person` },
+        publisher: { "@id": `${SITE_URL}/#person` },
+        blogPost: posts.slice(0, 20).map((p) => ({
+          "@type": "BlogPosting",
+          "@id": `${p.url}#article`,
+          headline: p.title,
+          description: p.excerpt,
+          url: p.url,
+          datePublished: p.publishedDate,
+          dateModified: p.updatedDate ?? p.publishedDate,
+          inLanguage: p.language,
+          author: { "@id": `${SITE_URL}/#person` },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+        ],
+      },
+    ],
   };
 
   return (

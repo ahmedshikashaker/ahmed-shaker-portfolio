@@ -177,9 +177,9 @@ export default function BlueprintRealityLedger({
                     <span className="font-mono text-[11px] text-fg-4">{current.stack}</span>
                   </div>
 
-                  <h4 className="mt-3 font-display text-[1.4rem] leading-tight text-fg">
+                  <h3 className="mt-3 font-display text-[1.4rem] leading-tight text-fg">
                     {current.subsystem}
-                  </h4>
+                  </h3>
 
                   <div className="mt-4">
                     <p className="font-mono text-[10.5px] uppercase tracking-wider text-signal">

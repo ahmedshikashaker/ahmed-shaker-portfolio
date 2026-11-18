@@ -36,6 +36,8 @@ export interface Series {
   slug: string;
   eyebrowLabel?: string;
   title: string;
+  /** Compact page title for search results when the full title exceeds ~60 characters. */
+  seoTitle?: string;
   tagline: string;
   description: string;
   centralThesis?: string;
@@ -58,6 +60,7 @@ export const SERIES: Series[] = [
     slug: "governed-ai",
     eyebrowLabel: "AI Agents & Enterprise Governance",
     title: "Governed Autonomy, From AI Knowledge to Controlled Enterprise Action",
+    seoTitle: "Governed Autonomy: Enterprise AI Governance Series",
     tagline:
       "Eight architectural essays on how enterprises give AI the authority to act—without surrendering identity, policy, risk boundaries, or non-repudiation.",
     description:

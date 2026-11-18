@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ series: s
   const title = `${series.title}: a series in ${allParts.length} parts`;
   const image = `${SITE_URL}/og/series/${series.slug}`;
   return {
-    title: series.title,
+    title: series.seoTitle ?? series.title,
     description: series.description,
     alternates: {
       canonical: seriesUrl(series.slug),
@@ -38,12 +38,18 @@ export async function generateMetadata({ params }: { params: Promise<{ series: s
     openGraph: {
       type: "website",
       url: seriesUrl(series.slug),
+      locale: "en_US",
       title,
       description: series.tagline,
       siteName: "Ahmed Shaker",
       images: [{ url: image, width: 1200, height: 630, alt: series.title }],
     },
-    twitter: { card: "summary_large_image", title, description: series.tagline, images: [image] },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: series.tagline,
+      images: [{ url: image, width: 1200, height: 630, alt: series.title }],
+    },
   };
 }
 

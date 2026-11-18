@@ -38,6 +38,7 @@ export interface PostMeta {
   featured: boolean;
   draft: boolean;
   seoTitle: string;
+  seoDescription: string;
   canonicalUrl: string | null;
   readingMinutes: number;
   wordCount: number;
@@ -244,6 +245,7 @@ function toMeta(slug: string, entry: RawEntry["entry"]): PostMeta {
     featured: entry.featured,
     draft: entry.draft,
     seoTitle: entry.seoTitle,
+    seoDescription: entry.seoDescription ?? "",
     canonicalUrl: entry.canonicalUrl ?? null,
     readingMinutes: Math.max(1, Math.round(stats.minutes)),
     wordCount: stats.words,

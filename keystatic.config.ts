@@ -540,6 +540,11 @@ export default config({
           label: "SEO title (optional)",
           description: "Overrides the title in Google results and share previews. Aim for under 60 characters.",
         }),
+        seoDescription: fields.text({
+          label: "SEO description (optional)",
+          description: "Overrides the summary in Google search results. Aim for 120–158 characters.",
+          multiline: true,
+        }),
         canonicalUrl: fields.url({
           label: "Canonical URL (optional)",
           description: "Only if this article was first published elsewhere (e.g. Medium). Leave empty so Google credits your website.",

@@ -1,6 +1,13 @@
 import { getAllPosts, SITE_URL } from "@/lib/blog";
 import { SERIES, seriesUrl } from "@/lib/series";
-import { EXECUTIVE_PROFILE } from "@/data/portfolioData";
+import {
+  ARCHIVE_PLATFORMS,
+  EXECUTIVE_CASE_STUDIES,
+  EXECUTIVE_PROFILE,
+  FACTORIES,
+  FLAGSHIP_PLATFORMS,
+  TRACK_RECORD,
+} from "@/data/portfolioData";
 
 export const dynamic = "force-static";
 
@@ -24,11 +31,36 @@ export async function GET() {
   };
 
   const body = [
-    "# Ahmed Shaker",
+    "# Ahmed Shaker (أحمد شاكر)",
     "",
     `> ${EXECUTIVE_PROFILE.title} at Kuwait International Bank (KIB). Writes about digital transformation in banking, building banking digital factories, and governing enterprise AI.`,
     "",
     EXECUTIVE_PROFILE.shortBio,
+    "",
+    "## Digital Factories Built from Zero",
+    "",
+    ...FACTORIES.map(
+      (f) =>
+        `- **${f.factoryName} (${f.institution}, ${f.period})** — ${f.role}: ${f.mandate} Lines delivered: ${f.linesUnlocked.join(", ")}.`
+    ),
+    "",
+    "## Executive Case Studies",
+    "",
+    ...EXECUTIVE_CASE_STUDIES.map((c) => line(c.title, `${SITE_URL}/?brief=${c.id}`, c.subtitle)),
+    "",
+    "## Production Platforms Delivered",
+    "",
+    ...[...FLAGSHIP_PLATFORMS, ...ARCHIVE_PLATFORMS].map((p) =>
+      line(
+        `${p.name} (${p.institution})`,
+        p.listing?.href ?? `${SITE_URL}/?platform=${p.id}#ecosystems`,
+        `${p.domain} — ${p.outcome}`
+      )
+    ),
+    "",
+    "## Career Track Record",
+    "",
+    ...TRACK_RECORD.map((r) => `- **${r.title}**, ${r.institution} (${r.period}, ${r.location}): ${r.mandate}`),
     "",
     "## Series",
     "",
@@ -45,9 +77,11 @@ export async function GET() {
     "## About",
     "",
     line("Portfolio", SITE_URL, "career, the two banking digital factories, and the platforms delivered"),
+    line("Executive CV", `${SITE_URL}/#cv`, "1-page A4 executive curriculum vitae in English and Arabic"),
     line("All articles", `${SITE_URL}/blog`, "the blog index"),
     line("RSS feed", `${SITE_URL}/blog/rss.xml`, "every article with its summary"),
     line("LinkedIn", EXECUTIVE_PROFILE.contact.linkedin, "professional profile"),
+    line("GitHub", EXECUTIVE_PROFILE.contact.github, "code & repositories"),
     "",
   ].join("\n");
 

@@ -19,7 +19,7 @@ import ReadingProgress from "@/components/blog/ReadingProgress";
 import AuthorCard from "@/components/blog/AuthorCard";
 import PostCard from "@/components/blog/PostCard";
 import ComingSoonSeriesModal, { ComingSoonPartTrigger } from "@/components/blog/ComingSoonSeriesModal";
-import { getSeriesWithPosts, seriesForPost, seriesPath } from "@/lib/series";
+import { getSeriesWithPosts, seriesForPost, seriesPath, seriesUrl } from "@/lib/series";
 
 export const dynamicParams = false;
 
@@ -37,6 +37,25 @@ function pageTitle(post: { seoTitle: string; title: string }) {
   return (post.seoTitle || post.title).replace(/\s*[|·–—-]\s*Ahmed Shaker\s*$/i, "").trim();
 }
 
+/** Search results show about 155–158 characters of a description; use seoDescription when set, or trim at a word boundary. */
+function metaDescription(post: { seoDescription: string; excerpt: string }, max = 158) {
+  const raw = (post.seoDescription || post.excerpt).replace(/\s+/g, " ").trim();
+  if (raw.length <= max) return raw;
+  const slice = raw.slice(0, max - 1);
+  const wordEnd = slice.lastIndexOf(" ");
+  return `${(wordEnd > 80 ? slice.slice(0, wordEnd) : slice).replace(/[,;:\s]+$/, "")}…`;
+}
+
+function uniqueKeywords(items: string[]) {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 const absoluteUrl = (path: string) => (/^https?:\/\//.test(path) ? path : `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`);
 
 /** "Watch · 1:21 · sound on" → "PT1M21S", for VideoObject.duration. */
@@ -52,11 +71,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getPost(slug);
   if (!post) return {};
   const title = pageTitle(post);
+  const description = metaDescription(post);
   const image = shareImage(post);
   return {
     title,
-    description: post.excerpt,
-    keywords: [...post.tags, post.categoryLabel, "Ahmed Shaker"],
+    description,
+    keywords: uniqueKeywords([...post.tags, post.categoryLabel, "Ahmed Shaker"]),
     authors: [{ name: "Ahmed Shaker", url: SITE_URL }],
     alternates: {
       canonical: post.canonicalUrl || post.url,
@@ -80,9 +100,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: "summary_large_image",
       title,
       description: post.excerpt,
-      images: [image],
+      images: [{ url: image, width: 1200, height: 630, alt: post.coverAlt }],
     },
-    robots: post.draft ? { index: false, follow: false } : undefined,
+    ...(post.draft && { robots: { index: false, follow: false } }),
   };
 }
 
@@ -118,7 +138,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     // published as independent research don't carry the employer title.
     author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: "Ahmed Shaker", url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#person` },
-    isPartOf: { "@id": `${SITE_URL}/blog#blog` },
+    isPartOf: inSeries
+      ? [
+          { "@id": `${SITE_URL}/blog#blog` },
+          {
+            "@type": "CreativeWorkSeries",
+            "@id": `${seriesUrl(inSeries.series.slug)}#series`,
+            name: inSeries.series.title,
+            url: seriesUrl(inSeries.series.slug),
+          },
+        ]
+      : { "@id": `${SITE_URL}/blog#blog` },
+    ...(inSeries && { position: inSeries.part }),
     ...(post.videos.length > 0 && {
       video: post.videos.map((v) => ({
         "@type": "VideoObject",

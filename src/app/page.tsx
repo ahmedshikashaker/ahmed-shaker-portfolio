@@ -51,6 +51,8 @@ const homeJsonLd = {
           applicationCategory: p.category,
           operatingSystem: p.platforms.join(", "),
           description: p.tagline,
+          ...(p.listing && { url: p.listing.href }),
+          ...(p.iconPath && { image: `${SITE_URL}${p.iconPath}` }),
           author: { "@id": `${SITE_URL}/#person` },
         },
       })),

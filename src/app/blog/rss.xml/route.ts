@@ -6,27 +6,37 @@ function esc(s: string) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+function uniqueCategories(items: string[]) {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 /** RSS 2.0 feed: lets readers subscribe and lets Medium, Dev.to, LinkedIn newsletters, etc. import posts. */
 export async function GET() {
   const posts = (await getAllPosts()).filter((p) => !p.draft);
-  const lastBuild = posts[0]?.publishedDate ?? new Date().toISOString().slice(0, 10);
+  const lastBuild = posts.map((p) => p.updatedDate ?? p.publishedDate).sort().at(-1) ?? new Date().toISOString().slice(0, 10);
 
   const items = posts
-    .map(
-      (p) => `    <item>
+    .map((p) => {
+      const categories = uniqueCategories([p.categoryLabel, ...p.tags]);
+      return `    <item>
       <title>${esc(p.title)}</title>
       <link>${p.url}</link>
       <guid isPermaLink="true">${p.url}</guid>
       <pubDate>${new Date(`${p.publishedDate}T08:00:00Z`).toUTCString()}</pubDate>
       <description>${esc(p.excerpt)}</description>
-      <category>${esc(p.categoryLabel)}</category>
-${p.tags.map((t) => `      <category>${esc(t)}</category>`).join("\n")}
+${categories.map((c) => `      <category>${esc(c)}</category>`).join("\n")}
       <dc:creator>Ahmed Shaker</dc:creator>
       <dc:language>${p.language}</dc:language>${
         p.coverImage ? `\n      <enclosure url="${SITE_URL}${p.coverImage}" type="image/${p.coverImage.split(".").pop() === "png" ? "png" : "jpeg"}" length="0" />` : ""
       }
-    </item>`
-    )
+    </item>`;
+    })
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
